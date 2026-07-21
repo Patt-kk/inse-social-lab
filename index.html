@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>J&amp;T - INSE Social Listening Lab</title>
+<title>MFG - INSE Social Listening Lab</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Bricolage+Grotesque:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
 <style>
@@ -39,7 +39,7 @@ body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min
 /* ── HEADER ── */
 header{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:35px;height:35px;background:#DC2626;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:"Cinzel",serif;font-size:26px;font-weight:1000;color:#fff}
+.logo-icon{width:35px;height:35px;background:#132241;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:"Cinzel",serif;font-size:26px;font-weight:1000;color:#fff}
 .logo-name{font-family:"Bricolage Grotesque",sans-serif;font-size:20px;font-weight:700;color:var(--accent);letter-spacing:-.5px}
 .logo-name em{color:#132241;font-style:normal}
 .status-chip{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);font-size:12px;font-weight:500;color:var(--text3)}
@@ -223,9 +223,96 @@ table.dt tbody td{padding:9px 14px;font-size:12px;color:var(--text2);max-width:2
 .gr-subpanel{display:none}
 .gr-subpanel.active{display:block}
 
+/* ── BRANCH TOP 5 TABLE ── */
+.gr-top5-filter{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.gr-top5-pill{font-size:11px;font-weight:600;padding:4px 14px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;transition:all .15s;user-select:none;color:var(--text2);background:var(--surface);font-family:"DM Sans",sans-serif}
+.gr-top5-pill:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt)}
+.gr-top5-pill.active-all{background:var(--accent);color:#fff;border-color:var(--accent)}
+.gr-top5-pill.active-pos{background:var(--pos);color:#fff;border-color:var(--pos)}
+.gr-top5-pill.active-neu{background:var(--neu);color:#fff;border-color:var(--neu)}
+.gr-top5-pill.active-neg{background:var(--neg);color:#fff;border-color:var(--neg)}
+.gr-top5-table{width:100%;border-collapse:collapse}
+.gr-top5-table thead th{background:var(--bg);padding:9px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--text3);text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+.gr-top5-table thead th.num{text-align:right}
+.gr-top5-table tbody tr{border-bottom:1px solid var(--border);transition:background .1s}
+.gr-top5-table tbody tr:last-child{border-bottom:none}
+.gr-top5-table tbody tr:hover{background:var(--bg)}
+.gr-top5-table tbody td{padding:10px 14px;font-size:12px;color:var(--text2);white-space:nowrap}
+.gr-top5-table tbody td.num{text-align:right;font-family:"DM Mono",monospace;font-size:12px}
+.gr-top5-table tbody td.branch-name{font-weight:700;color:var(--text);max-width:220px;overflow:hidden;text-overflow:ellipsis}
+.gr-top5-netsent{font-family:"DM Mono",monospace;font-size:12px;font-weight:700}
+.gr-top5-netsent.pos{color:var(--pos)}
+.gr-top5-netsent.neg{color:var(--neg)}
+.gr-top5-netsent.neu{color:var(--neu)}
+
+/* KPI Row */
+.gr-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+.gr-kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;box-shadow:var(--shadow-sm);position:relative}
+.gr-kpi-val{font-family:"Bricolage Grotesque",sans-serif;font-size:30px;font-weight:800;color:var(--accent);line-height:1}
+.gr-kpi-lbl{font-size:11px;font-weight:700;color:var(--text3);margin-top:5px;text-transform:uppercase;letter-spacing:.6px}
+.gr-kpi-days-input{position:absolute;top:14px;right:16px;display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text3);font-weight:600}
+.gr-kpi-days-input label{text-transform:uppercase;letter-spacing:.5px}
+.gr-kpi-days-input input{width:46px;height:24px;border:1px solid var(--border2);border-radius:5px;padding:0 6px;font-family:"DM Mono",monospace;font-size:11px;color:var(--text);text-align:center;outline:none;background:var(--surface);transition:border-color .15s}
+.gr-kpi-days-input input:focus{border-color:var(--accent)}
+
+/* 2-column grid */
+.gr-grid-2{display:grid;grid-template-columns:2fr 3fr;gap:14px;margin-bottom:16px}
+@media (max-width:1100px){.gr-grid-2{grid-template-columns:1fr}}
+
+/* Donut */
+.gr-donut-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;padding:12px 0}
+.gr-donut-canvas{position:relative;width:min(260px,100%);height:260px}
+.gr-donut-centre{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.gr-donut-centre-num{font-family:"Bricolage Grotesque",sans-serif;font-size:36px;font-weight:800;color:var(--text);line-height:1}
+.gr-donut-centre-lbl{font-family:"DM Mono",monospace;font-size:10px;color:var(--text3);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.gr-donut-legend{display:flex;flex-direction:column;gap:8px;width:100%;max-width:320px}
+.gr-donut-leg-row{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:7px;background:var(--bg);border:1px solid var(--border)}
+.gr-donut-leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.gr-donut-leg-name{font-size:12px;font-weight:600;color:var(--text2);flex:1;text-transform:capitalize}
+.gr-donut-leg-num{font-family:"DM Mono",monospace;font-size:13px;font-weight:700;color:var(--text)}
+.gr-donut-leg-pct{font-family:"DM Mono",monospace;font-size:11px;color:var(--text3);min-width:46px;text-align:right}
+
+/* Category stack */
+.gr-cat-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.gr-cat-lbl{font-size:15px;font-weight:700;color:var(--text);width:145px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:capitalize}
+.gr-cat-track{flex:1;height:34px;display:flex;border-radius:6px;overflow:hidden;background:var(--bg);border:1px solid var(--border);position:relative}
+.gr-cat-seg{height:100%;transition:width .7s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center;font-family:"DM Mono",monospace;overflow:hidden;white-space:nowrap;cursor:default}
+.gr-cat-seg-count{font-size:12px;font-weight:800;color:#fff;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.gr-cat-total{font-family:"DM Mono",monospace;font-size:12px;font-weight:700;color:var(--text2);width:52px;text-align:right;flex-shrink:0}
+
+/* Word Cloud */
+.gr-wordcloud{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 14px;padding:26px 20px;min-height:220px;background:linear-gradient(135deg,#FAFBFE 0%,#F5F6FA 100%);border:1px solid var(--border);border-radius:10px;line-height:1.2}
+.gr-word{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;cursor:default;transition:transform .2s,opacity .2s;display:inline-block;line-height:1}
+.gr-word:hover{transform:scale(1.12);opacity:.75}
+.gr-wc-empty{color:var(--text3);font-size:13px;font-style:italic}
+
+/* Example Reviews */
+.gr-review-filter{display:flex;gap:5px;flex-wrap:wrap}
 .gr-rev-pill{font-size:11px;font-weight:500;padding:4px 11px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;transition:all .15s;user-select:none;color:var(--text2);background:var(--surface);font-family:"DM Sans",sans-serif}
 .gr-rev-pill:hover{border-color:var(--accent);color:var(--accent)}
 .gr-rev-pill.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+.gr-reviews-list{display:flex;flex-direction:column;gap:10px}
+.gr-review-item{display:flex;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface);transition:border-color .15s}
+.gr-review-item:hover{border-color:var(--border2)}
+.gr-review-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:700;color:#fff;font-size:14px;flex-shrink:0}
+.gr-review-body{flex:1;min-width:0}
+.gr-review-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.gr-review-brand{font-size:13px;font-weight:700;color:var(--text)}
+.gr-review-date{font-size:11px;color:var(--text3);font-family:"DM Mono",monospace}
+.gr-review-text{font-size:13px;color:var(--text2);line-height:1.6;margin:4px 0 8px;word-break:break-word;white-space:pre-wrap}
+.gr-review-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.gr-review-sent{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:capitalize}
+.gr-review-sent.positive{background:var(--pos-lt);color:#0d9e75}
+.gr-review-sent.negative{background:var(--neg-lt);color:var(--neg)}
+.gr-review-sent.neutral{background:var(--neu-lt);color:#b45309}
+.gr-review-link{font-size:11px;color:var(--accent);text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:3px;padding:2px 9px;border:1px solid rgba(37,99,235,.25);border-radius:20px;background:var(--accent-lt);transition:all .15s}
+.gr-review-link:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.gr-review-no-link{font-size:11px;color:var(--text3);font-style:italic}
+.gr-review-location{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#7c3aed;background:#f3f0ff;border:1px solid rgba(124,58,237,.2);border-radius:20px;padding:2px 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+
+/* Empty/loading states inside dashboard */
+.gr-chart-empty{padding:28px 20px;text-align:center;color:var(--text3);font-size:13px;font-style:italic}
+
 /* ── CLEAR BUTTON (used by AI Copy) ── */
 .clear-btn{font-size:11px;font-weight:500;color:var(--text3);background:none;border:none;cursor:pointer;transition:color .15s;font-family:"DM Sans",sans-serif}
 .clear-btn:hover{color:var(--neg)}
@@ -487,7 +574,7 @@ table.dt tbody td{padding:9px 14px;font-size:12px;color:var(--text2);max-width:2
   --shadow-sm:0 1px 3px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.2);
 }
 [data-theme="dark"] canvas { filter: brightness(0.9); }
-[data-theme="dark"] .logo-icon { background:#EF4444; }
+[data-theme="dark"] .logo-icon { background:#2563EB; }
 [data-theme="dark"] .kk-badge { filter: brightness(1.2); }
 
 /* ── THEME TOGGLE BUTTON ── */
@@ -662,7 +749,7 @@ textarea:focus{border-color:var(--accent)!important}
 <body>
 
 <div class="loading-screen" id="loadingScreen">
-  <div class="load-logo">J&amp;T - <span style="color:#FF7A01">INSE</span> <span>Social Listening Lab</span></div>
+  <div class="load-logo">MFG - <span style="color:#FF7A01">INSE</span> <span>Social Listening Lab</span></div>
   <div class="load-bar-wrap"><div class="load-bar"></div></div>
   <div class="load-sub">Initialising Python runtime</div>
   <div id="loadProgress">Loading Pyodide…</div>
@@ -671,8 +758,8 @@ textarea:focus{border-color:var(--accent)!important}
 
 <header>
   <div class="logo">
-    <div class="logo-icon">J</div>
-    <div class="logo-name"><em>J&amp;T - <span style="color:#FF7A01">INSE</span></em> Social Listening Lab</div>
+    <div class="logo-icon">M</div>
+    <div class="logo-name"><em>MFG - <span style="color:#FF7A01">INSE</span></em> Social Listening Lab</div>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
     <div id="moodWrap">
@@ -783,7 +870,7 @@ textarea:focus{border-color:var(--accent)!important}
         <div class="kk-badge">KK</div>
         <div class="kk-text">
           <div class="kk-name">Designed by KK 🐻</div>
-          <div class="kk-role">J&amp;T - INSE Social Listening Lab</div>
+          <div class="kk-role">MFG - INSE Social Listening Lab</div>
         </div>
       </div>
       <div style="margin-top:10px;padding:8px 12px;background:var(--accent-lt);border:1px solid rgba(37,99,235,.15);border-radius:6px;font-size:10px;color:var(--text2);line-height:1.6;">
@@ -797,9 +884,10 @@ textarea:focus{border-color:var(--accent)!important}
       <button class="tab-btn active" data-tab="report" title="Statistical Data (Alt+1)">📋 Statistical Data</button>
       <button class="tab-btn" data-tab="overview" title="Overview (Alt+2)">🔭 Overview</button>
       <button class="tab-btn" data-tab="brand" title="Brand Deep-Dive (Alt+3)">📌 Brand Deep-Dive</button>
-      <button class="tab-btn" data-tab="campaign" title="Campaign (Alt+4)">🎯 Campaign</button>
-      <button class="tab-btn" data-tab="charts" title="Sentiment Charts (Alt+5)">📊 Sentiment</button>
-      <button class="tab-btn" data-tab="table" title="Data Table (Alt+6)">🗂 Data Table</button>
+      <button class="tab-btn" data-tab="greview" title="Google Review (Alt+4)">⭐ Google Review</button>
+      <button class="tab-btn" data-tab="campaign" title="Campaign (Alt+5)">🎯 Campaign</button>
+      <button class="tab-btn" data-tab="charts" title="Sentiment Charts (Alt+6)">📊 Sentiment</button>
+      <button class="tab-btn" data-tab="table" title="Data Table (Alt+7)">🗂 Data Table</button>
     </nav>
 
     <!-- ═══ GLOBAL API KEY BAR ═══ -->
@@ -848,13 +936,13 @@ textarea:focus{border-color:var(--accent)!important}
           </div>
           <div class="card">
             <div class="section-bar" style="display:flex;align-items:center;justify-content:space-between;">
-              <span>Topic × Brand × Sentiment + Engagement &amp; Mentions</span>
+              <span>Attribute × Brand × Sentiment + Engagement &amp; Mentions</span>
               <button class="copy-table-btn" id="copyBtn1">⎘ Copy</button>
             </div>
             <div class="report-table-wrap">
               <table class="report-table">
                 <thead><tr>
-                  <th>Brand</th><th>Topic</th>
+                  <th>Brand</th><th>Attribute</th>
                   <th class="num">Negative</th><th class="num">Neutral</th><th class="num">Positive</th>
                   <th class="col-spacer"></th><th class="num">Engagement</th><th class="num">Mentions</th>
                 </tr></thead>
@@ -878,6 +966,291 @@ textarea:focus{border-color:var(--accent)!important}
               </table>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- ═══ GOOGLE REVIEW ═══ -->
+      <div class="panel" id="panel-greview">
+        <div class="empty-state" id="greviewEmpty">
+          <div class="empty-illus"><svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M36 8l5.5 11.2 12.4 1.8-9 8.7 2.1 12.3L36 36.4l-11 5.6 2.1-12.3-9-8.7 12.4-1.8z" fill="var(--accent)" opacity=".15" stroke="var(--accent)" stroke-width="1.5" stroke-linejoin="round" opacity=".35"/>
+  <circle cx="50" cy="52" r="13" fill="var(--surface)" stroke="var(--border2)" stroke-width="1.5"/>
+  <text x="50" y="57" font-size="13" fill="var(--text3)" opacity=".7" font-family="system-ui,sans-serif" font-weight="700" text-anchor="middle">?</text>
+</svg></div>
+          <div class="empty-title">No Google Reviews found</div>
+          <div class="empty-sub">Upload a CSV containing rows where the <strong>source</strong> column includes "googlereviews"</div>
+        </div>
+        <div id="greviewContent" style="display:none">
+          <!-- Sub-tab nav -->
+          <div class="gr-subnav">
+            <button class="gr-subtab active" data-gr-tab="dashboard">📊 Dashboard</button>
+            <button class="gr-subtab" data-gr-tab="ai">✦ AI Analysis</button>
+            <button class="gr-subtab" data-gr-tab="raw">🗂 Raw Data</button>
+            <div class="gr-subnav-meta" id="grSubnavMeta"><span id="grSubnavMetaText"></span><button class="analyse-ai-btn" id="grAnalyseBtn" style="display:none"><span class="ab-icon">✦</span> Analyse with AI <span>→</span></button></div>
+          </div>
+
+          <!-- ═════ DASHBOARD ═════ -->
+          <div class="gr-subpanel active" id="gr-panel-dashboard">
+
+            <!-- Brand selector — same white card style as Campaign / BDD -->
+            <div style="margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px">
+              <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:10px">
+                Select Brand
+                <span id="grActiveBrandLabel" style="font-weight:600;color:var(--accent);letter-spacing:0;text-transform:none;margin-left:6px"></span>
+              </div>
+              <div id="grDashBrandPills" style="display:flex;gap:7px;flex-wrap:wrap;padding-bottom:4px;scrollbar-width:thin"></div>
+            </div>
+
+            <!-- KPI Row -->
+            <div class="gr-kpi-row">
+              <div class="gr-kpi-card">
+                <div class="gr-kpi-val" id="grUniqueMentions">—</div>
+                <div class="gr-kpi-lbl">Mentions</div>
+              </div>
+              <div class="gr-kpi-card">
+                <div class="gr-kpi-val" id="grMentionsPerDay">—</div>
+                <div class="gr-kpi-lbl">Mentions / Day</div>
+                <div class="gr-kpi-days-input">
+                  <label>Days:</label>
+                  <input type="number" id="grDaysInput" min="1" max="365" value="30">
+                </div>
+              </div>
+              <div class="gr-kpi-card">
+                <div class="gr-kpi-val" id="grAvgRating">—</div>
+                <div class="gr-kpi-lbl">Net Sentiment</div>
+              </div>
+              <div class="gr-kpi-card">
+                <div class="gr-kpi-val" id="grDateRange">—</div>
+                <div class="gr-kpi-lbl">Date Range</div>
+              </div>
+            </div>
+
+            <!-- Sentiment Donut + Category Stack Side-by-Side -->
+            <div class="gr-grid-2">
+              <div class="card">
+                <div class="card-title">Sentiment Breakdown</div>
+                <div class="card-sub">Distribution of review sentiment — unique mentions</div>
+                <div id="grSentimentDonut" class="gr-donut-wrap"></div>
+              </div>
+              <div class="card">
+                <div class="card-title">Category × Sentiment</div>
+                <div class="card-sub">Mentions grouped by Detail, split by sentiment</div>
+                <div id="grCategoryStack"></div>
+              </div>
+            </div>
+
+            <!-- Top 5 Branches by Sentiment -->
+            <div class="card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:10px">
+                <div>
+                  <div class="card-title" style="margin-bottom:2px">Top 5 Branch / Location</div>
+                  <div class="card-sub" style="margin-bottom:0">Ranked by mentions — filter by sentiment column to sort</div>
+                </div>
+              </div>
+              <div class="gr-top5-filter">
+                <button class="gr-top5-pill active-all" data-top5="all">All</button>
+                <button class="gr-top5-pill" data-top5="positive">Positive</button>
+                <button class="gr-top5-pill" data-top5="neutral">Neutral</button>
+                <button class="gr-top5-pill" data-top5="negative">Negative</button>
+              </div>
+              <div style="overflow-x:auto;border:1px solid var(--border);border-radius:var(--r)">
+                <table class="gr-top5-table">
+                  <thead id="grTop5Head">
+                    <tr>
+                      <th>Branch / Location</th>
+                      <th class="num">Mentions</th>
+                      <th class="num" style="color:var(--pos)">Positive</th>
+                      <th class="num" style="color:var(--neu)">Neutral</th>
+                      <th class="num" style="color:var(--neg)">Negative</th>
+                      <th class="num">Net Sentiment</th>
+                    </tr>
+                  </thead>
+                  <tbody id="grTop5Body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Word Cloud -->
+            <div class="card">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+                <div>
+                  <div class="card-title" style="margin-bottom:2px">Word Cloud</div>
+                  <div class="card-sub" style="margin-bottom:0">Most frequent words from review text (stopwords removed)</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+                  <!-- Sentiment filter -->
+                  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                    <span style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase">Sentiment:</span>
+                    <label style="font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" name="grWcSent" value="all" checked> All</label>
+                    <label style="font-size:12px;color:#0d9e75;display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" name="grWcSent" value="positive"> Positive</label>
+                    <label style="font-size:12px;color:#b45309;display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" name="grWcSent" value="neutral"> Neutral</label>
+                    <label style="font-size:12px;color:var(--neg);display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" name="grWcSent" value="negative"> Negative</label>
+                  </div>
+                  <!-- Language filter -->
+                  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                    <span style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase">Language:</span>
+                    <label style="font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" name="grWcLang" value="all" checked> All</label>
+                    <label style="font-size:12px;color:var(--accent);display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" name="grWcLang" value="en"> English</label>
+                    <label style="font-size:12px;color:#7c3aed;display:flex;align-items:center;gap:5px;cursor:pointer"><input type="radio" name="grWcLang" value="th"> Thai</label>
+                  </div>
+                </div>
+              </div>
+              <div id="grWordCloud" class="gr-wordcloud" style="padding:0;background:none;border:none;min-height:0"></div>
+            </div>
+
+            <!-- Example Reviews -->
+            <div class="card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+                <div>
+                  <div class="card-title" style="margin-bottom:2px">Example Reviews</div>
+                  <div class="card-sub" style="margin-bottom:0">Sample reviews with direct links to source</div>
+                </div>
+                <div class="gr-review-filter">
+                  <button class="gr-rev-pill active" data-rev="all">All</button>
+                  <button class="gr-rev-pill" data-rev="positive">😊 Positive</button>
+                  <button class="gr-rev-pill" data-rev="neutral">😐 Neutral</button>
+                  <button class="gr-rev-pill" data-rev="negative">😞 Negative</button>
+                </div>
+              </div>
+              <div id="grExampleReviews" class="gr-reviews-list"></div>
+              <div style="display:flex;justify-content:center;margin-top:14px">
+                <button class="btn-outline" id="grLoadMoreBtn" style="display:none">Load more reviews</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═════ AI ANALYSIS ═════ -->
+          <div class="gr-subpanel" id="gr-panel-ai">
+            <div class="card" id="grAiCard" style="margin-top:4px;padding:0">
+
+              <!-- Hero header — title + model selector only, no pills -->
+              <div style="background:linear-gradient(135deg,#3b82f6 0%,#60a5fa 60%,#93c5fd 100%);padding:20px 24px;position:relative;overflow:hidden">
+                <div style="position:absolute;inset:0;opacity:.12;background-image:repeating-linear-gradient(0deg,transparent,transparent 24px,#fff 24px,#fff 25px),repeating-linear-gradient(90deg,transparent,transparent 24px,#fff 24px,#fff 25px);pointer-events:none"></div>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative;flex-wrap:wrap">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0">🤖</div>
+                    <div>
+                      <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:800;color:#fff;line-height:1;letter-spacing:-.3px;text-shadow:0 1px 3px rgba(0,0,0,.15)">Google Review AI Analysis</div>
+                      <div style="font-size:11px;color:rgba(255,255,255,.85);margin-top:3px;font-weight:500">Select a brand below — results are scoped to Google Reviews only</div>
+                    </div>
+                  </div>
+                  <div style="flex-shrink:0;position:relative">
+                    <select id="grAiModel" style="height:32px;font-size:12px;font-family:'DM Sans',sans-serif;font-weight:600;background:#fff;color:var(--accent);border:none;border-radius:8px;padding:0 30px 0 12px;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,.12);min-width:180px"></select>
+                    <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:10px;color:var(--accent)">▼</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Brand selector — white card style matching Dashboard -->
+              <div style="padding:14px 20px 16px;border-bottom:1px solid var(--border);background:var(--surface)">
+                <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:10px">
+                  Select Brand
+                  <span id="grAiActiveLabel" style="font-weight:600;color:var(--accent);letter-spacing:0;text-transform:none;margin-left:6px"></span>
+                </div>
+                <div id="grAiBrandPills" style="display:flex;flex-wrap:wrap;gap:7px;padding-bottom:4px;scrollbar-width:thin"></div>
+              </div>
+
+              <!-- card body -->
+              <div style="padding:20px 24px">
+
+              <!-- Filters row -->
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px">Sentiment</div>
+                  <div class="ms-wrap" id="grAiMsWrapSent">
+                    <div class="ms-trigger" id="grAiMsTriggerSent">
+                      <span class="ms-trigger-label placeholder" id="grAiMsLabelSent">All sentiments</span>
+                      <span class="ms-arrow">▼</span>
+                    </div>
+                    <div class="ms-dropdown" id="grAiMsDropSent">
+                      <div class="ms-option ms-all selected" data-value="__all__">
+                        <input type="checkbox" checked> All sentiments
+                      </div>
+                      <div class="ms-divider"></div>
+                      <div class="ms-option" data-value="positive"><input type="checkbox"> Positive</div>
+                      <div class="ms-option" data-value="neutral"><input type="checkbox"> Neutral</div>
+                      <div class="ms-option" data-value="negative"><input type="checkbox"> Negative</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px">Max Reviews</div>
+                  <select id="grAiMaxPosts" class="ai-select">
+                    <option value="1000" selected>1,000 reviews</option>
+                    <option value="3000">3,000 reviews</option>
+                    <option value="10000">10,000 reviews</option>
+                    <option value="30000">30,000 reviews</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px">Sort By</div>
+                  <select id="grAiSortBy" class="ai-select">
+                    <option value="engagement">Highest engagement first</option>
+                    <option value="none">Original order</option>
+                  </select>
+                </div>
+                <div>
+                  <div style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:5px">Note</div>
+                  <div style="font-size:10px;font-weight:600;color:#d97706;background:#fff8ed;border:1px solid #fde68a;border-radius:5px;padding:4px 9px;line-height:1.4">🔒 Source locked to<br>Google Reviews</div>
+                </div>
+              </div>
+              <div style="margin-bottom:12px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:6px">
+                  <div style="font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px;text-transform:uppercase">Custom Prompt <span style="font-weight:500;color:var(--text3);text-transform:none;letter-spacing:0">(Optional)</span></div>
+                  <span style="font-size:10px;color:var(--text3);font-style:italic">Leave blank to use the default analysis</span>
+                </div>
+                <textarea id="grAiInstruction" rows="4" style="width:100%;background:var(--bg);border:1.5px solid var(--border2);border-radius:8px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);outline:none;resize:vertical;line-height:1.6;transition:border-color .15s" placeholder="e.g. Summarise the top complaints about staff service across all branches, highlight any recurring issues by location, and suggest 3 actionable improvements."></textarea>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+                <button class="ai-run-btn" id="grAiRunBtn">
+                  <div class="ai-spinner"></div><span id="grAiRunBtnLabel">✦ Generate Google Review Analysis</span>
+                </button>
+                <span id="grAiPostCount" style="font-size:12px;font-weight:500;color:var(--text3)"></span>
+              </div>
+
+              <!-- Output -->
+              <div class="ai-output-card" id="grAiOutputCard" style="display:none;margin-top:16px">
+                <div class="ai-output-header">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase" id="grAiOutputLabel">Google Review Analysis</span>
+                    <span id="grAiOutputMeta" style="font-size:12px;color:var(--accent);font-weight:500"></span>
+                  </div>
+                  <button class="clear-btn" id="grAiCopyBtn">Copy</button>
+                </div>
+                <div id="grAiOutputBody" class="ai-output-body"></div>
+              </div>
+              <div id="grAiError" style="display:none" class="ai-error-msg"></div>
+              </div><!-- /.card body -->
+            </div><!-- /#grAiCard -->
+          </div>
+
+          <!-- ═════ RAW DATA ═════ -->
+          <div class="gr-subpanel" id="gr-panel-raw">
+            <div class="card" style="padding-bottom:16px">
+              <div class="table-controls">
+                <input class="search-input" id="grTableSearch" placeholder="Search text, brand, sentiment…">
+                <select id="grSentFilter" class="ai-select" style="max-width:160px">
+                  <option value="__all__">All sentiments</option>
+                  <option value="positive">Positive</option>
+                  <option value="neutral">Neutral</option>
+                  <option value="negative">Negative</option>
+                </select>
+                <span style="font-size:12px;color:var(--text3);font-weight:500" id="grTableCount"></span>
+              </div>
+              <div class="table-wrap">
+                <table class="dt">
+                  <thead id="grTHead"></thead>
+                  <tbody id="grTBody"></tbody>
+                </table>
+              </div>
+              <div class="pagination" style="padding-top:12px">
+                <button class="page-btn" id="grPrevPage">← Previous</button>
+                <span class="page-info" id="grPageInfo"></span>
+                <button class="page-btn" id="grNextPage">Next →</button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -1188,7 +1561,7 @@ textarea:focus{border-color:var(--accent)!important}
           <div class="card">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
               <div>
-                <div class="card-title" style="margin-bottom:2px">Sentiment by Topic</div>
+                <div class="card-title" style="margin-bottom:2px">Sentiment by Attribute</div>
                 <div style="font-size:12px;color:var(--text3)">Filter by brand using the pills on the right</div>
               </div>
               <div id="topic-sent-brand-filter" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"></div>
@@ -1196,7 +1569,7 @@ textarea:focus{border-color:var(--accent)!important}
             <div id="sent-topic-bars"></div>
           </div>
           <div class="card">
-            <div class="card-title" style="margin-bottom:4px">Topic × Brand × Sentiment</div>
+            <div class="card-title" style="margin-bottom:4px">Attribute × Brand × Sentiment</div>
             <div class="card-sub">Stacked vertical bars — 7 topics per brand, sorted by total engagement</div>
             <div id="brand-topic-sent-grid"></div>
           </div>
@@ -1382,7 +1755,7 @@ textarea:focus{border-color:var(--accent)!important}
               <div id="bddSentDonut"></div>
             </div>
             <div class="card" style="margin-bottom:0">
-              <div class="bdd-section-title"><span>🏷</span>Topic Breakdown</div>
+              <div class="bdd-section-title"><span>🏷</span>Attribute Breakdown</div>
               <div id="bddTopicBars"></div>
             </div>
           </div>
@@ -1396,7 +1769,7 @@ textarea:focus{border-color:var(--accent)!important}
             </div>
             <div class="card" style="margin-bottom:0">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
-                <div class="bdd-section-title" style="margin-bottom:0;border:none;padding:0"><span>🔬</span>Sentiment by Topic</div>
+                <div class="bdd-section-title" style="margin-bottom:0;border:none;padding:0"><span>🔬</span>Sentiment by Attribute</div>
                 <div style="display:flex;gap:14px">
                   <span style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#0d9e75"><span style="width:10px;height:10px;border-radius:2px;background:#1DC997;display:inline-block"></span>Positive</span>
                   <span style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#d14f4f"><span style="width:10px;height:10px;border-radius:2px;background:#FF5050;display:inline-block"></span>Negative</span>
@@ -1623,11 +1996,12 @@ textarea:focus{border-color:var(--accent)!important}
 
 let pyodide = null;
 let rawData = [], filteredData = [];
+let grRawData = [];   // Google Review rows parsed by pandas — preserves embedded newlines
 let allRawData = [];  // All rows parsed by pandas — used by AI Summary
 let activeBrands = new Set();
 let currentPage = 1;
 const PAGE_SIZE = 50;
-const DISPLAY_COLS = ['source','created_at','Brands','Topics','Campaign','sentiment','text','link'];
+const DISPLAY_COLS = ['source','created_at','Brand','Attribute','Campaign','Channel','Area','crisis','sentiment','text','link'];
 const LINK_FIELDS  = ['link','Link','url','URL','post_url','post_link','permalink','source_url'];
 let reportData = { topicRows:[], sentRows:[], totalMention:0, totalEngagement:0, csvBlob:null };
 let csvFile1 = null, csvFile2 = null;  // store both uploaded files
@@ -1688,7 +2062,7 @@ document.addEventListener('keydown', e => {
   if (e.altKey && e.key === 'd') { document.getElementById('themeToggle').click(); return; }
   // Alt+1–7 → switch tabs
   if (e.altKey && !e.ctrlKey && !e.shiftKey) {
-    const tabs = ['report','overview','brand','campaign','charts','table'];
+    const tabs = ['report','overview','brand','greview','campaign','charts','table'];
     const idx = parseInt(e.key) - 1;
     if (idx >= 0 && idx < tabs.length) {
       e.preventDefault();
@@ -1871,7 +2245,7 @@ async function triggerPipeline() {
 
   await runMainPipeline();
   updateSidebarStats(); buildBrandFilter(); buildColToggles();
-  filteredData=[...rawData]; renderCharts(); renderTable(); updateBrandDeepDive(); renderOverview();
+  filteredData=[...rawData]; renderCharts(); renderTable(); updateGooglePanel(); updateBrandDeepDive(); renderOverview();
   setStatus('ready', totalLabel);
   _hidePipelineOverlay();
   showToast(`Pipeline complete — ${totalLabel}`, 'success', 4000);
@@ -1916,10 +2290,6 @@ df.columns = [c.lstrip('\\ufeff') for c in df.columns]
 # Normalise common column name variants (case differences between files)
 if 'Source' in df.columns and 'source' not in df.columns:
     df = df.rename(columns={'Source': 'source'})
-if 'Brand' in df.columns and 'Brands' not in df.columns:
-    df = df.rename(columns={'Brand': 'Brands'})
-if 'Attribute' in df.columns and 'Topics' not in df.columns:
-    df = df.rename(columns={'Attribute': 'Topics'})
 if 'view_count' not in df.columns:
     df['view_count'] = 0
 final_sw_data = pd.DataFrame()
@@ -1932,7 +2302,7 @@ async function runMainPipeline() {
   // step0 (merge) already handled by triggerPipeline before this is called
 
   const pipeline = [
-    // ── STEP 2: strip outer brackets → split → explode Topics then Brands ─────
+    // ── STEP 2: strip outer brackets → split → explode Attribute then Brand ─────
     // e.g. "[amazon, starbucks]" → strip → "amazon, starbucks" → split → explode
     ['step2', `
 def clean_and_split(val):
@@ -1942,50 +2312,50 @@ def clean_and_split(val):
     return [x.strip() for x in s.split(',') if x.strip()]
 
 mfg = df.copy()
-mfg['_topics_list']   = mfg['Topics'].apply(clean_and_split)
-mfg['_brands_list']   = mfg['Brands'].apply(clean_and_split)
+mfg['_topics_list']   = mfg['Attribute'].apply(clean_and_split)
+mfg['_brands_list']   = mfg['Brand'].apply(clean_and_split)
 if 'Campaign' in mfg.columns:
     mfg['_campaign_list'] = mfg['Campaign'].apply(clean_and_split)
 else:
     mfg['_campaign_list'] = [['(no campaign)']] * len(mfg)
 
-# Explode Topics → Brands → Campaign — each row becomes one Brand + one Topic + one Campaign
-mfg['Topics'] = mfg['_topics_list']
-filtered_mfg_exploded = mfg.explode('Topics').copy()
+# Explode Attribute → Brand → Campaign — each row becomes one Brand + one Topic + one Campaign
+mfg['Attribute'] = mfg['_topics_list']
+filtered_mfg_exploded = mfg.explode('Attribute').copy()
 
-filtered_mfg_exploded['Brands'] = filtered_mfg_exploded['_brands_list']
-filtered_mfg_exploded_2 = filtered_mfg_exploded.explode('Brands').copy()
+filtered_mfg_exploded['Brand'] = filtered_mfg_exploded['_brands_list']
+filtered_mfg_exploded_2 = filtered_mfg_exploded.explode('Brand').copy()
 
 filtered_mfg_exploded_2['Campaign'] = filtered_mfg_exploded_2['_campaign_list']
 filtered_mfg_exploded_final = filtered_mfg_exploded_2.explode('Campaign').copy()
 
-filtered_mfg_exploded_final['Brands']   = filtered_mfg_exploded_final['Brands'].astype(str).str.strip()
-filtered_mfg_exploded_final['Topics']   = filtered_mfg_exploded_final['Topics'].astype(str).str.strip()
+filtered_mfg_exploded_final['Brand']   = filtered_mfg_exploded_final['Brand'].astype(str).str.strip()
+filtered_mfg_exploded_final['Attribute']   = filtered_mfg_exploded_final['Attribute'].astype(str).str.strip()
 filtered_mfg_exploded_final['Campaign'] = filtered_mfg_exploded_final['Campaign'].astype(str).str.strip()
 filtered_mfg_exploded_final['engagement_score'] = pd.to_numeric(filtered_mfg_exploded_final['engagement_score'], errors='coerce').fillna(0)
 
 print("Exploded shape:", filtered_mfg_exploded_final.shape)
-print("Unique Brands:",    sorted(filtered_mfg_exploded_final['Brands'].unique()))
-print("Unique Topics:",    sorted(filtered_mfg_exploded_final['Topics'].unique()))
+print("Unique Brand:",    sorted(filtered_mfg_exploded_final['Brand'].unique()))
+print("Unique Attribute:",    sorted(filtered_mfg_exploded_final['Attribute'].unique()))
 print("Unique Campaigns:", sorted(filtered_mfg_exploded_final['Campaign'].unique()))
 `],
 
     // ── STEP 3: sentiment count pivot — sum per Brand+Topic+sentiment ─────────
     ['step3', `
-desired_order = ['tracking', 'timeliness', 'general', 'staff service', 'pricing', 'branding', 'product quality', 'event/activity', 'cod', 'availability', 'claim', 'promotion', 'others']
+desired_order = ['availability', 'branding', 'claim', 'cod', 'event/activity', 'general', 'pricing', 'product quality', 'promotion', 'staff service', 'timeliness', 'tracking', 'others']
 
 # Count unique IDs per Brand × Topic × sentiment (on exploded df)
 topic_brand_sentiment_counts = (
     filtered_mfg_exploded_final
-    .groupby(['Brands', 'Topics', 'sentiment'])['id']
+    .groupby(['Brand', 'Attribute', 'sentiment'])['id']
     .nunique()
 )
 topic_sentiment_pivot = topic_brand_sentiment_counts.unstack(fill_value=0)
 
 # Build a complete MultiIndex: every brand × every topic in desired_order
 # Brand order here doesn't matter — step 5 will sort by engagement rank
-all_brands_step3 = filtered_mfg_exploded_final['Brands'].unique().tolist()
-full_index_step3 = pd.MultiIndex.from_product([all_brands_step3, desired_order], names=['Brands', 'Topics'])
+all_brands_step3 = filtered_mfg_exploded_final['Brand'].unique().tolist()
+full_index_step3 = pd.MultiIndex.from_product([all_brands_step3, desired_order], names=['Brand', 'Attribute'])
 topic_sentiment_pivot = topic_sentiment_pivot.reindex(full_index_step3, fill_value=0)
 
 # Ensure all three sentiment columns exist
@@ -1997,11 +2367,11 @@ topic_sentiment_pivot = topic_sentiment_pivot[['negative', 'neutral', 'positive'
 
     // ── STEP 4: sum engagement + count unique mention per Brand+Topic ─────────
     ['step4', `
-desired_order = ['tracking', 'timeliness', 'general', 'staff service', 'pricing', 'branding', 'product quality', 'event/activity', 'cod', 'availability', 'claim', 'promotion', 'others']
+desired_order = ['availability', 'branding', 'claim', 'cod', 'event/activity', 'general', 'pricing', 'product quality', 'promotion', 'staff service', 'timeliness', 'tracking', 'others']
 
 engagement_mention_by_topic_brand = (
     filtered_mfg_exploded_final
-    .groupby(['Brands', 'Topics'])
+    .groupby(['Brand', 'Attribute'])
     .agg(
         engagement=('engagement_score', 'sum'),   # sum engagement across exploded rows
         mention=('id', 'nunique')                  # unique post IDs
@@ -2009,10 +2379,10 @@ engagement_mention_by_topic_brand = (
 )
 
 # Sort brands alphabetically (A → Z)
-sorted_brands = sorted(engagement_mention_by_topic_brand.index.get_level_values('Brands').unique())
+sorted_brands = sorted(engagement_mention_by_topic_brand.index.get_level_values('Brand').unique())
 
 # Build a complete MultiIndex: every brand × every topic in desired_order (sorted by engagement)
-full_index = pd.MultiIndex.from_product([sorted_brands, desired_order], names=['Brands', 'Topics'])
+full_index = pd.MultiIndex.from_product([sorted_brands, desired_order], names=['Brand', 'Attribute'])
 engagement_mention_by_topic_brand = engagement_mention_by_topic_brand.reindex(full_index, fill_value=0)
 `],
 
@@ -2026,9 +2396,9 @@ combined_data = pd.concat([topic_sentiment_pivot, blank_column, engagement_menti
 # Use engagement-sorted brand order from step 4
 combined_data_list = []
 for brand in sorted_brands:
-    if brand not in combined_data.index.get_level_values('Brands'):
+    if brand not in combined_data.index.get_level_values('Brand'):
         continue
-    brand_df = combined_data.xs(brand, level='Brands')
+    brand_df = combined_data.xs(brand, level='Brand')
     brand_df.index = pd.MultiIndex.from_tuples(
         [(brand, t) for t in brand_df.index], names=combined_data.index.names
     )
@@ -2043,7 +2413,7 @@ for brand in sorted_brands:
 combined_data_with_blanks = pd.concat(combined_data_list[:-1]).reset_index()
 
 # Suppress repeated brand name — only show it on first topic row
-combined_data_with_blanks.loc[combined_data_with_blanks['Brands'].duplicated(), 'Brands'] = ''
+combined_data_with_blanks.loc[combined_data_with_blanks['Brand'].duplicated(), 'Brand'] = ''
 
 # Convert numeric cols to int, blank rows stay blank
 for col in ['negative', 'neutral', 'positive', 'engagement', 'mention']:
@@ -2068,7 +2438,7 @@ def _cs6(val):
     return [x.strip() for x in s.split(',') if x.strip()]
 
 _s6 = df.copy()
-_s6['_bl'] = _s6['Brands'].apply(_cs6)
+_s6['_bl'] = _s6['Brand'].apply(_cs6)
 _s6 = _s6.explode('_bl')
 _s6 = _s6[_s6['_bl'].notna() & (_s6['_bl'] != '')]
 
@@ -2079,7 +2449,7 @@ sentiment_counts_by_brand = (
     .nunique()
     .unstack(fill_value=0)
     .reset_index()
-    .rename(columns={'_bl': 'Brands'})
+    .rename(columns={'_bl': 'Brand'})
 )
 
 # Ensure all sentiment columns exist
@@ -2122,8 +2492,8 @@ total_eng_val     = float(pd.to_numeric(df['engagement_score'], errors='coerce')
 # ── Build topic rows for Report UI ───────────────────────────────────────────
 _topic_rows = []
 for _, row in combined_data_with_blanks.iterrows():
-    b = str(row.get('Brands', ''))
-    t = str(row.get('Topics', ''))
+    b = str(row.get('Brand', ''))
+    t = str(row.get('Attribute', ''))
     if b == '' and t == '':
         _topic_rows.append({'brand':'__blank__','topic':'','negative':'','neutral':'','positive':'','engagement':'','mention':''})
         continue
@@ -2140,7 +2510,7 @@ for _, row in combined_data_with_blanks.iterrows():
 # ── Build sentiment rows for Report UI ───────────────────────────────────────
 _sent_rows = []
 for _, row in sentiment_counts_by_brand.iterrows():
-    b = str(row.get('Brands', ''))
+    b = str(row.get('Brand', ''))
     if not b or b in ('', 'nan'): continue
     def _i(v):
         try: return int(v)
@@ -2165,7 +2535,7 @@ _df_brands = df.copy()
 _df_brands['engagement_score'] = pd.to_numeric(_df_brands['engagement_score'], errors='coerce').fillna(0)
 if 'view_count' not in _df_brands.columns: _df_brands['view_count'] = 0
 _df_brands['view_count'] = pd.to_numeric(_df_brands['view_count'], errors='coerce').fillna(0)
-_df_brands['_bl'] = _df_brands['Brands'].apply(_clean_split)
+_df_brands['_bl'] = _df_brands['Brand'].apply(_clean_split)
 _df_brands_exploded = _df_brands.explode('_bl')
 _df_brands_exploded = _df_brands_exploded[_df_brands_exploded['_bl'].notna() & (_df_brands_exploded['_bl'] != '')]
 eng_by_brand  = _df_brands_exploded.groupby('_bl')['engagement_score'].sum().to_dict()
@@ -2177,7 +2547,7 @@ _df_topics = df.copy()
 _df_topics['engagement_score'] = pd.to_numeric(_df_topics['engagement_score'], errors='coerce').fillna(0)
 if 'view_count' not in _df_topics.columns: _df_topics['view_count'] = 0
 _df_topics['view_count'] = pd.to_numeric(_df_topics['view_count'], errors='coerce').fillna(0)
-_df_topics['_tl'] = _df_topics['Topics'].apply(_clean_split)
+_df_topics['_tl'] = _df_topics['Attribute'].apply(_clean_split)
 _df_topics_exploded = _df_topics.explode('_tl')
 _df_topics_exploded = _df_topics_exploded[_df_topics_exploded['_tl'].notna() & (_df_topics_exploded['_tl'] != '')]
 eng_by_topic  = _df_topics_exploded.groupby('_tl')['engagement_score'].sum().to_dict()
@@ -2199,45 +2569,63 @@ eng_by_campaign  = _df_campaigns_exploded.groupby('_cl')['engagement_score'].sum
 men_by_campaign  = _df_campaigns_exploded.groupby('_cl')['id'].nunique().to_dict()
 view_by_campaign = _df_campaigns_exploded.groupby('_cl')['view_count'].sum().to_dict()
 
-# --- Channel-axis explode ---
-_df_channels = df.copy()
-_df_channels['engagement_score'] = pd.to_numeric(_df_channels['engagement_score'], errors='coerce').fillna(0)
-if 'view_count' not in _df_channels.columns: _df_channels['view_count'] = 0
-_df_channels['view_count'] = pd.to_numeric(_df_channels['view_count'], errors='coerce').fillna(0)
-if 'Channel' in _df_channels.columns:
-    _df_channels['_chl'] = _df_channels['Channel'].apply(_clean_split)
-else:
-    _df_channels['_chl'] = [['(no channel)']] * len(_df_channels)
-_df_channels_exploded = _df_channels.explode('_chl')
-_df_channels_exploded = _df_channels_exploded[_df_channels_exploded['_chl'].notna() & (_df_channels_exploded['_chl'] != '')]
-eng_by_channel  = _df_channels_exploded.groupby('_chl')['engagement_score'].sum().to_dict()
-men_by_channel  = _df_channels_exploded.groupby('_chl')['id'].nunique().to_dict()
-view_by_channel = _df_channels_exploded.groupby('_chl')['view_count'].sum().to_dict()
-
-# --- Area-axis explode ---
-_df_areas = df.copy()
-_df_areas['engagement_score'] = pd.to_numeric(_df_areas['engagement_score'], errors='coerce').fillna(0)
-if 'view_count' not in _df_areas.columns: _df_areas['view_count'] = 0
-_df_areas['view_count'] = pd.to_numeric(_df_areas['view_count'], errors='coerce').fillna(0)
-if 'Area' in _df_areas.columns:
-    _df_areas['_arl'] = _df_areas['Area'].apply(_clean_split)
-else:
-    _df_areas['_arl'] = [['(no area)']] * len(_df_areas)
-_df_areas_exploded = _df_areas.explode('_arl')
-_df_areas_exploded = _df_areas_exploded[_df_areas_exploded['_arl'].notna() & (_df_areas_exploded['_arl'] != '')]
-eng_by_area  = _df_areas_exploded.groupby('_arl')['engagement_score'].sum().to_dict()
-men_by_area  = _df_areas_exploded.groupby('_arl')['id'].nunique().to_dict()
-view_by_area = _df_areas_exploded.groupby('_arl')['view_count'].sum().to_dict()
-
 # --- Source metrics (source is not exploded, one value per row) ---
 view_by_source = df.groupby('source')['view_count'].sum().to_dict() if 'source' in df.columns and 'view_count' in df.columns else {}
 eng_by_source  = df.groupby('source')['engagement_score'].sum().to_dict() if 'source' in df.columns else {}
 men_by_source  = df.groupby('source')['id'].nunique().to_dict() if 'source' in df.columns else {}
 
+# --- Channel-axis explode (branch / call center / courier / digital service / seller / others) ---
+if 'Channel' in df.columns:
+    _df_channels = df.copy()
+    _df_channels['engagement_score'] = pd.to_numeric(_df_channels['engagement_score'], errors='coerce').fillna(0)
+    if 'view_count' not in _df_channels.columns: _df_channels['view_count'] = 0
+    _df_channels['view_count'] = pd.to_numeric(_df_channels['view_count'], errors='coerce').fillna(0)
+    _df_channels['_chl'] = _df_channels['Channel'].apply(_clean_split)
+    _df_channels_exploded = _df_channels.explode('_chl')
+    _df_channels_exploded = _df_channels_exploded[_df_channels_exploded['_chl'].notna() & (_df_channels_exploded['_chl'] != '')]
+    eng_by_channel  = _df_channels_exploded.groupby('_chl')['engagement_score'].sum().to_dict()
+    men_by_channel  = _df_channels_exploded.groupby('_chl')['id'].nunique().to_dict()
+    view_by_channel = _df_channels_exploded.groupby('_chl')['view_count'].sum().to_dict()
+else:
+    eng_by_channel, men_by_channel, view_by_channel = {}, {}, {}
+
+# --- Area-axis explode (central / east / isan / north / south / west / others) ---
+if 'Area' in df.columns:
+    _df_areas = df.copy()
+    _df_areas['engagement_score'] = pd.to_numeric(_df_areas['engagement_score'], errors='coerce').fillna(0)
+    if 'view_count' not in _df_areas.columns: _df_areas['view_count'] = 0
+    _df_areas['view_count'] = pd.to_numeric(_df_areas['view_count'], errors='coerce').fillna(0)
+    _df_areas['_arl'] = _df_areas['Area'].apply(_clean_split)
+    _df_areas_exploded = _df_areas.explode('_arl')
+    _df_areas_exploded = _df_areas_exploded[_df_areas_exploded['_arl'].notna() & (_df_areas_exploded['_arl'] != '')]
+    eng_by_area  = _df_areas_exploded.groupby('_arl')['engagement_score'].sum().to_dict()
+    men_by_area  = _df_areas_exploded.groupby('_arl')['id'].nunique().to_dict()
+    view_by_area = _df_areas_exploded.groupby('_arl')['view_count'].sum().to_dict()
+else:
+    eng_by_area, men_by_area, view_by_area = {}, {}, {}
+
+# --- Crisis flag (keyword tags; 'others' means no crisis keyword matched) ---
+if 'crisis' in df.columns:
+    _df_crisis = df.copy()
+    _df_crisis['engagement_score'] = pd.to_numeric(_df_crisis['engagement_score'], errors='coerce').fillna(0)
+    _df_crisis['_crl'] = _df_crisis['crisis'].apply(_clean_split)
+    _df_crisis_exploded = _df_crisis.explode('_crl')
+    _df_crisis_exploded = _df_crisis_exploded[_df_crisis_exploded['_crl'].notna() & (_df_crisis_exploded['_crl'] != '') & (_df_crisis_exploded['_crl'].str.lower() != 'others')]
+    eng_by_crisis = _df_crisis_exploded.groupby('_crl')['engagement_score'].sum().to_dict()
+    men_by_crisis = _df_crisis_exploded.groupby('_crl')['id'].nunique().to_dict()
+    total_crisis_mentions = int(_df_crisis_exploded['id'].nunique())
+    crisis_summary = [
+        {'keyword': k, 'mention': int(men_by_crisis.get(k, 0)), 'engagement': float(eng_by_crisis.get(k, 0))}
+        for k in sorted(men_by_crisis, key=lambda k: men_by_crisis[k], reverse=True)
+    ]
+else:
+    total_crisis_mentions = 0
+    crisis_summary = []
+
 # ── Brand × Topic sentiment (for stacked sentiment chart) ─────────────────────
-_desired_topics = ['tracking', 'timeliness', 'general', 'staff service', 'pricing', 'branding', 'product quality', 'event/activity', 'cod', 'availability', 'claim', 'promotion', 'others']
+_desired_topics = ['availability', 'branding', 'claim', 'cod', 'event/activity', 'general', 'pricing', 'product quality', 'promotion', 'staff service', 'timeliness', 'tracking', 'others']
 _brand_topic_sent = {}
-_bt_sent = filtered_mfg_exploded_final.groupby(['Brands','Topics','sentiment'])['id'].nunique()
+_bt_sent = filtered_mfg_exploded_final.groupby(['Brand','Attribute','sentiment'])['id'].nunique()
 for (b,t,s), v in _bt_sent.items():
     if b not in _brand_topic_sent: _brand_topic_sent[b] = {}
     if t not in _brand_topic_sent[b]: _brand_topic_sent[b][t] = {'positive':0,'neutral':0,'negative':0}
@@ -2250,7 +2638,7 @@ for b in _brand_topic_sent:
 
 # ── All-brand aggregated topic sentiment ──────────────────────────────────────
 _all_topic_sent = {}
-_at_sent = filtered_mfg_exploded_final.groupby(['Topics','sentiment'])['id'].nunique()
+_at_sent = filtered_mfg_exploded_final.groupby(['Attribute','sentiment'])['id'].nunique()
 for (t,s), v in _at_sent.items():
     if t not in _all_topic_sent: _all_topic_sent[t] = {'positive':0,'neutral':0,'negative':0}
     _all_topic_sent[t][s] = int(v)
@@ -2282,28 +2670,46 @@ _js_payload = json.dumps({
         'engagement': {'brand': {k:float(v) for k,v in eng_by_brand.items()},
                        'topic': {k:float(v) for k,v in eng_by_topic.items()},
                        'campaign': {k:float(v) for k,v in eng_by_campaign.items()},
-                       'channel': {k:float(v) for k,v in eng_by_channel.items()},
-                       'area': {k:float(v) for k,v in eng_by_area.items()},
-                       'source':{k:float(v) for k,v in eng_by_source.items()}},
+                       'source':{k:float(v) for k,v in eng_by_source.items()},
+                       'channel':{k:float(v) for k,v in eng_by_channel.items()},
+                       'area':{k:float(v) for k,v in eng_by_area.items()}},
         'mention':    {'brand': {k:int(v)   for k,v in men_by_brand.items()},
                        'topic': {k:int(v)   for k,v in men_by_topic.items()},
                        'campaign': {k:int(v) for k,v in men_by_campaign.items()},
-                       'channel': {k:int(v) for k,v in men_by_channel.items()},
-                       'area': {k:int(v) for k,v in men_by_area.items()},
-                       'source':{k:int(v)   for k,v in men_by_source.items()}},
+                       'source':{k:int(v)   for k,v in men_by_source.items()},
+                       'channel':{k:int(v)  for k,v in men_by_channel.items()},
+                       'area':{k:int(v)     for k,v in men_by_area.items()}},
         'view':       {'brand': {k:float(v) for k,v in view_by_brand.items()},
                        'topic': {k:float(v) for k,v in view_by_topic.items()},
                        'campaign': {k:float(v) for k,v in view_by_campaign.items()},
-                       'channel': {k:float(v) for k,v in view_by_channel.items()},
-                       'area': {k:float(v) for k,v in view_by_area.items()},
-                       'source':{k:float(v) for k,v in view_by_source.items()}},
+                       'source':{k:float(v) for k,v in view_by_source.items()},
+                       'channel':{k:float(v) for k,v in view_by_channel.items()},
+                       'area':{k:float(v) for k,v in view_by_area.items()}},
     },
     'brandTopicSent': _brand_topic_sent,   # {brand: {topic: {pos,neu,neg}}}
     'allTopicSent':   _all_topic_sent,     # {topic: {pos,neu,neg}}
-    'brandChannelEng': _brand_channel_eng, # {brand: {rawSource: eng}}
+    'brandChannelEng': _brand_channel_eng, # {brand: {rawSource: eng}}  -- NOTE: keyed by 'source' (social platform), unrelated to the new 'Channel' field
     'brandChannelMen': _brand_channel_men, # {brand: {rawSource: men}}
     'brandChannelView': _brand_channel_view, # {brand: {rawSource: view}}
+    'crisisSummary':  crisis_summary,      # [{keyword, mention, engagement}, ...] excludes 'others'
+    'totalCrisisMentions': total_crisis_mentions,
 })
+
+# ── Google Reviews: export directly from pandas (avoids JS parseCSV
+#    dropping rows that contain embedded newlines in the text field) ──────────
+_gr_mask = df['source'].astype(str).str.lower().str.contains('googlereviews', na=False) if 'source' in df.columns else pd.Series([False]*len(df))
+_gr_df = df[_gr_mask].copy()
+# Only keep columns the GR panel actually uses — avoids serialising unused wide columns
+_gr_keep = [c for c in ['id','source','text','sentiment','created_at','date','engagement_score',
+                         'view_count','comment_count','like_count','share_count','retweet_count','reply_count',
+                         'Brand','Attribute','Campaign','campaign','Channel','Area','crisis','Detail','detail','Category','category',
+                         'link','Link','url','URL','post_url','post_link','permalink','source_url',
+                         'title','Title','page','Page',
+                         'branch','Branch','location','Location'] if c in _gr_df.columns]
+_gr_df = _gr_df[_gr_keep] if _gr_keep else _gr_df
+# Serialise NaN as None → null in JSON so JS doesn't see "nan" strings
+_gr_df = _gr_df.where(_gr_df.notna(), other=None)
+_gr_rows_payload = _gr_df.to_json(orient='records', force_ascii=False)
 
 # ── All rows payload is built lazily (on AI tab open) to avoid MemoryError
 #    on large datasets. Set a sentinel so JS knows to fetch it on demand. ──────
@@ -2345,6 +2751,10 @@ _all_rows_payload = '__LAZY__'
     },
     csvBlob:          null,
   };
+
+  // Pull Google Review rows parsed by pandas (preserves rows with embedded newlines)
+  const _grRaw = pyodide.globals.get('_gr_rows_payload');
+  grRawData = JSON.parse(typeof _grRaw === 'string' ? _grRaw : _grRaw.toString());
 
   // allRawData is loaded lazily on first AI/BDD access to avoid MemoryError on large datasets
   allRawData = [];
@@ -3363,14 +3773,14 @@ function copyOvTable(tableId, btnId) {
 function updateSidebarStats() {
   document.getElementById('statRows').textContent=rawData.length.toLocaleString();
   const brands=new Set();
-  rawData.forEach(r=>(r.Brands||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
+  rawData.forEach(r=>(r.Brand||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
   document.getElementById('statBrands').textContent=brands.size;
 }
 
 // ── BRAND FILTER ──────────────────────────────────────────────────────────────
 function buildBrandFilter() {
   const brands=new Set();
-  rawData.forEach(r=>(r.Brands||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
+  rawData.forEach(r=>(r.Brand||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
   const c=document.getElementById('brandFilter'); c.innerHTML='';
   const allP=document.createElement('span');
   allP.className='brand-pill active'; allP.textContent='All'; allP.dataset.brand='__all__';
@@ -3398,11 +3808,11 @@ function applyFilters() {
   const search=(document.getElementById('tableSearch')?.value||'').toLowerCase().trim();
   filteredData=rawData.filter(row=>{
     if(activeBrands.size>0){
-      const b=(row.Brands||'').toLowerCase();
+      const b=(row.Brand||'').toLowerCase();
       if(![...activeBrands].some(ab=>b.includes(ab.toLowerCase()))) return false;
     }
     if(search){
-      const hay=[row.text,row.Brands,row.source,row.Topics,row.sentiment].join(' ').toLowerCase();
+      const hay=[row.text,row.Brand,row.source,row.Attribute,row.sentiment].join(' ').toLowerCase();
       if(!hay.includes(search)) return false;
     }
     return true;
@@ -3920,20 +4330,1085 @@ document.getElementById('tableExportFilteredBtn')?.addEventListener('click', () 
   showToast(`Exported ${data.length.toLocaleString()} rows as CSV`, 'success');
 });
 
-// ── HTML ESCAPE / SAFE FIELD GETTER (generic helpers used across tabs) ─────────
-function escapeHtml(str) {
-  return String(str == null ? '' : str)
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+// ── GOOGLE REVIEW MODULE ─────────────────────────────────────────────────────
+let grData = [];               // all google review rows (unfiltered by brand)
+let grActiveBrand = null;      // shared brand filter — null = all brands (Dashboard + AI in sync)
+let grCurrentPage = 1;
+const GR_PAGE_SIZE = 50;
+let grReviewFilter = 'all';    // all | positive | neutral | negative
+let grReviewLimit = 5;         // how many example reviews to show
+let grWcSentiment = 'all';     // word-cloud sentiment filter
+let grWcLang      = 'all';     // word-cloud language filter: 'all' | 'en' | 'th'
+
+// Returns grData filtered by the active brand selection (null = all)
+function _grFiltered() {
+  if (!grActiveBrand) return grData;
+  return grData.filter(row => {
+    let b = String(_grGet(row, 'Brands', 'brands', 'Brand', 'brand') || '').trim();
+    if (b.startsWith('[') && b.endsWith(']')) b = b.slice(1, -1);
+    return b.split(',').map(x => x.trim()).includes(grActiveBrand);
+  });
 }
+
+// Detect Google Review source column candidates
+function _grGetSource(row) {
+  return String(row.source || row.Source || row.channel || row.Channel || '').toLowerCase().trim();
+}
+function _grIsGoogle(row) {
+  const s = _grGetSource(row);
+  // Match any row whose source contains the exact substring "googlereviews"
+  return s.includes('googlereviews');
+}
+
+// Helpers to read a row safely (case-insensitive fallback for column names)
 function _grGet(row, ...keys) {
   for (const k of keys) {
     if (row[k] !== undefined && row[k] !== null && String(row[k]).trim() !== '') return row[k];
+    // Try case-insensitive match
     const match = Object.keys(row).find(x => x.toLowerCase() === k.toLowerCase());
     if (match && row[match] !== undefined && row[match] !== null && String(row[match]).trim() !== '') return row[match];
   }
   return '';
 }
+
+function updateGooglePanel() {
+  // Use grRawData which is parsed by pandas — correctly handles rows with
+  // embedded newlines in text that the JS parseCSV would have dropped
+  grData = grRawData.length ? grRawData : rawData.filter(_grIsGoogle);
+
+  if (!grData.length) {
+    document.getElementById('greviewEmpty').style.display = '';
+    document.getElementById('greviewContent').style.display = 'none';
+    return;
+  }
+
+  // Reset brand selection on fresh data load
+  grActiveBrand = null;
+
+  document.getElementById('greviewEmpty').style.display = 'none';
+  document.getElementById('greviewContent').style.display = '';
+
+  const _grMetaSpan = document.getElementById('grSubnavMetaText');
+  if (_grMetaSpan) _grMetaSpan.textContent = `${grData.length.toLocaleString()} Google Reviews loaded`;
+
+  // Show Analyse with AI button (only visible on dashboard subtab)
+  const _grABtn = document.getElementById('grAnalyseBtn');
+  if (_grABtn) _grABtn.style.display = '';
+
+  renderGrDashBrandPills();
+  renderGrDashboard();
+  renderGrRawTable();
+  _grAiInit();
+}
+
+// ── GR BRAND SELECTOR (shared Dashboard ↔ AI) ────────────────────────────────
+function renderGrDashBrandPills() {
+  const container = document.getElementById('grDashBrandPills');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // Collect unique brands from grData
+  const brandCount = {};
+  grData.forEach(row => {
+    let b = String(_grGet(row, 'Brands', 'brands', 'Brand', 'brand') || '').trim();
+    if (b.startsWith('[') && b.endsWith(']')) b = b.slice(1, -1);
+    b.split(',').map(x => x.trim()).filter(Boolean).forEach(x => {
+      brandCount[x] = (brandCount[x] || 0) + 1;
+    });
+  });
+  const brands = Object.keys(brandCount).sort((a, b) => brandCount[b] - brandCount[a]);
+
+  // Update active label
+  _grUpdateActiveBrandLabel();
+
+  // "All Brands" pill
+  const allPill = document.createElement('button');
+  allPill.className = 'brand-pill' + (grActiveBrand === null ? ' active' : '');
+  allPill.textContent = 'All Brands';
+  allPill.addEventListener('click', () => { grActiveBrand = null; _grSelectBrand(); });
+  container.appendChild(allPill);
+
+  // Per-brand pills
+  brands.forEach((brand, i) => {
+    const color = BDD_COLORS[i % BDD_COLORS.length];
+    const isActive = brand === grActiveBrand;
+    const pill = document.createElement('button');
+    pill.className = 'brand-pill' + (isActive ? ' active' : '');
+    if (isActive) { pill.style.background = color; pill.style.borderColor = color; }
+    else { pill.style.background = color+'22'; pill.style.borderColor = color+'55'; pill.style.color = color; }
+    pill.textContent = brand;
+    pill.addEventListener('click', () => { grActiveBrand = brand; _grSelectBrand(); });
+    pill.addEventListener('mouseenter', () => { if (brand !== grActiveBrand) { pill.style.background = color+'44'; pill.style.borderColor = color; } });
+    pill.addEventListener('mouseleave', () => { if (brand !== grActiveBrand) { pill.style.background = color+'22'; pill.style.borderColor = color+'55'; } });
+    container.appendChild(pill);
+  });
+}
+
+function _grUpdateActiveBrandLabel() {
+  const lbl = document.getElementById('grActiveBrandLabel');
+  if (lbl) lbl.textContent = grActiveBrand ? '— ' + grActiveBrand : '';
+  // Sync subnav meta
+  const _metaSpan = document.getElementById('grSubnavMetaText');
+  if (_metaSpan) {
+    const filtered = _grFiltered();
+    _metaSpan.textContent = grActiveBrand
+      ? `${filtered.length.toLocaleString()} reviews · ${grActiveBrand}`
+      : `${grData.length.toLocaleString()} Google Reviews loaded`;
+  }
+}
+
+function _grSelectBrand() {
+  // Sync grAiActiveBrand so AI panel stays linked
+  grAiActiveBrand = grActiveBrand;
+  // Re-render dashboard pills (to reflect new active state)
+  renderGrDashBrandPills();
+  _grUpdateActiveBrandLabel();
+  // Re-render all dashboard content with filtered data
+  grReviewFilter = 'all';
+  grReviewLimit = 5;
+  grWcSentiment = 'all';
+  document.querySelectorAll('.gr-rev-pill').forEach(b => b.classList.toggle('active', b.dataset.rev === 'all'));
+  document.querySelectorAll('input[name="grWcSent"]').forEach(r => { r.checked = r.value === 'all'; });
+  renderGrDashboard();
+  // Sync AI panel pills if it's open
+  if (document.getElementById('gr-panel-ai')?.classList.contains('active')) {
+    populateGrAiBrandPills();
+  } else {
+    // Update AI brand pills in background so they're ready
+    populateGrAiBrandPills();
+  }
+  _grAiUpdatePostCount();
+}
+
+// ── DASHBOARD ────────────────────────────────────────────────────────────────
+function renderGrDashboard() {
+  const pool = _grFiltered();   // respects active brand filter
+  // ── KPIs
+  const uniq = new Set(pool.map(r => r.id || r.ID || JSON.stringify(r))).size;
+  document.getElementById('grUniqueMentions').textContent = uniq.toLocaleString();
+
+  // Mentions/day based on days input
+  updateGrMentionsPerDay();
+
+  // Net Sentiment (pos - neg) / total * 100
+  const sentCounts = { positive:0, neutral:0, negative:0 };
+  pool.forEach(r => {
+    const s = String(r.sentiment || '').toLowerCase().trim();
+    if (sentCounts[s] !== undefined) sentCounts[s]++;
+  });
+  const sentTotal = sentCounts.positive + sentCounts.neutral + sentCounts.negative || 1;
+  const nss = ((sentCounts.positive - sentCounts.negative) / sentTotal * 100);
+  const nssEl = document.getElementById('grAvgRating');
+  nssEl.textContent = (nss >= 0 ? '+' : '') + nss.toFixed(0) + '%';
+  nssEl.style.color = nss >= 20 ? 'var(--pos)' : (nss <= -20 ? 'var(--neg)' : 'var(--neu)');
+
+  // Date range
+  const dates = pool
+    .map(r => new Date(_grGet(r, 'created_at', 'Created_At', 'date', 'Date')))
+    .filter(d => !isNaN(d.getTime()));
+  if (dates.length) {
+    const min = new Date(Math.min(...dates));
+    const max = new Date(Math.max(...dates));
+    const fmt = d => `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getFullYear()).slice(-2)}`;
+    document.getElementById('grDateRange').textContent = dates.length > 1 ? `${fmt(min)} – ${fmt(max)}` : fmt(min);
+    document.getElementById('grDateRange').style.fontSize = '15px';
+  } else {
+    document.getElementById('grDateRange').textContent = '—';
+  }
+
+  // ── Charts
+  renderGrDonut(sentCounts);
+  renderGrCategoryStack();
+  renderGrTop5Branches();
+  renderGrWordCloud();
+  renderGrExampleReviews();
+}
+
+function updateGrMentionsPerDay() {
+  const days = parseInt(document.getElementById('grDaysInput').value) || 30;
+  const total = _grFiltered().length;
+  const perDay = total / days;
+  document.getElementById('grMentionsPerDay').textContent =
+    perDay >= 10 ? perDay.toFixed(0) : perDay.toFixed(1);
+}
+
+document.getElementById('grDaysInput').addEventListener('input', updateGrMentionsPerDay);
+
+// ── SENTIMENT DONUT ──────────────────────────────────────────────────────────
+function renderGrDonut(counts) {
+  const el = document.getElementById('grSentimentDonut');
+  el.innerHTML = '';
+
+  const total = counts.positive + counts.neutral + counts.negative || 1;
+  const segs = [
+    { key:'positive', label:'Positive', val:counts.positive, color:'#1DC997' },
+    { key:'neutral',  label:'Neutral',  val:counts.neutral,  color:'#FFC145' },
+    { key:'negative', label:'Negative', val:counts.negative, color:'#FF5050' },
+  ];
+
+  // ── Canvas sizing — large enough to fit leader lines + labels on all sides ──
+  const STROKE = 52, R = 95;
+  const PAD = 110;                          // generous padding for labels
+  const SIZE = (R + STROKE / 2) * 2 + PAD * 2;
+  const cx = SIZE / 2, cy = SIZE / 2;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = SIZE; canvas.height = SIZE;
+  canvas.style.cssText = 'display:block;margin:0 auto;max-width:100%';
+
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:relative;width:' + SIZE + 'px;max-width:100%;margin:0 auto';
+  wrap.appendChild(canvas);
+  el.appendChild(wrap);
+
+  // ── Horizontal legend ──
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;justify-content:center;gap:28px;margin-top:10px;flex-wrap:wrap';
+  segs.forEach(s => {
+    const item = document.createElement('div');
+    item.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:4px';
+    item.innerHTML = `
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="width:11px;height:11px;border-radius:50%;background:${s.color};flex-shrink:0;display:inline-block"></span>
+        <span style="font-size:12px;font-weight:600;color:#4B5168">${s.label}</span>
+      </div>
+      <span style="font-family:'DM Mono',monospace;font-size:14px;font-weight:700;color:#1A1D2E">${s.val.toLocaleString()}</span>`;
+    legend.appendChild(item);
+  });
+  el.appendChild(legend);
+
+  // ── Draw ──
+  requestAnimationFrame(() => {
+    const ctx = canvas.getContext('2d');
+    const GAP = 0.022;
+
+    // Pre-compute angles
+    let angle = -Math.PI / 2;
+    const segAngles = segs.map(s => {
+      const sweep = (s.val / total) * Math.PI * 2;
+      const start = angle;
+      angle += sweep;
+      return { ...s, start, sweep, end: angle };
+    });
+
+    // Draw ring segments
+    segAngles.forEach(s => {
+      if (!s.val) return;
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, s.start + GAP / 2, s.end - GAP / 2);
+      ctx.strokeStyle = s.color;
+      ctx.lineWidth = STROKE;
+      ctx.lineCap = 'butt';
+      ctx.stroke();
+    });
+
+    // Leader line distances (all relative to cx/cy)
+    const RING_OUTER  = R + STROKE / 2;      // outer edge of ring
+    const LINE_START  = RING_OUTER + 6;      // start of leader line
+    const LINE_RADIAL = RING_OUTER + 24;     // end of radial part
+    const TICK_LEN    = 18;                  // horizontal tick length
+    const LABEL_GAP   = 5;                   // gap between tick end and text
+
+    ctx.textBaseline = 'middle';
+
+    segAngles.forEach(s => {
+      const pct = s.val / total * 100;
+      if (pct < 0.5) return;
+
+      const mid = s.start + s.sweep / 2;
+      const cos = Math.cos(mid);
+      const sin = Math.sin(mid);
+
+      // Radial line: ring outer → elbow
+      const x1 = cx + cos * LINE_START;
+      const y1 = cy + sin * LINE_START;
+      const x2 = cx + cos * LINE_RADIAL;
+      const y2 = cy + sin * LINE_RADIAL;
+
+      // Horizontal tick
+      const dir  = cos >= 0 ? 1 : -1;
+      const x3   = x2 + dir * TICK_LEN;
+      const y3   = y2;
+
+      // Draw line
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.lineTo(x3, y3);
+      ctx.strokeStyle = s.color;
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      // Text anchor
+      const labelX = x3 + dir * LABEL_GAP;
+      ctx.textAlign = dir >= 0 ? 'left' : 'right';
+
+      // Label name
+      ctx.fillStyle = '#4B5168';
+      ctx.font = '500 14px "DM Sans", sans-serif';
+      ctx.fillText(s.label, labelX, y3 - 11);
+
+      // Percentage
+      ctx.fillStyle = s.color;
+      ctx.font = '700 16px "DM Sans", sans-serif';
+      ctx.fillText(pct.toFixed(2) + '%', labelX, y3 + 10);
+    });
+  });
+}
+
+// ── CATEGORY STACKED BAR (from "Detail" column) ─────────────────────────────
+function renderGrCategoryStack() {
+  const el = document.getElementById('grCategoryStack');
+  el.innerHTML = '';
+
+  // Group by Detail × sentiment (exploded on Detail comma-split & bracket-stripped)
+  const cats = {}; // { categoryName: { positive, neutral, negative, total } }
+  _grFiltered().forEach(r => {
+    let detail = _grGet(r, 'Detail', 'detail', 'Category', 'category');
+    if (!detail) return;
+    let s = String(detail).trim();
+    if (s.startsWith('[') && s.endsWith(']')) s = s.slice(1,-1);
+    const parts = s.split(',').map(x => x.trim()).filter(Boolean);
+    const sent = String(r.sentiment || '').toLowerCase().trim();
+    parts.forEach(cat => {
+      if (!cats[cat]) cats[cat] = { positive:0, neutral:0, negative:0, total:0 };
+      if (cats[cat][sent] !== undefined) {
+        cats[cat][sent]++;
+        cats[cat].total++;
+      }
+    });
+  });
+
+  const catList = Object.entries(cats)
+    .map(([name, c]) => ({ name, ...c }))
+    .sort((a, b) => {
+      const aOther = /^others?$/i.test(a.name.trim());
+      const bOther = /^others?$/i.test(b.name.trim());
+      if (aOther && !bOther) return 1;
+      if (!aOther && bOther) return -1;
+      return b.total - a.total;
+    });
+
+  if (!catList.length) {
+    el.innerHTML = '<div class="gr-chart-empty">No "Detail" column data found in Google Reviews</div>';
+    return;
+  }
+
+  // Legend
+  const leg = document.createElement('div');
+  leg.className = 'sent-legend';
+  leg.style.marginBottom = '14px';
+  ['positive','neutral','negative'].forEach(s => {
+    const i = document.createElement('div');
+    i.className = 'sent-leg-item';
+    i.innerHTML = `<span class="sent-leg-dot" style="background:${SENT_COLORS[s]}"></span>${s}`;
+    leg.appendChild(i);
+  });
+  el.appendChild(leg);
+
+  catList.forEach(c => {
+    const tot = c.total || 1;
+    const pp = (c.positive / tot * 100);
+    const np = (c.neutral  / tot * 100);
+    const negp = (c.negative / tot * 100);
+
+    const row = document.createElement('div');
+    row.className = 'gr-cat-row';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'gr-cat-lbl';
+    lbl.textContent = c.name;
+    lbl.title = c.name;
+
+    const track = document.createElement('div');
+    track.className = 'gr-cat-track';
+
+    [['positive',c.positive,pp],['neutral',c.neutral,np],['negative',c.negative,negp]].forEach(([s,v,pct]) => {
+      const seg = document.createElement('div');
+      seg.className = 'gr-cat-seg';
+      seg.style.background = SENT_COLORS[s];
+      seg.style.width = '0%';
+      seg.dataset.pct = pct.toFixed(1);
+      seg.title = `${s}: ${v.toLocaleString()} (${pct.toFixed(1)}%)`;
+      if (pct >= 6) {
+        const pctEl = document.createElement('span');
+        pctEl.className = 'gr-cat-seg-count';
+        pctEl.textContent = pct.toFixed(1) + '%';
+        seg.appendChild(pctEl);
+      }
+      track.appendChild(seg);
+      requestAnimationFrame(() => { seg.style.width = pct + '%'; });
+    });
+
+    const tot2 = document.createElement('div');
+    tot2.className = 'gr-cat-total';
+    tot2.textContent = c.total.toLocaleString();
+
+    row.appendChild(lbl); row.appendChild(track); row.appendChild(tot2);
+    el.appendChild(row);
+  });
+}
+
+// ── WORD CLOUD ──────────────────────────────────────────────────────────────
+const GR_STOPWORDS = new Set([
+  // English
+  'the','a','an','and','or','but','of','in','on','at','to','for','with','by','from','as','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','must','can','this','that','these','those','i','you','he','she','it','we','they','my','your','his','her','its','our','their','me','him','them','us','what','which','who','when','where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not','only','own','same','so','than','too','very','just','up','out','if','about','into','through','during','before','after','above','below','over','under','again','further','then','once','very','really','quite','there','here','also','because','been','being','went','go','got','get','got','would','one','two','three','new','back','good','like','much','many','big','small','think','say','said','know','time','way','use','even','much','well','make','made','see','saw','want','need','came','come','find','take','took','put','want','day','days','year','years','thing','things','people','person','work','day','mr','ms','mrs','etc',
+  // Thai common
+  'ครับ','ค่ะ','คะ','นะ','และ','ของ','ที่','ไม่','มาก','ก็','จะ','แต่','เป็น','ให้','ได้','กับ','มี','ใน','ไป','มา','ว่า','ไว้','ต้อง','คน','นี้','นั้น','ถ้า','จาก','เรา','เขา','เธอ','ผม','ฉัน','โดย','ด้วย','อยู่','อยาก','ยัง','แล้ว','เลย','อีก','ทำ','ใช้','เอา','ดู','อะไร','ทำไม','อย่าง','ที่สุด','เพราะ','หรือ','สำหรับ','ต่อ','ไหม','เท่านั้น','เดียว','ประมาณ','ช่วย','คิด','รู้','พูด','ชอบ','หน่อย','มัน','ทั้ง','จริง','เพื่อ','ตอน','วัน','เมื่อ','ทุก','กว่า','ซึ่ง','เช่น','คือ','ตาม','อย่างไร','ฯลฯ','ๆ','ต่างๆ','หลาย','บาง','เรื่อง','เวลา','ทาง','พร้อม','อีกทั้ง','โอ','เฮ้','ว้าว','สาขา'
+]);
+
+function _grTokenise(text) {
+  if (!text) return [];
+  const s = String(text).toLowerCase();
+  const tokens = s.split(/[\s,.\-!?;:"'()\[\]{}\/\\|<>@#$%^&*+=~`\n\t\r0-9]+/u)
+    .map(t => t.trim())
+    .filter(t => t.length >= 2 && !GR_STOPWORDS.has(t) && !/^\d+$/.test(t));
+  return tokens;
+}
+
+// Detect if a token is Thai (contains at least one Thai Unicode char)
+function _isThai(token) { return /[\u0E00-\u0E7F]/.test(token); }
+function _isEnglish(token) { return /^[a-z]+$/.test(token); }
+
+function renderGrWordCloud() {
+  const el = document.getElementById('grWordCloud');
+  el.innerHTML = '';
+
+  const base = _grFiltered();
+  let pool = base;
+  if (grWcSentiment !== 'all') {
+    pool = base.filter(r => String(r.sentiment || '').toLowerCase() === grWcSentiment);
+  }
+
+  const freq = {};
+  pool.forEach(r => {
+    const text = _grGet(r, 'text', 'Text', 'review', 'Review', 'content', 'Content');
+    _grTokenise(text).forEach(t => {
+      // Language filter
+      if (grWcLang === 'en' && !_isEnglish(t)) return;
+      if (grWcLang === 'th' && !_isThai(t)) return;
+      freq[t] = (freq[t] || 0) + 1;
+    });
+  });
+
+  const top = Object.entries(freq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 80);
+
+  if (!top.length) {
+    el.innerHTML = '<div class="gr-wc-empty" style="padding:40px 0;text-align:center">No text data available for word cloud</div>';
+    return;
+  }
+
+  // ── Canvas-based word cloud ──
+  const W = 680, H = 320;
+  const canvas = document.createElement('canvas');
+  canvas.width  = W;
+  canvas.height = H;
+  canvas.style.cssText = 'display:block;width:100%;max-width:' + W + 'px;border-radius:10px;background:#fff;margin:0 auto';
+  el.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+
+  // Soft multi-color palette matching reference image style
+  const PALETTE = [
+    '#2563EB','#1DC997','#8B5CF6','#F59E0B','#EF4444',
+    '#0EA5E9','#EC4899','#10B981','#F97316','#6366F1',
+    '#14B8A6','#A855F7','#3B82F6','#84CC16',
+  ];
+
+  const maxC = top[0][1];
+  const minC = top[top.length - 1][1];
+  const range = Math.max(maxC - minC, 1);
+
+  // Collision grid (pixel-based bitmask using occupied rectangles)
+  const placed = []; // [{x,y,w,h}]
+  function overlaps(nx, ny, nw, nh) {
+    for (const r of placed) {
+      if (nx < r.x + r.w + 4 && nx + nw + 4 > r.x &&
+          ny < r.y + r.h + 4 && ny + nh + 4 > r.y) return true;
+    }
+    return false;
+  }
+
+  // Spiral placement from centre
+  function tryPlace(word, fontSize, color) {
+    ctx.font = `700 ${fontSize}px "Bricolage Grotesque", "DM Sans", sans-serif`;
+    const tw = ctx.measureText(word).width;
+    const th = fontSize * 1.1;
+
+    const cx = W / 2, cy = H / 2;
+    const step = 3, maxR = Math.max(W, H);
+
+    for (let r = 0; r < maxR; r += step) {
+      const turns = r === 0 ? 1 : Math.max(8, Math.round(2 * Math.PI * r / step));
+      for (let i = 0; i < turns; i++) {
+        const angle = (2 * Math.PI * i) / turns;
+        // slight random jitter to avoid perfect rings
+        const rx = cx + r * Math.cos(angle) * (0.9 + Math.random() * 0.2) - tw / 2;
+        const ry = cy + r * Math.sin(angle) * (0.55 + Math.random() * 0.1) - th / 2;
+
+        if (rx < 6 || ry < 6 || rx + tw > W - 6 || ry + th > H - 6) continue;
+        if (overlaps(rx, ry, tw, th)) continue;
+
+        // Place it
+        placed.push({ x: rx, y: ry, w: tw, h: th });
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.82 + (fontSize / (14 + 44)) * 0.18;
+        ctx.fillText(word, rx, ry + fontSize * 0.88);
+        ctx.globalAlpha = 1;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  top.forEach(([word, cnt], idx) => {
+    const ratio    = (cnt - minC) / range;
+    const fontSize = Math.round(11 + ratio * 28);  // 11px → 39px
+    const color    = PALETTE[idx % PALETTE.length];
+    tryPlace(word, fontSize, color);
+  });
+}
+
+// Word cloud sentiment filter
+document.querySelectorAll('input[name="grWcSent"]').forEach(r => {
+  r.addEventListener('change', e => {
+    grWcSentiment = e.target.value;
+    renderGrWordCloud();
+  });
+});
+
+// Word cloud language filter
+document.querySelectorAll('input[name="grWcLang"]').forEach(r => {
+  r.addEventListener('change', e => {
+    grWcLang = e.target.value;
+    renderGrWordCloud();
+  });
+});
+
+// ── EXAMPLE REVIEWS ─────────────────────────────────────────────────────────
+function renderGrExampleReviews() {
+  const el = document.getElementById('grExampleReviews');
+  el.innerHTML = '';
+
+  const base = _grFiltered();
+  let pool = base;
+  if (grReviewFilter !== 'all') {
+    pool = base.filter(r => String(r.sentiment || '').toLowerCase() === grReviewFilter);
+  }
+
+  // Sort by engagement score desc if available, else by date desc, else original
+  pool = pool.slice().sort((a, b) => {
+    const ea = parseFloat(a.engagement_score) || 0;
+    const eb = parseFloat(b.engagement_score) || 0;
+    if (eb !== ea) return eb - ea;
+    const da = new Date(_grGet(a, 'created_at', 'date')).getTime() || 0;
+    const db = new Date(_grGet(b, 'created_at', 'date')).getTime() || 0;
+    return db - da;
+  });
+
+  const slice = pool.slice(0, grReviewLimit);
+
+  if (!slice.length) {
+    el.innerHTML = '<div class="gr-chart-empty">No reviews match this filter</div>';
+    document.getElementById('grLoadMoreBtn').style.display = 'none';
+    return;
+  }
+
+  slice.forEach(r => {
+    const brand = _grGet(r, 'Brands', 'brand', 'Brand') || 'Unknown Brand';
+    const brandClean = String(brand).replace(/^\[|\]$/g, '').trim();
+    const location = String(_grGet(r, 'title', 'Title', 'location', 'Location') || '').trim();
+    const locationClean = (location && location !== 'null') ? location : '';
+    const text  = _grGet(r, 'text', 'Text', 'review', 'Review');
+    const sent  = String(r.sentiment || '').toLowerCase();
+    const date  = _grGet(r, 'created_at', 'date', 'Date');
+    const link  = _grGet(r, 'link', 'Link', 'url', 'URL', 'post_url', 'permalink');
+    const author = _grGet(r, 'author', 'Author', 'username', 'user_name', 'user') || brandClean;
+    const initial = (author || 'U').toString().charAt(0).toUpperCase();
+
+    const dateFmt = date ? new Date(date).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : '';
+
+    const item = document.createElement('div');
+    item.className = 'gr-review-item';
+
+    const linkHtml = link
+      ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="gr-review-link">🔗 View on Google</a>`
+      : '<span class="gr-review-no-link">no link</span>';
+
+    item.innerHTML = `
+      <div class="gr-review-avatar">${initial}</div>
+      <div class="gr-review-body">
+        <div class="gr-review-head">
+          ${locationClean ? `<span class="gr-review-location">📍 ${escapeHtml(locationClean)}</span>` : `<span class="gr-review-brand">${escapeHtml(brandClean)}</span>`}
+          ${dateFmt ? `<span class="gr-review-date">· ${escapeHtml(dateFmt)}</span>` : ''}
+        </div>
+        <div class="gr-review-text">${escapeHtml(text || '(no text)')}</div>
+        <div class="gr-review-foot">
+          ${sent ? `<span class="gr-review-sent ${sent}">${sent}</span>` : ''}
+          ${linkHtml}
+        </div>
+      </div>`;
+    el.appendChild(item);
+  });
+
+  // Show "load more" if there are more than current limit
+  const loadBtn = document.getElementById('grLoadMoreBtn');
+  if (pool.length > grReviewLimit) {
+    loadBtn.style.display = '';
+    loadBtn.textContent = `Load more reviews (${(pool.length - grReviewLimit).toLocaleString()} remaining)`;
+  } else {
+    loadBtn.style.display = 'none';
+  }
+}
+
+// ── TOP 5 BRANCH / LOCATION TABLE ───────────────────────────────────────────
+let grTop5Filter = 'all'; // all | positive | neutral | negative
+
+function renderGrTop5Branches() {
+  const tbody = document.getElementById('grTop5Body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  // Aggregate by branch name — look for title/Title first (Google Maps page name),
+  // then location/Location, then branch/Branch. Never fall back to Brands.
+  const branches = {};
+  _grFiltered().forEach(r => {
+    const branch = String(_grGet(r, 'title', 'Title', 'page', 'Page', 'location', 'Location', 'branch', 'Branch') || '').trim();
+    if (!branch || branch === 'null') return;
+    const sent = String(r.sentiment || '').toLowerCase().trim();
+    if (!branches[branch]) branches[branch] = { positive: 0, neutral: 0, negative: 0 };
+    if (branches[branch][sent] !== undefined) branches[branch][sent]++;
+  });
+
+  if (!Object.keys(branches).length) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:24px;color:var(--text3);font-style:italic">No branch/location data found — needs a "title", "Location", "branch", or "page" column</td></tr>`;
+    return;
+  }
+
+  // Build sortable list
+  let list = Object.entries(branches).map(([name, c]) => {
+    const total = c.positive + c.neutral + c.negative;
+    const net = total ? ((c.positive - c.negative) / total * 100) : 0;
+    return { name, ...c, total, net };
+  });
+
+  // Sort: if filter is a sentiment, rank by that count desc; else by total mentions desc
+  if (grTop5Filter === 'all') {
+    list.sort((a, b) => b.total - a.total);
+  } else {
+    list.sort((a, b) => b[grTop5Filter] - a[grTop5Filter]);
+  }
+
+  // Top 5
+  const top5 = list.slice(0, 5);
+
+  top5.forEach((row, idx) => {
+    const netClass = row.net > 0 ? 'pos' : (row.net < 0 ? 'neg' : 'neu');
+    const netStr   = (row.net >= 0 ? '+' : '') + row.net.toFixed(0) + '%';
+
+    // Highlight the sorted column
+    const posStyle = grTop5Filter === 'positive' ? `font-weight:700;color:var(--pos)` : `color:var(--pos)`;
+    const neuStyle = grTop5Filter === 'neutral'  ? `font-weight:700;color:var(--neu)` : `color:var(--neu)`;
+    const negStyle = grTop5Filter === 'negative' ? `font-weight:700;color:var(--neg)` : `color:var(--neg)`;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="branch-name" title="${escapeHtml(row.name)}">${escapeHtml(row.name)}</td>
+      <td class="num" style="font-weight:700;color:var(--text)">${row.total.toLocaleString()}</td>
+      <td class="num" style="${posStyle}">${row.positive.toLocaleString()}</td>
+      <td class="num" style="${neuStyle}">${row.neutral.toLocaleString()}</td>
+      <td class="num" style="${negStyle}">${row.negative.toLocaleString()}</td>
+      <td class="num"><span class="gr-top5-netsent ${netClass}">${netStr}</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// Filter pill event listeners
+document.querySelectorAll('.gr-top5-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.gr-top5-pill').forEach(b => {
+      b.classList.remove('active-all','active-pos','active-neu','active-neg');
+    });
+    grTop5Filter = btn.dataset.top5;
+    const activeClass = grTop5Filter === 'all' ? 'active-all'
+      : grTop5Filter === 'positive' ? 'active-pos'
+      : grTop5Filter === 'neutral'  ? 'active-neu'
+      : 'active-neg';
+    btn.classList.add(activeClass);
+    renderGrTop5Branches();
+  });
+});
+
+
+
+// Review filter pills
+document.querySelectorAll('.gr-rev-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.gr-rev-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    grReviewFilter = btn.dataset.rev;
+    grReviewLimit = 5; // reset on filter change
+    renderGrExampleReviews();
+  });
+});
+
+document.getElementById('grLoadMoreBtn').addEventListener('click', () => {
+  grReviewLimit += 10;
+  renderGrExampleReviews();
+});
+
+// Safe HTML escape (reusing pattern from elsewhere)
+function escapeHtml(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── RAW DATA TABLE ──────────────────────────────────────────────────────────
+const GR_DISPLAY_COLS = ['title','created_at','Brand','Detail','sentiment','text','link'];
+
+// Human-readable header labels for GR table columns
+const GR_COL_LABELS = {
+  title:       'LOCATION',
+  source:      'SOURCE',
+  created_at:  'DATE',
+  brands:      'BRANDS',
+  detail:      'DETAIL',
+  sentiment:   'SENTIMENT',
+  text:        'REVIEW',
+  link:        'LINK',
+};
+
+function renderGrRawTable() {
+  const search = (document.getElementById('grTableSearch').value || '').toLowerCase();
+  const sentF  = document.getElementById('grSentFilter').value;
+
+  let filtered = _grFiltered().filter(row => {
+    if (sentF !== '__all__' && String(row.sentiment || '').toLowerCase() !== sentF) return false;
+    if (search) {
+      const hay = Object.values(row).join(' ').toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('grTableCount').textContent = `${filtered.length.toLocaleString()} rows`;
+
+  // Determine which columns actually exist in the first row of grData
+  const sampleKeys = grData.length ? Object.keys(grData[0]) : [];
+  const cols = GR_DISPLAY_COLS.filter(c =>
+    sampleKeys.some(k => k.toLowerCase() === c.toLowerCase())
+  );
+  // Fallback: if no cols match, use first 8 keys excluding 'id'
+  const finalCols = cols.length ? cols : sampleKeys.filter(k => k.toLowerCase() !== 'id').slice(0, 8);
+
+  // Build header using friendly labels
+  document.getElementById('grTHead').innerHTML =
+    '<tr>' + finalCols.map(c => {
+      const label = GR_COL_LABELS[c.toLowerCase()] || c.toUpperCase();
+      return `<th>${escapeHtml(label)}</th>`;
+    }).join('') + '</tr>';
+
+  const total = Math.max(1, Math.ceil(filtered.length / GR_PAGE_SIZE));
+  grCurrentPage = Math.min(grCurrentPage, total);
+  const slice = filtered.slice((grCurrentPage-1)*GR_PAGE_SIZE, grCurrentPage*GR_PAGE_SIZE);
+
+  const tb = document.getElementById('grTBody');
+  tb.innerHTML = '';
+
+  if (!slice.length) {
+    tb.innerHTML = `<tr><td colspan="${finalCols.length}" style="text-align:center;padding:28px;color:var(--text3);font-style:italic">No rows match</td></tr>`;
+  } else {
+    slice.forEach(row => {
+      const tr = document.createElement('tr');
+      finalCols.forEach(c => {
+        // Find the actual key regardless of case
+        const actualKey = Object.keys(row).find(k => k.toLowerCase() === c.toLowerCase()) || c;
+        let val = row[actualKey] || '';
+        const td = document.createElement('td');
+        if (c.toLowerCase() === 'sentiment') {
+          const s = String(val).toLowerCase();
+          td.innerHTML = val ? `<span class="badge ${s}">${escapeHtml(val)}</span>` : '';
+        } else if (c.toLowerCase() === 'link' || c.toLowerCase() === 'url') {
+          if (val) {
+            td.innerHTML = `<a href="${escapeHtml(val)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:600">🔗 Open</a>`;
+          }
+        } else {
+          td.textContent = val;
+          td.title = val;
+        }
+        tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    });
+  }
+
+  document.getElementById('grPageInfo').textContent = `Page ${grCurrentPage} of ${total} (${filtered.length.toLocaleString()} rows)`;
+  document.getElementById('grPrevPage').disabled = grCurrentPage <= 1;
+  document.getElementById('grNextPage').disabled = grCurrentPage >= total;
+}
+
+document.getElementById('grPrevPage').addEventListener('click', () => { grCurrentPage--; renderGrRawTable(); });
+document.getElementById('grNextPage').addEventListener('click', () => { grCurrentPage++; renderGrRawTable(); });
+let _grSearchDebounceTimer = null;
+document.getElementById('grTableSearch').addEventListener('input', () => {
+  clearTimeout(_grSearchDebounceTimer);
+  _grSearchDebounceTimer = setTimeout(() => { grCurrentPage = 1; renderGrRawTable(); }, 250);
+});
+document.getElementById('grSentFilter').addEventListener('change', () => { grCurrentPage = 1; renderGrRawTable(); });
+
+// ── GR SUB-TAB SWITCHER ─────────────────────────────────────────────────────
+document.querySelectorAll('.gr-subtab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Only affect tabs within the same parent subnav
+    const nav = btn.closest('.gr-subnav');
+    const panel = btn.closest('.panel') || btn.closest('#bddContent') || document.body;
+    nav.querySelectorAll('.gr-subtab').forEach(b => b.classList.remove('active'));
+    // Hide all gr-subpanels that are siblings of this subnav's parent
+    const subpanelParent = nav.parentElement;
+    subpanelParent.querySelectorAll(':scope > .gr-subpanel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const tabId = btn.dataset.grTab || btn.dataset.bddTab;
+    // Determine the correct panel prefix
+    const isGr  = !!btn.dataset.grTab;
+    const prefix = isGr ? 'gr-panel-' : 'bdd-panel-';
+    const target = document.getElementById(prefix + tabId);
+    if (target) target.classList.add('active');
+    // Init AI panel when switching to it
+    if (isGr && tabId === 'ai') _grAiInit();
+    if (!isGr && tabId === 'ai') _bddAiInit();
+    // Toggle Analyse with AI button visibility
+    if (typeof _updateAnalyseBtns === 'function') _updateAnalyseBtns(nav, tabId);
+  });
+});
+
+// ── GR AI ANALYSIS MODULE ────────────────────────────────────────────────────
+let grAiActiveBrand = null; // null = all brands
+function _grAiInit() {
+  populateGrAiModelSelect();
+  populateGrAiBrandPills();
+  _grAiUpdatePostCount();
+}
+
+
+
+// Multi-select helpers scoped to grAi
+function grAiMsToggle(key) {
+  const drop = document.getElementById('grAiMsDrop'+key);
+  const trig = document.getElementById('grAiMsTrigger'+key);
+  const isOpen = drop.classList.contains('open');
+  document.querySelectorAll('.ms-dropdown.open').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.ms-trigger.open').forEach(t=>t.classList.remove('open'));
+  if (!isOpen) { drop.classList.add('open'); trig.classList.add('open'); }
+}
+function grAiMsToggleAll(key, el) {
+  const drop = document.getElementById('grAiMsDrop'+key);
+  drop.querySelectorAll('.ms-option:not(.ms-all)').forEach(o=>{o.classList.remove('selected');o.querySelector('input').checked=false;});
+  el.classList.add('selected'); el.querySelector('input').checked=true;
+  grAiMsUpdateLabel(key); _grAiUpdatePostCount();
+}
+function grAiMsToggleOption(key, el) {
+  const allEl = document.getElementById('grAiMsDrop'+key).querySelector('.ms-all');
+  const checked = !el.classList.contains('selected');
+  el.classList.toggle('selected', checked); el.querySelector('input').checked = checked;
+  const anySelected = [...document.getElementById('grAiMsDrop'+key).querySelectorAll('.ms-option:not(.ms-all)')].some(o=>o.classList.contains('selected'));
+  allEl.classList.toggle('selected', !anySelected); allEl.querySelector('input').checked = !anySelected;
+  grAiMsUpdateLabel(key); _grAiUpdatePostCount();
+}
+function grAiMsGetValues(key) {
+  const drop = document.getElementById('grAiMsDrop'+key);
+  if (!drop) return ['__all__'];
+  const allEl = drop.querySelector('.ms-all');
+  if (allEl?.classList.contains('selected')) return ['__all__'];
+  return [...drop.querySelectorAll('.ms-option:not(.ms-all).selected')].map(o=>o.dataset.value);
+}
+function grAiMsUpdateLabel(key) {
+  const vals = grAiMsGetValues(key);
+  const lbl  = document.getElementById('grAiMsLabel'+key);
+  if (!lbl) return;
+  if (vals[0]==='__all__'||vals.length===0) { lbl.textContent='All sentiments'; lbl.classList.add('placeholder'); }
+  else { lbl.textContent=vals.join(', '); lbl.classList.remove('placeholder'); }
+}
+
+function populateGrAiModelSelect() {
+  const sel = document.getElementById('grAiModel');
+  if (!sel) return;
+  sel.innerHTML = '';
+  AI_MODELS['gemini'].forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.value; opt.textContent = m.label; sel.appendChild(opt);
+  });
+  sel.value = 'gemini-2.5-flash-lite';
+}
+
+function populateGrAiBrandPills() {
+  const container = document.getElementById('grAiBrandPills');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // Sync AI active brand from shared dashboard state on every render
+  grAiActiveBrand = grActiveBrand;
+
+  // Count reviews per brand then sort descending
+  const brandCount = {};
+  grData.forEach(row => {
+    let b = String(row.Brand || row.Brands || row.brands || '').trim();
+    if (b.startsWith('[') && b.endsWith(']')) b = b.slice(1,-1);
+    b.split(',').map(x=>x.trim()).filter(Boolean).forEach(x => {
+      brandCount[x] = (brandCount[x] || 0) + 1;
+    });
+  });
+  const brands = Object.keys(brandCount).sort((a, b) => brandCount[b] - brandCount[a]);
+
+  // Update active label
+  const lbl = document.getElementById('grAiActiveLabel');
+  if (lbl) lbl.textContent = grAiActiveBrand ? '— ' + grAiActiveBrand : '';
+
+  function makePill(label, isActive, color, onClick) {
+    const pill = document.createElement('button');
+    pill.className = 'brand-pill' + (isActive ? ' active' : '');
+    if (isActive && color) { pill.style.background = color; pill.style.borderColor = color; }
+    else if (color) { pill.style.background = color+'22'; pill.style.borderColor = color+'55'; pill.style.color = color; }
+    pill.textContent = label;
+    pill.addEventListener('click', onClick);
+    pill.addEventListener('mouseenter', () => { if (!isActive && color) { pill.style.background = color+'44'; pill.style.borderColor = color; } });
+    pill.addEventListener('mouseleave', () => { if (!isActive && color) { pill.style.background = color+'22'; pill.style.borderColor = color+'55'; } });
+    return pill;
+  }
+
+  // "All Brands" pill
+  const allPill = makePill('All Brands', grAiActiveBrand === null, null, () => {
+    grActiveBrand = null;
+    grAiActiveBrand = null;
+    populateGrAiBrandPills();
+    renderGrDashBrandPills();
+    _grUpdateActiveBrandLabel();
+    _grAiUpdatePostCount();
+  });
+  container.appendChild(allPill);
+
+  // Per-brand pills
+  brands.forEach((brand, i) => {
+    const color = BDD_COLORS[i % BDD_COLORS.length];
+    const isActive = brand === grAiActiveBrand;
+    const pill = makePill(brand, isActive, color, () => {
+      grActiveBrand = brand;
+      grAiActiveBrand = brand;
+      populateGrAiBrandPills();
+      renderGrDashBrandPills();
+      _grUpdateActiveBrandLabel();
+      _grAiUpdatePostCount();
+    });
+    container.appendChild(pill);
+  });
+
+  _grAiUpdatePostCount();
+}
+
+function _grAiGetRows() {
+  const pool = grData;
+  const sents   = grAiMsGetValues('Sent');
+  const allSent = sents[0]==='__all__';
+  return pool.filter(row => {
+    if (grAiActiveBrand) {
+      let b = String(row.Brand||row.Brands||row.brands||'').trim();
+      if (b.startsWith('[')&&b.endsWith(']')) b=b.slice(1,-1);
+      if (!b.split(',').map(x=>x.trim()).includes(grAiActiveBrand)) return false;
+    }
+    if (!allSent && !sents.includes(String(row.sentiment||'').toLowerCase())) return false;
+    return true;
+  });
+}
+
+function _grAiGetFilteredTexts() {
+  const max    = parseInt(document.getElementById('grAiMaxPosts').value)||1000;
+  const sortBy = document.getElementById('grAiSortBy').value;
+  let rows = _grAiGetRows().filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null');
+  if (sortBy==='engagement') rows=rows.slice().sort((a,b)=>(parseFloat(b.engagement_score)||0)-(parseFloat(a.engagement_score)||0));
+  return rows.slice(0,max).map(row=>({
+    text:       String(row.text||'').trim(),
+    engagement: parseFloat(row.engagement_score)||0,
+    sentiment:  String(row.sentiment||'').toLowerCase(),
+    source:     String(row.source||row.Source||''),
+    title:      String(row.title||row.Title||row.page||''),
+    created_at: row.created_at||row.date||'',
+  }));
+}
+
+function _grAiUpdatePostCount() {
+  if (!grData.length) return;
+  const max      = parseInt(document.getElementById('grAiMaxPosts').value)||1000;
+  const sortBy   = document.getElementById('grAiSortBy')?.value;
+  const total    = _grAiGetRows().length;
+  const withText = _grAiGetRows().filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null').length;
+  const forAI    = Math.min(withText, max);
+  const noText   = total - withText;
+  const capped   = withText > max;
+
+  let note = '';
+  if (capped)          note = ` · <strong>${forAI.toLocaleString()} sent to AI</strong> (capped at ${max.toLocaleString()})`;
+  else if (noText > 0) note = ` · ${noText} row${noText>1?'s':''} skipped (no text)`;
+
+  const sorted = sortBy==='engagement' ? ' · sorted by engagement' : '';
+  const el = document.getElementById('grAiPostCount');
+  if (el) el.innerHTML = `${total.toLocaleString()} reviews matched${note}${sorted}`;
+}
+
+['grAiMaxPosts','grAiSortBy'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('change', _grAiUpdatePostCount);
+});
+
+document.getElementById('grAiRunBtn').addEventListener('click', async () => {
+  if (!geminiApiKey) {
+    const el=document.getElementById('grAiError'); el.textContent='Please save your Gemini API key in the bar at the top first.'; el.style.display='';
+    return;
+  }
+  const rows = _grAiGetFilteredTexts();
+  if (!rows.length) {
+    const el=document.getElementById('grAiError'); el.textContent='No reviews with text match the current filters.'; el.style.display=''; return;
+  }
+
+  const btn        = document.getElementById('grAiRunBtn');
+  const outputCard = document.getElementById('grAiOutputCard');
+  const outputBody = document.getElementById('grAiOutputBody');
+  const errEl      = document.getElementById('grAiError');
+  const metaEl     = document.getElementById('grAiOutputMeta');
+  const model      = document.getElementById('grAiModel')?.value || 'gemini-2.5-flash-lite';
+  const sents      = grAiMsGetValues('Sent');
+  const sent       = sents[0]==='__all__'?'all sentiments':sents.join(', ');
+  const brandLabel = grAiActiveBrand || 'All Brands';
+
+  btn.classList.add('running'); btn.disabled=true;
+  errEl.style.display='none';
+  outputCard.style.display='';
+  outputBody.innerHTML='<span class="ai-cursor"></span>';
+  metaEl.textContent=`${rows.length.toLocaleString()} reviews · ${brandLabel} · ${sent} · Gemini · ${model}`;
+  showToast(`Analysing ${rows.length.toLocaleString()} reviews with Gemini…`, 'info', 3000);
+
+  const { system, user } = _buildGrAiPrompts(rows);
+
+  await _runGeminiStream({ model, system, user, outputBody,
+    onDone: (fullText) => {
+      btn.classList.remove('running'); btn.disabled=false;
+      showToast('Google Review analysis complete!', 'success');
+      document.getElementById('grAiCopyBtn').onclick=()=>{
+        navigator.clipboard.writeText(fullText).then(()=>{
+          document.getElementById('grAiCopyBtn').textContent='Copied!';
+          showToast('AI analysis copied to clipboard!', 'success');
+          setTimeout(()=>document.getElementById('grAiCopyBtn').textContent='Copy',2000);
+        });
+      };
+    },
+    onError: (msg) => {
+      outputCard.style.display='none';
+      errEl.textContent=`Gemini error: ${msg}`; errEl.style.display='';
+      btn.classList.remove('running'); btn.disabled=false;
+    }
+  });
+});
 
 // ── TABS ──────────────────────────────────────────────────────────────────────
 document.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -3966,7 +5441,7 @@ _all_df2 = _all_df2.where(_all_df2.notna(), other=None)
 # Only keep columns useful to the UI to reduce payload size
 _keep_cols = [c for c in ['id','source','Source','text','Text','sentiment','created_at','date',
     'engagement_score','view_count','comment_count','like_count','share_count','retweet_count','reply_count',
-    'Brands','Topics','Campaign','campaign','Detail','detail','Category','category',
+    'Brand','Attribute','Campaign','campaign','Channel','Area','crisis','Detail','detail','Category','category',
     'link','Link','url','URL','post_url','post_link','permalink','source_url',
     'title','Title','page','Page',
     'branch','Branch','location','Location'] if c in _all_df2.columns]
@@ -4020,7 +5495,7 @@ function _renderBddAiBrandPills() {
   const pool = allRawData.length ? allRawData : rawData;
   const brandSet = new Set();
   pool.forEach(row => {
-    let b = String(row.Brands||'').trim();
+    let b = String(row.Brand||row.Brands||'').trim();
     if (b.startsWith('[')&&b.endsWith(']')) b=b.slice(1,-1);
     b.split(',').map(x=>x.trim()).filter(Boolean).forEach(x=>brandSet.add(x));
   });
@@ -4581,7 +6056,7 @@ function renderBddSourceBars() {
   const useEng = bddMetric === 'engagement';
 
   const pool = (allRawData.length ? allRawData : rawData).filter(row => {
-    let b = String(row.Brands||'').trim();
+    let b = String(row.Brand||row.Brands||'').trim();
     if (b.startsWith('[') && b.endsWith(']')) b = b.slice(1,-1);
     return b.split(',').map(x=>x.trim()).includes(brand);
   });
@@ -4886,7 +6361,7 @@ function renderBddTopPosts() {
   el.innerHTML = '';
 
   let pool = (allRawData.length ? allRawData : rawData).filter(row => {
-    let b = String(row.Brands||'').trim();
+    let b = String(row.Brand||row.Brands||'').trim();
     if (b.startsWith('[') && b.endsWith(']')) b = b.slice(1,-1);
     return b.split(',').map(x=>x.trim()).includes(brand);
   });
@@ -5067,7 +6542,7 @@ function populateBddAiFilters() {
 
   // Scope to active brand rows so we only show channels that brand actually has
   const brandPool = bddActiveBrand ? pool.filter(row => {
-    let b = String(row.Brands||row.brands||'').trim();
+    let b = String(row.Brand||row.Brands||row.brands||'').trim();
     if (b.startsWith('[')&&b.endsWith(']')) b=b.slice(1,-1);
     return b.split(',').map(x=>x.trim()).includes(bddActiveBrand);
   }) : pool;
@@ -5167,7 +6642,7 @@ function _bddAiGetRows() {
   const forceGR = bddAiAnalysisType === 'googlereview';
   return pool.filter(row => {
     // Always filter to active brand
-    let b = String(row.Brands||'').trim();
+    let b = String(row.Brand||row.Brands||'').trim();
     if (b.startsWith('[')&&b.endsWith(']')) b=b.slice(1,-1);
     if (!b.split(',').map(x=>x.trim()).includes(bddActiveBrand)) return false;
     if (forceGR) {
@@ -5393,6 +6868,178 @@ Start directly with **Brand Health Overview**.`;
 }
 
 // Build Google Review prompt scoped to active brand
+// ── GR AI PROMPT BUILDER ─────────────────────────────────────────────────────
+// Mirrors _buildBddGoogleReviewPrompts but reads from GR-scoped UI elements
+function _buildGrAiPrompts(rows) {
+  return _buildGrReviewPrompts(rows);
+}
+
+function _buildGrReviewPrompts(rows) {
+  const brand       = grAiActiveBrand || 'All Brands';
+  const sents       = grAiMsGetValues('Sent');
+  const sent        = sents[0]==='__all__' ? 'all sentiments' : `"${sents.join(', ')}" only`;
+  const enriched    = rows.map((r,i) => {
+    const loc  = String(r.title||r.page||'').trim() || 'Unknown Location';
+    const date = String(r.created_at||r.date||'').trim().slice(0,16);
+    return `[${i+1}] [${r.sentiment}] [${loc}] [${date}]\n${r.text}`;
+  });
+  const instruction = document.getElementById('grAiInstruction').value.trim();
+
+  // If user wrote a full custom prompt, use it directly — skip default structure
+  if (instruction) {
+    const postsBlock = enriched.join('\n\n');
+    const system = `You are an expert Customer Experience & Brand Reputation Analyst. The user has provided a custom prompt — follow it precisely.`;
+    const user = `Brand: "${brand}" | Sentiment filter: ${sent}\n\n${instruction}\n\n--- REVIEWS START ---\n${postsBlock}\n--- REVIEWS END ---`;
+    return { system, user };
+  }
+
+  const focusPart = '';
+  const system = `You are an expert Customer Experience & Brand Reputation Analyst specialising in Thai food & beverage chains.
+You analyse Google Review data and write concise, data-driven intelligence reports for brand managers.
+
+Your output MUST follow this EXACT structure with these EXACT section headers (wrapped in **). Do not add extra sections, intros, or closing remarks.
+
+**Total Volume & Sentiment Distribution**
+Write 3 sentences maximum:
+1. State the exact total review count and brand name.
+2. State the sentiment split as percentages (Positive X%, Neutral X%, Negative X%).
+3. One analytical sentence on what the sentiment balance implies operationally for the brand.
+Then add one bullet on peak review periods with a hypothesis (day/week spike + likely cause).
+
+**Location Performance**
+Use these exact sub-labels on separate lines in bold:
+- High Engagement: name the top 3 locations by volume with counts. Summarize and group any sentiment concerns at that location in 1–2 sentences.
+- Top Performers: name the top 3 locations by positive sentiment counts. Summarize positive sentiment highlight at that location in 1–2 sentences.
+- Service Watchlist: name locations with the most critical or specific negative complaints.
+
+**Key Strengths (Positive Sentiment)**
+Group positives into named themes (e.g. "Product Excellence", "Atmosphere", "Staff Friendliness").
+For each theme: one label in bold, then one sentence summarizing the positive messages and citing location names.
+Maximum 3 themes.
+
+**Critical Pain Points (Negative Sentiment)**
+Group top distinct issues into named themes in bold (e.g. "Operational Slowness", "Hygiene Standards").
+For each: one sentence summarizing the specific incident or pattern and location names.
+End each with a risk label: 🔴 High / 🟡 Medium / 🟢 Low.
+Maximum 5 pain points.
+
+Rules:
+- Never write generic observations. Every sentence must reference specific locations, counts, or reviewer language from the data.
+- Do not include an introduction, preamble, or conclusion outside the four sections above.
+- Do not use phrases like "it is worth noting", "overall", "in summary", or any filler language.
+- Write in tight, direct analyst prose — each bullet should be 1–2 sentences maximum.`;
+
+  const user = `Analyse the following ${rows.length} Google Reviews for "${brand}" (filtered to ${sent}).${focusPart}
+
+Each review below is formatted as:
+[index] [sentiment] [branch/location] [date]
+<review text>
+
+DATA NOTES:
+- "branch/location" is the exact branch name — always use it when citing examples.
+- Dates are in "YYYY Mon DD HH:MM" format — use them to identify volume spikes.
+
+--- REVIEWS START ---
+${enriched.join('\n\n')}
+--- REVIEWS END ---
+
+Output only the four sections as instructed. No introduction. No conclusion. Start directly with **Total Volume & Sentiment Distribution**.`;
+
+  return { system, user };
+}
+
+function _buildGrSentimentPrompts(rows) {
+  const brand = grAiActiveBrand || 'All Brands';
+  const sents = grAiMsGetValues('Sent');
+  const sent  = sents[0]==='__all__' ? 'all sentiments' : `"${sents.join(', ')}" only`;
+  const instruction = document.getElementById('grAiInstruction').value.trim();
+  const enriched = rows.map((r,i) => {
+    const loc = String(r.title||r.page||'').trim() || 'Unknown Location';
+    return `[${i+1}] [${r.sentiment}] [${loc}] ${r.text}`;
+  });
+
+  if (instruction) {
+    return {
+      system: `You are an expert Customer Experience Analyst. Follow the custom prompt precisely.`,
+      user:   `Brand: "${brand}" | Filter: ${sent}\n\n${instruction}\n\n--- REVIEWS START ---\n${enriched.join('\n\n')}\n--- REVIEWS END ---`,
+    };
+  }
+
+  const system = `You are an expert Customer Experience & Sentiment Analyst for Thai food & beverage brands.
+Analyse Google Reviews and produce a structured sentiment intelligence report.
+
+Your output MUST follow this exact structure:
+
+**Sentiment Overview**
+State the exact counts and percentages for Positive, Neutral, and Negative reviews. Note the dominant tone and any polarisation.
+
+**Positive Drivers**
+Top 3–5 themes driving positive sentiment. For each: bold label, 1–2 sentences citing specific reviewer language and locations.
+
+**Negative Drivers**
+Top 3–5 themes driving negative sentiment. For each: bold label, 1–2 sentences citing specific complaints and locations. End each with risk level: 🔴 High / 🟡 Medium / 🟢 Low.
+
+**Sentiment by Location**
+Which locations have the best and worst sentiment ratios. Cite counts. Max 5 locations.
+
+**Strategic Recommendations**
+3 concrete actions to improve overall sentiment score, each linked to a finding above.
+
+Rules: Be specific. Reference locations, counts, and reviewer language. No filler.`;
+
+  const user = `Analyse the sentiment in ${rows.length} Google Reviews for "${brand}" (${sent}).
+
+--- REVIEWS START ---
+${enriched.join('\n\n')}
+--- REVIEWS END ---
+
+Start directly with **Sentiment Overview**.`;
+  return { system, user };
+}
+
+function _buildGrContentPrompts(rows) {
+  const brand = grAiActiveBrand || 'All Brands';
+  const sents = grAiMsGetValues('Sent');
+  const sent  = sents[0]==='__all__' ? 'all sentiments' : `"${sents.join(', ')}" only`;
+  const instruction = document.getElementById('grAiInstruction').value.trim();
+  const texts = rows.map((r,i) => `[${i+1}] [${r.sentiment}] ${r.text}`);
+
+  if (instruction) {
+    return {
+      system: `You are an expert Content & Customer Voice Analyst. Follow the custom prompt precisely.`,
+      user:   `Brand: "${brand}" | Filter: ${sent}\n\n${instruction}\n\n--- REVIEWS START ---\n${texts.join('\n')}\n--- REVIEWS END ---`,
+    };
+  }
+
+  const system = `You are an expert Content & Customer Voice Analyst for Thai food & beverage brands.
+Analyse Google Review text to surface content themes, messaging gaps, and creative opportunities.
+
+Your output MUST follow this exact structure:
+
+**Top Content Themes**
+4–6 recurring themes in reviewer language. For each: bold label, describe what reviewers say, note dominant sentiment.
+
+**Messaging Gaps**
+What customers want to talk about that the brand's experience doesn't address. Identify 2–3 unmet expectations.
+
+**High-Impact Language**
+5–8 verbatim phrases or recurring words that best capture the customer voice (high-engagement preferred).
+
+**Creative Opportunities**
+3 specific content or marketing directions the brand could take, grounded in themes above.
+
+Rules: Quote or paraphrase actual reviewer language. Be specific and actionable.`;
+
+  const user = `Analyse content themes in ${rows.length} Google Reviews for "${brand}" (${sent}).
+
+--- REVIEWS START ---
+${texts.join('\n')}
+--- REVIEWS END ---
+
+Start directly with **Top Content Themes**.`;
+  return { system, user };
+}
+
 // ── SHARED GEMINI STREAMING RUNNER ────────────────────────────────────────────
 const _ALLOWED_AI_MODELS = new Set(AI_MODELS.gemini.map(m => m.value));
 async function _runGeminiStream({ model, system, user, outputBody, onDone, onError }) {
@@ -6080,6 +7727,15 @@ document.getElementById('ovCopyEng')?.addEventListener('click', () => copyOvTabl
 document.getElementById('ovCopyMen')?.addEventListener('click', () => copyOvTable('ovTableMen','ovCopyMen'));
 document.getElementById('ovCopyView')?.addEventListener('click', () => copyOvTable('ovTableView','ovCopyView'));
 
+// GR AI — ms-dropdown (trigger + delegated option clicks)
+document.getElementById('grAiMsTriggerSent')?.addEventListener('click', () => grAiMsToggle('Sent'));
+document.getElementById('grAiMsDropSent')?.addEventListener('click', e => {
+  const opt = e.target.closest('.ms-option'); if (!opt) return;
+  opt.classList.contains('ms-all') ? grAiMsToggleAll('Sent', opt) : grAiMsToggleOption('Sent', opt);
+});
+
+// GR AI — analysis type buttons
+
 // BDD AI — analysis type buttons
 document.getElementById('bddAiTypeSocial')?.addEventListener('click', () => setBddAiType('social'));
 document.getElementById('bddAiTypeBrand')?.addEventListener('click', () => setBddAiType('brand'));
@@ -6110,6 +7766,12 @@ document.getElementById('campAiMsDropSent')?.addEventListener('click', e => {
 // Show/hide button based on active subpanel; click switches to AI subtab
 
 (function() {
+  // GR
+  document.getElementById('grAnalyseBtn')?.addEventListener('click', () => {
+    const btn = document.querySelector('#greviewContent .gr-subnav .gr-subtab[data-gr-tab="ai"]');
+    if (btn) btn.click();
+  });
+
   document.getElementById('campAnalyseBtn')?.addEventListener('click', () => {
     const btn = document.querySelector('#campSubnav .gr-subtab[data-camp-tab="ai"]');
     if (btn) btn.click();
