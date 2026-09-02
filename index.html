@@ -2975,7 +2975,7 @@ function _renderXdimTrend(trend, idx) {
   // Width now scales with data, so every label fits without overlapping —
   // no more skipping labels on longer date ranges.
   const labels = trend.buckets.map((b, i) =>
-    `<text x="${xAt(i).toFixed(1)}" y="${H - 6}" font-size="8.5" fill="var(--text3)" text-anchor="middle">${_esc(b.length > 7 ? b.slice(5) : b)}</text>`
+    `<text x="${xAt(i).toFixed(1)}" y="${H - 6}" font-size="8.5" font-family="'DM Mono',monospace" fill="var(--text3)" text-anchor="middle">${_esc(b.length > 7 ? b.slice(5) : b)}</text>`
   ).join('');
 
   const legend = cats.map((cat, ci) => {
@@ -5564,7 +5564,7 @@ function renderSentimentTrendChart() {
     pct.map((v,i) => `<circle class="xdim-trend-point" data-i="${i}" cx="${xAt(i).toFixed(1)}" cy="${yAt(v[s]).toFixed(1)}" r="3.5" fill="${SENT_COLORS[s]}" stroke="var(--surface)" stroke-width="1.5" opacity="0"/>`).join('')
   ).join('');
 
-  const labels = rows.map((r,i) => `<text x="${xAt(i).toFixed(1)}" y="${H-6}" font-size="8.5" fill="var(--text3)" text-anchor="middle">${_esc(r.key.length>7?r.key.slice(5):r.key)}</text>`).join('');
+  const labels = rows.map((r,i) => `<text x="${xAt(i).toFixed(1)}" y="${H-6}" font-size="8.5" font-family="'DM Mono',monospace" fill="var(--text3)" text-anchor="middle">${_esc(r.key.length>7?r.key.slice(5):r.key)}</text>`).join('');
 
   wrapEl.innerHTML = `
     <div class="xdim-trend-outer" id="xdimTrendOuter_sentTrend">
