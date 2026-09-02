@@ -1049,9 +1049,9 @@ textarea:focus{border-color:var(--accent)!important}
       <button class="tab-btn active" data-tab="report" title="Statistical Data (Alt+1)">📋 Statistical Data</button>
       <button class="tab-btn" data-tab="overview" title="Overview (Alt+2)">🔭 Overview</button>
       <button class="tab-btn" data-tab="brand" title="Brand Deep-Dive (Alt+3)">📌 Brand Deep-Dive</button>
-      <button class="tab-btn" data-tab="greview" title="Google Review (Alt+4)">⭐ Google Review</button>
-      <button class="tab-btn" data-tab="campaign" title="Campaign (Alt+5)">🎯 Campaign</button>
-      <button class="tab-btn" data-tab="charts" title="Sentiment Charts (Alt+6)">📊 Sentiment</button>
+      <button class="tab-btn" data-tab="campaign" title="Campaign (Alt+4)">🎯 Campaign</button>
+      <button class="tab-btn" data-tab="charts" title="Sentiment Charts (Alt+5)">📊 Sentiment</button>
+      <button class="tab-btn" data-tab="greview" title="Google Review (Alt+6)">⭐ Google Review</button>
       <button class="tab-btn" data-tab="extras" title="More Breakdowns (Alt+7)">🧩 More Breakdowns</button>
       <button class="tab-btn" data-tab="table" title="Data Table (Alt+8)">🗂 Data Table</button>
     </nav>
@@ -2296,7 +2296,7 @@ document.addEventListener('keydown', e => {
   if (e.altKey && e.key === 'd') { document.getElementById('themeToggle').click(); return; }
   // Alt+1–8 → switch tabs
   if (e.altKey && !e.ctrlKey && !e.shiftKey) {
-    const tabs = ['report','overview','brand','greview','campaign','charts','extras','table'];
+    const tabs = ['report','overview','brand','campaign','charts','greview','extras','table'];
     const idx = parseInt(e.key) - 1;
     if (idx >= 0 && idx < tabs.length) {
       e.preventDefault();
@@ -5263,17 +5263,26 @@ function copyOvTable(tableId, btnId) {
 }
 
 // ── SIDEBAR STATS ─────────────────────────────────────────────────────────────
+// Resolve the actual brand column for the current upload — the schema-review
+// step lets the brand data live under any header (Brand, Brands, etc.), so we
+// can't assume the literal string "Brands" like the old hardcoded lookups did.
+function _brandColName() {
+  return (confirmedSchemaConfig && confirmedSchemaConfig.brandDim) || 'Brands';
+}
+
 function updateSidebarStats() {
   document.getElementById('statRows').textContent=rawData.length.toLocaleString();
+  const col=_brandColName();
   const brands=new Set();
-  rawData.forEach(r=>(r.Brands||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
+  rawData.forEach(r=>(r[col]||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
   document.getElementById('statBrands').textContent=brands.size;
 }
 
 // ── BRAND FILTER ──────────────────────────────────────────────────────────────
 function buildBrandFilter() {
+  const col=_brandColName();
   const brands=new Set();
-  rawData.forEach(r=>(r.Brands||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
+  rawData.forEach(r=>(r[col]||'').replace(/[\[\]]/g,'').split(',').map(x=>x.trim()).filter(Boolean).forEach(b=>brands.add(b)));
   const c=document.getElementById('brandFilter'); c.innerHTML='';
   const allP=document.createElement('span');
   allP.className='brand-pill active'; allP.textContent='All'; allP.dataset.brand='__all__';
@@ -7384,17 +7393,17 @@ function renderBddKpis() {
   const netColor = netSent >= 20 ? 'var(--pos)' : (netSent <= -20 ? 'var(--neg)' : 'var(--neu)');
 
   const engChangeData = _getBrandChange(brand, 'engagement');
-  const engChangeDisplay = engChangeData.pct === null ? '—' : (engChangeData.pct >= 0 ? '+' : '') + engChangeData.pct + '%';
+  const engChangeDisplay = engChangeData.pct === null ? '—' : (engChangeData.pct >= 0 ? '+' : '') + engChangeData.pct.toLocaleString('en-US') + '%';
   const engChangeColor = engChangeData.pct === null ? 'var(--text3)' : (engChangeData.pct > 3 ? 'var(--pos)' : (engChangeData.pct < -3 ? 'var(--neg)' : 'var(--neu)'));
   const engChangeSub = (engChangeData.from !== null && engChangeData.to !== null)
-    ? `${Math.round(engChangeData.from).toLocaleString()} → ${Math.round(engChangeData.to).toLocaleString()}`
+    ? `${Math.round(engChangeData.from).toLocaleString('en-US')} → ${Math.round(engChangeData.to).toLocaleString('en-US')}`
     : 'engagement change';
 
   const menChangeData = _getBrandChange(brand, 'mentions');
-  const menChangeDisplay = menChangeData.pct === null ? '—' : (menChangeData.pct >= 0 ? '+' : '') + menChangeData.pct + '%';
+  const menChangeDisplay = menChangeData.pct === null ? '—' : (menChangeData.pct >= 0 ? '+' : '') + menChangeData.pct.toLocaleString('en-US') + '%';
   const menChangeColor = menChangeData.pct === null ? 'var(--text3)' : (menChangeData.pct > 3 ? 'var(--pos)' : (menChangeData.pct < -3 ? 'var(--neg)' : 'var(--neu)'));
   const menChangeSub = (menChangeData.from !== null && menChangeData.to !== null)
-    ? `${Math.round(menChangeData.from).toLocaleString()} → ${Math.round(menChangeData.to).toLocaleString()}`
+    ? `${Math.round(menChangeData.from).toLocaleString('en-US')} → ${Math.round(menChangeData.to).toLocaleString('en-US')}`
     : 'mentions change';
 
   const granName = { day:'Day', week:'Week', month:'Month' }[bddGranularity] || 'Period';
