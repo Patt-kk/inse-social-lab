@@ -176,9 +176,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0 2
 .stk-seg{height:100%;transition:width .6s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap}
 .stk-seg-lbl{font-family:"DM Mono",monospace;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);pointer-events:none;line-height:1}
 .stk-total{font-family:"DM Mono",monospace;font-size:11px;color:var(--text3);width:54px;text-align:right;flex-shrink:0}
-.ts-brand-pill{font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;transition:all .15s;user-select:none;color:var(--text2);background:var(--surface)}
-.ts-brand-pill:hover{border-color:var(--accent);color:var(--accent)}
-.ts-brand-pill.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+.ts-brand-pill,.bts-brand-pill{font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid var(--border2);cursor:pointer;transition:all .15s;user-select:none;color:var(--text2);background:var(--surface)}
+.ts-brand-pill:hover,.bts-brand-pill:hover{border-color:var(--accent);color:var(--accent)}
+.ts-brand-pill.active,.bts-brand-pill.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
 .brand-donut-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:140px}
 .brand-donut-name{font-size:12px;font-weight:700;color:var(--text);text-align:center}
 .brand-donut-canvas{position:relative}
@@ -408,6 +408,7 @@ table.dt tbody td{padding:9px 14px;font-size:12px;color:var(--text2);max-width:2
 .bdd-kpi-val{font-family:"Bricolage Grotesque",sans-serif;font-size:26px;font-weight:800;color:var(--text);line-height:1;margin-bottom:4px}
 .bdd-kpi-lbl{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.6px}
 .bdd-kpi-sub{font-size:10px;color:var(--text3);margin-top:3px;font-family:"DM Mono",monospace}
+.sent-kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
 .bdd-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .bdd-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
 @media(max-width:1200px){.bdd-grid-3{grid-template-columns:1fr 1fr}}
@@ -738,8 +739,8 @@ table.dt tbody td{padding:9px 14px;font-size:12px;color:var(--text2);max-width:2
 .xdim-trend-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:10px}
 .xdim-trend-legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);font-weight:500}
 .xdim-trend-legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.xdim-trend-canvas{position:relative}
-.xdim-trend-svg{display:block;cursor:crosshair}
+.xdim-trend-canvas{position:relative;width:100%}
+.xdim-trend-svg{display:block;cursor:crosshair;width:100%}
 .xdim-trend-hoverline{transition:opacity .1s}
 .xdim-trend-point{transition:opacity .1s}
 .xdim-trend-tooltip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--border);border-radius:9px;box-shadow:0 8px 22px rgba(0,0,0,.14);padding:9px 12px;font-size:11px;z-index:20;min-width:130px}
@@ -1716,13 +1717,37 @@ textarea:focus{border-color:var(--accent)!important}
         </div>
         <div id="chartsGrid" style="display:none">
           <div class="card">
+            <div class="card-title">Overall Sentiment Health</div>
+            <div class="card-sub">Aggregated across all brands in the current dataset</div>
+            <div class="sent-kpi-row" id="sentOverviewKpis"></div>
+          </div>
+          <div class="card">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
+              <div>
+                <div class="card-title" style="margin-bottom:2px">Sentiment Trend Over Time</div>
+                <div class="card-sub">Share of positive / neutral / negative mentions per period, across all brands</div>
+              </div>
+              <div class="bdd-metric-toggle bdd-metric-toggle--compare">
+                <button class="bdd-metric-btn active" id="sentGranDay" data-gran="day">Day</button>
+                <button class="bdd-metric-btn" id="sentGranWeek" data-gran="week">Week</button>
+                <button class="bdd-metric-btn" id="sentGranMonth" data-gran="month">Month</button>
+              </div>
+            </div>
+            <div class="sent-legend" style="margin:8px 0 4px">
+              <div class="sent-leg-item"><span class="sent-leg-dot" style="background:#1DC997"></span>positive</div>
+              <div class="sent-leg-item"><span class="sent-leg-dot" style="background:#FFC145"></span>neutral</div>
+              <div class="sent-leg-item"><span class="sent-leg-dot" style="background:#FF5050"></span>negative</div>
+            </div>
+            <div id="sent-trend-chart"></div>
+          </div>
+          <div class="card">
             <div class="card-title">Sentiment Split by Brand</div>
-            <div class="card-sub">Proportion of positive, neutral, and negative mentions per brand</div>
+            <div class="card-sub">Proportion of positive, neutral, and negative mentions per brand — best for comparing brands side by side</div>
             <div id="sent-brand-stacked"></div>
           </div>
           <div class="card">
             <div class="card-title">Sentiment of Unique Mentions by Brand</div>
-            <div class="card-sub">Donut charts — total unique mentions shown in the centre</div>
+            <div class="card-sub">Same split as above, shown as donuts with each brand's total mention volume in the centre</div>
             <div id="brand-donuts" style="display:flex;flex-wrap:wrap;gap:32px 24px;justify-content:flex-start;padding-top:4px"></div>
           </div>
           <div class="card">
@@ -1736,8 +1761,13 @@ textarea:focus{border-color:var(--accent)!important}
             <div id="sent-topic-bars"></div>
           </div>
           <div class="card">
-            <div class="card-title" style="margin-bottom:4px"><span data-schema-label="topic">Topic</span> × <span data-schema-label="brand">Brand</span> × Sentiment</div>
-            <div class="card-sub" id="brandTopicSentSub">Stacked vertical bars per brand, sorted by total engagement</div>
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+              <div>
+                <div class="card-title" style="margin-bottom:2px"><span data-schema-label="topic">Topic</span> × <span data-schema-label="brand">Brand</span> × Sentiment</div>
+                <div class="card-sub" id="brandTopicSentSub">Stacked vertical bars per brand, sorted by total engagement</div>
+              </div>
+              <div id="bts-brand-filter" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"></div>
+            </div>
             <div id="brand-topic-sent-grid"></div>
           </div>
         </div>
@@ -2913,10 +2943,16 @@ function _renderXdimTrend(trend, idx) {
   const series = xdimMetric === 'mentions' ? trend.seriesMentions : trend.seriesEngagement;
   const maxVal = Math.max(...cats.flatMap(c => series[c] || []), 1);
   const n = trend.buckets.length;
-  const padL = 10, padR = 10, padT = 12, padB = 22;
+  const padL = 22, padR = 22, padT = 12, padB = 22;
   const STEP = 46; // px per data point — fixed, so the chart grows wider (and scrolls) with more data instead of squeezing points together
   const plotW = Math.max(560, (n - 1) * STEP);
   const W = plotW + padL + padR, H = 150;
+  // Cap how far the chart is allowed to stretch to fill its container —
+  // without this, a handful of weekly/monthly points would get spread
+  // across the full panel width, leaving huge gaps between points/labels.
+  const MAX_STEP = 92;
+  const maxPlotW = Math.max(560, (n - 1) * MAX_STEP);
+  const maxW = maxPlotW + padL + padR;
   const plotH = H - padT - padB;
   const xAt = i => n === 1 ? padL + plotW / 2 : padL + (i / (n - 1)) * plotW;
   const yAt = v => padT + plotH - (v / maxVal) * plotH;
@@ -2952,8 +2988,8 @@ function _renderXdimTrend(trend, idx) {
     <div class="xdim-trend-legend">${legend}</div>
     <div class="xdim-trend-outer" id="xdimTrendOuter_${idx}">
       <div class="xdim-trend-wrap" id="xdimTrendWrap_${idx}">
-        <div class="xdim-trend-canvas" style="width:${W}px">
-        <svg class="xdim-trend-svg" id="xdimTrendSvg_${idx}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+        <div class="xdim-trend-canvas" style="min-width:${W}px;max-width:${maxW}px">
+        <svg class="xdim-trend-svg" id="xdimTrendSvg_${idx}" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <line x1="${padL}" y1="${padT+plotH}" x2="${W-padR}" y2="${padT+plotH}" stroke="var(--border)" stroke-width="1"/>
           ${lines}
           ${points}
@@ -2983,7 +3019,7 @@ function _setupTrendInteractivity(idx, trend) {
   const series = xdimMetric === 'mentions' ? trend.seriesMentions : trend.seriesEngagement;
   const n = trend.buckets.length;
   const vbWidth = svg.viewBox.baseVal.width;
-  const padL = 10, padR = 10;
+  const padL = 22, padR = 22;
   const plotW = vbWidth - padL - padR;
   const xAt = i => n === 1 ? padL + plotW / 2 : padL + (i / (n - 1)) * plotW;
   const points = svg.querySelectorAll('.xdim-trend-point');
@@ -5322,6 +5358,23 @@ function applyFilters() {
   currentPage=1; renderTable();
 }
 
+// Jump to the Data Table pre-filtered to a specific brand/topic combo — used
+// by the Sentiment tab's Topic × Brand × Sentiment grid so a client-facing
+// question ("which posts drove that?") is one click away instead of a manual
+// re-filter in the table.
+function _drillDownToTable({ brand, topic } = {}) {
+  if (brand) {
+    activeBrands = new Set([brand]);
+    document.querySelectorAll('.brand-pill').forEach(p => {
+      p.classList.toggle('active', p.dataset.brand === brand);
+    });
+  }
+  const searchInput = document.getElementById('tableSearch');
+  if (searchInput) searchInput.value = topic || '';
+  applyFilters();
+  document.querySelector('.tab-btn[data-tab="table"]')?.click();
+}
+
 // ── CHARTS ────────────────────────────────────────────────────────────────────
 const SENT_COLORS  = { positive:'#1DC997', neutral:'#FFC145', negative:'#FF5050' };
 // TOPIC_ORDER is re-derived from the pipeline's actual output taxonomy after each
@@ -5390,6 +5443,10 @@ function renderCharts() {
 
   const brandsSorted = reportData.sentRows.map(r => r.brand);
 
+  // ── 0. Overall sentiment health + trend over time ─────────────────────────
+  renderSentimentOverview();
+  renderSentimentTrendChart();
+
   // ── 1. Sentiment Split by Brand ───────────────────────────────────────────
   const sentBrand = {};
   reportData.sentRows.forEach(r => {
@@ -5405,7 +5462,177 @@ function renderCharts() {
   renderTopicSentBars();
 
   // ── 3. Topic × Brand × Sentiment ─────────────────────────────────────────
+  buildBrandTopicSentFilter(brandsSorted);
   renderBrandTopicSentiment(brandsSorted);
+}
+
+// ── Overall Sentiment Health (top-of-tab summary) ─────────────────────────────
+function renderSentimentOverview() {
+  const el = document.getElementById('sentOverviewKpis');
+  if (!el) return;
+  const rows = reportData.sentRows || [];
+  const pos = rows.reduce((a,r)=>a+(r.positive||0),0);
+  const neu = rows.reduce((a,r)=>a+(r.neutral||0),0);
+  const neg = rows.reduce((a,r)=>a+(r.negative||0),0);
+  const total = pos+neu+neg || 1;
+  const net = ((pos-neg)/total*100).toFixed(1);
+  const netColor = net >= 20 ? 'var(--pos)' : (net <= -20 ? 'var(--neg)' : 'var(--neu)');
+  const kpis = [
+    { val: (pos+neu+neg).toLocaleString(), lbl:'Total Mentions', sub:'across all brands', cls:'' },
+    { val: (net>=0?'+':'')+net+'%', lbl:'Net Sentiment', sub:'positive minus negative', cls:'', color:netColor },
+    { val: Math.round(pos/total*100)+'%', lbl:'Positive', sub: pos.toLocaleString()+' mentions', cls:'pos', color:'var(--pos)' },
+    { val: Math.round(neu/total*100)+'%', lbl:'Neutral', sub: neu.toLocaleString()+' mentions', cls:'neu', color:'var(--neu)' },
+    { val: Math.round(neg/total*100)+'%', lbl:'Negative', sub: neg.toLocaleString()+' mentions', cls:'neg', color:'var(--neg)' },
+  ];
+  el.innerHTML = kpis.map(k=>`
+    <div class="bdd-kpi ${k.cls}">
+      <div class="bdd-kpi-val" style="color:${k.color||'var(--text)'}">${k.val}</div>
+      <div class="bdd-kpi-lbl">${k.lbl}</div>
+      <div class="bdd-kpi-sub">${k.sub}</div>
+    </div>`).join('');
+}
+
+// ── Sentiment Trend Over Time ──────────────────────────────────────────────────
+// Reads straight from rawData (client-side) so it needs no changes to the
+// Python pipeline — buckets every dated row by day/week/month and plots the
+// % positive/neutral/negative mix per period. Percentage (not raw count) is
+// used deliberately so volume swings don't get mistaken for sentiment swings.
+let sentTrendGranularity = 'day'; // 'day' | 'week' | 'month'
+
+function _sentDateKey(dt, gran) {
+  if (!dt || isNaN(dt.getTime())) return null;
+  const y = dt.getFullYear(), m = dt.getMonth(), d = dt.getDate();
+  if (gran === 'month') return `${y}-${String(m+1).padStart(2,'0')}`;
+  if (gran === 'week') {
+    const dow = (dt.getDay() + 6) % 7; // Monday = 0
+    const mon = new Date(y, m, d - dow);
+    return `${mon.getFullYear()}-${String(mon.getMonth()+1).padStart(2,'0')}-${String(mon.getDate()).padStart(2,'0')}`;
+  }
+  return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+
+function _buildSentimentTrendData() {
+  const sentCol = (typeof detectedSchemaConfig !== 'undefined' && detectedSchemaConfig && detectedSchemaConfig.sentimentCol) || 'sentiment';
+  const buckets = {};
+  (rawData||[]).forEach(row => {
+    const dateRaw = row.created_at||row.date||row.Date||row.Created_At||'';
+    if (!dateRaw) return;
+    const dt = new Date(dateRaw);
+    const key = _sentDateKey(dt, sentTrendGranularity);
+    if (!key) return;
+    const sentVal = String(row[sentCol]||'').trim().toLowerCase();
+    if (sentVal !== 'positive' && sentVal !== 'neutral' && sentVal !== 'negative') return;
+    if (!buckets[key]) buckets[key] = {positive:0,neutral:0,negative:0};
+    buckets[key][sentVal]++;
+  });
+  return Object.keys(buckets).sort().map(k => ({ key:k, ...buckets[k] }));
+}
+
+function renderSentimentTrendChart() {
+  const wrapEl = document.getElementById('sent-trend-chart');
+  if (!wrapEl) return;
+  const rows = _buildSentimentTrendData();
+  if (rows.length < 2) {
+    wrapEl.innerHTML = '<div class="xdim-empty-note">Not enough dated data for a sentiment trend — need at least two dated periods.</div>';
+    return;
+  }
+  const n = rows.length;
+  const padL = 22, padR = 22, padT = 12, padB = 22;
+  const STEP = 46;
+  const plotW = Math.max(560, (n-1)*STEP);
+  const W = plotW + padL + padR, H = 150;
+  // Cap how far the chart stretches — with few weekly/monthly buckets this
+  // stops the points spreading into huge, oddly-spaced gaps across the panel.
+  const MAX_STEP = 92;
+  const maxPlotW = Math.max(560, (n-1)*MAX_STEP);
+  const maxW = maxPlotW + padL + padR;
+  const plotH = H - padT - padB;
+  const xAt = i => n === 1 ? padL + plotW/2 : padL + (i/(n-1))*plotW;
+  const yAt = pct => padT + plotH - (Math.max(0,Math.min(100,pct))/100)*plotH;
+
+  const pct = rows.map(r => {
+    const total = (r.positive+r.neutral+r.negative) || 1;
+    return { positive: r.positive/total*100, neutral: r.neutral/total*100, negative: r.negative/total*100 };
+  });
+
+  const lines = ['positive','neutral','negative'].map(s => {
+    const pts = pct.map((v,i)=>`${xAt(i).toFixed(1)},${yAt(v[s]).toFixed(1)}`).join(' ');
+    return `<polyline points="${pts}" fill="none" stroke="${SENT_COLORS[s]}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  }).join('');
+
+  const points = ['positive','neutral','negative'].map((s) =>
+    pct.map((v,i) => `<circle class="xdim-trend-point" data-i="${i}" cx="${xAt(i).toFixed(1)}" cy="${yAt(v[s]).toFixed(1)}" r="3.5" fill="${SENT_COLORS[s]}" stroke="var(--surface)" stroke-width="1.5" opacity="0"/>`).join('')
+  ).join('');
+
+  const labels = rows.map((r,i) => `<text x="${xAt(i).toFixed(1)}" y="${H-6}" font-size="8.5" fill="var(--text3)" text-anchor="middle">${_esc(r.key.length>7?r.key.slice(5):r.key)}</text>`).join('');
+
+  wrapEl.innerHTML = `
+    <div class="xdim-trend-outer" id="xdimTrendOuter_sentTrend">
+      <div class="xdim-trend-wrap" id="xdimTrendWrap_sentTrend">
+        <div class="xdim-trend-canvas" style="min-width:${W}px;max-width:${maxW}px">
+          <svg class="xdim-trend-svg" id="xdimTrendSvg_sentTrend" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="${padL}" y1="${padT+plotH}" x2="${W-padR}" y2="${padT+plotH}" stroke="var(--border)" stroke-width="1"/>
+            ${lines}
+            ${points}
+            ${labels}
+            <line class="xdim-trend-hoverline" id="xdimHoverLine_sentTrend" x1="0" y1="${padT}" x2="0" y2="${padT+plotH}" stroke="var(--text3)" stroke-width="1" stroke-dasharray="3 2" opacity="0"/>
+          </svg>
+          <div class="xdim-trend-tooltip" id="xdimTrendTip_sentTrend" style="display:none"></div>
+        </div>
+      </div>
+      <div class="xdim-trend-fade left" id="xdimFadeLeft_sentTrend"></div>
+      <div class="xdim-trend-fade right" id="xdimFadeRight_sentTrend"></div>
+      <button type="button" class="xdim-trend-navbtn left" id="xdimNavLeft_sentTrend" aria-label="Scroll left">◀</button>
+      <button type="button" class="xdim-trend-navbtn right" id="xdimNavRight_sentTrend" aria-label="Scroll right">▶</button>
+    </div>`;
+
+  _setupSentTrendInteractivity(rows, pct, W, padL, padR);
+  _setupTrendScroll('sentTrend');
+}
+
+function _setupSentTrendInteractivity(rows, pct, vbWidth, padL, padR) {
+  const svg = document.getElementById('xdimTrendSvg_sentTrend');
+  const tip = document.getElementById('xdimTrendTip_sentTrend');
+  const hoverLine = document.getElementById('xdimHoverLine_sentTrend');
+  if (!svg || !tip || !hoverLine) return;
+  const n = rows.length;
+  const plotW = vbWidth - padL - padR;
+  const xAt = i => n === 1 ? padL + plotW/2 : padL + (i/(n-1))*plotW;
+  const points = svg.querySelectorAll('.xdim-trend-point');
+
+  function showAt(nearest) {
+    hoverLine.setAttribute('x1', xAt(nearest)); hoverLine.setAttribute('x2', xAt(nearest));
+    hoverLine.setAttribute('opacity','1');
+    points.forEach(p => p.setAttribute('opacity', parseInt(p.dataset.i)===nearest ? '1':'0'));
+    const r = rows[nearest], v = pct[nearest];
+    const rowsHtml = ['positive','neutral','negative'].map(s => {
+      return `<div class="xdim-tip-row"><span class="xdim-tip-dot" style="background:${SENT_COLORS[s]}"></span>${s}: <strong>${Math.round(v[s])}%</strong> <span style="color:var(--text3)">(${r[s].toLocaleString()})</span></div>`;
+    }).join('');
+    tip.innerHTML = `<div class="xdim-tip-date">${_esc(r.key)}</div>${rowsHtml}`;
+    tip.style.display = 'block';
+    const canvas = svg.parentElement;
+    const canvasWidth = canvas.offsetWidth;
+    const tipWidth = tip.offsetWidth || 150;
+    const px = xAt(nearest) * (canvas.offsetWidth / vbWidth);
+    let left = px + 14;
+    if (left + tipWidth > canvasWidth) left = px - tipWidth - 14;
+    tip.style.left = Math.max(0,left) + 'px';
+    tip.style.top = '4px';
+  }
+
+  svg.addEventListener('mousemove', (e) => {
+    const rect = svg.getBoundingClientRect();
+    const scaleX = vbWidth / rect.width;
+    const mouseX = (e.clientX - rect.left) * scaleX;
+    let nearest = 0, minDist = Infinity;
+    for (let i=0;i<n;i++){ const d=Math.abs(xAt(i)-mouseX); if (d<minDist){minDist=d;nearest=i;} }
+    showAt(nearest);
+  });
+  svg.addEventListener('mouseleave', () => {
+    hoverLine.setAttribute('opacity','0');
+    points.forEach(p=>p.setAttribute('opacity','0'));
+    tip.style.display = 'none';
+  });
 }
 
 // ── Stacked sentiment bar ─────────────────────────────────────────────────────
@@ -5618,9 +5845,39 @@ function renderTopicSentBars() {
   });
 }
 
+// ── Topic × Brand × Sentiment brand filter pills ──────────────────────────────
+// Single-select, same behavior as the "Sentiment by Attribute" filter above:
+// pick one brand to focus the grid, or "All brands" to reset.
+let activeBTSBrand = '__all__';
+
+function buildBrandTopicSentFilter(brandsSorted) {
+  const c = document.getElementById('bts-brand-filter');
+  if (!c) return;
+  if (activeBTSBrand !== '__all__' && !brandsSorted.includes(activeBTSBrand)) activeBTSBrand = '__all__';
+  c.innerHTML = '';
+  const makeP = (label, value) => {
+    const p = document.createElement('span');
+    p.className = 'bts-brand-pill' + (value === activeBTSBrand ? ' active' : '');
+    p.textContent = label;
+    p.addEventListener('click', () => {
+      activeBTSBrand = value;
+      document.querySelectorAll('.bts-brand-pill').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+      renderBrandTopicSentiment(brandsSorted);
+    });
+    return p;
+  };
+  c.appendChild(makeP('All brands', '__all__'));
+  brandsSorted.forEach(b => c.appendChild(makeP(b, b)));
+}
+
 // ── Topic × Brand × Sentiment — vertical stacked bars ────────────────────────
 function renderBrandTopicSentiment(brandsSorted) {
   const el=document.getElementById('brand-topic-sent-grid'); el.innerHTML='';
+
+  const visibleBrands = activeBTSBrand === '__all__'
+    ? brandsSorted
+    : brandsSorted.filter(b => b === activeBTSBrand);
 
   const leg=document.createElement('div'); leg.className='sent-legend'; leg.style.marginBottom='18px';
   ['positive','neutral','negative'].forEach(s=>{
@@ -5630,23 +5887,29 @@ function renderBrandTopicSentiment(brandsSorted) {
   });
   el.appendChild(leg);
 
+  // Column count follows the actual number of topics in this dataset —
+  // TOPIC_ORDER is schema-driven and won't always be 7.
+  const gridCols = `100px repeat(${TOPIC_ORDER.length},1fr)`;
+
   const headerRow=document.createElement('div');
-  headerRow.style.cssText='display:grid;grid-template-columns:100px repeat(7,1fr);gap:4px 8px;margin-bottom:6px;';
+  headerRow.style.cssText=`display:grid;grid-template-columns:${gridCols};gap:4px 8px;margin-bottom:6px;`;
   headerRow.innerHTML='<div></div>'+TOPIC_ORDER.map(t=>
     `<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-align:center;letter-spacing:.5px;">${t}</div>`
   ).join('');
   el.appendChild(headerRow);
 
-  let gMax=0;
-  brandsSorted.forEach(b=>{
-    const bt=reportData.brandTopicSent[b]||{};
-    TOPIC_ORDER.forEach(t=>{ const d=bt[t]||{}; gMax=Math.max(gMax,(d.positive||0)+(d.neutral||0)+(d.negative||0)); });
-  });
+  if (!visibleBrands.length) {
+    const empty=document.createElement('div');
+    empty.className='xdim-empty-note';
+    empty.textContent='No brands selected — pick at least one brand above.';
+    el.appendChild(empty);
+    return;
+  }
 
-  brandsSorted.forEach((brand,bi)=>{
+  visibleBrands.forEach((brand,bi)=>{
     const bt=reportData.brandTopicSent[brand]||{};
     const row=document.createElement('div');
-    row.style.cssText='display:grid;grid-template-columns:100px repeat(7,1fr);gap:4px 8px;margin-bottom:12px;align-items:end;';
+    row.style.cssText=`display:grid;grid-template-columns:${gridCols};gap:4px 8px;margin-bottom:12px;align-items:end;`;
 
     const brandTotal = TOPIC_ORDER.reduce((sum,t)=>{
       const d=bt[t]||{}; return sum+(d.positive||0)+(d.neutral||0)+(d.negative||0);
@@ -5667,14 +5930,16 @@ function renderBrandTopicSentiment(brandsSorted) {
       cell.style.cssText='display:flex;flex-direction:column;align-items:center;gap:3px;';
 
       const barWrap=document.createElement('div');
-      barWrap.style.cssText='width:100%;height:80px;display:flex;flex-direction:column-reverse;border-radius:4px;overflow:hidden;background:var(--border);';
+      barWrap.style.cssText='width:100%;height:80px;display:flex;flex-direction:column-reverse;border-radius:4px;overflow:hidden;background:var(--border);cursor:pointer;';
+      barWrap.title='Click to view these posts in the Data Table';
+      barWrap.addEventListener('click', () => _drillDownToTable({ brand, topic }));
 
       ['positive','neutral','negative'].forEach((s,i)=>{
         const pct=parseFloat([pp,np,negp][i]);
         const v=[pos,neu,neg][i];
         const seg=document.createElement('div');
         seg.style.cssText=`width:100%;height:0%;background:${SENT_COLORS[s]};transition:height 0.7s cubic-bezier(0.16,1,0.3,1);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;`;
-        seg.title=`${brand} · ${topic} · ${s}: ${v.toLocaleString()} (${pct}%)`;
+        seg.title=`${brand} · ${topic} · ${s}: ${v.toLocaleString()} (${pct}%) — click to view in Data Table`;
         if (true) {
           const lbl=document.createElement('span');
           lbl.style.cssText='font-family:"DM Mono",monospace;font-size:9px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;';
@@ -5695,7 +5960,7 @@ function renderBrandTopicSentiment(brandsSorted) {
 
     el.appendChild(row);
 
-    if (bi<brandsSorted.length-1) {
+    if (bi<visibleBrands.length-1) {
       const sep=document.createElement('div');
       sep.style.cssText='height:1px;background:var(--border);margin:2px 0 10px;';
       el.appendChild(sep);
@@ -7890,6 +8155,17 @@ document.getElementById('xdimFromBucket')?.addEventListener('change', (e) => {
 document.getElementById('xdimToBucket')?.addEventListener('change', (e) => {
   xdimToBucket = e.target.value;
   renderExtraDimensionPanels();
+});
+
+// Sentiment tab trend granularity toggle (Day/Week/Month)
+['Day','Week','Month'].forEach(cap => {
+  const btn = document.getElementById(`sentGran${cap}`);
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    sentTrendGranularity = btn.dataset.gran;
+    ['Day','Week','Month'].forEach(c => document.getElementById(`sentGran${c}`)?.classList.toggle('active', c===cap));
+    renderSentimentTrendChart();
+  });
 });
 
 // Brand Deep-Dive Compare (DoD/WoW/MoM) toggle + custom From/To pickers —
