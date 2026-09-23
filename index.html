@@ -396,6 +396,108 @@ table.dt tbody td{padding:9px 14px;font-size:12px;color:var(--text2);max-width:2
 .bdd-pill{font-size:12px;font-weight:600;padding:6px 16px;border-radius:20px;border:1.5px solid var(--border2);cursor:pointer;transition:all .15s;user-select:none;color:var(--text2);background:var(--surface);font-family:"DM Sans",sans-serif}
 .bdd-pill:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt);transform:translateY(-1px)}
 .bdd-pill.active{color:#fff;border-color:transparent;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.15);transform:translateY(-1px)}
+
+/* ── Brand Deep-Dive searchable dropdown (replaces the pill wall for large brand lists) ── */
+.bdd-brand-select{position:relative;max-width:340px;font-family:"DM Sans",sans-serif}
+.bdd-brand-select-trigger{display:flex;align-items:center;gap:9px;width:100%;height:38px;padding:0 12px;border-radius:10px;border:1.5px solid var(--border2);background:var(--surface);cursor:pointer;font-size:13px;font-weight:600;color:var(--text);transition:border-color .15s,box-shadow .15s}
+.bdd-brand-select-trigger:hover{border-color:var(--accent)}
+.bdd-brand-select.open .bdd-brand-select-trigger{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-lt)}
+.bdd-brand-select-swatch{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.bdd-brand-select-label{flex:1;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bdd-brand-select-caret{color:var(--text3);font-size:11px;transition:transform .15s;flex-shrink:0}
+.bdd-brand-select.open .bdd-brand-select-caret{transform:rotate(180deg)}
+.bdd-brand-select-panel{display:none;flex-direction:column;position:absolute;top:0;left:calc(100% + 8px);width:min(360px,90vw);max-height:360px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.16);z-index:40;overflow:hidden}
+.bdd-brand-select.open .bdd-brand-select-panel{display:flex}
+.bdd-brand-select-search-wrap{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.bdd-brand-select-search-icon{font-size:12px;opacity:.6}
+.bdd-brand-select-search{flex:1;min-width:0;border:none;outline:none;font-size:13px;font-family:"DM Sans",sans-serif;background:transparent;color:var(--text)}
+.bdd-brand-select-count{font-size:10.5px;color:var(--text3);font-weight:600;white-space:nowrap;flex-shrink:0}
+.bdd-brand-select-list{overflow-y:auto;padding:6px}
+.bdd-brand-select-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--text2)}
+.bdd-brand-select-item:hover,.bdd-brand-select-item.focused{background:var(--surface2)}
+.bdd-brand-select-item.active{background:var(--accent-lt);color:var(--accent)}
+.bdd-brand-select-item-swatch{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.bdd-brand-select-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bdd-brand-select-item-name mark{background:none;color:inherit;font-weight:800;padding:0}
+.bdd-brand-select-item-meta{font-size:10.5px;color:var(--text3);font-weight:600;flex-shrink:0}
+.bdd-brand-select-empty{padding:20px 12px;text-align:center;font-size:12px;color:var(--text3)}
+
+/* ── Generic searchable combo-filter (Sentiment tab brand filters, etc.) ── */
+.combo-filter{position:relative;display:inline-block;font-family:"DM Sans",sans-serif}
+.combo-filter-trigger{display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:8px;border:1.5px solid var(--border2);background:var(--surface);cursor:pointer;font-size:12px;font-weight:600;color:var(--text);max-width:220px}
+.combo-filter-trigger:hover{border-color:var(--accent)}
+.combo-filter.open .combo-filter-trigger{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-lt)}
+.combo-filter-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:left}
+.combo-filter-caret{color:var(--text3);font-size:10px;transition:transform .15s;flex-shrink:0}
+.combo-filter.open .combo-filter-caret{transform:rotate(180deg)}
+.combo-filter-panel{display:none;flex-direction:column;position:absolute;top:calc(100% + 6px);left:0;width:min(300px,85vw);max-height:320px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.16);z-index:40;overflow:hidden}
+.combo-filter.open .combo-filter-panel{display:flex}
+.combo-filter-search-wrap{display:flex;align-items:center;gap:7px;padding:8px 10px;border-bottom:1px solid var(--border);flex-shrink:0}
+.combo-filter-search-icon{font-size:11px;opacity:.6}
+.combo-filter-search{flex:1;min-width:0;border:none;outline:none;font-size:12.5px;font-family:"DM Sans",sans-serif;background:transparent;color:var(--text)}
+.combo-filter-count{font-size:10px;color:var(--text3);font-weight:600;white-space:nowrap;flex-shrink:0}
+.combo-filter-list{overflow-y:auto;padding:5px}
+.combo-filter-item{display:flex;align-items:center;padding:7px 9px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text2)}
+.combo-filter-item:hover,.combo-filter-item.focused{background:var(--surface2)}
+.combo-filter-item.active{background:var(--accent-lt);color:var(--accent)}
+.combo-filter-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.combo-filter-empty{padding:16px 10px;text-align:center;font-size:11.5px;color:var(--text3)}
+.sent-cap-note{font-size:11px;color:var(--text3);font-weight:500;margin:6px 0 2px;padding:8px 12px;background:var(--surface2);border-radius:8px}
+
+/* ── Campaign tab multi-select dropdown (Select Campaigns) ── */
+.camp-select{position:relative;max-width:360px;font-family:"DM Sans",sans-serif}
+.camp-select-trigger{display:flex;align-items:center;gap:9px;width:100%;height:38px;padding:0 12px;border-radius:10px;border:1.5px solid var(--border2);background:var(--surface);cursor:pointer;font-size:13px;font-weight:600;color:var(--text);transition:border-color .15s,box-shadow .15s}
+.camp-select-trigger:hover{border-color:var(--accent)}
+.camp-select.open .camp-select-trigger{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-lt)}
+.camp-select-label{flex:1;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.camp-select-caret{color:var(--text3);font-size:11px;transition:transform .15s;flex-shrink:0}
+.camp-select.open .camp-select-caret{transform:rotate(180deg)}
+.camp-select-panel{display:none;flex-direction:column;position:absolute;top:0;left:calc(100% + 8px);width:min(380px,90vw);max-height:400px;background:var(--surface);border:1px solid var(--border2);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.16);z-index:40;overflow:hidden}
+.camp-select.open .camp-select-panel{display:flex}
+.camp-select-search-wrap{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.camp-select-search-icon{font-size:12px;opacity:.6}
+.camp-select-search{flex:1;min-width:0;border:none;outline:none;font-size:13px;font-family:"DM Sans",sans-serif;background:transparent;color:var(--text)}
+.camp-select-count{font-size:10.5px;color:var(--text3);font-weight:600;white-space:nowrap;flex-shrink:0}
+.camp-select-actions{display:flex;gap:7px;padding:8px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.camp-select-action-btn{font-size:11px;font-weight:600;padding:5px 11px;border-radius:6px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .15s;font-family:"DM Sans",sans-serif}
+.camp-select-action-btn:hover{border-color:var(--accent);color:var(--accent)}
+.camp-select-action-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.camp-select-action-btn--clear{margin-left:auto}
+.camp-select-list{overflow-y:auto;padding:6px}
+.camp-select-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--text2)}
+.camp-select-item:hover{background:var(--surface2)}
+.camp-select-item.active{background:var(--accent-lt);color:var(--accent)}
+.camp-select-item-check{width:14px;flex-shrink:0;font-size:11px;font-weight:800;color:var(--accent);text-align:center}
+.camp-select-item-swatch{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.camp-select-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.camp-select-item-meta{font-size:10.5px;color:var(--text3);font-weight:600;flex-shrink:0}
+.camp-select-empty{padding:20px 12px;text-align:center;font-size:12px;color:var(--text3)}
+
+/* ── Campaign selection modal ── */
+.camp-modal-overlay{position:fixed;inset:0;background:rgba(15,17,23,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;font-family:"DM Sans",sans-serif}
+.camp-modal{background:var(--surface);border-radius:18px;box-shadow:0 24px 64px rgba(0,0,0,.28);width:min(680px,94vw);max-height:min(720px,88vh);display:flex;flex-direction:column;overflow:hidden;padding:24px 26px 20px}
+.camp-modal-header{margin-bottom:16px}
+.camp-modal-title{font-family:"Bricolage Grotesque",sans-serif;font-size:19px;font-weight:800;color:var(--text);letter-spacing:-.2px;margin-bottom:4px}
+.camp-modal-subtitle{font-size:12.5px;color:var(--text3);font-weight:500}
+.camp-modal-search-wrap{display:flex;align-items:center;gap:9px;padding:11px 16px;background:var(--surface2);border:1.5px solid transparent;border-radius:10px;margin-bottom:12px;flex-shrink:0}
+.camp-modal-search-wrap:focus-within{background:var(--surface);border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-lt)}
+.camp-modal-search-icon{font-size:13px;opacity:.6}
+.camp-modal-search{flex:1;min-width:0;border:none;outline:none;font-size:13.5px;font-family:"DM Sans",sans-serif;background:transparent;color:var(--text)}
+.camp-modal-actions{display:flex;gap:9px;margin-bottom:14px;flex-shrink:0}
+.camp-modal-action-btn{font-size:12.5px;font-weight:600;padding:7px 16px;border-radius:8px;border:1.5px solid var(--border2);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .15s;font-family:"DM Sans",sans-serif}
+.camp-modal-action-btn:hover{border-color:var(--accent);color:var(--accent)}
+.camp-modal-action-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.camp-modal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px 18px;overflow-y:auto;padding:2px 2px 4px;flex:1;align-content:start}
+.camp-modal-item{display:flex;align-items:center;gap:9px;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--text2);min-width:0;background:var(--surface2);border-radius:9px;padding:10px 12px;transition:background .15s}
+.camp-modal-item:hover{background:var(--border)}
+.camp-modal-item:has(input:checked){background:var(--accent-lt);color:var(--accent)}
+.camp-modal-item input[type="checkbox"]{flex-shrink:0;width:15px;height:15px;cursor:pointer;accent-color:var(--accent)}
+.camp-modal-item-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.camp-modal-empty{grid-column:1/-1;padding:28px 12px;text-align:center;font-size:12.5px;color:var(--text3)}
+.camp-modal-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;margin-top:12px;border-top:1px solid var(--border);flex-shrink:0}
+.camp-modal-status{font-size:12px;color:var(--text3);font-weight:500}
+.camp-modal-done-btn{font-size:13px;font-weight:700;padding:9px 26px;border-radius:9px;border:none;background:var(--accent);color:#fff;cursor:pointer;transition:opacity .15s;font-family:"DM Sans",sans-serif}
+.camp-modal-done-btn:hover{opacity:.9}
 .bdd-kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
 .bdd-kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 18px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
 .bdd-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
@@ -848,6 +950,30 @@ textarea:focus{border-color:var(--accent)!important}
 .kb-keys{display:flex;gap:4px;align-items:center}
 .kb-close{margin-top:16px;width:100%;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;color:var(--text2);cursor:pointer;transition:all .15s}
 .kb-close:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt)}
+
+/* ── "See more" campaign modal ── */
+.camp-see-more-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;text-align:center;transition:all .15s;border:1.5px dashed var(--border2);background:var(--bg);color:var(--text3);grid-column:span 1}
+.camp-see-more-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt)}
+#campAllOverlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(3px);animation:fadeIn .15s ease}
+#campAllOverlay.show{display:flex}
+.camp-all-modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px 24px;width:min(760px,94vw);max-height:88vh;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.2);animation:slideUp .2s cubic-bezier(.34,1.2,.64,1)}
+.camp-all-modal-title{font-family:"Bricolage Grotesque",sans-serif;font-size:16px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.camp-all-modal-sub{font-size:12px;color:var(--text3);margin-bottom:14px}
+.camp-all-search{width:100%;height:36px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:0 12px 0 34px;font-size:13px;font-family:"DM Sans",sans-serif;color:var(--text);outline:none;transition:border-color .15s;margin-bottom:12px;flex-shrink:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238890A8' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:11px center}
+.camp-all-search:focus{border-color:var(--accent)}
+.camp-all-actions{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;flex-shrink:0}
+.camp-all-list{overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:7px;padding-right:4px;flex:0 1 auto;align-content:start;min-height:60px;max-height:min(58vh,520px)}
+.camp-all-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;transition:all .15s;font-size:12px;font-weight:500;color:var(--text2)}
+.camp-all-row:hover{border-color:var(--border2)}
+.camp-all-row.active{background:var(--accent-lt);border-color:var(--accent)}
+.camp-all-row .cchk{width:15px;height:15px;border-radius:4px;border:1.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;transition:all .15s}
+.camp-all-row.active .cchk{background:var(--accent);border-color:var(--accent)}
+.camp-all-row .cname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.camp-all-empty{grid-column:1/-1;text-align:center;padding:24px;color:var(--text3);font-size:12px}
+.camp-all-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);flex-shrink:0}
+.camp-all-count{font-size:12px;color:var(--text3);font-weight:500}
+.camp-all-done{padding:8px 20px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-family:"DM Sans",sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.camp-all-done:hover{background:#1d4ed8}
 .kb-hint{position:fixed;bottom:24px;right:24px;z-index:50;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px;box-shadow:var(--shadow-sm);opacity:0;transition:opacity .3s;pointer-events:none}
 .kb-hint.show{opacity:1;pointer-events:auto}
 .kb-hint .kbd{font-size:10px}
@@ -891,7 +1017,7 @@ textarea:focus{border-color:var(--accent)!important}
 <body>
 
 <div class="loading-screen" id="loadingScreen">
-  <img id="loadLogoImg" alt="InsightEra logo" style="width:120px;height:120px;object-fit:contain;margin-bottom:4px">
+  <img id="loadLogoImg" src="data:image/png;base64,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" alt="InsightEra logo" style="width:120px;height:120px;object-fit:contain;margin-bottom:4px">
   <div class="load-logo"><span style="color:#FF7A01">INSE</span> <span>Social Listening Lab</span></div>
   <div class="load-bar-wrap"><div class="load-bar"></div></div>
   <div class="load-sub">Initialising Python runtime</div>
@@ -937,6 +1063,24 @@ textarea:focus{border-color:var(--accent)!important}
     <div class="kb-row"><span class="kb-desc">Show this cheat sheet</span><div class="kb-keys"><kbd class="kbd">?</kbd></div></div>
     <div class="kb-row"><span class="kb-desc">Close overlay / modal</span><div class="kb-keys"><kbd class="kbd">Esc</kbd></div></div>
     <button class="kb-close" id="kbCloseBtn">Close</button>
+  </div>
+</div>
+
+<!-- "See more" modal — browse & select from the FULL campaign list -->
+<div id="campAllOverlay">
+  <div class="camp-all-modal">
+    <div class="camp-all-modal-title">🎯 All Campaigns</div>
+    <div class="camp-all-modal-sub" id="campAllModalSub">Select any number of campaigns — selections stay in sync with the panel behind this.</div>
+    <input type="text" class="camp-all-search" id="campAllSearch" placeholder="Search campaigns…">
+    <div class="camp-all-actions">
+      <button class="kb-close" id="campAllSelectAllBtn" style="margin-top:0;width:auto;padding:6px 14px;font-size:12px">Select All</button>
+      <button class="kb-close" id="campAllClearBtn" style="margin-top:0;width:auto;padding:6px 14px;font-size:12px">Clear</button>
+    </div>
+    <div class="camp-all-list" id="campAllList"></div>
+    <div class="camp-all-footer">
+      <span class="camp-all-count" id="campAllCount"></span>
+      <button class="camp-all-done" id="campAllDoneBtn">Done</button>
+    </div>
   </div>
 </div>
 
@@ -1965,8 +2109,24 @@ textarea:focus{border-color:var(--accent)!important}
 
           <!-- Brand selector -->
           <div class="bdd-selector">
-            <div class="bdd-selector-label">Select Brand</div>
-            <div class="bdd-brand-pills" id="bddBrandPills"></div>
+            <div style="flex:1;min-width:0">
+              <div class="bdd-selector-label" id="bddSelectorLabel" style="margin-bottom:6px">Select Brand</div>
+              <div class="bdd-brand-select" id="bddBrandSelect">
+                <button type="button" class="bdd-brand-select-trigger" id="bddBrandTrigger" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="bdd-brand-select-swatch" id="bddBrandTriggerSwatch"></span>
+                  <span class="bdd-brand-select-label" id="bddBrandTriggerLabel">Select a brand</span>
+                  <span class="bdd-brand-select-caret">⌄</span>
+                </button>
+                <div class="bdd-brand-select-panel" id="bddBrandPanel" role="listbox">
+                  <div class="bdd-brand-select-search-wrap">
+                    <span class="bdd-brand-select-search-icon">🔍</span>
+                    <input type="text" id="bddBrandSearchInput" class="bdd-brand-select-search" placeholder="Search brands…" autocomplete="off">
+                    <span class="bdd-brand-select-count" id="bddBrandSelectCount"></span>
+                  </div>
+                  <div class="bdd-brand-select-list" id="bddBrandSelectList"></div>
+                </div>
+              </div>
+            </div>
             <div class="bdd-selector-divider"></div>
             <div style="flex-shrink:0">
               <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--text3);margin-bottom:5px;text-align:center">View By</div>
@@ -3402,6 +3562,14 @@ async function triggerPipeline() {
     document.getElementById('fileBadge').textContent =
       `✔ ${csvFile1.name}\n${totalLabel}`;
 
+    if (rawData.length > 20000) {
+      showToast(
+        `Large file (${totalLabel}) — processing may take a while and the browser may say "Page Unresponsive". ` +
+        `Click "Wait", don't close the tab.`,
+        'info', 8000
+      );
+    }
+
     // Pause here for schema confirmation instead of assuming Brands/Topics/Campaign.
     // The rest of the pipeline (step1 onward) runs once the user confirms in the modal.
     _pendingMergedText = mergedText;
@@ -3443,7 +3611,10 @@ async function continuePipelineAfterSchemaConfirm() {
   const totalLabel = _pendingTotalLabel;
   try {
     setStep('step1','running');
+    console.log(`[pipeline] step1 (push CSV into pyodide) starting… mergedText length=${mergedText.length.toLocaleString()} chars`);
+    const _t1 = performance.now();
     await pushDFtoPyodide(mergedText, confirmedSchemaConfig);
+    console.log(`[pipeline] step1 done in ${(performance.now()-_t1).toFixed(0)}ms`);
     setStep('step1','done');
 
     await runMainPipeline();
@@ -3552,6 +3723,15 @@ async function runMainPipeline() {
   const pipeline = [
     // ── STEP 2: strip outer brackets → split → explode Topics then Brands ─────
     // e.g. "[amazon, starbucks]" → strip → "amazon, starbucks" → split → explode
+    // NOTE: Campaign is intentionally NOT exploded here. It was previously
+    // exploded as a third dimension (Topics × Brands × Campaign), which
+    // multiplies row count for every campaign value tagged on a post, but
+    // nothing downstream of this step ever reads 'Campaign' from this
+    // dataframe — campaign metrics are computed later from a separate,
+    // lighter single-axis explode of the raw df. On datasets with multiple
+    // campaigns per post this was silently multiplying the working
+    // dataframe size (and every groupby/pivot cost after it) for zero
+    // benefit — a likely cause of freezes on larger uploads.
     ['step2', `
 def clean_and_split(val):
     s = str(val).strip()
@@ -3563,30 +3743,30 @@ def clean_and_split(val):
 mfg = df.copy()
 mfg['_topics_list']   = mfg['Topics'].apply(clean_and_split)
 mfg['_brands_list']   = mfg['Brands'].apply(clean_and_split)
-if 'Campaign' in mfg.columns:
-    mfg['_campaign_list'] = mfg['Campaign'].apply(clean_and_split)
-else:
-    mfg['_campaign_list'] = [['(no campaign)']] * len(mfg)
 
-# Explode Topics → Brands → Campaign — each row becomes one Brand + one Topic + one Campaign
+# Explode Topics → Brands — each row becomes one Brand + one Topic.
+# (Campaign is deliberately left un-exploded here — see note above.)
 mfg['Topics'] = mfg['_topics_list']
 filtered_mfg_exploded = mfg.explode('Topics').copy()
 
 filtered_mfg_exploded['Brands'] = filtered_mfg_exploded['_brands_list']
-filtered_mfg_exploded_2 = filtered_mfg_exploded.explode('Brands').copy()
-
-filtered_mfg_exploded_2['Campaign'] = filtered_mfg_exploded_2['_campaign_list']
-filtered_mfg_exploded_final = filtered_mfg_exploded_2.explode('Campaign').copy()
+filtered_mfg_exploded_final = filtered_mfg_exploded.explode('Brands').copy()
 
 filtered_mfg_exploded_final['Brands']   = filtered_mfg_exploded_final['Brands'].astype(str).str.strip()
 filtered_mfg_exploded_final['Topics']   = filtered_mfg_exploded_final['Topics'].astype(str).str.strip()
-filtered_mfg_exploded_final['Campaign'] = filtered_mfg_exploded_final['Campaign'].astype(str).str.strip()
 filtered_mfg_exploded_final['engagement_score'] = pd.to_numeric(filtered_mfg_exploded_final['engagement_score'], errors='coerce').fillna(0)
+
+# Cheap unique-campaign count for the log — derived from the un-exploded
+# list column, so it costs nothing proportional to row count.
+if 'Campaign' in mfg.columns:
+    _uniq_campaigns = sorted({c for lst in mfg['Campaign'].apply(clean_and_split) for c in lst})
+else:
+    _uniq_campaigns = []
 
 print("Exploded shape:", filtered_mfg_exploded_final.shape)
 print("Unique Brands:",    sorted(filtered_mfg_exploded_final['Brands'].unique()))
 print("Unique Topics:",    sorted(filtered_mfg_exploded_final['Topics'].unique()))
-print("Unique Campaigns:", sorted(filtered_mfg_exploded_final['Campaign'].unique()))
+print("Unique Campaigns:", _uniq_campaigns)
 `],
 
     // ── STEP 3: sentiment count pivot — sum per Brand+Topic+sentiment ─────────
@@ -3746,6 +3926,15 @@ sentiment_counts_by_brand = sentiment_counts_by_brand[combined_data_with_blanks.
 
     // ── STEP 7: assemble final_sw_data + JSON for UI ──────────────────────────
     ['step7', `
+import time as _t7
+_step7_timings = {}
+_t7_mark = _t7.time()
+def _t7_lap(_name):
+    global _t7_mark
+    _now = _t7.time()
+    _step7_timings[_name] = round(_now - _t7_mark, 2)
+    _t7_mark = _now
+
 title_row_2 = pd.DataFrame({col: "" for col in combined_data_with_blanks.columns}, index=[0])
 title_row_2.iloc[0, 0] = "Sentiment by Mention"
 
@@ -3769,10 +3958,15 @@ final_sw_data = pd.concat([
 total_mention_val = int(df['id'].nunique())
 total_eng_val     = float(pd.to_numeric(df['engagement_score'], errors='coerce').sum())
 total_view_val    = float(pd.to_numeric(df['view_count'], errors='coerce').sum()) if 'view_count' in df.columns else 0.0
+_t7_lap('final_sw_data+summary')
 
 # ── Build topic rows for Report UI ───────────────────────────────────────────
+# NOTE: previously used combined_data_with_blanks.iterrows(), which builds a
+# full pandas Series object per row — one of the slowest ways to walk a
+# dataframe, and a likely major contributor to slow loads at scale.
+# to_dict('records') does the equivalent conversion in one vectorized pass.
 _topic_rows = []
-for _, row in combined_data_with_blanks.iterrows():
+for row in combined_data_with_blanks.to_dict('records'):
     b = str(row.get('Brands', ''))
     t = str(row.get('Topics', ''))
     if b == '' and t == '':
@@ -3790,16 +3984,17 @@ for _, row in combined_data_with_blanks.iterrows():
 
 # ── Build sentiment rows for Report UI ───────────────────────────────────────
 _sent_rows = []
-for _, row in sentiment_counts_by_brand.iterrows():
+def _i(v):
+    try: return int(v)
+    except: return 0
+for row in sentiment_counts_by_brand.to_dict('records'):
     b = str(row.get('Brands', ''))
     if not b or b in ('', 'nan'): continue
-    def _i(v):
-        try: return int(v)
-        except: return 0
     neg = _i(row.get('negative', 0))
     neu = _i(row.get('neutral',  0))
     pos = _i(row.get('positive', 0))
     _sent_rows.append({'brand':b,'negative':neg,'neutral':neu,'positive':pos,'total':neg+neu+pos})
+_t7_lap('topic_rows+sent_rows')
 
 # ── Per-brand and per-topic metrics (engagement, mention, view) ───────────────
 # IMPORTANT: must use single-axis explodes from the RAW df (not filtered_mfg_exploded_final)
@@ -3824,6 +4019,7 @@ _df_brands_exploded = _df_brands_exploded[_df_brands_exploded['_bl'].notna() & (
 eng_by_brand  = _df_brands_exploded.groupby('_bl')['engagement_score'].sum().to_dict()
 men_by_brand  = _df_brands_exploded.groupby('_bl')['id'].nunique().to_dict()
 view_by_brand = _df_brands_exploded.groupby('_bl')['view_count'].sum().to_dict()
+_t7_lap('brand_axis_explode')
 
 # --- Topic-axis explode ---
 _df_topics = df.copy()
@@ -3836,6 +4032,7 @@ _df_topics_exploded = _df_topics_exploded[_df_topics_exploded['_tl'].notna() & (
 eng_by_topic  = _df_topics_exploded.groupby('_tl')['engagement_score'].sum().to_dict()
 men_by_topic  = _df_topics_exploded.groupby('_tl')['id'].nunique().to_dict()
 view_by_topic = _df_topics_exploded.groupby('_tl')['view_count'].sum().to_dict()
+_t7_lap('topic_axis_explode')
 
 # --- Campaign-axis explode ---
 _df_campaigns = df.copy()
@@ -3856,6 +4053,7 @@ view_by_campaign = _df_campaigns_exploded.groupby('_cl')['view_count'].sum().to_
 view_by_source = df.groupby('source')['view_count'].sum().to_dict() if 'source' in df.columns and 'view_count' in df.columns else {}
 eng_by_source  = df.groupby('source')['engagement_score'].sum().to_dict() if 'source' in df.columns else {}
 men_by_source  = df.groupby('source')['id'].nunique().to_dict() if 'source' in df.columns else {}
+_t7_lap('campaign_axis_explode+source_metrics')
 
 # ── Brand × Topic sentiment (for stacked sentiment chart) ─────────────────────
 _CANONICAL_TOPIC_ORDER = ['product', 'promotion', 'price', 'branding', 'service', 'activity']
@@ -3878,6 +4076,7 @@ for b in _brand_topic_sent:
     for t in _desired_topics:
         if t not in _brand_topic_sent[b]:
             _brand_topic_sent[b][t] = {'positive':0,'neutral':0,'negative':0}
+_t7_lap('brand_topic_sentiment')
 
 # ── All-brand aggregated topic sentiment ──────────────────────────────────────
 # Built by iterating _desired_topics explicitly (not the raw groupby result) so
@@ -3890,6 +4089,7 @@ for (t,s), v in _at_sent.items():
     if t not in _at_lookup: _at_lookup[t] = {'positive':0,'neutral':0,'negative':0}
     _at_lookup[t][s] = int(v)
 _all_topic_sent = {t: _at_lookup.get(t, {'positive':0,'neutral':0,'negative':0}) for t in _desired_topics}
+_t7_lap('all_topic_sentiment')
 
 # ── Brand × Channel (source) engagement & mention ─────────────────────────────
 # Uses brand-only exploded df so each post counted once per brand per source
@@ -3908,6 +4108,7 @@ for (b, s), v in (_bc_men.items() if hasattr(_bc_men, 'items') else []):
 for (b, s), v in (_bc_view.items() if hasattr(_bc_view, 'items') else []):
     if b not in _brand_channel_view: _brand_channel_view[b] = {}
     _brand_channel_view[b][str(s)] = float(v)
+_t7_lap('brand_channel_matrix')
 
 # ── Extra dimensions (schema-driven, e.g. Product / Sub-Attribute / Detail) ──
 # Any column the schema review marked "extra" gets the same single-axis
@@ -3979,197 +4180,29 @@ for _freq, _gran in _GRANULARITIES:
             _xdim_periods[_gran] = {'hasEnoughData': False, 'label': None, 'buckets': _gb, 'bucketLabels': [_format_period_label(_b, _gran) for _b in _gb]}
     else:
         _xdim_periods[_gran] = {'hasEnoughData': False, 'label': None, 'buckets': [], 'bucketLabels': []}
+_t7_lap('xdim_periods')
 
 # ── Per-brand time-bucketed series (day/week/month) — powers Brand Deep-Dive's
 #    Change KPI card, using the exact same DoD/WoW/MoM mechanism (global
 #    bucket lists, _pct_change helper) already built for More Breakdowns,
 #    so the two tabs behave identically even though this is a different axis
 #    (single brand, not a category within an extra dimension).
+#
+# LAZY: this used to run here unconditionally (3 granularities × a full
+# brand-exploded pivot each), which is one of the most expensive parts of
+# the whole pipeline and runs even if the user never opens Brand Deep-Dive.
+# It's now computed on demand — see ensureBrandTrendComputed() in JS,
+# triggered on first visit to the Brand tab — using the exact same code,
+# since df/clean_and_split/_xdim_periods/_GRANULARITIES all stay alive as
+# Pyodide globals between calls.
 _brand_trend_by_granularity = {}
-if _HAS_DATES:
-    _brands_exploded = df.copy()
-    _brands_exploded['Brands'] = _brands_exploded['Brands'].apply(clean_and_split)
-    _brands_exploded = _brands_exploded.explode('Brands')
-    _brands_exploded = _brands_exploded[_brands_exploded['Brands'].notna() & (_brands_exploded['Brands'] != '')]
-    _all_brand_names = sorted(_brands_exploded['Brands'].astype(str).str.strip().unique())
-    _brands_exploded['Brands'] = _brands_exploded['Brands'].astype(str).str.strip()
-    for _freq, _gran in _GRANULARITIES:
-        _global_buckets = _xdim_periods[_gran]['buckets']
-        if not _global_buckets or not _all_brand_names:
-            continue
-        _bdf = _brands_exploded.copy()
-        _bdf['_dt'] = pd.to_datetime(_bdf['created_at'], errors='coerce')
-        _bdf = _bdf[_bdf['_dt'].notna()]
-        if not len(_bdf):
-            continue
-        _bdf['_bucket'] = _bdf['_dt'].dt.to_period(_freq).astype(str)
-        _bpivot_men = _bdf.groupby(['_bucket', 'Brands'])['id'].nunique().unstack(fill_value=0)
-        _bpivot_men = _bpivot_men.reindex(index=_global_buckets, columns=_all_brand_names, fill_value=0)
-        _bpivot_eng = _bdf.groupby(['_bucket', 'Brands'])['engagement_score'].sum().unstack(fill_value=0)
-        _bpivot_eng = _bpivot_eng.reindex(index=_global_buckets, columns=_all_brand_names, fill_value=0)
-        _brand_trend_by_granularity[_gran] = {
-            'hasEnoughData': len(_global_buckets) >= 2,
-            'buckets': list(_global_buckets),
-            'seriesEngagement': {str(b): [float(v) for v in _bpivot_eng[b].tolist()] for b in _all_brand_names},
-            'seriesMentions': {str(b): [int(v) for v in _bpivot_men[b].tolist()] for b in _all_brand_names},
-        }
 
+# LAZY: same story — extra-dimension panels (heatmap + 3-granularity trend
+# per dimension, per category) are the OTHER most expensive part of the
+# pipeline and scale with however many "extra" columns the schema review
+# found. Computed on demand — see ensureExtraDimensionsComputed() in JS,
+# triggered on first visit to the More Breakdowns tab.
 _extra_dimensions = {}
-for _xd in _schema_cfg.get('extraDims', []):
-    _col = _xd.get('column')
-    if not _col or _col not in df.columns:
-        continue
-    _xdf = df.copy()
-    _xdf['_xl'] = _xdf[_col].apply(_clean_split)
-    _xde = _xdf.explode('_xl')
-    _xde = _xde[_xde['_xl'].notna() & (_xde['_xl'] != '')]
-    _xeng = _xde.groupby('_xl')['engagement_score'].sum()
-    _xmen = _xde.groupby('_xl')['id'].nunique()
-    _xeng_dict = _xeng.to_dict()
-
-    # Sentiment split per category — fills a real gap: extra dimensions never
-    # had sentiment info before, only an engagement ranking.
-    _xsent = _xde.groupby(['_xl', 'sentiment'])['id'].nunique().unstack(fill_value=0) if 'sentiment' in _xde.columns else pd.DataFrame()
-    for _sc in ['positive', 'neutral', 'negative']:
-        if _sc not in _xsent.columns:
-            _xsent[_sc] = 0
-    _xsent_dict = _xsent.to_dict(orient='index') if not _xsent.empty else {}
-
-    def _pct_change(_recent, _earlier):
-        # None means "not enough history to compare" (e.g. only one bucket
-        # exists, or the category is absent from the previous bucket) — the
-        # UI shows a dash for this, not a misleading 0% or divide-by-zero.
-        if _earlier == 0:
-            return None if _recent == 0 else 100.0
-        return round((_recent - _earlier) / _earlier * 100, 1)
-
-    # 'others' is a catch-all bucket, not a ranked category — always show it
-    # last regardless of its engagement total, same treatment as the main
-    # Topic taxonomy. Everything else is ranked by engagement descending.
-    # Capped generously (not the old 12) so the UI can re-rank by mentions
-    # instead of engagement without silently missing categories that rank
-    # highly on mentions but not on engagement.
-    _others_key = next((k for k in _xeng_dict if str(k).strip().lower() == 'others'), None)
-    _ranked = sorted([(k, v) for k, v in _xeng_dict.items() if k != _others_key], key=lambda kv: kv[1], reverse=True)
-    _slice_n = 19 if _others_key is not None else 20
-    _ranked_names = [k for k, v in _ranked[:_slice_n]]
-    if _others_key is not None:
-        _ranked_names.append(_others_key)
-
-    _top = []
-    for _n in _ranked_names:
-        _s = _xsent_dict.get(_n, {'positive':0,'neutral':0,'negative':0})
-        _pos, _neu, _neg = int(_s.get('positive',0)), int(_s.get('neutral',0)), int(_s.get('negative',0))
-        _sent_total = _pos + _neu + _neg
-        _mentions = int(_xmen.get(_n, 0))
-        _eng = float(_xeng_dict[_n])
-        _top.append({
-            'name': str(_n), 'engagement': _eng, 'mentions': _mentions,
-            'positive': _pos, 'neutral': _neu, 'negative': _neg,
-            # Engagement rate: average engagement per post — reveals "went viral
-            # a few times" (high rate, low mentions) vs "steady broad reach"
-            # (lower rate, high mentions), which raw totals alone can't show.
-            'engagementRate': round(_eng / _mentions, 1) if _mentions else 0,
-            # Net Sentiment Score, same formula already used in Brand Deep-Dive —
-            # a signed number to rank/scan by, instead of eyeballing bar color.
-            'netSentiment': round((_pos - _neg) / _sent_total * 100, 1) if _sent_total else None,
-            # changeByGranularity is populated below, per DoD/WoW/MoM, once
-            # the time-bucketing for this dimension has been computed.
-        })
-
-    _entry = {'label': _xd.get('label', _col), 'topValues': _top, 'uniqueCount': int(_xeng.shape[0])}
-
-    # Only build the heatmap/trend for dimensions with more than one real
-    # category — a matrix or trend line with a single constant value (like
-    # PTG's Crisis column, which is 100% "others") isn't analytically useful.
-    if int(_xeng.shape[0]) > 1:
-        # ── Brand x category heatmap (capped to stay readable) ──────────────
-        # Category/brand SELECTION is fixed by engagement rank regardless of
-        # which metric is displayed — only the cell values switch on toggle,
-        # so the axes don't jump around when the user changes metric.
-        _hx_brand_col = _schema_cfg.get('brandDim')
-        if _hx_brand_col and _hx_brand_col in df.columns:
-            _hx = df.copy()
-            _hx[_hx_brand_col] = _hx[_hx_brand_col].apply(clean_and_split)
-            _hx = _hx.explode(_hx_brand_col)
-            _hx[_col] = _hx[_col].apply(_clean_split)
-            _hx = _hx.explode(_col)
-            _hx = _hx[_hx[_hx_brand_col].notna() & (_hx[_hx_brand_col]!='') & _hx[_col].notna() & (_hx[_col]!='')]
-            _top_brands = list(_hx.groupby(_hx_brand_col)['engagement_score'].sum().sort_values(ascending=False).head(6).index)
-            _top_cats = _ranked_names[:8]
-            _hx_f = _hx[_hx[_hx_brand_col].isin(_top_brands) & _hx[_col].isin(_top_cats)]
-            _hx_pivot_eng = _hx_f.groupby([_hx_brand_col, _col])['engagement_score'].sum().unstack(fill_value=0)
-            _hx_pivot_eng = _hx_pivot_eng.reindex(index=_top_brands, columns=_top_cats, fill_value=0)
-            _hx_pivot_men = _hx_f.groupby([_hx_brand_col, _col])['id'].nunique().unstack(fill_value=0)
-            _hx_pivot_men = _hx_pivot_men.reindex(index=_top_brands, columns=_top_cats, fill_value=0)
-            _entry['heatmap'] = {
-                'brands': [str(b) for b in _top_brands],
-                'categories': [str(c) for c in _top_cats],
-                'matrixEngagement': [[float(v) for v in row] for row in _hx_pivot_eng.values.tolist()],
-                'matrixMentions': [[int(v) for v in row] for row in _hx_pivot_men.values.tolist()],
-            }
-
-        # ── Time bucketing at ALL THREE granularities (day/week/month), not
-        #    just the auto-selected default — lets the DoD/WoW/MoM buttons
-        #    switch instantly client-side instead of re-running the pipeline.
-        #    Computed for EVERY category (not just the chart's top 5) and
-        #    reindexed against the SAME global bucket list used by every
-        #    other dimension, so a user can pick any two arbitrary periods
-        #    to compare for any category — not just "last vs previous".
-        #    The trend CHART still only draws the top 5 as lines (chartCategories)
-        #    since a 20-line chart is unreadable regardless of correctness.
-        _trend_cats = _ranked_names[:5]
-        _entry['trendByGranularity'] = {}
-        for _item in _top:
-            _item['changeByGranularity'] = {}
-        if _HAS_DATES:
-            for _freq, _gran in _GRANULARITIES:
-                _global_buckets = _xdim_periods[_gran]['buckets']
-                if not _global_buckets:
-                    continue
-                _tdf = _xde[_xde['_xl'].isin(_ranked_names)].copy()
-                _tdf['_dt'] = pd.to_datetime(_tdf['created_at'], errors='coerce')
-                _tdf = _tdf[_tdf['_dt'].notna()]
-                if not len(_tdf):
-                    continue
-                _tdf['_bucket'] = _tdf['_dt'].dt.to_period(_freq).astype(str)
-                _tpivot_men = _tdf.groupby(['_bucket', '_xl'])['id'].nunique().unstack(fill_value=0)
-                _tpivot_men = _tpivot_men.reindex(index=_global_buckets, columns=_ranked_names, fill_value=0)
-                _tpivot_eng = _tdf.groupby(['_bucket', '_xl'])['engagement_score'].sum().unstack(fill_value=0)
-                _tpivot_eng = _tpivot_eng.reindex(index=_global_buckets, columns=_ranked_names, fill_value=0)
-
-                _has_enough = len(_global_buckets) >= 2
-                # Default period-over-period = last bucket vs. the one before
-                # it (what DoD/WoW/MoM mean out of the box); the UI lets users
-                # override this to any two buckets via the From/To pickers,
-                # computed client-side from the full series shipped below.
-                if _has_enough:
-                    _last_b, _prev_b = _global_buckets[-1], _global_buckets[-2]
-                    for _item in _top:
-                        _n = _item['name']
-                        if _n not in _tpivot_eng.columns:
-                            continue
-                        _item['changeByGranularity'][_gran] = {
-                            'engagement': _pct_change(_tpivot_eng.loc[_last_b, _n], _tpivot_eng.loc[_prev_b, _n]),
-                            'mentions': _pct_change(_tpivot_men.loc[_last_b, _n], _tpivot_men.loc[_prev_b, _n]),
-                        }
-
-                _entry['trendByGranularity'][_gran] = {
-                    'hasEnoughData': _has_enough,
-                    'buckets': list(_global_buckets),
-                    'chartCategories': _trend_cats,
-                    'seriesEngagement': {str(c): [float(v) for v in _tpivot_eng[c].tolist()] for c in _ranked_names},
-                    'seriesMentions': {str(c): [int(v) for v in _tpivot_men[c].tolist()] for c in _ranked_names},
-                }
-
-        # Alias 'trend' to the auto-selected granularity so it has a sane
-        # default the instant the tab first renders, before any button click.
-        if _trend_granularity in _entry['trendByGranularity']:
-            _entry['trend'] = dict(_entry['trendByGranularity'][_trend_granularity])
-            _entry['trend']['granularity'] = _trend_granularity
-
-    _extra_dimensions[_col] = _entry
-
 _js_payload = json.dumps({
     'totalMention':    total_mention_val,
     'totalEngagement': total_eng_val,
@@ -4199,6 +4232,7 @@ _js_payload = json.dumps({
     'brandChannelMen': _brand_channel_men, # {brand: {rawSource: men}}
     'brandChannelView': _brand_channel_view, # {brand: {rawSource: view}}
 })
+_t7_lap('json_dumps_payload')
 
 # ── Google Reviews: export directly from pandas (avoids JS parseCSV
 #    dropping rows that contain embedded newlines in the text field) ──────────
@@ -4215,22 +4249,66 @@ _gr_df = _gr_df[_gr_keep] if _gr_keep else _gr_df
 # Serialise NaN as None → null in JSON so JS doesn't see "nan" strings
 _gr_df = _gr_df.where(_gr_df.notna(), other=None)
 _gr_rows_payload = _gr_df.to_json(orient='records', force_ascii=False)
+_t7_lap('gr_export')
 
 # ── All rows payload is built lazily (on AI tab open) to avoid MemoryError
 #    on large datasets. Set a sentinel so JS knows to fetch it on demand. ──────
 _all_rows_payload = '__LAZY__'
+
+import json as _json_t7
+_step7_timings_json = _json_t7.dumps(_step7_timings)
+print("STEP7_TIMINGS:", _step7_timings_json)
 `],
   ];
 
   for (const [stepId, code] of pipeline) {
     setStep(stepId,'running');
+    const _t0 = performance.now();
+    console.log(`[pipeline] ${stepId} starting…`);
     try {
       await pyodide.runPythonAsync(code);
+      const _ms = (performance.now() - _t0).toFixed(0);
+      console.log(`[pipeline] ${stepId} done in ${_ms}ms`);
+      // Best-effort row-count / memory snapshot after each step, so a hang
+      // on the NEXT step still leaves a trail of how big things got.
+      try {
+        const _diag = await pyodide.runPythonAsync(`
+import json as _json_diag
+_d = {}
+for _name in ['df','filtered_mfg_exploded_final','topic_sentiment_pivot','engagement_mention_by_topic_brand','combined_data_with_blanks','sentiment_counts_by_brand','final_sw_data']:
+    if _name in globals():
+        try:
+            _d[_name] = len(globals()[_name])
+        except Exception:
+            pass
+# Cardinality of Brands/Topics — high cardinality here (thousands of unique
+# values instead of a small curated list) is the single biggest driver of
+# slowness in every downstream groupby/pivot/explode step.
+if 'df' in globals():
+    try:
+        _d['uniqueBrandsInDf'] = int(df['Brands'].astype(str).nunique())
+    except Exception:
+        pass
+if 'filtered_mfg_exploded_final' in globals():
+    try:
+        _d['uniqueBrandsExploded'] = int(filtered_mfg_exploded_final['Brands'].astype(str).nunique())
+        _d['uniqueTopicsExploded'] = int(filtered_mfg_exploded_final['Topics'].astype(str).nunique())
+    except Exception:
+        pass
+if 'df' in globals():
+    _d['totalRows'] = int(len(df))
+if '_step7_timings' in globals():
+    _d['step7_timings_seconds'] = _step7_timings
+_json_diag.dumps(_d)
+`);
+        console.log(`[pipeline] ${stepId} row counts:`, JSON.parse(_diag));
+      } catch(_diagErr) { /* diagnostics are best-effort only */ }
       setStep(stepId,'done');
     } catch(e) {
+      const _ms = (performance.now() - _t0).toFixed(0);
       setStep(stepId,'error');
       setStatus('error','Pipeline error — check console');
-      console.error(`Pipeline error at ${stepId}:`, e.toString());
+      console.error(`[pipeline] ${stepId} FAILED after ${_ms}ms:`, e.toString());
       showToast(`Pipeline error at ${stepId} — check console`, 'error', 6000);
       return;
     }
@@ -4363,6 +4441,12 @@ const CAMP_COLORS = [
   '#ef4444','#ec4899','#14b8a6','#6366f1','#84cc16',
 ];
 
+// ── Campaign selector: compact pill grid (top 20) + "See more" modal ───────
+// Ported to match the established app pattern: a colored pill grid gives
+// quick one-click access to the top campaigns by engagement, and a
+// "See more campaigns (N total)" button opens a searchable modal for
+// anything beyond that — rather than hiding everything behind a single
+// dropdown trigger.
 function _buildCampCards(camps, metrics, containerId, activeLabelId) {
   const engMap = metrics.engagement || {};
 
@@ -4385,6 +4469,13 @@ function _buildCampCards(camps, metrics, containerId, activeLabelId) {
   const container = document.getElementById(containerId || 'campPillsContainer');
   if (!container) return;
   container.innerHTML = '';
+  // Force a column stack: some containers (e.g. campPillsContainer) default to a
+  // horizontal-scroll flex row, which pushed "See more" beside the grid instead
+  // of underneath it. Normalize so header/grid/see-more always stack vertically.
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
+  container.style.overflowX = 'visible';
+  container.style.gap = '0';
 
   // Sync campActiveCampaign (legacy / AI compat) = first selected or null
   campActiveCampaign = campActiveCampaigns.size > 0 ? [...campActiveCampaigns][0] : null;
@@ -4500,7 +4591,112 @@ function _buildCampCards(camps, metrics, containerId, activeLabelId) {
   });
 
   container.appendChild(grid);
+
+  // "See more" — only needed when there are campaigns beyond the top 20 shown here
+  const _allCampNames = camps.filter(c => c.toLowerCase() !== 'others');
+  if (_allCampNames.length > top20.length) {
+    const seeMoreWrap = document.createElement('div');
+    seeMoreWrap.style.cssText = 'margin-top:8px';
+    const seeMoreBtn = document.createElement('button');
+    seeMoreBtn.className = 'camp-see-more-btn';
+    seeMoreBtn.style.width = '100%';
+    seeMoreBtn.innerHTML = `👀 See more campaigns <span style="opacity:.7">(${_allCampNames.length} total)</span>`;
+    seeMoreBtn.addEventListener('click', () => openCampAllModal(_allCampNames, metrics, containerId));
+    seeMoreWrap.appendChild(seeMoreBtn);
+    container.appendChild(seeMoreWrap);
+  }
 }
+
+// ══════════════════════════════════════════════════════════════════════════
+// "See more" modal — browse & select from the FULL campaign list (not just
+// the top 20 shown in the compact pill grid), shared across Dashboard + AI panel
+// ══════════════════════════════════════════════════════════════════════════
+let _campAllModalCtx = { camps: [], metrics: null, containerId: 'campPillsContainer' };
+
+function openCampAllModal(camps, metrics, containerId) {
+  _campAllModalCtx = { camps, metrics, containerId };
+  const overlay = document.getElementById('campAllOverlay');
+  const searchEl = document.getElementById('campAllSearch');
+  if (!overlay) return;
+  searchEl.value = '';
+  _renderCampAllList('');
+  overlay.classList.add('show');
+  setTimeout(() => searchEl.focus(), 50);
+}
+
+function closeCampAllModal() {
+  document.getElementById('campAllOverlay')?.classList.remove('show');
+  // Refresh whichever underlying view triggered this so the two stay in sync
+  if (_campAllModalCtx.containerId === 'campPillsContainer') {
+    renderCampaignTab();
+  } else {
+    populateCampAiPills(); populateCampAiFilters(); _campAiUpdatePostCount();
+  }
+}
+
+function _renderCampAllList(filterText) {
+  const { camps, metrics } = _campAllModalCtx;
+  const engMap = (metrics && metrics.engagement) || {};
+  const listEl = document.getElementById('campAllList');
+  const countEl = document.getElementById('campAllCount');
+  if (!listEl) return;
+
+  const sorted = [...camps].sort((a, b) => {
+    const aIs26 = a.startsWith('2026'), bIs26 = b.startsWith('2026');
+    if (aIs26 !== bIs26) return aIs26 ? -1 : 1;
+    return (engMap[b] || 0) - (engMap[a] || 0);
+  });
+
+  const q = (filterText || '').trim().toLowerCase();
+  const filtered = q ? sorted.filter(c => c.toLowerCase().includes(q)) : sorted;
+
+  listEl.innerHTML = '';
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<div class="camp-all-empty">No campaigns match "${escapeHtml(filterText)}"</div>`;
+  } else {
+    filtered.forEach(c => {
+      const isActive = campActiveCampaigns.has(c);
+      const row = document.createElement('div');
+      row.className = 'camp-all-row' + (isActive ? ' active' : '');
+      row.innerHTML = `<span class="cchk">${isActive ? '✓' : ''}</span><span class="cname" title="${escapeHtml(c)}">${escapeHtml(c)}</span>`;
+      row.addEventListener('click', () => {
+        if (campActiveCampaigns.has(c)) { campActiveCampaigns.delete(c); }
+        else { campActiveCampaigns.add(c); }
+        _renderCampAllList(document.getElementById('campAllSearch').value);
+      });
+      listEl.appendChild(row);
+    });
+  }
+
+  if (countEl) {
+    countEl.textContent = campActiveCampaigns.size > 0
+      ? `${campActiveCampaigns.size} selected`
+      : 'None selected';
+  }
+}
+
+document.getElementById('campAllSearch')?.addEventListener('input', e => _renderCampAllList(e.target.value));
+document.getElementById('campAllSelectAllBtn')?.addEventListener('click', () => {
+  const q = (document.getElementById('campAllSearch').value || '').trim().toLowerCase();
+  const visible = q ? _campAllModalCtx.camps.filter(c => c.toLowerCase().includes(q)) : _campAllModalCtx.camps;
+  visible.forEach(c => campActiveCampaigns.add(c));
+  _renderCampAllList(document.getElementById('campAllSearch').value);
+});
+document.getElementById('campAllClearBtn')?.addEventListener('click', () => {
+  const q = (document.getElementById('campAllSearch').value || '').trim().toLowerCase();
+  const visible = q ? _campAllModalCtx.camps.filter(c => c.toLowerCase().includes(q)) : _campAllModalCtx.camps;
+  visible.forEach(c => campActiveCampaigns.delete(c));
+  _renderCampAllList(document.getElementById('campAllSearch').value);
+});
+document.getElementById('campAllDoneBtn')?.addEventListener('click', closeCampAllModal);
+document.getElementById('campAllOverlay')?.addEventListener('click', e => {
+  if (e.target.id === 'campAllOverlay') closeCampAllModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('campAllOverlay')?.classList.contains('show')) {
+    closeCampAllModal();
+  }
+});
 
 function renderCampaignTab() {
   _campPostsMemo = null; // force re-filter (key-based cache in _campPostsForActive will rebuild)
@@ -5382,6 +5578,110 @@ const SENT_COLORS  = { positive:'#1DC997', neutral:'#FFC145', negative:'#FF5050'
 // client schemas have different Topic/Attribute category sets and sizes.
 let TOPIC_ORDER  = ['product','promotion','price','branding','service','activity','others'];
 
+// A chart/grid that renders one element (or worse, one element PER TOPIC PER
+// SENTIMENT) per brand does not scale past a handful of brands — with a large
+// brand list this is exactly what freezes the tab. Every "show every brand at
+// once" visual in the Sentiment tab is capped to this many, ranked by volume,
+// with the rest reachable via the brand filter instead of always-rendered.
+const SENT_CHART_BRAND_CAP = 20;
+function _topBrandsByVolume(brandsList, n) {
+  const withTotals = brandsList.map(b => {
+    const row = reportData.sentRows.find(r => r.brand === b);
+    return { brand: b, total: row ? (row.total || 0) : 0 };
+  });
+  withTotals.sort((a, b) => b.total - a.total);
+  return withTotals.slice(0, n).map(x => x.brand);
+}
+
+// ── Generic searchable brand combo-filter ───────────────────────────────────
+// Replaces "one pill button per brand" filters (unusable past a dozen or so
+// brands) everywhere in the app with a single reusable click-to-open,
+// type-to-filter combobox. Builds its own DOM into `container` from scratch,
+// so multiple independent instances can coexist without id collisions.
+let _comboFilterSeq = 0;
+function buildBrandComboFilter(container, { brands, current, includeAll = true, allLabel = 'All brands', onSelect }) {
+  if (!container) return;
+  const uid = `combof_${++_comboFilterSeq}`;
+  container.innerHTML = `
+    <div class="combo-filter" id="${uid}">
+      <button type="button" class="combo-filter-trigger" aria-haspopup="listbox" aria-expanded="false">
+        <span class="combo-filter-label"></span>
+        <span class="combo-filter-caret">⌄</span>
+      </button>
+      <div class="combo-filter-panel" role="listbox">
+        <div class="combo-filter-search-wrap">
+          <span class="combo-filter-search-icon">🔍</span>
+          <input type="text" class="combo-filter-search" placeholder="Search brands…" autocomplete="off">
+          <span class="combo-filter-count"></span>
+        </div>
+        <div class="combo-filter-list"></div>
+      </div>
+    </div>`;
+  const wrap    = container.querySelector('.combo-filter');
+  const trigger = wrap.querySelector('.combo-filter-trigger');
+  const label   = wrap.querySelector('.combo-filter-label');
+  const search  = wrap.querySelector('.combo-filter-search');
+  const list    = wrap.querySelector('.combo-filter-list');
+  const countEl = wrap.querySelector('.combo-filter-count');
+
+  const items = (includeAll ? [{ value: '__all__', name: allLabel }] : [])
+    .concat(brands.map(b => ({ value: b, name: b })));
+
+  function setLabel() {
+    const cur = items.find(i => i.value === current) || items[0];
+    label.textContent = cur ? cur.name : allLabel;
+  }
+  function renderList(query) {
+    const q = (query || '').trim().toLowerCase();
+    const matches = items.filter(i => !q || i.name.toLowerCase().includes(q));
+    countEl.textContent = q ? `${matches.length.toLocaleString()} / ${items.length.toLocaleString()}` : `${items.length.toLocaleString()} options`;
+    if (!matches.length) {
+      list.innerHTML = `<div class="combo-filter-empty">No brands match "${_esc(query)}"</div>`;
+      return;
+    }
+    list.innerHTML = matches.map(i => `
+      <div class="combo-filter-item${i.value === current ? ' active' : ''}" data-value="${_esc(i.value)}" role="option">
+        <span class="combo-filter-item-name">${_esc(i.name)}</span>
+      </div>`).join('');
+    list.querySelectorAll('.combo-filter-item').forEach(el => {
+      el.addEventListener('click', () => {
+        current = el.dataset.value;
+        setLabel();
+        closePanel();
+        onSelect(current);
+      });
+    });
+  }
+  function openPanel() {
+    wrap.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+    search.value = '';
+    renderList('');
+    requestAnimationFrame(() => search.focus());
+  }
+  function closePanel() {
+    wrap.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    wrap.classList.contains('open') ? closePanel() : openPanel();
+  });
+  search.addEventListener('input', () => renderList(search.value));
+  search.addEventListener('keydown', (e) => {
+    const els = [...list.querySelectorAll('.combo-filter-item')];
+    if (!els.length) return;
+    let idx = els.findIndex(i => i.classList.contains('focused'));
+    if (e.key === 'ArrowDown') { e.preventDefault(); idx = Math.min(els.length-1, idx+1); els.forEach(i=>i.classList.remove('focused')); els[idx].classList.add('focused'); els[idx].scrollIntoView({block:'nearest'}); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); idx = Math.max(0, idx-1); els.forEach(i=>i.classList.remove('focused')); els[idx].classList.add('focused'); els[idx].scrollIntoView({block:'nearest'}); }
+    else if (e.key === 'Enter') { e.preventDefault(); (els[idx]||els[0]).click(); }
+    else if (e.key === 'Escape') { closePanel(); trigger.focus(); }
+  });
+  document.addEventListener('click', (e) => { const _path = e.composedPath ? e.composedPath() : []; if (!_path.includes(wrap)) closePanel(); });
+
+  setLabel();
+}
+
 // ── CHANNEL NORMALISATION ─────────────────────────────────────────────────────
 // Fixed channel list — everything not matched falls through to Website
 const CANONICAL_CHANNELS = ['Facebook','X (Twitter)','TikTok','Pantip','YouTube','Instagram','Google Review','Lemon8','LineVoom','Blockdit','Website'];
@@ -5442,6 +5742,11 @@ function renderCharts() {
   document.getElementById('chartsGrid').style.display='';
 
   const brandsSorted = reportData.sentRows.map(r => r.brand);
+  // Anything that renders one element per brand unconditionally (donuts,
+  // stacked bars, the topic×brand×sentiment grid) is capped — see
+  // SENT_CHART_BRAND_CAP above. Filters themselves (dropdowns) still search
+  // the FULL brand list; only the always-rendered visuals are capped.
+  const brandsCapped = _topBrandsByVolume(brandsSorted, SENT_CHART_BRAND_CAP);
 
   // ── 0. Overall sentiment health + trend over time ─────────────────────────
   renderSentimentOverview();
@@ -5452,10 +5757,10 @@ function renderCharts() {
   reportData.sentRows.forEach(r => {
     sentBrand[r.brand] = { positive:r.positive, neutral:r.neutral, negative:r.negative };
   });
-  renderSentimentStacked('sent-brand-stacked', sentBrand, brandsSorted);
+  renderSentimentStacked('sent-brand-stacked', sentBrand, brandsCapped, brandsSorted.length);
 
   // ── 1b. Sentiment donut per brand ─────────────────────────────────────────
-  renderBrandDonuts(brandsSorted);
+  renderBrandDonuts(brandsCapped, brandsSorted.length);
 
   // ── 2. Sentiment by Topic — filterable by brand ───────────────────────────
   buildTopicSentBrandFilter(brandsSorted);
@@ -5636,7 +5941,7 @@ function _setupSentTrendInteractivity(rows, pct, vbWidth, padL, padR) {
 }
 
 // ── Stacked sentiment bar ─────────────────────────────────────────────────────
-function renderSentimentStacked(id, sentData, order) {
+function renderSentimentStacked(id, sentData, order, totalBrandCount) {
   const el=document.getElementById(id); el.innerHTML='';
   const leg=document.createElement('div'); leg.className='sent-legend';
   ['positive','neutral','negative'].forEach(s=>{
@@ -5645,6 +5950,12 @@ function renderSentimentStacked(id, sentData, order) {
     leg.appendChild(i);
   });
   el.appendChild(leg);
+  if (totalBrandCount && totalBrandCount > order.length) {
+    const note = document.createElement('div');
+    note.className = 'sent-cap-note';
+    note.textContent = `Showing top ${order.length} of ${totalBrandCount.toLocaleString()} brands by volume — use Brand Deep-Dive for any other brand.`;
+    el.appendChild(note);
+  }
   order.forEach(key=>{
     const d=sentData[key]||{positive:0,neutral:0,negative:0};
     const total=(d.positive||0)+(d.neutral||0)+(d.negative||0)||1;
@@ -5670,9 +5981,16 @@ function renderSentimentStacked(id, sentData, order) {
 }
 
 // ── Brand sentiment donut charts ──────────────────────────────────────────────
-function renderBrandDonuts(brandsSorted) {
+function renderBrandDonuts(brandsSorted, totalBrandCount) {
   const el = document.getElementById('brand-donuts');
   el.innerHTML = '';
+  if (totalBrandCount && totalBrandCount > brandsSorted.length) {
+    const note = document.createElement('div');
+    note.className = 'sent-cap-note';
+    note.style.gridColumn = '1 / -1';
+    note.textContent = `Showing top ${brandsSorted.length} of ${totalBrandCount.toLocaleString()} brands by volume — use Brand Deep-Dive for any other brand.`;
+    el.appendChild(note);
+  }
 
   brandsSorted.forEach(brand => {
     const row = reportData.sentRows.find(r => r.brand === brand);
@@ -5768,21 +6086,13 @@ function renderBrandDonuts(brandsSorted) {
 
 // ── Topic sentiment brand filter pills ────────────────────────────────────────
 function buildTopicSentBrandFilter(brandsSorted) {
-  const c=document.getElementById('topic-sent-brand-filter'); c.innerHTML='';
-  const makeP=(label,value)=>{
-    const p=document.createElement('span');
-    p.className='ts-brand-pill'+(value===activeTSBrand?' active':'');
-    p.textContent=label;
-    p.addEventListener('click',()=>{
-      activeTSBrand=value;
-      document.querySelectorAll('.ts-brand-pill').forEach(x=>x.classList.remove('active'));
-      p.classList.add('active');
-      renderTopicSentBars();
-    });
-    return p;
-  };
-  c.appendChild(makeP('All brands','__all__'));
-  brandsSorted.forEach(b=>c.appendChild(makeP(b,b)));
+  const c=document.getElementById('topic-sent-brand-filter');
+  buildBrandComboFilter(c, {
+    brands: brandsSorted,
+    current: activeTSBrand,
+    allLabel: 'All brands',
+    onSelect: (value) => { activeTSBrand = value; renderTopicSentBars(); },
+  });
 }
 
 // ── Sentiment by Topic — horizontal stacked bar per topic ─────────────────────
@@ -5854,29 +6164,25 @@ function buildBrandTopicSentFilter(brandsSorted) {
   const c = document.getElementById('bts-brand-filter');
   if (!c) return;
   if (activeBTSBrand !== '__all__' && !brandsSorted.includes(activeBTSBrand)) activeBTSBrand = '__all__';
-  c.innerHTML = '';
-  const makeP = (label, value) => {
-    const p = document.createElement('span');
-    p.className = 'bts-brand-pill' + (value === activeBTSBrand ? ' active' : '');
-    p.textContent = label;
-    p.addEventListener('click', () => {
-      activeBTSBrand = value;
-      document.querySelectorAll('.bts-brand-pill').forEach(x => x.classList.remove('active'));
-      p.classList.add('active');
-      renderBrandTopicSentiment(brandsSorted);
-    });
-    return p;
-  };
-  c.appendChild(makeP('All brands', '__all__'));
-  brandsSorted.forEach(b => c.appendChild(makeP(b, b)));
+  buildBrandComboFilter(c, {
+    brands: brandsSorted,
+    current: activeBTSBrand,
+    allLabel: 'All brands',
+    onSelect: (value) => { activeBTSBrand = value; renderBrandTopicSentiment(brandsSorted); },
+  });
 }
 
 // ── Topic × Brand × Sentiment — vertical stacked bars ────────────────────────
 function renderBrandTopicSentiment(brandsSorted) {
   const el=document.getElementById('brand-topic-sent-grid'); el.innerHTML='';
 
+  // This grid renders topics × 3 sentiment segments PER brand — with "All
+  // brands" selected that's unbounded DOM + animation work scaling with
+  // brand count, which is exactly what can freeze this tab. Cap it; picking
+  // a specific brand from the filter above still shows that one in full.
+  const allBrandsCount = brandsSorted.length;
   const visibleBrands = activeBTSBrand === '__all__'
-    ? brandsSorted
+    ? _topBrandsByVolume(brandsSorted, SENT_CHART_BRAND_CAP)
     : brandsSorted.filter(b => b === activeBTSBrand);
 
   const leg=document.createElement('div'); leg.className='sent-legend'; leg.style.marginBottom='18px';
@@ -5897,6 +6203,13 @@ function renderBrandTopicSentiment(brandsSorted) {
     `<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-align:center;letter-spacing:.5px;">${t}</div>`
   ).join('');
   el.appendChild(headerRow);
+
+  if (activeBTSBrand === '__all__' && allBrandsCount > visibleBrands.length) {
+    const note = document.createElement('div');
+    note.className = 'sent-cap-note';
+    note.textContent = `Showing top ${visibleBrands.length} of ${allBrandsCount.toLocaleString()} brands by volume — pick a specific brand above to view any other one.`;
+    el.appendChild(note);
+  }
 
   if (!visibleBrands.length) {
     const empty=document.createElement('div');
@@ -7194,6 +7507,21 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     }
     if (btn.dataset.tab === 'campaign' && reportData.campaignMetrics) renderCampaignTab();
 
+    // Lazy-load the two most expensive per-tab computations — see
+    // ensureBrandTrendComputed / ensureExtraDimensionsComputed above.
+    if (btn.dataset.tab === 'brand' && rawData.length && !_brandTrendComputed) {
+      showToast('Computing brand trend…', 'info', 2000);
+      ensureBrandTrendComputed().then(() => {
+        if (document.querySelector('.tab-btn[data-tab="brand"]')?.classList.contains('active')) updateBrandDeepDive();
+      });
+    }
+    if (btn.dataset.tab === 'extras' && rawData.length && !_extraDimsComputed) {
+      showToast('Computing breakdown panels…', 'info', 2000);
+      ensureExtraDimensionsComputed().then(() => {
+        if (document.querySelector('.tab-btn[data-tab="extras"]')?.classList.contains('active')) renderExtraDimensionPanels();
+      });
+    }
+
   });
 });
 
@@ -7228,6 +7556,300 @@ _all_df2.to_json(orient='records', force_ascii=False)
     // Non-fatal: _aiPool() and bdd pool already fall back to rawData
   } finally {
     _allRawDataLoading = false;
+  }
+}
+
+// ── LAZY: per-brand trend (day/week/month) ─────────────────────────────────────
+// Moved out of the eager pipeline — this was one of the most expensive steps
+// (3 granularities × a full brand-exploded pivot each) and used to run
+// unconditionally even if the user never opened Brand Deep-Dive. Now it only
+// runs once, on first visit to that tab, reusing df/clean_and_split/
+// _xdim_periods/_GRANULARITIES which stay alive as Pyodide globals from the
+// main pipeline run.
+let _brandTrendLoading = false;
+let _brandTrendComputed = false;
+async function ensureBrandTrendComputed() {
+  if (_brandTrendComputed || _brandTrendLoading || !pyodide) return;
+  _brandTrendLoading = true;
+  const _t0 = performance.now();
+  console.log('[lazy] brand trend starting…');
+  try {
+    const _raw = await pyodide.runPythonAsync(`
+import json as _json_bt
+_brand_trend_by_granularity = {}
+if _HAS_DATES:
+    if '_dt_parsed' not in df.columns:
+        df['_dt_parsed'] = pd.to_datetime(df['created_at'], errors='coerce')
+    _brands_exploded = df.copy()
+    _brands_exploded['Brands'] = _brands_exploded['Brands'].apply(clean_and_split)
+    _brands_exploded = _brands_exploded.explode('Brands')
+    _brands_exploded = _brands_exploded[_brands_exploded['Brands'].notna() & (_brands_exploded['Brands'] != '')]
+    _all_brand_names = sorted(_brands_exploded['Brands'].astype(str).str.strip().unique())
+    _brands_exploded['Brands'] = _brands_exploded['Brands'].astype(str).str.strip()
+    for _freq, _gran in _GRANULARITIES:
+        _global_buckets = _xdim_periods[_gran]['buckets']
+        if not _global_buckets or not _all_brand_names:
+            continue
+        _bdf = _brands_exploded.copy()
+        _bdf['_dt'] = _bdf['_dt_parsed'] if '_dt_parsed' in _bdf.columns else pd.to_datetime(_bdf['created_at'], errors='coerce')
+        _bdf = _bdf[_bdf['_dt'].notna()]
+        if not len(_bdf):
+            continue
+        _bdf['_bucket'] = _bdf['_dt'].dt.to_period(_freq).astype(str)
+        _bpivot_men = _bdf.groupby(['_bucket', 'Brands'])['id'].nunique().unstack(fill_value=0)
+        _bpivot_men = _bpivot_men.reindex(index=_global_buckets, columns=_all_brand_names, fill_value=0)
+        _bpivot_eng = _bdf.groupby(['_bucket', 'Brands'])['engagement_score'].sum().unstack(fill_value=0)
+        _bpivot_eng = _bpivot_eng.reindex(index=_global_buckets, columns=_all_brand_names, fill_value=0)
+        _brand_trend_by_granularity[_gran] = {
+            'hasEnoughData': len(_global_buckets) >= 2,
+            'buckets': list(_global_buckets),
+            'seriesEngagement': {str(b): [float(v) for v in _bpivot_eng[b].tolist()] for b in _all_brand_names},
+            'seriesMentions': {str(b): [int(v) for v in _bpivot_men[b].tolist()] for b in _all_brand_names},
+        }
+_json_bt.dumps(_brand_trend_by_granularity)
+`);
+    reportData.brandTrendByGranularity = JSON.parse(typeof _raw === 'string' ? _raw : _raw.toString());
+    _brandTrendComputed = true;
+    console.log(`[lazy] brand trend done in ${(performance.now()-_t0).toFixed(0)}ms`);
+  } catch(e) {
+    console.error('[lazy] brand trend failed:', e.toString());
+    showToast('Brand trend failed to load — check console', 'error', 5000);
+  } finally {
+    _brandTrendLoading = false;
+  }
+}
+
+// ── LAZY: extra-dimension panels (heatmap + 3-granularity trend) ───────────────
+// Moved out of the eager pipeline for the same reason as brand trend above —
+// cost scales with however many "extra" schema columns exist, and used to
+// run for every one of them on every upload regardless of whether the user
+// ever opens More Breakdowns. Runs once, on first visit to that tab —
+// AND, within that, only computes the trend for the single auto-selected
+// granularity (day/week/month) rather than all three, since the trend loop
+// is the dominant cost here (same shape as brand trend above) and two of
+// the three granularities are usually never looked at. If the user clicks
+// a DoD/WoW/MoM toggle for a granularity not yet computed, this is called
+// again with that granularity added to the request — see the toggle click
+// handler further down — so correctness is preserved, just deferred.
+let _extraDimsLoading = false;
+let _extraDimsComputed = false;
+let _extraDimsComputedGrans = new Set(); // which granularities' trend data we actually have
+async function ensureExtraDimensionsComputed(targetGran) {
+  const wantGran = targetGran || xdimGranularity || 'day';
+  if (_extraDimsComputed && _extraDimsComputedGrans.has(wantGran)) return;
+  if (_extraDimsLoading || !pyodide) return;
+  _extraDimsLoading = true;
+  const _t0 = performance.now();
+  const _requestGrans = new Set(_extraDimsComputedGrans);
+  _requestGrans.add(wantGran);
+  const _requestGransArr = [..._requestGrans];
+  console.log(`[lazy] extra dimensions starting… granularities=${_requestGransArr.join(',')}`);
+  try {
+    pyodide.globals.set('_xdim_target_grans_json', JSON.stringify(_requestGransArr));
+    const _raw = await pyodide.runPythonAsync(`
+import json as _json_xd
+import time as _t_xd
+_target_grans = set(json.loads(_xdim_target_grans_json))
+_extra_dimensions = {}
+_xdim_timings = {}
+
+# DEFENSIVE: pandas' .explode() raises "columns must be unique" if the
+# dataframe has ANY duplicate column names anywhere — not just in the
+# column being exploded. If the original CSV had two columns sharing a
+# header (or something upstream produced a name collision), every
+# .explode() call here would fail no matter which column it targets.
+# Dedupe (keeping the first occurrence of each name) before anything
+# downstream touches these frames, and record how many were found so we
+# can confirm from the console whether this was actually the cause.
+_dup_report = {}
+if not df.columns.is_unique:
+    _dup_names = df.columns[df.columns.duplicated()].unique().tolist()
+    _dup_report['df'] = [str(x) for x in _dup_names]
+    df = df.loc[:, ~df.columns.duplicated()]
+if '_df_brands_exploded' in globals() and not _df_brands_exploded.columns.is_unique:
+    _dup_names2 = _df_brands_exploded.columns[_df_brands_exploded.columns.duplicated()].unique().tolist()
+    _dup_report['_df_brands_exploded'] = [str(x) for x in _dup_names2]
+    _df_brands_exploded = _df_brands_exploded.loc[:, ~_df_brands_exploded.columns.duplicated()]
+_xdim_timings['_dup_columns_found'] = _dup_report
+
+# Precompute date parsing ONCE, shared across every extra-dimension column,
+# instead of re-running pd.to_datetime() on 'created_at' from scratch inside
+# the trend section for every single column. The underlying dates never
+# change between columns — only which rows survive each column's category
+# filter — so this was pure repeated work that scaled with column count.
+if _HAS_DATES and '_dt_parsed' not in df.columns:
+    df['_dt_parsed'] = pd.to_datetime(df['created_at'], errors='coerce')
+
+for _xd in _schema_cfg.get('extraDims', []):
+    _col = _xd.get('column')
+    if not _col or _col not in df.columns:
+        continue
+    _col_t0 = _t_xd.time()
+    _xdf = df.copy()
+    _xdf['_xl'] = _xdf[_col].apply(_clean_split)
+    if not _xdf.columns.is_unique:
+        _xdf = _xdf.loc[:, ~_xdf.columns.duplicated()]
+    _xde = _xdf.explode('_xl')
+    _xde = _xde[_xde['_xl'].notna() & (_xde['_xl'] != '')]
+    _xeng = _xde.groupby('_xl')['engagement_score'].sum()
+    _xmen = _xde.groupby('_xl')['id'].nunique()
+    _xeng_dict = _xeng.to_dict()
+
+    _xsent = _xde.groupby(['_xl', 'sentiment'])['id'].nunique().unstack(fill_value=0) if 'sentiment' in _xde.columns else pd.DataFrame()
+    for _sc in ['positive', 'neutral', 'negative']:
+        if _sc not in _xsent.columns:
+            _xsent[_sc] = 0
+    _xsent_dict = _xsent.to_dict(orient='index') if not _xsent.empty else {}
+
+    def _pct_change(_recent, _earlier):
+        if _earlier == 0:
+            return None if _recent == 0 else 100.0
+        return round((_recent - _earlier) / _earlier * 100, 1)
+
+    _others_key = next((k for k in _xeng_dict if str(k).strip().lower() == 'others'), None)
+    _ranked = sorted([(k, v) for k, v in _xeng_dict.items() if k != _others_key], key=lambda kv: kv[1], reverse=True)
+    _slice_n = 19 if _others_key is not None else 20
+    _ranked_names = [k for k, v in _ranked[:_slice_n]]
+    if _others_key is not None:
+        _ranked_names.append(_others_key)
+
+    _top = []
+    for _n in _ranked_names:
+        _s = _xsent_dict.get(_n, {'positive':0,'neutral':0,'negative':0})
+        _pos, _neu, _neg = int(_s.get('positive',0)), int(_s.get('neutral',0)), int(_s.get('negative',0))
+        _sent_total = _pos + _neu + _neg
+        _mentions = int(_xmen.get(_n, 0))
+        _eng = float(_xeng_dict[_n])
+        _top.append({
+            'name': str(_n), 'engagement': _eng, 'mentions': _mentions,
+            'positive': _pos, 'neutral': _neu, 'negative': _neg,
+            'engagementRate': round(_eng / _mentions, 1) if _mentions else 0,
+            'netSentiment': round((_pos - _neg) / _sent_total * 100, 1) if _sent_total else None,
+        })
+
+    _entry = {'label': _xd.get('label', _col), 'topValues': _top, 'uniqueCount': int(_xeng.shape[0])}
+    _xdim_timings[f'{_col}__base_explode_and_rank'] = round(_t_xd.time() - _col_t0, 2)
+
+    if int(_xeng.shape[0]) > 1:
+        _hx_brand_col = _schema_cfg.get('brandDim')
+        _heatmap_t0 = _t_xd.time()
+        if _hx_brand_col and _hx_brand_col in df.columns:
+            _top_cats = _ranked_names[:8]
+            # Rank top brands from the SINGLE-axis brand explode already built
+            # in step7 (_df_brands_exploded persists as a Pyodide global) —
+            # this used to re-explode Brands from scratch here, THEN also
+            # explode the category column on the FULL dataset before
+            # filtering to just 6 brands x 8 categories. A double explode
+            # (brand-list x category-list) over every row, most of which get
+            # thrown away immediately after, was the single biggest cost in
+            # this whole function. Filtering to the top brands FIRST means
+            # the category explode below only ever runs over the rows that
+            # actually mention one of those 6 brands.
+            if '_df_brands_exploded' in globals():
+                _top_brands = list(_df_brands_exploded.groupby('_bl')['engagement_score'].sum().sort_values(ascending=False).head(6).index)
+                _hx_pre = _df_brands_exploded[_df_brands_exploded['_bl'].isin(_top_brands)].copy()
+                # NOTE: deliberately NOT renaming '_bl' to _hx_brand_col here —
+                # _df_brands_exploded still carries the original raw brand
+                # column (whatever _hx_brand_col is) alongside '_bl', so
+                # renaming would create two columns with the same name and
+                # pandas' .explode() refuses to run on a frame with duplicate
+                # column names ("columns must be unique"). Just group by
+                # '_bl' directly instead.
+                _hx_brand_key = '_bl'
+            else:
+                # Fallback if that global isn't available for some reason
+                _hx_pre = df.copy()
+                _hx_pre[_hx_brand_col] = _hx_pre[_hx_brand_col].apply(clean_and_split)
+                _hx_pre = _hx_pre.explode(_hx_brand_col)
+                _hx_pre = _hx_pre[_hx_pre[_hx_brand_col].notna() & (_hx_pre[_hx_brand_col] != '')]
+                _top_brands = list(_hx_pre.groupby(_hx_brand_col)['engagement_score'].sum().sort_values(ascending=False).head(6).index)
+                _hx_pre = _hx_pre[_hx_pre[_hx_brand_col].isin(_top_brands)]
+                _hx_brand_key = _hx_brand_col
+
+            _hx_pre[_col] = _hx_pre[_col].apply(_clean_split)
+            if not _hx_pre.columns.is_unique:
+                _hx_pre = _hx_pre.loc[:, ~_hx_pre.columns.duplicated()]
+            _hx_f = _hx_pre.explode(_col)
+            _hx_f = _hx_f[_hx_f[_col].notna() & (_hx_f[_col] != '') & _hx_f[_col].isin(_top_cats)]
+            _hx_pivot_eng = _hx_f.groupby([_hx_brand_key, _col])['engagement_score'].sum().unstack(fill_value=0)
+            _hx_pivot_eng = _hx_pivot_eng.reindex(index=_top_brands, columns=_top_cats, fill_value=0)
+            _hx_pivot_men = _hx_f.groupby([_hx_brand_key, _col])['id'].nunique().unstack(fill_value=0)
+            _hx_pivot_men = _hx_pivot_men.reindex(index=_top_brands, columns=_top_cats, fill_value=0)
+            _entry['heatmap'] = {
+                'brands': [str(b) for b in _top_brands],
+                'categories': [str(c) for c in _top_cats],
+                'matrixEngagement': [[float(v) for v in row] for row in _hx_pivot_eng.values.tolist()],
+                'matrixMentions': [[int(v) for v in row] for row in _hx_pivot_men.values.tolist()],
+            }
+        _xdim_timings[f'{_col}__heatmap'] = round(_t_xd.time() - _heatmap_t0, 2)
+        _trend_t0 = _t_xd.time()
+
+        _trend_cats = _ranked_names[:5]
+        _entry['trendByGranularity'] = {}
+        for _item in _top:
+            _item['changeByGranularity'] = {}
+        if _HAS_DATES:
+            # Only the requested granularities are computed — this loop used
+            # to always do all three (see _GRANULARITIES), which was the
+            # single biggest cost in the whole lazy load.
+            for _freq, _gran in _GRANULARITIES:
+                if _gran not in _target_grans:
+                    continue
+                _global_buckets = _xdim_periods[_gran]['buckets']
+                if not _global_buckets:
+                    continue
+                _tdf = _xde[_xde['_xl'].isin(_ranked_names)].copy()
+                _tdf['_dt'] = _tdf['_dt_parsed'] if '_dt_parsed' in _tdf.columns else pd.to_datetime(_tdf['created_at'], errors='coerce')
+                _tdf = _tdf[_tdf['_dt'].notna()]
+                if not len(_tdf):
+                    continue
+                _tdf['_bucket'] = _tdf['_dt'].dt.to_period(_freq).astype(str)
+                _tpivot_men = _tdf.groupby(['_bucket', '_xl'])['id'].nunique().unstack(fill_value=0)
+                _tpivot_men = _tpivot_men.reindex(index=_global_buckets, columns=_ranked_names, fill_value=0)
+                _tpivot_eng = _tdf.groupby(['_bucket', '_xl'])['engagement_score'].sum().unstack(fill_value=0)
+                _tpivot_eng = _tpivot_eng.reindex(index=_global_buckets, columns=_ranked_names, fill_value=0)
+
+                _has_enough = len(_global_buckets) >= 2
+                if _has_enough:
+                    _last_b, _prev_b = _global_buckets[-1], _global_buckets[-2]
+                    for _item in _top:
+                        _n = _item['name']
+                        if _n not in _tpivot_eng.columns:
+                            continue
+                        _item['changeByGranularity'][_gran] = {
+                            'engagement': _pct_change(_tpivot_eng.loc[_last_b, _n], _tpivot_eng.loc[_prev_b, _n]),
+                            'mentions': _pct_change(_tpivot_men.loc[_last_b, _n], _tpivot_men.loc[_prev_b, _n]),
+                        }
+
+                _entry['trendByGranularity'][_gran] = {
+                    'hasEnoughData': _has_enough,
+                    'buckets': list(_global_buckets),
+                    'chartCategories': _trend_cats,
+                    'seriesEngagement': {str(c): [float(v) for v in _tpivot_eng[c].tolist()] for c in _ranked_names},
+                    'seriesMentions': {str(c): [int(v) for v in _tpivot_men[c].tolist()] for c in _ranked_names},
+                }
+
+        if _trend_granularity in _entry['trendByGranularity']:
+            _entry['trend'] = dict(_entry['trendByGranularity'][_trend_granularity])
+            _entry['trend']['granularity'] = _trend_granularity
+        _xdim_timings[f'{_col}__trend'] = round(_t_xd.time() - _trend_t0, 2)
+
+    _extra_dimensions[_col] = _entry
+    _xdim_timings[f'{_col}__TOTAL'] = round(_t_xd.time() - _col_t0, 2)
+
+_json_xd.dumps({'data': _extra_dimensions, 'timings': _xdim_timings})
+`);
+    const _parsed = JSON.parse(typeof _raw === 'string' ? _raw : _raw.toString());
+    reportData.extraDimensions = _parsed.data;
+    _extraDimsComputed = true;
+    _requestGransArr.forEach(g => _extraDimsComputedGrans.add(g));
+    console.log(`[lazy] extra dimensions done in ${(performance.now()-_t0).toFixed(0)}ms (granularities=${_requestGransArr.join(',')})`);
+    console.log('[lazy] extra dimensions per-column/section timings (seconds):', _parsed.timings);
+  } catch(e) {
+    console.error('[lazy] extra dimensions failed:', e.toString());
+    showToast('Extra dimension panels failed to load — check console', 'error', 5000);
+  } finally {
+    _extraDimsLoading = false;
   }
 }
 
@@ -7543,6 +8165,103 @@ function bddColor(brand) {
   return BDD_COLORS[(idx < 0 ? 0 : idx) % BDD_COLORS.length];
 }
 
+// ── Brand Deep-Dive searchable dropdown ─────────────────────────────────────
+// Replaces a one-button-per-brand pill wall (unusable once there are more
+// than a dozen or so brands) with a combobox: click to open, type to filter,
+// arrow keys + Enter to pick, click outside or Escape to close. Built once
+// (_bddDropdownSetup) and re-filled by updateBrandDeepDive() on every
+// pipeline refresh via _bddBrandListCache.
+let _bddBrandListCache = []; // [{name, color, metaLabel}]
+let _bddDropdownSetup = false;
+
+function _bddSetupDropdownOnce() {
+  if (_bddDropdownSetup) return;
+  _bddDropdownSetup = true;
+  const wrap    = document.getElementById('bddBrandSelect');
+  const trigger = document.getElementById('bddBrandTrigger');
+  const search  = document.getElementById('bddBrandSearchInput');
+  const list    = document.getElementById('bddBrandSelectList');
+  if (!wrap || !trigger || !search || !list) return;
+
+  function openPanel() {
+    wrap.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+    search.value = '';
+    _bddRenderDropdownList('');
+    requestAnimationFrame(() => search.focus());
+  }
+  function closePanel() {
+    wrap.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    wrap.classList.contains('open') ? closePanel() : openPanel();
+  });
+  search.addEventListener('input', () => _bddRenderDropdownList(search.value));
+  search.addEventListener('keydown', (e) => {
+    const items = [...list.querySelectorAll('.bdd-brand-select-item')];
+    if (!items.length) return;
+    let idx = items.findIndex(i => i.classList.contains('focused'));
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      idx = Math.min(items.length - 1, idx + 1);
+      items.forEach(i => i.classList.remove('focused'));
+      items[idx].classList.add('focused');
+      items[idx].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      idx = Math.max(0, idx - 1);
+      items.forEach(i => i.classList.remove('focused'));
+      items[idx].classList.add('focused');
+      items[idx].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      (items[idx] || items[0]).click();
+    } else if (e.key === 'Escape') {
+      closePanel();
+      trigger.focus();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    const _path = e.composedPath ? e.composedPath() : [];
+    if (!_path.includes(wrap)) closePanel();
+  });
+}
+
+function _bddRenderDropdownList(query) {
+  const list    = document.getElementById('bddBrandSelectList');
+  const countEl = document.getElementById('bddBrandSelectCount');
+  if (!list) return;
+  const q = (query || '').trim().toLowerCase();
+  const matches = _bddBrandListCache.filter(b => !q || b.name.toLowerCase().includes(q));
+  if (countEl) countEl.textContent = q
+    ? `${matches.length.toLocaleString()} / ${_bddBrandListCache.length.toLocaleString()}`
+    : `${_bddBrandListCache.length.toLocaleString()} brands`;
+
+  if (!matches.length) {
+    list.innerHTML = `<div class="bdd-brand-select-empty">No brands match "${_esc(query)}"</div>`;
+    return;
+  }
+  list.innerHTML = matches.map(b => `
+    <div class="bdd-brand-select-item${b.name === bddActiveBrand ? ' active' : ''}" data-brand="${_esc(b.name)}" role="option" aria-selected="${b.name === bddActiveBrand}">
+      <span class="bdd-brand-select-item-swatch" style="background:${b.color}"></span>
+      <span class="bdd-brand-select-item-name">${_esc(b.name)}</span>
+      <span class="bdd-brand-select-item-meta">${_esc(b.metaLabel)}</span>
+    </div>`).join('');
+  list.querySelectorAll('.bdd-brand-select-item').forEach(el => {
+    el.addEventListener('click', () => {
+      bddActiveBrand = el.dataset.brand;
+      bddPostSentFilter = 'all';
+      bddPostLimit = 5;
+      document.querySelectorAll('[data-bdd-sent]').forEach(x => x.classList.toggle('active', x.dataset.bddSent === 'all'));
+      document.getElementById('bddBrandSelect')?.classList.remove('open');
+      updateBrandDeepDive();
+    });
+  });
+}
+
 function updateBrandDeepDive() {
   const hasData = rawData.length > 0;
   document.getElementById('bddEmpty').style.display   = hasData ? 'none' : '';
@@ -7554,36 +8273,40 @@ function updateBrandDeepDive() {
     btn.classList.toggle('active', btn.dataset.metric === bddMetric);
   });
 
-  // Build brand pills
-  const pillsEl = document.getElementById('bddBrandPills');
-  pillsEl.innerHTML = '';
+  // Build brand dropdown (replaces the old pill wall — see _bddSetupDropdownOnce
+  // and _bddRenderDropdownList below). A wall of one button per brand doesn't
+  // scale past a handful of brands; a searchable combobox does.
   const brands = reportData.sentRows.map(r => r.brand).filter(Boolean);
   if (!brands.length) return;
 
-  brands.forEach((b, i) => {
-    const p = document.createElement('button');
-    p.className = 'bdd-pill' + (b === bddActiveBrand ? ' active' : '');
-    p.textContent = b;
-    p.style.setProperty('--pill-color', BDD_COLORS[i % BDD_COLORS.length]);
-    if (b === bddActiveBrand) {
-      p.style.background = BDD_COLORS[i % BDD_COLORS.length];
-      p.style.borderColor = BDD_COLORS[i % BDD_COLORS.length];
-    }
-    p.addEventListener('click', () => {
-      bddActiveBrand = b;
-      bddPostSentFilter = 'all';
-      bddPostLimit = 5;
-      // Reset post filter pills
-      document.querySelectorAll('[data-bdd-sent]').forEach(x => x.classList.toggle('active', x.dataset.bddSent === 'all'));
-      updateBrandDeepDive();
-    });
-    pillsEl.appendChild(p);
-  });
-
-  // Auto-select first brand if none selected
+  // Auto-select first brand if none selected — do this BEFORE building the
+  // cache/trigger below, since this branch re-renders anyway.
   if (!bddActiveBrand || !brands.includes(bddActiveBrand)) {
     bddActiveBrand = brands[0];
     updateBrandDeepDive(); return;
+  }
+
+  _bddBrandListCache = brands.map((b, i) => {
+    const row = reportData.sentRows.find(r => r.brand === b);
+    return {
+      name: b,
+      color: BDD_COLORS[i % BDD_COLORS.length],
+      metaLabel: row ? `${(row.total||0).toLocaleString()} posts` : '',
+    };
+  });
+  _bddSetupDropdownOnce();
+  const trigger      = document.getElementById('bddBrandTrigger');
+  const triggerLabel = document.getElementById('bddBrandTriggerLabel');
+  const triggerSwatch= document.getElementById('bddBrandTriggerSwatch');
+  const selectorLabel= document.getElementById('bddSelectorLabel');
+  if (triggerLabel)  triggerLabel.textContent = bddActiveBrand;
+  if (triggerSwatch) triggerSwatch.style.background = bddColor(bddActiveBrand);
+  if (selectorLabel) selectorLabel.textContent = `Select Brand · ${brands.length.toLocaleString()} total`;
+  // If the panel happens to already be open (e.g. re-render triggered while
+  // browsing), keep its filtered list in sync with whatever was typed.
+  const wrapEl = document.getElementById('bddBrandSelect');
+  if (wrapEl && wrapEl.classList.contains('open')) {
+    _bddRenderDropdownList(document.getElementById('bddBrandSearchInput')?.value || '');
   }
 
   renderBddHero();
