@@ -200,7 +200,29 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0 2
 .col-check{font-size:11px;font-weight:500;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--text3);padding:3px 9px;border:1px solid var(--border);border-radius:6px;transition:all .15s;user-select:none;background:var(--surface)}
 .col-check:hover{color:var(--text);border-color:var(--border2)}
 .col-check.on{color:var(--accent);border-color:rgba(37,99,235,.4);background:var(--accent-lt)}
-.col-check input{display:none}
+.col-check input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.col-check{position:relative}
+.col-check:focus-within{outline:2px solid var(--accent);outline-offset:1px}
+.col-check .cc-tick{width:12px;height:12px;border-radius:3px;border:1.5px solid var(--border2);display:inline-flex;align-items:center;justify-content:center;font-size:9px;line-height:1;color:transparent;flex-shrink:0;transition:all .15s}
+.col-check.on .cc-tick{background:var(--accent);border-color:var(--accent);color:#fff}
+.col-check:not(.on){border-style:dashed}
+/* Data Table controls: search row, hint, column picker on its own row */
+.tc-search-row{margin-bottom:6px}
+.tc-search{position:relative}
+.tc-search .search-input{padding-right:32px}
+.tc-clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:22px;height:22px;border:0;border-radius:50%;background:var(--surface2);color:var(--text3);font-size:15px;line-height:1;cursor:pointer;display:none;align-items:center;justify-content:center}
+.tc-clear:hover{background:var(--border);color:var(--text)}
+.tc-search.has-value .tc-clear{display:flex}
+.tc-count{font-size:11.5px;font-weight:600;color:var(--text3);white-space:nowrap}
+.tc-hint{font-size:11px;color:var(--text3);margin:0 2px 14px;line-height:1.6}
+.tc-hint code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:0 4px;color:var(--text2)}
+.tc-cols{border:1px solid var(--border);background:var(--bg);border-radius:10px;padding:10px 12px 12px;margin-bottom:14px}
+.tc-cols-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.tc-cols-count{font-size:11px;color:var(--text3)}
+.tc-link{margin-left:auto;background:none;border:0;padding:2px 4px;font-family:"Prompt",sans-serif;font-size:11px;font-weight:600;color:var(--accent);cursor:pointer;border-radius:4px}
+.tc-link:hover{text-decoration:underline}
+.tc-link:disabled{color:var(--text3);cursor:default;text-decoration:none}
+@media (max-width:640px){.tc-search-row .search-wrap{flex-basis:100%}.tc-count{margin-right:auto}}
 .table-wrap{overflow:auto;border:1px solid var(--border);border-radius:var(--r);max-height:500px}
 table.dt{width:100%;border-collapse:collapse}
 table.dt thead th{background:var(--bg);padding:9px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text3);text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:0}
@@ -1368,11 +1390,15 @@ table.dt.ovd-score td{max-width:none}
 <div id="kbOverlay">
   <div class="kb-modal">
     <div class="kb-modal-title">⌨️ Keyboard Shortcuts</div>
-    <div class="kb-row"><span class="kb-desc">Overview tab</span><div class="kb-keys"><kbd class="kbd">1</kbd></div></div>
-    <div class="kb-row"><span class="kb-desc">Sentiment tab</span><div class="kb-keys"><kbd class="kbd">2</kbd></div></div>
-    <div class="kb-row"><span class="kb-desc">Brand Deep-Dive tab</span><div class="kb-keys"><kbd class="kbd">3</kbd></div></div>
-    <div class="kb-row"><span class="kb-desc">Campaign tab</span><div class="kb-keys"><kbd class="kbd">4</kbd></div></div>
-    <div class="kb-row"><span class="kb-desc">AI Analysis tab</span><div class="kb-keys"><kbd class="kbd">5</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Overview tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">1</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Brand Deep-Dive tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">2</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Campaign tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">3</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Sentiment Charts tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">4</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Influencer tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">5</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Statistical Data tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">6</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Google Review tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">7</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">More Breakdowns tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">8</kbd></div></div>
+    <div class="kb-row"><span class="kb-desc">Data Table tab</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">9</kbd></div></div>
     <div class="kb-row"><span class="kb-desc">Toggle dark / light mode</span><div class="kb-keys"><kbd class="kbd">Alt</kbd><span style="font-size:10px;color:var(--text3)">+</span><kbd class="kbd">D</kbd></div></div>
     <div class="kb-row"><span class="kb-desc">Show this cheat sheet</span><div class="kb-keys"><kbd class="kbd">?</kbd></div></div>
     <div class="kb-row"><span class="kb-desc">Close overlay / modal</span><div class="kb-keys"><kbd class="kbd">Esc</kbd></div></div>
@@ -1509,12 +1535,12 @@ table.dt.ovd-score td{max-width:none}
     <div class="tab-nav-wrap">
     <button type="button" class="tab-scroll l" aria-label="Scroll tabs left" tabindex="-1">‹</button>
     <nav class="tab-nav">
-      <button class="tab-btn active" data-tab="report" title="Statistical Data (Alt+1)">📋 Statistical Data</button>
-      <button class="tab-btn" data-tab="overview" title="Overview (Alt+2)">🔭 Overview</button>
-      <button class="tab-btn" data-tab="brand" title="Brand Deep-Dive (Alt+3)">📌 Brand Deep-Dive</button>
-      <button class="tab-btn" data-tab="campaign" title="Campaign (Alt+4)">🎯 Campaign</button>
-      <button class="tab-btn" data-tab="charts" title="Sentiment Charts (Alt+5)">📊 Sentiment</button>
-      <button class="tab-btn" data-tab="influencer" title="Influencer (Alt+6)">👥 Influencer</button>
+      <button class="tab-btn active" data-tab="overview" title="Overview (Alt+1)">🔭 Overview</button>
+      <button class="tab-btn" data-tab="brand" title="Brand Deep-Dive (Alt+2)">📌 Brand Deep-Dive</button>
+      <button class="tab-btn" data-tab="campaign" title="Campaign (Alt+3)">🎯 Campaign</button>
+      <button class="tab-btn" data-tab="charts" title="Sentiment Charts (Alt+4)">📊 Sentiment</button>
+      <button class="tab-btn" data-tab="influencer" title="Influencer (Alt+5)">👥 Influencer</button>
+      <button class="tab-btn" data-tab="report" title="Statistical Data (Alt+6)">📋 Statistical Data</button>
       <button class="tab-btn" data-tab="greview" title="Google Review (Alt+7)">⭐ Google Review</button>
       <button class="tab-btn" data-tab="extras" title="More Breakdowns (Alt+8)">🧩 More Breakdowns</button>
       <button class="tab-btn" data-tab="table" title="Data Table (Alt+9)">🗂 Data Table</button>
@@ -1540,7 +1566,7 @@ table.dt.ovd-score td{max-width:none}
     <div class="main-content">
 
       <!-- ═══ REPORT ═══ -->
-      <div class="panel active" id="panel-report">
+      <div class="panel" id="panel-report">
         <div class="empty-state" id="reportEmpty">
           <div class="empty-illus"><svg width="80" height="68" viewBox="0 0 80 68" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="8" y="32" width="14" height="28" rx="3" fill="var(--accent)" opacity=".18"/>
@@ -1559,13 +1585,6 @@ table.dt.ovd-score td{max-width:none}
           <div class="page-header">
             <div class="page-title">Statistical Data — <span id="reportDateLabel">—</span></div>
             <button class="btn-primary" id="downloadBtn" disabled>⬇ Download CSV</button>
-          </div>
-          <div class="kpi-row">
-            <div class="kpi-card"><div class="kpi-val" id="rTotalEng">—</div><div class="kpi-lbl">Total Engagement</div></div>
-            <div class="kpi-card"><div class="kpi-val" id="rTotalMention">—</div><div class="kpi-lbl">Total Mentions</div></div>
-            <div class="kpi-card"><div class="kpi-val" id="rTotalView">—</div><div class="kpi-lbl">Total Views</div></div>
-            <div class="kpi-card pos"><div class="kpi-val" id="rPosPct">—</div><div class="kpi-lbl">Positive %</div></div>
-            <div class="kpi-card neg"><div class="kpi-val" id="rNegPct">—</div><div class="kpi-lbl">Negative %</div></div>
           </div>
           <div class="card">
             <div class="section-bar" style="display:flex;align-items:center;justify-content:space-between;">
@@ -2284,11 +2303,26 @@ table.dt.ovd-score td{max-width:none}
               <div class="sb-label" style="margin-bottom:8px">Filter by Brand</div>
               <div class="brand-pills" id="brandFilter"></div>
             </div>
-            <div class="table-controls">
-              <div class="search-wrap"><input class="search-input" id="tableSearch" placeholder="Search… use + for AND, / for OR (e.g. coffee+milk, coffee/tea)" title="word → contains word&#10;word+word → contains both&#10;word/word → contains either&#10;&quot;…&quot; → search literally"></div>
-              <div class="col-toggle" id="colToggle"></div>
-              <span id="tableRowCount" style="font-size:11px;font-weight:600;color:var(--text3);white-space:nowrap;margin-left:auto"></span>
+            <!-- Row 1: search + result count + export -->
+            <div class="table-controls tc-search-row">
+              <div class="search-wrap tc-search">
+                <input class="search-input" id="tableSearch" placeholder="Search posts, brands, topics…" autocomplete="off"
+                  title="word → contains word&#10;word+word → contains both&#10;word/word → contains either&#10;&quot;…&quot; → search literally">
+                <button type="button" class="tc-clear" id="tableSearchClear" title="Clear search" aria-label="Clear search">×</button>
+              </div>
+              <span id="tableRowCount" class="tc-count"></span>
               <button class="btn-outline" id="tableExportFilteredBtn" title="Export currently filtered rows as CSV" style="white-space:nowrap;flex-shrink:0">⬇ Export</button>
+            </div>
+            <div class="tc-hint">Tip: <code>coffee+milk</code> finds both words · <code>coffee/tea</code> finds either · <code>"exact phrase"</code> · press <kbd class="kbd">/</kbd> to jump here</div>
+
+            <!-- Row 2: column picker -->
+            <div class="tc-cols">
+              <div class="tc-cols-head">
+                <span class="sb-label">Columns shown</span>
+                <span class="tc-cols-count" id="colToggleCount"></span>
+                <button type="button" class="tc-link" id="colShowAllBtn">Show all</button>
+              </div>
+              <div class="col-toggle" id="colToggle"></div>
             </div>
             <div class="table-wrap">
               <table class="dt"><thead id="tHead"></thead><tbody id="tBody"></tbody></table>
@@ -2623,7 +2657,7 @@ table.dt.ovd-score td{max-width:none}
       </div>
 
       <!-- ═══ OVERVIEW ═══ -->
-      <div class="panel" id="panel-overview">
+      <div class="panel active" id="panel-overview">
         <div class="empty-state" id="overviewEmpty">
           <div class="empty-illus"><svg width="80" height="64" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect x="20" y="4" width="16" height="8" rx="3" fill="var(--accent)" opacity=".18"/>
@@ -2648,6 +2682,13 @@ table.dt.ovd-score td{max-width:none}
         <div id="overviewContent" style="display:none">
           <div class="page-header">
             <div class="page-title">Overview — <span>All Brands</span></div>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-card"><div class="kpi-val" id="rTotalEng">—</div><div class="kpi-lbl">Total Engagement</div></div>
+            <div class="kpi-card"><div class="kpi-val" id="rTotalMention">—</div><div class="kpi-lbl">Total Mentions</div></div>
+            <div class="kpi-card"><div class="kpi-val" id="rTotalView">—</div><div class="kpi-lbl">Total Views</div></div>
+            <div class="kpi-card pos"><div class="kpi-val" id="rPosPct">—</div><div class="kpi-lbl">Positive %</div></div>
+            <div class="kpi-card neg"><div class="kpi-val" id="rNegPct">—</div><div class="kpi-lbl">Negative %</div></div>
           </div>
           <div class="gr-subnav" id="ovSubnav">
             <button class="gr-subtab active" data-ov-tab="dashboard">📊 Dashboard</button>
@@ -3072,7 +3113,6 @@ let allRawData = [];  // All rows parsed by pandas — used by AI Summary
 let activeBrands = new Set();
 let currentPage = 1;
 const PAGE_SIZE = 50;
-const DISPLAY_COLS = ['source','created_at','Brands','Topics','Campaign','sentiment','text','link'];
 const LINK_FIELDS  = ['link','Link','url','URL','post_url','post_link','permalink','source_url'];
 let reportData = { topicRows:[], sentRows:[], totalMention:0, totalEngagement:0, csvBlob:null };
 let csvFile1 = null, csvFile2 = null;  // store both uploaded files
@@ -3139,7 +3179,7 @@ document.addEventListener('keydown', e => {
   if (e.altKey && e.key === 'd') { document.getElementById('themeToggle').click(); return; }
   // Alt+1–9 → switch tabs
   if (e.altKey && !e.ctrlKey && !e.shiftKey) {
-    const tabs = ['report','overview','brand','campaign','charts','influencer','greview','extras','table'];
+    const tabs = ['overview','brand','campaign','charts','influencer','report','greview','extras','table'];
     const idx = parseInt(e.key) - 1;
     if (idx >= 0 && idx < tabs.length) {
       e.preventDefault();
@@ -3382,6 +3422,32 @@ const SCHEMA_USED_COLS = [
 ];
 const _SCHEMA_SYS_SET = new Set(SCHEMA_USED_COLS.filter(c=>c.sys).map(c=>c.col));
 function _schemaFindCol(headers, c){ return [c.col, ...(c.alts||[])].find(h=>headers.includes(h)) || null; }
+
+// Resolve a column name against the current file's headers, tolerating case and
+// singular/plural differences ("Brand" / "Brands" / "brand" / "brands"). Used when a
+// saved setup from one dataset is loaded onto a file whose headers are spelled differently.
+function _resolveHeaderName(name, headers) {
+  if (!name) return null;
+  if (headers.includes(name)) return name;
+  const norm = x => String(x).replace(/^\uFEFF/, '').trim().toLowerCase();
+  const n = norm(name);
+  const ci = headers.find(h => norm(h) === n);
+  if (ci) return ci;
+  const stem = x => norm(x).replace(/s$/, '');
+  return headers.find(h => stem(h) === stem(name)) || null;
+}
+
+// Mirror the Python schema step on the JS rows: the Data Table, brand filter, search,
+// Brand Deep Dive and AI filters all read row.Brands / row.Topics / row.Campaign from
+// rawData, so copy the confirmed columns into those canonical keys. Without this, a
+// file whose brand column is named "Brand" or "brand" shows an empty Brands column.
+function _aliasRoleColumns() {
+  const s = confirmedSchemaConfig || {};
+  const pairs = [['Brands', s.brandDim], ['Topics', s.topicDim], ['Campaign', s.campaignDim]]
+    .filter(([canon, src]) => src && src !== canon);
+  if (!pairs.length) return;
+  rawData.forEach(row => { pairs.forEach(([canon, src]) => { row[canon] = row[src] ?? ''; }); });
+}
 
 function detectSchema(headers, rows) {
   headers = headers.map(h=>h.replace(/^\uFEFF/,''));
@@ -3725,6 +3791,17 @@ document.getElementById('schemaConfigFileInput').addEventListener('change', (e) 
       const flat = JSON.parse(ev.target.result);
       // Convert the saved flat config back into the editable dims-array shape
       const headers = Object.keys(rawData[0]||{}).map(h=>h.replace(/^\uFEFF/,''));
+      // Match saved column names to this file's headers (case / singular-plural tolerant),
+      // so a setup saved on a "Brands" file still works on a "brand" file.
+      ['brandDim','topicDim','campaignDim','sentimentCol','idCol','engagementCol','viewCol','sourceCol']
+        .forEach(k => { if (flat[k]) flat[k] = _resolveHeaderName(flat[k], headers); });
+      flat.extraDims = (flat.extraDims||[])
+        .map(d => ({ ...d, column: _resolveHeaderName(d.column, headers) }))
+        .filter(d => d.column);
+      if (!flat.brandDim) {
+        const auto = detectSchema(headers, rawData).dims.find(d => d.role === 'brand');
+        if (auto) flat.brandDim = auto.column;
+      }
       const dims = [];
       const used = new Set();
       if (flat.brandDim) { dims.push({column:flat.brandDim, role:'brand', label:flat.brandLabel||flat.brandDim, confidence:'high'}); used.add(flat.brandDim); }
@@ -4315,6 +4392,7 @@ async function remergeWithoutResettingReview() {
 async function continuePipelineAfterSchemaConfirm() {
   const mergedText = _pendingMergedText;
   const totalLabel = _pendingTotalLabel;
+  _aliasRoleColumns();
   try {
     setStep('step1','running');
     console.log(`[pipeline] step1 (push CSV into pyodide) starting… mergedText length=${mergedText.length.toLocaleString()} chars`);
@@ -6274,6 +6352,7 @@ function _boolSearchMatch(hay, groups) {
 
 function applyFilters() {
   if (!rawData.length) return; // no data yet — don't wipe the empty state
+  _syncSearchClear(); // keep the × button in sync when search is set from code (drill-downs, clear links)
   const search=_parseBoolSearch(document.getElementById('tableSearch')?.value);
   filteredData=rawData.filter(row=>{
     if(activeBrands.size>0){
@@ -6281,7 +6360,7 @@ function applyFilters() {
       if(![...activeBrands].some(ab=>b.includes(ab.toLowerCase()))) return false;
     }
     if(search){
-      const hay=[row.text,row.Brands,row.source,row.Topics,row.sentiment].join(' ').toLowerCase();
+      const hay=(_tableColDefs.length ? _tableColDefs.map(d=>row[d.key]) : [row.text,row.Brands,row.source,row.Topics,row.sentiment]).join(' ').toLowerCase();
       if(!_boolSearchMatch(hay,search)) return false;
     }
     return true;
@@ -7017,17 +7096,61 @@ function renderBrandTopicSentiment(brandsSorted) {
 }
 
 // ── TABLE ─────────────────────────────────────────────────────────────────────
+// Data Table columns come from the column-review step, not a fixed list: each
+// dataset has its own headers, so the table shows whatever was detected/confirmed
+// (source, date, Brand/Topic/Campaign/Extra with their labels, sentiment, text),
+// reading the real header name from the file and showing the confirmed label.
+function getTableColumns(){
+  const cfg = confirmedSchemaConfig || {};
+  const headers = Object.keys(rawData[0]||{});
+  const has = h => h && headers.includes(h);
+  const find = (col, alts) => _schemaFindCol(headers, {col, alts});
+  const defs = [];
+  const add = (key, label, kind) => {
+    if (!has(key) || defs.some(d => d.key === key)) return;
+    defs.push({ key, label: label || key, kind: kind || 'plain' });
+  };
+  add(cfg.sourceCol || find('source',['Source']), null);
+  add(find('created_at',['date','Date']), null);
+  add(cfg.brandDim, cfg.brandLabel);
+  add(cfg.topicDim, cfg.topicLabel);
+  add(cfg.campaignDim, cfg.campaignLabel);
+  (cfg.extraDims||[]).forEach(d => add(d.column, d.label));
+  add(cfg.sentimentCol || find('sentiment',[]), null, 'sentiment');
+  add(find('text',['Text','review','Review']) || find('title',['Title']), null);
+  return defs;
+}
+let _tableColDefs = [];
 function buildColToggles(){
   const c=document.getElementById('colToggle');c.innerHTML='';
-  DISPLAY_COLS.filter(col=>col!=='link').forEach(col=>{
+  _tableColDefs = getTableColumns();
+  _tableColDefs.forEach(def=>{
     const lbl=document.createElement('label');lbl.className='col-check on';
-    lbl.innerHTML=`<input type="checkbox" checked> ${col}`;
-    lbl.querySelector('input').addEventListener('change',e=>{lbl.classList.toggle('on',e.target.checked);renderTable();});
+    lbl.dataset.col=def.key;
+    lbl.title = def.label!==def.key ? `Column in file: ${def.key}` : '';
+    lbl.innerHTML=`<input type="checkbox" checked><span class="cc-tick" aria-hidden="true">✓</span>${_esc(def.label)}`;
+    lbl.querySelector('input').addEventListener('change',e=>{
+      // Keep at least one column visible — an empty table is confusing
+      if(!e.target.checked && getActiveCols().length===0){ e.target.checked=true; showToast('At least one column needs to stay visible','info'); return; }
+      lbl.classList.toggle('on',e.target.checked); _updateColToggleCount(); renderTable();
+    });
     c.appendChild(lbl);
   });
+  _updateColToggleCount();
 }
+function _updateColToggleCount(){
+  const n=getActiveCols().length, t=_tableColDefs.length;
+  const el=document.getElementById('colToggleCount'); if(el) el.textContent = t ? `${n} of ${t}` : '';
+  const btn=document.getElementById('colShowAllBtn'); if(btn) btn.disabled = n===t;
+}
+document.getElementById('colShowAllBtn')?.addEventListener('click',()=>{
+  document.querySelectorAll('#colToggle .col-check').forEach(l=>{ l.querySelector('input').checked=true; l.classList.add('on'); });
+  _updateColToggleCount(); renderTable();
+});
 function getActiveCols(){
-  return [...document.querySelectorAll('#colToggle .col-check')].filter(l=>l.querySelector('input').checked).map(l=>l.querySelector('input').nextSibling.textContent.trim());
+  const on = new Set([...document.querySelectorAll('#colToggle .col-check')]
+    .filter(l=>l.querySelector('input').checked).map(l=>l.dataset.col));
+  return _tableColDefs.filter(d=>on.has(d.key));
 }
 function getLinkField(row){
   for(const f of LINK_FIELDS){ if(row[f] && String(row[f]).startsWith('http')) return row[f]; }
@@ -7079,13 +7202,13 @@ function renderTable(){
   // Update row count badge
   const rcEl = document.getElementById('tableRowCount');
   if (rcEl) rcEl.textContent = `${data.length.toLocaleString()} rows`;
-  document.getElementById('tHead').innerHTML='<tr>'+cols.map(c=>`<th>${c}</th>`).join('')+'<th>Link</th></tr>';
+  document.getElementById('tHead').innerHTML='<tr>'+cols.map(c=>`<th title="${_esc(c.key)}">${_esc(c.label)}</th>`).join('')+'<th>Link</th></tr>';
   const tb=document.getElementById('tBody');tb.innerHTML='';
   slice.forEach(row=>{
     const tr=document.createElement('tr');
     cols.forEach(col=>{
-      const td=document.createElement('td'),val=row[col]||'';
-      if(col==='sentiment') td.innerHTML=`<span class="badge ${val}">${val}</span>`;
+      const td=document.createElement('td'),val=row[col.key]||'';
+      if(col.kind==='sentiment') td.innerHTML=`<span class="badge ${_esc(String(val).toLowerCase())}">${_esc(val)}</span>`;
       else{td.textContent=val;td.title=val;}
       tr.appendChild(td);
     });
@@ -7105,7 +7228,18 @@ function renderTable(){
 document.getElementById('prevPage').addEventListener('click',()=>{currentPage--;renderTable();});
 document.getElementById('nextPage').addEventListener('click',()=>{currentPage++;renderTable();});
 let _searchDebounceTimer = null;
+function _syncSearchClear(){
+  const inp=document.getElementById('tableSearch');
+  inp?.closest('.tc-search')?.classList.toggle('has-value', !!(inp && inp.value));
+}
+document.getElementById('tableSearchClear')?.addEventListener('click', () => {
+  const inp=document.getElementById('tableSearch'); inp.value=''; _syncSearchClear(); applyFilters(); inp.focus();
+});
+document.getElementById('tableSearch').addEventListener('keydown', e => {
+  if (e.key==='Escape' && e.target.value) { e.target.value=''; _syncSearchClear(); applyFilters(); }
+});
 document.getElementById('tableSearch').addEventListener('input', () => {
+  _syncSearchClear();
   clearTimeout(_searchDebounceTimer);
   _searchDebounceTimer = setTimeout(applyFilters, 250);
 });
@@ -7128,10 +7262,11 @@ document.getElementById('tableExportFilteredBtn')?.addEventListener('click', () 
   const data = hasFilter && filteredData.length ? filteredData : rawData;
   if (!data.length) { showToast('No data to export', 'error'); return; }
   const cols = getActiveCols();
-  const header = [...cols, 'link'].join(',');
+  const _q = v => { v = String(v).replace(/"/g,'""'); return /[",\n]/.test(v) ? `"${v}"` : v; };
+  const header = [...cols.map(c=>_q(c.label)), 'link'].join(',');
   const rows = data.map(row => {
     const vals = cols.map(c => {
-      const v = String(row[c]||'').replace(/"/g,'""');
+      const v = String(row[c.key]||'').replace(/"/g,'""');
       return v.includes(',') || v.includes('\n') ? `"${v}"` : v;
     });
     const link = getLinkField(row) || '';
@@ -13165,21 +13300,72 @@ function _acctBrandList(){
   (_inf.rows||[]).forEach(r=>r.brands.forEach(b=>set.add(b)));
   return [...set].filter(Boolean);
 }
-// Automatic suggestion for one account_group value
+// Automatic suggestion for one account_group value.
+// Rules run in this order (first match wins):
+//   1. Explicit owned phrase ("owned media", "main account", "brand account", Thai "เพจทางการ"…) → owned
+//   2. KOL / influencer / creator words (English + Thai)                                         → kol
+//   3. News / media / publisher words (English + Thai; "social media" alone is not a signal)     → media
+//   4. "official" / "ทางการ" on its own                                                           → owned
+//   5. Name matches a tracked brand                                                               → owned
+//   6. Nothing matched → "other" (earned), flagged ⚠ Check — never counted as owned unreviewed
+// An owned suggestion with no brand name left in it (e.g. just "Owned Media") is flagged ⚠ Check.
+// Thai has no word boundaries, so Thai keywords are matched as plain substrings.
+const _ACCT_RX = {
+  // owned phrases, checked before KOL/media so "Owned Media" / "Official KOL page" can't be stolen by those rules
+  owned:  /\bowned?\s+(media|channels?|accounts?|pages?)\b|\bmain\s+accounts?\b|\bbrand\s+(accounts?|pages?|channels?)\b|^\s*(own|owned|brand)\s*[|:\-–—]/i,
+  ownedTh:/บัญชีหลัก|บัญชีทางการ|เพจหลัก|เพจทางการ|ช่องทางการ|ช่องทางหลัก|สื่อของแบรนด์|สื่อของบริษัท/,
+  official:/\bofficial\b|ทางการ/i,
+  kol:    /^\s*kols?\b|\b(kols?|influencers?|creators?|bloggers?|youtubers?|tiktokers?|streamers?|reviewers?)\b/i,
+  kolTh:  /อินฟลูเอนเซอร์|อินฟลู|ครีเอเตอร์|บล็อกเกอร์|บล็อคเกอร์|ยูทูบเบอร์|ยูทูปเบอร์|ติ๊กต็อกเกอร์|ติ๊กต๊อกเกอร์|เคโอแอล|นักรีวิว|เน็ตไอดอล/,
+  media:  /^\s*(media|news)\s*[|:\-–—]|\b(news|media|publishers?|press|magazines?|newspapers?)\b/i,
+  mediaTh:/สำนักข่าว|ข่าว|หนังสือพิมพ์|นิตยสาร|สื่อมวลชน|สื่อออนไลน์|สื่อ/,
+};
+// Prefixes stripped to build a readable roster / brand label ("KOL | Food Bloggers" → "Food Bloggers")
+function _acctStripPrefix(s){
+  return String(s||'')
+    .replace(/^\s*(owned?\s+media|kols?|influencers?|creators?|media|news|own|owned|brand)\s*[|:\-–—]\s*/i,'')
+    .replace(/^\s*kols?\s+/i,'').trim();
+}
+// Owned label: drop the owned-marker words so the label reads as the brand name
+function _acctOwnedLabel(s){
+  const t = _acctStripPrefix(s)
+    .replace(/\bowned?\s+(media|channels?|accounts?|pages?)\b|\bmain\s+accounts?\b|\bbrand\s+(accounts?|pages?|channels?)\b|\bofficial\b/gi,' ')
+    .replace(/บัญชีหลัก|บัญชีทางการ|เพจหลัก|เพจทางการ|ช่องทางการ|ช่องทางหลัก|สื่อของแบรนด์|สื่อของบริษัท|ทางการ/g,' ')
+    .replace(/\s*[|:\-–—]\s*$/,'').replace(/^\s*[|:\-–—]\s*/,'').replace(/\s+/g,' ').trim();
+  return t || String(s||'').trim();
+}
+// Tracked brand whose normalised name equals, or (both ≥4 chars) contains / is contained in, the value
+function _acctBrandHit(v){
+  const k = _bddOwnedKey(v);
+  if (!k) return null;
+  return _acctBrandList().find(b=>{ const bk=_bddOwnedKey(b); return bk && (bk===k || (bk.length>=4 && k.length>=4 && (bk.includes(k)||k.includes(bk)))); }) || null;
+}
+// Owned suggestion from an explicit marker: label is the matched brand when one is found, else the
+// cleaned name; if no brand name is left (e.g. just "Owned Media") the user is asked to pick the brand.
+function _acctOwnedSuggest(v){
+  const base = _acctOwnedLabel(v), hit = _acctBrandHit(base) || _acctBrandHit(v);
+  if (hit) return { cat:'owned', label:_infGroupLabel(hit), why:`marked as owned and matches the tracked brand “${_infGroupLabel(hit)}”`, sure:true };
+  if (base && base !== String(v).trim()) return { cat:'owned', label:_infGroupLabel(base), why:'name marks it as a brand / official account', sure:true };
+  return { cat:'owned', label:_infGroupLabel(base), why:'marked as owned but no brand name was found — please pick which brand owns it', sure:false };
+}
 function _acctSuggest(value){
   const v = String(value||'').replace(/^\[|\]$/g,'').trim();
-  const low = v.toLowerCase();
-  const stripPrefix = s => s.replace(/^\s*(kol|kols|influencers?|creators?|media|news|own|owned|brand)\s*[|:\-–—]\s*/i,'').replace(/^\s*(kol|kols)\s+/i,'').trim();
-  if (/^\s*(kol|kols)\b|\b(kol|kols|influencer|influencers|creator|creators|blogger|youtuber|tiktoker)\b/i.test(v))
-    return { cat:'kol', label:stripPrefix(v) || v, why:'name mentions KOL / influencer / creator', sure:true };
-  if (/^\s*(media|news)\s*[|:\-–—]|\b(news|media|publisher|press|magazine|newspaper)\b/i.test(v))
-    return { cat:'media', label:stripPrefix(v) || v, why:'name mentions news / media / publisher', sure:true };
-  if (/main account|official|^\s*(own|owned|brand)\s*[|:\-–—]|brand account|owned media/i.test(v))
-    return { cat:'owned', label:_infGroupLabel(stripPrefix(v)), why:'name marks it as a brand / official account', sure:true };
-  const k = _bddOwnedKey(v);
-  const hit = _acctBrandList().find(b=>{ const bk=_bddOwnedKey(b); return bk && (bk===k || (bk.length>=4 && k.length>=4 && (bk.includes(k)||k.includes(bk)))); });
+  // 1. Explicit owned marker
+  if (_ACCT_RX.owned.test(v) || _ACCT_RX.ownedTh.test(v)) return _acctOwnedSuggest(v);
+  // 2. KOL roster
+  if (_ACCT_RX.kol.test(v) || _ACCT_RX.kolTh.test(v))
+    return { cat:'kol', label:_acctStripPrefix(v) || v, why:'name mentions KOL / influencer / creator', sure:true };
+  // 3. Tracked media — "social media" on its own is a generic phrase, not a publisher list
+  const vNoSocial = v.replace(/\bsocial\s+media\b/gi,' ').replace(/โซเชียลมีเดีย|สื่อโซเชียล/g,' ');
+  if (_ACCT_RX.media.test(vNoSocial) || _ACCT_RX.mediaTh.test(vNoSocial))
+    return { cat:'media', label:_acctStripPrefix(v) || v, why:'name mentions news / media / publisher', sure:true };
+  // 4. "official" without a KOL / media signal
+  if (_ACCT_RX.official.test(v)) return _acctOwnedSuggest(v);
+  // 5. Matches a tracked brand
+  const hit = _acctBrandHit(v);
   if (hit) return { cat:'owned', label:_infGroupLabel(v), why:`matches the tracked brand “${_infGroupLabel(hit)}”`, sure:true };
-  return { cat:'owned', label:_infGroupLabel(v), why:'looks like a brand name, but doesn’t match a tracked brand — please confirm', sure:false };
+  // 6. Unknown list — treat as earned until someone confirms it
+  return { cat:'other', label:_infGroupLabel(v), why:'doesn’t match a tracked brand or a known list type — please choose a category', sure:false };
 }
 function _acctResolve(value){
   const s = _acct.saved[_acctKey(value)];
