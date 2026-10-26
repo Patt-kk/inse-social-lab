@@ -1861,7 +1861,7 @@ table.dt.ovd-score td{max-width:none}
           <div class="gr-subpanel" id="gr-panel-raw">
             <div class="card" style="padding-bottom:16px">
               <div class="table-controls">
-                <input class="search-input" id="grTableSearch" placeholder="Search text, brand, sentiment…">
+                <input class="search-input" id="grTableSearch" placeholder="Search… use + for AND, / for OR (e.g. coffee+milk, coffee/tea)" title="word → contains word&#10;word+word → contains both&#10;word/word → contains either&#10;&quot;…&quot; → search literally">
                 <select id="grSentFilter" class="ai-select" style="max-width:160px">
                   <option value="__all__">All sentiments</option>
                   <option value="positive">Positive</option>
@@ -2285,7 +2285,7 @@ table.dt.ovd-score td{max-width:none}
               <div class="brand-pills" id="brandFilter"></div>
             </div>
             <div class="table-controls">
-              <div class="search-wrap"><input class="search-input" id="tableSearch" placeholder="Search text, brand, source… (or press / to focus)"></div>
+              <div class="search-wrap"><input class="search-input" id="tableSearch" placeholder="Search… use + for AND, / for OR (e.g. coffee+milk, coffee/tea)" title="word → contains word&#10;word+word → contains both&#10;word/word → contains either&#10;&quot;…&quot; → search literally"></div>
               <div class="col-toggle" id="colToggle"></div>
               <span id="tableRowCount" style="font-size:11px;font-weight:600;color:var(--text3);white-space:nowrap;margin-left:auto"></span>
               <button class="btn-outline" id="tableExportFilteredBtn" title="Export currently filtered rows as CSV" style="white-space:nowrap;flex-shrink:0">⬇ Export</button>
@@ -6249,9 +6249,32 @@ function buildBrandFilter() {
   });
 }
 
+// ── Boolean search for the Data Table / Google Review Raw Data boxes ─────────
+// "a"      → text contains a
+// "a+b"    → text contains a AND b (any order, anywhere)
+// "a/b"    → text contains a OR b
+// "a+b/c"  → (a AND b) OR c   ("+" binds tighter than "/")
+// Wrap the whole query in double quotes to search it literally (e.g. a URL).
+function _parseBoolSearch(raw) {
+  const q = String(raw || '').toLowerCase().trim();
+  if (!q) return null;
+  if (q.length >= 2 && q.startsWith('"') && q.endsWith('"')) {
+    const lit = q.slice(1, -1).trim();
+    return lit ? [[lit]] : null;
+  }
+  const groups = q.split('/')
+    .map(g => g.split('+').map(t => t.trim()).filter(Boolean))
+    .filter(g => g.length);
+  return groups.length ? groups : null;
+}
+function _boolSearchMatch(hay, groups) {
+  if (!groups) return true;
+  return groups.some(g => g.every(t => hay.includes(t)));
+}
+
 function applyFilters() {
   if (!rawData.length) return; // no data yet — don't wipe the empty state
-  const search=(document.getElementById('tableSearch')?.value||'').toLowerCase().trim();
+  const search=_parseBoolSearch(document.getElementById('tableSearch')?.value);
   filteredData=rawData.filter(row=>{
     if(activeBrands.size>0){
       const b=(row.Brands||'').toLowerCase();
@@ -6259,7 +6282,7 @@ function applyFilters() {
     }
     if(search){
       const hay=[row.text,row.Brands,row.source,row.Topics,row.sentiment].join(' ').toLowerCase();
-      if(!hay.includes(search)) return false;
+      if(!_boolSearchMatch(hay,search)) return false;
     }
     return true;
   });
@@ -6278,7 +6301,7 @@ function _drillDownToTable({ brand, topic } = {}) {
     });
   }
   const searchInput = document.getElementById('tableSearch');
-  if (searchInput) searchInput.value = topic || '';
+  if (searchInput) searchInput.value = topic ? (/[+/]/.test(topic) ? `"${topic}"` : topic) : '';
   applyFilters();
   document.querySelector('.tab-btn[data-tab="table"]')?.click();
 }
@@ -7878,14 +7901,14 @@ const GR_COL_LABELS = {
 };
 
 function renderGrRawTable() {
-  const search = (document.getElementById('grTableSearch').value || '').toLowerCase();
+  const search = _parseBoolSearch(document.getElementById('grTableSearch').value);
   const sentF  = document.getElementById('grSentFilter').value;
 
   let filtered = _grFiltered().filter(row => {
     if (sentF !== '__all__' && String(row.sentiment || '').toLowerCase() !== sentF) return false;
     if (search) {
       const hay = Object.values(row).join(' ').toLowerCase();
-      if (!hay.includes(search)) return false;
+      if (!_boolSearchMatch(hay, search)) return false;
     }
     return true;
   });
