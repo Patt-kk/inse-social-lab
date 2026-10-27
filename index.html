@@ -829,8 +829,8 @@ table.dt tbody td{padding:9px 14px;font-size:12px;color:var(--text2);max-width:2
 .xdim-bar-track{background:var(--surface2);border-radius:5px;height:14px;overflow:hidden;display:flex}
 .xdim-bar-seg{height:100%;flex-shrink:0}
 .xdim-bar-seg.positive{background:var(--pos)}
-.xdim-bar-seg.neutral{background:#FFC145}
-.xdim-bar-seg.negative{background:#FF5050}
+.xdim-bar-seg.neutral{background:#F59E0B}
+.xdim-bar-seg.negative{background:#EF4444}
 .xdim-bar-val{font-family:"Prompt",sans-serif;font-size:9.5px;color:var(--text3);text-align:right}
 .xdim-bar-rate{font-family:"Prompt",sans-serif;font-size:9px;color:var(--text3);text-align:right}
 .xdim-net-chip{font-family:"Prompt",sans-serif;font-size:9px;font-weight:700;text-align:right;padding:2px 5px;border-radius:5px;white-space:nowrap}
@@ -1238,6 +1238,23 @@ button,input,select,textarea,optgroup{font-family:"Prompt",sans-serif}
 .bdd-oe-legend b{color:var(--text);font-weight:700;font-size:12px}
 .bdd-oe-ratio{margin-left:auto;font-weight:500}
 .bdd-owned-sub{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+/* Owned Media Performance — clickable slices open top owned posts */
+.own-hint{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--text2);background:var(--accent-lt);border:1px solid rgba(37,99,235,.18);border-radius:var(--r);padding:7px 12px;margin-bottom:12px}
+.own-click{cursor:pointer;transition:box-shadow .15s,background-color .15s,filter .15s}
+.own-click:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bdd-kpi.own-click:hover{box-shadow:0 0 0 2px var(--accent),var(--shadow-sm);transform:translateY(-1px)}
+.bdd-kpi.own-click{transition:box-shadow .15s,transform .15s}
+tr.own-click:hover td{background:var(--accent-lt)}
+.bdd-src-row.own-click{border-radius:6px;margin-left:-6px;margin-right:-6px;padding-left:6px;padding-right:6px}
+.bdd-src-row.own-click:hover{background:var(--accent-lt)}
+.bdd-oe-bar .own-click:hover{filter:brightness(1.12)}
+.bdd-oe-legend .own-click:hover{color:var(--accent);text-decoration:underline}
+.bdd-owned-trend g.own-click:hover rect{filter:brightness(1.12)}
+.bdd-owned-trend g.own-click:hover rect:first-of-type{fill:var(--accent);fill-opacity:.06}
+.bdd-owned-trend g.own-click:focus{outline:none}
+.bdd-owned-trend g.own-click:focus-visible rect:first-of-type{stroke:var(--accent);stroke-width:1.5}
+.inf-modal-meta .sma-seg{margin-left:auto}
+.sma-seg-btn:disabled{opacity:.4;cursor:default}
 .bdd-owned-posts .inf-post-text{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 /* ── Account Groups panel ── */
 .acct-modal{width:min(1080px,95vw)!important;max-height:min(820px,92vh)!important;display:flex;flex-direction:column}
@@ -1301,6 +1318,207 @@ table.dt.acct-table td{vertical-align:middle;max-width:none}
 .ovd-stack div{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden}
 .ovd-net{font-size:13px;font-weight:800;text-align:right}
 .ovd-heat td{min-width:62px}
+/* Overview section tabs — split the long dashboard into focused views */
+.ovd-sec{position:sticky;top:-24px;z-index:30;margin:0 -28px 4px;padding:10px 28px 0;background:var(--bg)}
+.ovd-sec-bar{display:flex;gap:4px;padding:4px;background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm);overflow-x:auto;scrollbar-width:none}
+.ovd-sec-bar::-webkit-scrollbar{display:none}
+.ovd-sec-bar.can-r{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 48px),transparent)}
+.ovd-sec-bar.can-l{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px);mask-image:linear-gradient(90deg,transparent,#000 48px)}
+.ovd-sec-bar.can-l.can-r{-webkit-mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent);mask-image:linear-gradient(90deg,transparent,#000 48px,#000 calc(100% - 48px),transparent)}
+.ovd-sec-tab{all:unset;box-sizing:border-box;flex:1 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:8px 14px;border-radius:9px;font-family:"Prompt",sans-serif;font-size:12.5px;font-weight:500;color:var(--text2);white-space:nowrap;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
+.ovd-sec-tab:hover{background:var(--surface2);color:var(--text)}
+.ovd-sec-tab[aria-selected="true"]{background:var(--accent-lt);color:var(--accent);font-weight:600;box-shadow:inset 0 0 0 1px rgba(37,99,235,.25)}
+.ovd-sec-tab:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.ovd-sec-tab .ic{font-size:14px;line-height:1}
+.ovd-sec-meta{display:flex;align-items:center;justify-content:space-between;gap:6px 14px;flex-wrap:wrap;padding:9px 2px 12px;border-bottom:1px solid transparent}
+.ovd-sec-desc{font-size:11.5px;color:var(--text2)}
+.ovd-sec-ctx{font-size:10.5px;font-weight:600;color:var(--text3);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap}
+.ovd-pane{animation:ovdPaneIn .22s ease}
+.ovd-pane[hidden]{display:none}
+@keyframes ovdPaneIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.ovd-pane{animation:none}}
+@media(max-width:700px){.ovd-sec-tab{flex:0 0 auto;padding:8px 12px}}
+/* Sentiment tab */
+.snt-period{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.snt-select{font-family:"Prompt",sans-serif;font-size:12px;font-weight:500;color:var(--text);background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:6px 28px 6px 10px;cursor:pointer;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--text3) 50%),linear-gradient(135deg,var(--text3) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 9px) 52%;background-size:5px 5px;background-repeat:no-repeat}
+.snt-select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.snt-cmp{font-size:11px;color:var(--text2);white-space:nowrap}
+.snt-cmp span{color:var(--text3);margin:0 2px}
+.snt-ms{position:relative}
+.snt-ms-btn{display:inline-flex;align-items:center;gap:6px;font-family:"Prompt",sans-serif;font-size:12px;font-weight:500;color:var(--text);background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:6px 10px;cursor:pointer;max-width:220px}
+.snt-ms-btn .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.snt-ms-btn:hover,.snt-ms-btn[aria-expanded="true"]{border-color:var(--accent)}
+.snt-ms-menu{position:absolute;z-index:60;top:calc(100% + 6px);left:0;width:290px;background:var(--surface);border:1px solid var(--border2);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.14);padding:8px}
+.snt-ms-search{width:100%;font-family:"Prompt",sans-serif;font-size:12px;padding:7px 10px;border:1px solid var(--border2);border-radius:7px;background:var(--bg);color:var(--text);margin-bottom:6px}
+.snt-ms-act{display:flex;gap:6px;margin-bottom:6px}
+.snt-ms-act button{font-family:"Prompt",sans-serif;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-lt);border:0;border-radius:6px;padding:4px 9px;cursor:pointer}
+.snt-ms-list{max-height:280px;overflow-y:auto}
+.snt-ms-opt{display:flex;align-items:center;gap:8px;padding:6px 6px;border-radius:6px;font-size:12px;color:var(--text);cursor:pointer}
+.snt-ms-opt:hover{background:var(--surface2)}
+.snt-ms-opt .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.snt-ms-opt .only{display:none;font-family:"Prompt",sans-serif;font-size:10px;font-weight:700;color:var(--accent);background:transparent;border:1px solid var(--accent);border-radius:5px;padding:1px 6px;cursor:pointer}
+.snt-ms-opt:hover .only,.snt-ms-opt:focus-within .only{display:inline-block}
+.snt-ms-opt:hover .ovd-ch-n{display:none}
+.snt-d{display:inline-flex;align-items:center;gap:2px;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.snt-d.good{color:#0f7a5c;background:#E8FBF5}
+.snt-d.bad{color:#b91c1c;background:#FEF0F0}
+.snt-d.flat{color:var(--text2);background:var(--surface2)}
+.snt-d.na{color:var(--text3)}
+[data-theme="dark"] .snt-d.good{color:#6ee7b7;background:#0f3b2e}
+[data-theme="dark"] .snt-d.bad{color:#fca5a5;background:#3f1515}
+.snt-low{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.2px;color:#b45309;background:#F59E0B1f;border:1px solid #F59E0B55;border-radius:4px;padding:0 5px;vertical-align:1px;white-space:nowrap;cursor:help}
+[data-theme="dark"] .snt-low{color:#fcd34d}
+.snt-mix-row{display:grid;grid-template-columns:130px minmax(0,1fr) 78px;gap:12px;align-items:center;margin-bottom:12px}
+.snt-mix-lbl{font-size:12px;font-weight:600;color:var(--text)}
+.snt-mix-lbl small,.snt-mix-n small{display:block;font-size:10px;font-weight:500;color:var(--text3)}
+.snt-mix-bar{display:flex;height:26px;border-radius:7px;overflow:hidden;background:var(--bg)}
+.snt-mix-bar div{display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:#fff}
+.snt-mix-bar.empty{align-items:center;justify-content:center;font-size:11px;color:var(--text3)}
+.snt-mix-n{text-align:right;font-size:12.5px;font-weight:700;color:var(--text)}
+.snt-net-row{display:grid;grid-template-columns:minmax(90px,140px) minmax(0,1fr) 40px 96px;gap:10px;align-items:center;padding:5px 0}
+.snt-net-row.low{opacity:.6}
+.snt-net-b{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--text);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.snt-net-track{position:relative;height:12px;background:var(--bg);border-radius:6px}
+.snt-net-track .mid{position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1px solid var(--border2)}
+.snt-net-bar{position:absolute;top:0;bottom:0;border-radius:6px}
+.snt-net-bar.pos{background:var(--pos)}.snt-net-bar.neg{background:var(--neg)}
+.snt-net-v{font-size:12px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.snt-net-d{text-align:right}
+.snt-foot{margin-top:10px;padding-top:9px;border-top:1px dashed var(--border);font-size:10.5px;color:var(--text3)}
+.snt-cov{font-size:11px;color:var(--text3);margin:2px 2px 12px}
+.snt-mini{display:flex;height:9px;border-radius:5px;overflow:hidden;background:var(--bg)}
+table.dt.snt-score td{vertical-align:middle}
+table.dt.snt-score tbody tr{cursor:pointer}
+table.dt.snt-score tbody tr:hover td{background:var(--accent-lt)}
+table.dt.snt-score tbody tr:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.snt-net-row{cursor:pointer;border-radius:6px;transition:background .12s}
+.snt-net-row:hover,.snt-net-row:focus-visible{background:var(--surface2);outline:none}
+.snt-band.cur{fill:var(--accent);fill-opacity:.07}
+.snt-band.prev{fill:var(--text3);fill-opacity:.07}
+.snt-tr-wrap .snt-hit{cursor:pointer}
+.snt-spikes{display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
+.snt-spikes-lbl{font-size:11px;font-weight:700;color:var(--neg)}
+.snt-spikes-lbl.ok{color:var(--pos)}
+.snt-spikes-note{font-size:10.5px;color:var(--text3)}
+.snt-spike{font-family:"Prompt",sans-serif;font-size:11px;color:var(--text);background:var(--neg-lt);border:1px solid #EF444455;border-radius:16px;padding:3px 10px;cursor:pointer;transition:border-color .12s}
+.snt-spike:hover,.snt-spike:focus-visible{border-color:var(--neg);outline:none}
+.snt-spike b{color:var(--neg)}
+.snt-spike span{color:var(--text3);font-size:10px}
+[data-theme="dark"] .snt-spike{background:#3f1515}
+.snt-heat td{min-width:84px}
+.snt-heat .cv{height:46px;font-size:13px;gap:5px}
+.snt-heat .ph-name{font-size:11.5px;color:var(--text)}
+.snt-hm-mix{display:flex;width:60%;max-width:56px;height:4px;border-radius:2px;overflow:hidden;background:rgba(127,127,127,.18);box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+.snt-hm-mix i{display:block;height:100%}
+.snt-hm-avg{color:var(--text2);font-size:11px}
+.snt-heat .cv.pn{gap:3px}
+.snt-hm-pn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;font-size:12px;font-weight:700;line-height:1.25}
+.snt-hm-pn .p{color:#0f8a66}.snt-hm-pn .n{color:#c62828}
+[data-theme="dark"] .snt-hm-pn .p{color:#6ee7b7}[data-theme="dark"] .snt-hm-pn .n{color:#fca5a5}
+.snt-heat .cv.pn[style*="color:#fff"] .snt-hm-pn .p,.snt-heat .cv.pn[style*="color:#fff"] .snt-hm-pn .n{color:#fff}
+.snt-vd{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;border-radius:14px;padding:3px 10px 3px 7px;white-space:nowrap;cursor:help}
+.snt-vd.pos{background:var(--pos-lt);color:#0f7a5c}.snt-vd.pos2{background:#1DC99712;color:#0f7a5c}
+.snt-vd.mid{background:var(--surface2);color:var(--text2)}
+.snt-vd.neg2{background:#EF444412;color:#b91c1c}.snt-vd.neg{background:var(--neg-lt);color:#b91c1c}
+[data-theme="dark"] .snt-vd.pos,[data-theme="dark"] .snt-vd.pos2{background:#0f3b2e;color:#6ee7b7}
+[data-theme="dark"] .snt-vd.neg,[data-theme="dark"] .snt-vd.neg2{background:#3f1515;color:#fca5a5}
+.ovd-plat td.tot .snt-vd{font-size:10.5px;padding:2px 8px 2px 6px}
+.snt-guide{background:var(--accent-lt);border:1px solid rgba(37,99,235,.2);border-radius:var(--r-lg);padding:12px 16px;margin-bottom:14px;font-size:12px;color:var(--text2)}
+.snt-guide-h{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:6px}
+.snt-guide-x{font-family:"Prompt",sans-serif;font-size:11px;font-weight:600;color:var(--accent);background:var(--surface);border:1px solid rgba(37,99,235,.3);border-radius:6px;padding:3px 10px;cursor:pointer}
+.snt-guide ol{margin:0;padding-left:18px;display:grid;gap:3px;line-height:1.5}
+.snt-guide b{color:var(--text)}
+.snt-k{display:inline-block;width:9px;height:9px;border-radius:2px;margin:0 3px 0 5px;vertical-align:0}
+.snt-sec-lbl{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin:2px 2px 8px}
+.snt-plain{font-size:12px;color:var(--text2);margin:-2px 0 12px;line-height:1.5}
+.snt-ctl-lbl{font-size:11px;font-weight:600;color:var(--text3)}
+.snt-tip-vd{font-size:12px;margin:-2px 0 6px;color:var(--text)}
+.snt-tov-head{display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,2.4fr) 150px 84px;gap:12px;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--text3);padding:0 6px 8px;border-bottom:1px solid var(--border);margin-bottom:4px}
+.snt-tov-head span:nth-child(3),.snt-tov-head span:nth-child(4){text-align:right}
+.snt-tov{display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,2.4fr) 150px 84px;gap:12px;align-items:center;padding:8px 6px;border-radius:8px;cursor:pointer;transition:background .12s}
+.snt-tov:hover,.snt-tov:focus-visible{background:var(--surface2);outline:none}
+.snt-tov.low{opacity:.7}
+.snt-tov-t b{display:block;font-size:12.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.snt-tov-t small{display:block;font-size:10.5px;color:var(--text3);margin-top:1px}
+.snt-tov .snt-mix-bar{height:22px}
+.snt-tov-net,.snt-tov-d{text-align:right}
+.snt-pill{display:inline-block;min-width:44px;text-align:center;font-size:12px;font-weight:800;border-radius:12px;padding:2px 9px;font-variant-numeric:tabular-nums}
+.snt-pill.pos{background:var(--pos-lt);color:#0f7a5c}
+.snt-pill.neg{background:var(--neg-lt);color:#b91c1c}
+.snt-pill.mid{background:var(--surface2);color:var(--text2)}
+[data-theme="dark"] .snt-pill.pos{background:#0f3b2e;color:#6ee7b7}
+[data-theme="dark"] .snt-pill.neg{background:#3f1515;color:#fca5a5}
+@media(max-width:900px){.snt-tov,.snt-tov-head{grid-template-columns:minmax(90px,1fr) minmax(0,1.6fr) 130px 72px;gap:8px}}
+@media(max-width:600px){.snt-tov,.snt-tov-head{grid-template-columns:minmax(0,1fr) 120px;row-gap:6px}.snt-tov .snt-mix-bar,.snt-tov-head span:nth-child(2){grid-column:1 / -1;grid-row:2}.snt-tov-d,.snt-tov-head span:nth-child(4){display:none}}
+.snt-ins{margin:0 0 14px}
+.snt-ins button.bad{border-left:3px solid var(--neg)}
+.snt-ins button.good{border-left:3px solid var(--pos)}
+.snt-drv{display:grid;grid-template-columns:minmax(110px,1.1fr) minmax(0,1.3fr) 40px 74px;gap:10px;align-items:center;padding:7px 6px;margin:0 -6px;border-radius:7px;cursor:pointer;transition:background .12s}
+.snt-drv:hover,.snt-drv:focus-visible{background:var(--surface2);outline:none}
+.snt-drv-t b{display:block;font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.snt-drv-t small{display:block;font-size:10px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.snt-drv-bar{height:10px;background:var(--bg);border-radius:5px;overflow:hidden}
+.snt-drv-bar div{height:100%;border-radius:5px}
+.snt-drv-v{font-size:12.5px;font-weight:800;color:var(--text);text-align:right;font-variant-numeric:tabular-nums}
+.snt-drv-d{text-align:right}
+.snt-idx{display:inline-block;min-width:38px;text-align:center;font-weight:700;border-radius:5px;padding:1px 6px;background:var(--surface2);color:var(--text2)}
+.snt-idx.hi{background:var(--neg-lt);color:#b91c1c}
+.snt-idx.lo{background:var(--pos-lt);color:#0f7a5c}
+[data-theme="dark"] .snt-idx.hi{background:#3f1515;color:#fca5a5}
+[data-theme="dark"] .snt-idx.lo{background:#0f3b2e;color:#6ee7b7}
+@media(max-width:600px){.snt-drv{grid-template-columns:minmax(90px,1fr) minmax(0,1fr) 36px 64px}}
+@media(max-width:600px){.snt-mix-row{grid-template-columns:90px minmax(0,1fr) 60px}.snt-net-row{grid-template-columns:90px minmax(0,1fr) 34px 92px}}
+/* Platform Mix — brand × platform matrix with switchable lenses */
+.ovd-plat-head{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin-bottom:8px}
+.ovd-plat-head .bdd-section-title{margin:0;padding:0;border:0}
+.ovd-plat-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ovd-plat-ctl .btn-outline{padding:5px 12px;font-size:11.5px}
+.ovd-plat-desc{font-size:11.5px;color:var(--text2);margin:0 0 12px;line-height:1.5}
+.ovd-plat-desc b{color:var(--text)}
+.ovd-plat-wrap{position:relative}
+.ovd-plat-scroll{overflow:auto;max-height:560px;border:1px solid var(--border);border-radius:var(--r)}
+table.ovd-plat{width:100%;border-collapse:separate;border-spacing:0;font-variant-numeric:tabular-nums}
+.ovd-plat th,.ovd-plat td{border-bottom:1px solid var(--border)}
+.ovd-plat thead th{position:sticky;top:0;z-index:2;background:var(--surface);padding:10px 8px 8px;text-align:right;vertical-align:bottom;font-size:11px;font-weight:600;color:var(--text2);white-space:nowrap;cursor:pointer;user-select:none;transition:color .12s}
+.ovd-plat thead th:first-child{left:0;z-index:3;text-align:left;padding-left:12px}
+.ovd-plat thead th:hover,.ovd-plat thead th.col-hl{color:var(--accent)}
+.ovd-plat thead th.sorted{color:var(--text)}
+.ovd-plat thead th:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.ovd-plat .ph-name{display:flex;align-items:center;justify-content:flex-end;gap:5px}
+.ovd-plat thead th:first-child .ph-name{justify-content:flex-start}
+.ovd-plat .ph-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ovd-plat .ph-arr{font-size:9px;color:var(--accent)}
+.ovd-plat .ph-sub{font-size:9.5px;font-weight:500;color:var(--text3);margin-top:2px}
+.ovd-plat .ph-bar{height:3px;border-radius:2px;background:var(--bg);margin-top:5px;overflow:hidden}
+.ovd-plat .ph-bar i{display:block;height:100%;border-radius:2px;opacity:.75}
+.ovd-plat tbody th{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;padding:0 12px;font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis;transition:color .12s}
+.ovd-plat tbody th .ovd-dot{margin-right:8px}
+.ovd-plat tr.hl th{color:var(--accent)}
+.ovd-plat td{padding:3px;min-width:78px}
+.ovd-plat td.c{cursor:pointer}
+.ovd-plat td.c:focus-visible{outline:none}
+.ovd-plat .cv{display:flex;flex-direction:column;align-items:center;justify-content:center;height:40px;border-radius:6px;font-size:12px;font-weight:700;color:var(--text);transition:box-shadow .12s}
+.ovd-plat .cv small{font-size:9.5px;font-weight:500;opacity:.8;margin-top:1px}
+.ovd-plat .cv.zero{color:var(--text3);font-weight:400;background:var(--bg)}
+.ovd-plat td.c:hover .cv,.ovd-plat td.c:focus-visible .cv{box-shadow:0 0 0 2px var(--accent)}
+.ovd-plat .cv.low{background-image:repeating-linear-gradient(135deg,transparent 0 5px,rgba(127,127,127,.16) 5px 7px)}
+.ovd-plat .tot{text-align:right;padding:0 12px;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap;border-left:1px solid var(--border)}
+.ovd-plat .tot small{display:block;font-size:9.5px;font-weight:500;color:var(--text3)}
+.ovd-plat tr.base th,.ovd-plat tr.base td{background:var(--surface2);border-bottom:2px solid var(--border2)}
+.ovd-plat tr.base th{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--text2)}
+.ovd-plat tbody tr:last-child th,.ovd-plat tbody tr:last-child td{border-bottom:0}
+.ovd-plat-ins{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-top:12px}
+.ovd-plat-ins button{all:unset;box-sizing:border-box;display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);cursor:pointer;transition:border-color .12s,background .12s}
+.ovd-plat-ins button:hover,.ovd-plat-ins button:focus-visible{border-color:var(--accent);background:var(--accent-lt)}
+.ovd-plat-ins .ic{font-size:15px;line-height:1.3}
+.ovd-plat-ins .k{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3)}
+.ovd-plat-ins .v{font-size:12px;color:var(--text2);line-height:1.45;margin-top:2px}
+.ovd-plat-ins .v b{color:var(--text)}
+.ovd-plat-foot{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;margin-top:10px;font-size:10.5px;color:var(--text3)}
+.ovd-plat-foot>span{display:inline-flex;align-items:center;gap:6px}
+.ovd-plat-scale{display:inline-block;width:96px;height:8px;border-radius:4px}
+.ovd-plat-lowkey{display:inline-block;width:16px;height:10px;border-radius:3px;border:1px solid var(--border2);background-image:repeating-linear-gradient(135deg,transparent 0 3px,rgba(127,127,127,.3) 3px 5px)}
+.ovd-plat-note{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:14px 16px;border:1px dashed var(--border2);border-radius:var(--r);font-size:12px;color:var(--text2)}
 .ovd-leg{cursor:pointer;user-select:none}
 .ovd-leg.off{opacity:.35;text-decoration:line-through}
 .ovd-eff-wrap{position:relative}
@@ -2221,60 +2439,8 @@ table.dt.ovd-score td{max-width:none}
           <div class="empty-sub">Upload a CSV to see sentiment charts</div>
         </div>
         <div id="chartsGrid" style="display:none">
-          <div class="card">
-            <div class="card-title">Overall Sentiment Health</div>
-            <div class="card-sub">Aggregated across all brands in the current dataset</div>
-            <div class="sent-kpi-row" id="sentOverviewKpis"></div>
-          </div>
-          <div class="card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
-              <div>
-                <div class="card-title" style="margin-bottom:2px">Sentiment Trend Over Time</div>
-                <div class="card-sub">Share of positive / neutral / negative mentions per period, across all brands</div>
-              </div>
-              <div class="bdd-metric-toggle bdd-metric-toggle--compare">
-                <button class="bdd-metric-btn active" id="sentGranDay" data-gran="day">Day</button>
-                <button class="bdd-metric-btn" id="sentGranWeek" data-gran="week">Week</button>
-                <button class="bdd-metric-btn" id="sentGranMonth" data-gran="month">Month</button>
-              </div>
-            </div>
-            <div class="sent-legend" style="margin:8px 0 4px">
-              <div class="sent-leg-item"><span class="sent-leg-dot" style="background:#1DC997"></span>positive</div>
-              <div class="sent-leg-item"><span class="sent-leg-dot" style="background:#FFC145"></span>neutral</div>
-              <div class="sent-leg-item"><span class="sent-leg-dot" style="background:#FF5050"></span>negative</div>
-            </div>
-            <div id="sent-trend-chart"></div>
-          </div>
-          <div class="card">
-            <div class="card-title">Sentiment Split by Brand</div>
-            <div class="card-sub">Proportion of positive, neutral, and negative mentions per brand — best for comparing brands side by side</div>
-            <div id="sent-brand-stacked"></div>
-          </div>
-          <div class="card">
-            <div class="card-title">Sentiment of Unique Mentions by Brand</div>
-            <div class="card-sub">Same split as above, shown as donuts with each brand's total mention volume in the centre</div>
-            <div id="brand-donuts" style="display:flex;flex-wrap:wrap;gap:32px 24px;justify-content:flex-start;padding-top:4px"></div>
-          </div>
-          <div class="card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
-              <div>
-                <div class="card-title" style="margin-bottom:2px">Sentiment by <span data-schema-label="topic">Topic</span></div>
-                <div style="font-size:12px;color:var(--text3)">Filter by brand using the pills on the right</div>
-              </div>
-              <div id="topic-sent-brand-filter" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"></div>
-            </div>
-            <div id="sent-topic-bars"></div>
-          </div>
-          <div class="card">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px">
-              <div>
-                <div class="card-title" style="margin-bottom:2px"><span data-schema-label="topic">Topic</span> × <span data-schema-label="brand">Brand</span> × Sentiment</div>
-                <div class="card-sub" id="brandTopicSentSub">Stacked vertical bars per brand, sorted by total engagement</div>
-              </div>
-              <div id="bts-brand-filter" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"></div>
-            </div>
-            <div id="brand-topic-sent-grid"></div>
-          </div>
+          <div class="ovd-controls snt-controls" id="sntControls"></div>
+          <div id="sntBody"></div>
         </div>
       </div>
 
@@ -2683,13 +2849,6 @@ table.dt.ovd-score td{max-width:none}
           <div class="page-header">
             <div class="page-title">Overview — <span>All Brands</span></div>
           </div>
-          <div class="kpi-row">
-            <div class="kpi-card"><div class="kpi-val" id="rTotalEng">—</div><div class="kpi-lbl">Total Engagement</div></div>
-            <div class="kpi-card"><div class="kpi-val" id="rTotalMention">—</div><div class="kpi-lbl">Total Mentions</div></div>
-            <div class="kpi-card"><div class="kpi-val" id="rTotalView">—</div><div class="kpi-lbl">Total Views</div></div>
-            <div class="kpi-card pos"><div class="kpi-val" id="rPosPct">—</div><div class="kpi-lbl">Positive %</div></div>
-            <div class="kpi-card neg"><div class="kpi-val" id="rNegPct">—</div><div class="kpi-lbl">Negative %</div></div>
-          </div>
           <div class="gr-subnav" id="ovSubnav">
             <button class="gr-subtab active" data-ov-tab="dashboard">📊 Dashboard</button>
             <button class="gr-subtab" data-ov-tab="tables">📋 Brand Raw Data</button>
@@ -2863,7 +3022,7 @@ table.dt.ovd-score td{max-width:none}
                 <div class="bdd-section-title" style="margin-bottom:0;border:none;padding:0"><span>🔬</span>Sentiment by <span data-schema-label="topic">Topic</span></div>
                 <div style="display:flex;gap:14px">
                   <span style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#0d9e75"><span style="width:10px;height:10px;border-radius:2px;background:#1DC997;display:inline-block"></span>Positive</span>
-                  <span style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#d14f4f"><span style="width:10px;height:10px;border-radius:2px;background:#FF5050;display:inline-block"></span>Negative</span>
+                  <span style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#d14f4f"><span style="width:10px;height:10px;border-radius:2px;background:#EF4444;display:inline-block"></span>Negative</span>
                 </div>
               </div>
               <div id="bddTopicSentBars"></div>
@@ -3840,8 +3999,6 @@ function applySchemaLabels() {
   document.querySelectorAll('[data-schema-label="brand"]').forEach(el => el.textContent = L.brand);
   document.querySelectorAll('[data-schema-label="topic"]').forEach(el => el.textContent = L.topic);
   document.querySelectorAll('[data-schema-label="campaign"]').forEach(el => el.textContent = L.campaign);
-  const sub = document.getElementById('brandTopicSentSub');
-  if (sub) sub.textContent = `Stacked vertical bars — ${TOPIC_ORDER.length} ${L.topic.toLowerCase()}${TOPIC_ORDER.length===1?'':'s'} per brand, sorted by total engagement`;
 }
 
 // ── Small formatting helper for tight heatmap cells ──────────────────────────
@@ -5164,16 +5321,6 @@ function renderReport() {
   document.getElementById('reportDateLabel').textContent=
     today.toLocaleString('default',{month:'long',year:'numeric'});
 
-  document.getElementById('rTotalMention').textContent=reportData.totalMention.toLocaleString();
-  document.getElementById('rTotalEng').textContent=Math.round(reportData.totalEngagement).toLocaleString();
-  document.getElementById('rTotalView').textContent=Math.round(reportData.totalView||0).toLocaleString();
-
-  const total=reportData.sentRows.reduce((a,r)=>a+r.total,0);
-  const pos=reportData.sentRows.reduce((a,r)=>a+r.positive,0);
-  const neg=reportData.sentRows.reduce((a,r)=>a+r.negative,0);
-  document.getElementById('rPosPct').textContent=total?Math.round(pos/total*100)+'%':'—';
-  document.getElementById('rNegPct').textContent=total?Math.round(neg/total*100)+'%':'—';
-
   // Section 1
   const tb1=document.getElementById('topicTableBody'); tb1.innerHTML='';
   reportData.topicRows.forEach(r=>{
@@ -6386,115 +6533,11 @@ function _drillDownToTable({ brand, topic } = {}) {
 }
 
 // ── CHARTS ────────────────────────────────────────────────────────────────────
-const SENT_COLORS  = { positive:'#1DC997', neutral:'#FFC145', negative:'#FF5050' };
+const SENT_COLORS  = { positive:'#1DC997', neutral:'#F59E0B', negative:'#EF4444' };
 // TOPIC_ORDER is re-derived from the pipeline's actual output taxonomy after each
 // run (see continuePipelineAfterSchemaConfirm) — NOT hardcoded, since different
 // client schemas have different Topic/Attribute category sets and sizes.
 let TOPIC_ORDER  = ['product','promotion','price','branding','service','activity','others'];
-
-// A chart/grid that renders one element (or worse, one element PER TOPIC PER
-// SENTIMENT) per brand does not scale past a handful of brands — with a large
-// brand list this is exactly what freezes the tab. Every "show every brand at
-// once" visual in the Sentiment tab is capped to this many, ranked by volume,
-// with the rest reachable via the brand filter instead of always-rendered.
-const SENT_CHART_BRAND_CAP = 20;
-function _topBrandsByVolume(brandsList, n) {
-  const withTotals = brandsList.map(b => {
-    const row = reportData.sentRows.find(r => r.brand === b);
-    return { brand: b, total: row ? (row.total || 0) : 0 };
-  });
-  withTotals.sort((a, b) => b.total - a.total);
-  return withTotals.slice(0, n).map(x => x.brand);
-}
-
-// ── Generic searchable brand combo-filter ───────────────────────────────────
-// Replaces "one pill button per brand" filters (unusable past a dozen or so
-// brands) everywhere in the app with a single reusable click-to-open,
-// type-to-filter combobox. Builds its own DOM into `container` from scratch,
-// so multiple independent instances can coexist without id collisions.
-let _comboFilterSeq = 0;
-function buildBrandComboFilter(container, { brands, current, includeAll = true, allLabel = 'All brands', onSelect }) {
-  if (!container) return;
-  const uid = `combof_${++_comboFilterSeq}`;
-  container.innerHTML = `
-    <div class="combo-filter" id="${uid}">
-      <button type="button" class="combo-filter-trigger" aria-haspopup="listbox" aria-expanded="false">
-        <span class="combo-filter-label"></span>
-        <span class="combo-filter-caret">⌄</span>
-      </button>
-      <div class="combo-filter-panel" role="listbox">
-        <div class="combo-filter-search-wrap">
-          <span class="combo-filter-search-icon">🔍</span>
-          <input type="text" class="combo-filter-search" placeholder="Search brands…" autocomplete="off">
-          <span class="combo-filter-count"></span>
-        </div>
-        <div class="combo-filter-list"></div>
-      </div>
-    </div>`;
-  const wrap    = container.querySelector('.combo-filter');
-  const trigger = wrap.querySelector('.combo-filter-trigger');
-  const label   = wrap.querySelector('.combo-filter-label');
-  const search  = wrap.querySelector('.combo-filter-search');
-  const list    = wrap.querySelector('.combo-filter-list');
-  const countEl = wrap.querySelector('.combo-filter-count');
-
-  const items = (includeAll ? [{ value: '__all__', name: allLabel }] : [])
-    .concat(brands.map(b => ({ value: b, name: b })));
-
-  function setLabel() {
-    const cur = items.find(i => i.value === current) || items[0];
-    label.textContent = cur ? cur.name : allLabel;
-  }
-  function renderList(query) {
-    const q = (query || '').trim().toLowerCase();
-    const matches = items.filter(i => !q || i.name.toLowerCase().includes(q));
-    countEl.textContent = q ? `${matches.length.toLocaleString()} / ${items.length.toLocaleString()}` : `${items.length.toLocaleString()} options`;
-    if (!matches.length) {
-      list.innerHTML = `<div class="combo-filter-empty">No brands match "${_esc(query)}"</div>`;
-      return;
-    }
-    list.innerHTML = matches.map(i => `
-      <div class="combo-filter-item${i.value === current ? ' active' : ''}" data-value="${_esc(i.value)}" role="option">
-        <span class="combo-filter-item-name">${_esc(i.name)}</span>
-      </div>`).join('');
-    list.querySelectorAll('.combo-filter-item').forEach(el => {
-      el.addEventListener('click', () => {
-        current = el.dataset.value;
-        setLabel();
-        closePanel();
-        onSelect(current);
-      });
-    });
-  }
-  function openPanel() {
-    wrap.classList.add('open');
-    trigger.setAttribute('aria-expanded', 'true');
-    search.value = '';
-    renderList('');
-    requestAnimationFrame(() => search.focus());
-  }
-  function closePanel() {
-    wrap.classList.remove('open');
-    trigger.setAttribute('aria-expanded', 'false');
-  }
-  trigger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    wrap.classList.contains('open') ? closePanel() : openPanel();
-  });
-  search.addEventListener('input', () => renderList(search.value));
-  search.addEventListener('keydown', (e) => {
-    const els = [...list.querySelectorAll('.combo-filter-item')];
-    if (!els.length) return;
-    let idx = els.findIndex(i => i.classList.contains('focused'));
-    if (e.key === 'ArrowDown') { e.preventDefault(); idx = Math.min(els.length-1, idx+1); els.forEach(i=>i.classList.remove('focused')); els[idx].classList.add('focused'); els[idx].scrollIntoView({block:'nearest'}); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); idx = Math.max(0, idx-1); els.forEach(i=>i.classList.remove('focused')); els[idx].classList.add('focused'); els[idx].scrollIntoView({block:'nearest'}); }
-    else if (e.key === 'Enter') { e.preventDefault(); (els[idx]||els[0]).click(); }
-    else if (e.key === 'Escape') { closePanel(); trigger.focus(); }
-  });
-  document.addEventListener('click', (e) => { const _path = e.composedPath ? e.composedPath() : []; if (!_path.includes(wrap)) closePanel(); });
-
-  setLabel();
-}
 
 // ── CHANNEL NORMALISATION ─────────────────────────────────────────────────────
 // Fixed channel list — everything not matched falls through to Website
@@ -6545,7 +6588,678 @@ function normalizeChannel(raw) {
   return 'Website';
 }
 
-let activeTSBrand = '__all__';
+// ════════════════════════════════════════════════════════════════════════
+// SENTIMENT TAB
+// Row-level model built from rawData once per upload; every view is computed
+// client-side so filters stay instant. A row tagged with two brands counts
+// once for each brand; tab-wide totals count each row once.
+// "Weight by engagement" turns every share into a share of engagement, so a
+// 50K-engagement complaint outweighs a quiet neutral comment.
+// ════════════════════════════════════════════════════════════════════════
+const SNT_S = ['positive','neutral','negative'];
+const SNT_LBL = { positive:'Positive', neutral:'Neutral', negative:'Negative' };
+const SNT_MIN_N = 30;       // brand / period with fewer mentions → flagged as a small sample
+const SNT_CELL_MIN_N = 10;  // same for heatmap cells and other small slices
+const SNT_PANE_KEY = 'inse-snt-pane';
+const SNT_PANES = [
+  { k:'summary', ic:'🧭', l:'Summary', d:'Headline sentiment for the selected period, compared with the period before it.' },
+  { k:'trend',   ic:'📈', l:'Trend',   d:'How sentiment moves over the whole file — the selected period is shaded, unusual negative spikes are flagged.' },
+  { k:'brands',  ic:'🏷', l:'Brands',  d:'Every brand side by side — click a column to sort, a row for its posts, or export the table as CSV.' },
+  { k:'topics',  ic:'🗂', l:'Topics',  d:'Where each brand wins or loses, topic by topic.' },
+  { k:'drivers', ic:'🔍', l:'Drivers', d:'Why sentiment moves — the topics, platforms and posts behind the negative and positive conversation.' },
+];
+const _snt = { rows:[], brands:[], chans:{}, days:[], noSent:0, noDate:0, noBrand:0,
+  f:{ metric:'mention', orig:false, ch:'__all__', brands:new Set(), period:null }, pane:null, sort:{ key:'n', dir:-1 } };
+const _SNT_MON = { jan:0, feb:1, mar:2, apr:3, may:4, jun:5, jul:6, aug:7, sep:8, oct:9, nov:10, dec:11 };
+
+// 'YYYY-MM-DD' from the export's "2026 Oct 01 10:00:00", ISO dates, or anything Date() can read
+function _sntDay(raw){
+  const s=String(raw||'').trim(); if (!s) return '';
+  let m=s.match(/^(\d{4})[ -]([A-Za-z]{3})[A-Za-z]*[ -](\d{1,2})\b/);
+  if (m && _SNT_MON[m[2].toLowerCase()]!=null) return `${m[1]}-${String(_SNT_MON[m[2].toLowerCase()]+1).padStart(2,'0')}-${m[3].padStart(2,'0')}`;
+  m=s.match(/^(\d{4})-(\d{2})-(\d{2})/); if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  const d=new Date(s); if (isNaN(d.getTime())) return '';
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function _sntAddDays(day, n){ const d=new Date(day+'T00:00:00'); d.setDate(d.getDate()+n); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+const _SNT_MN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function _sntFmtDay(day, withYear){ const [y,m,d]=day.split('-'); return `${Number(d)} ${_SNT_MN[Number(m)-1]}${withYear?' '+y:''}`; }
+function _sntRangeLbl(r){ if (!r) return ''; const [a,b]=r; return a===b?_sntFmtDay(a,true):`${_sntFmtDay(a, a.slice(0,4)!==b.slice(0,4))} – ${_sntFmtDay(b,true)}`; }
+function _sntColor(b){
+  try { if ((reportData.sentRows||[]).some(r=>r.brand===b)) return bddColor(b); } catch(_) {}
+  const i=_snt.brands.indexOf(b); return BDD_COLORS[(i<0?0:i)%BDD_COLORS.length];
+}
+function _sntText(r){ const x=r.raw; return String(x.text||x.Text||x.review||x.Review||x.title||x.Title||'').trim(); }
+function _sntLink(r){ for (const k of LINK_FIELDS) { const v=r.raw[k]; if (v && String(v).trim()) return String(v).trim(); } return ''; }
+
+function _sntBuild(){
+  const cfg=confirmedSchemaConfig||detectedSchemaConfig||{}, sc=cfg.sentimentCol||'sentiment';
+  const junk=/^(others?|nan|null|none)$/i, bc={}, cc={}, ds=new Set();
+  let noSent=0, noDate=0, noBrand=0;
+  const rows=[];
+  (rawData||[]).forEach(x=>{
+    const brands=_infSplit(x.Brands).filter(b=>!junk.test(b));
+    if (!brands.length) { noBrand++; return; }
+    const s=String(x[sc]||'').trim().toLowerCase();
+    if (!SNT_S.includes(s)) { noSent++; return; }
+    const day=_sntDay(x.created_at||x.date||x.Date); if (!day) noDate++; else ds.add(day);
+    const ch=normalizeChannel(x.source||x.Source);
+    const o=('is_origin' in x) ? ['true','1','yes','t'].includes(String(x.is_origin).trim().toLowerCase()) : true;
+    rows.push({ brands, topics:_infSplit(x.Topics).filter(t=>!junk.test(t)), s, e:Number(x.engagement_score)||0, ch, o, day, raw:x });
+    brands.forEach(b=>bc[b]=(bc[b]||0)+1); cc[ch]=(cc[ch]||0)+1;
+  });
+  Object.assign(_snt, { rows, noSent, noDate, noBrand, chans:cc, days:[...ds].sort(), brands:Object.keys(bc).sort((a,b)=>bc[b]-bc[a]) });
+  _snt.brandN = bc;
+  // keep filters that still make sense for the new file
+  _snt.f.brands = new Set([..._snt.f.brands].filter(b=>bc[b]));
+  if (_snt.f.ch!=='__all__' && !cc[_snt.f.ch]) _snt.f.ch='__all__';
+  const ps=_sntPeriods(); if (!ps.some(p=>p.k===_snt.f.period)) _snt.f.period=_sntDefaultPeriod(ps);
+}
+
+// Period options: the latest calendar month, the last 7/30/90 days (each against the window
+// right before it, offered only when the file fully covers that earlier window) and all dates.
+function _sntPeriods(){
+  const days=_snt.days; if (!days.length) return [{ k:'all', l:'All dates', cur:null, prev:null }];
+  const min=days[0], max=days[days.length-1], out=[];
+  const ym=max.slice(0,7), [y,mo]=ym.split('-').map(Number), pd=new Date(y, mo-2, 1);
+  const pym=`${pd.getFullYear()}-${String(pd.getMonth()+1).padStart(2,'0')}`;
+  const monthLbl=s=>new Date(s+'-01T00:00:00').toLocaleDateString('en-GB',{month:'short',year:'numeric'});
+  if (days.some(d=>d.startsWith(pym))) {
+    // a month still in progress is compared with the same days of the month before (1–28 Oct vs 1–28 Sep), a complete one with the whole month
+    const lastDay=new Date(y, mo, 0).getDate(), prevLast=new Date(y, mo-1, 0).getDate(), md=Number(max.slice(8,10));
+    const full=md>=lastDay, pTo=full?prevLast:Math.min(md, prevLast);
+    out.push({ k:'month', l:`Latest month · ${monthLbl(ym)}${full?'':' to date'}`, cur:[ym+'-01', max], prev:[pym+'-01', `${pym}-${String(pTo).padStart(2,'0')}`], prevLbl:full?monthLbl(pym):null });
+  }
+  [7,30,90].forEach(n=>{ const pf=_sntAddDays(max,-(2*n-1)); if (min<=pf) out.push({ k:'d'+n, l:`Last ${n} days`, cur:[_sntAddDays(max,-(n-1)), max], prev:[pf, _sntAddDays(max,-n)] }); });
+  out.push({ k:'all', l:'All dates', cur:[min,max], prev:null });
+  return out;
+}
+function _sntDefaultPeriod(ps){ return (ps.find(p=>p.k==='month') || ps.find(p=>p.k==='d7') || ps.find(p=>p.k==='all')).k; }
+function _sntPeriod(){ const ps=_sntPeriods(); return ps.find(p=>p.k===_snt.f.period) || ps[ps.length-1]; }
+
+// Rows passing the tab filters; win = [from,to] limits to that date range (null = every row, dated or not)
+function _sntBase(){ const f=_snt.f; return _snt.rows.filter(r=>(!f.orig||r.o) && (f.ch==='__all__'||r.ch===f.ch) && (!f.brands.size || r.brands.some(b=>f.brands.has(b)))); }
+function _sntIn(rows, win){ return win ? rows.filter(r=>r.day && r.day>=win[0] && r.day<=win[1]) : rows; }
+function _sntBrandsInScope(){ return _snt.f.brands.size ? _snt.brands.filter(b=>_snt.f.brands.has(b)) : _snt.brands; }
+
+function _sntAgg(rows){
+  const a={ n:0, e:0, c:{positive:0,neutral:0,negative:0}, w:{positive:0,neutral:0,negative:0} };
+  rows.forEach(r=>{ a.n++; a.e+=r.e; a.c[r.s]++; a.w[r.s]+=r.e; });
+  return a;
+}
+function _sntEng(){ return _snt.f.metric==='engagement'; }
+// share (0–100) of a sentiment under the active lens, or a forced one
+function _sntShare(a, s, eng=_sntEng()){ return eng ? (a.e?a.w[s]/a.e*100:0) : (a.n?a.c[s]/a.n*100:0); }
+function _sntNet(a, eng=_sntEng()){ return _sntShare(a,'positive',eng)-_sntShare(a,'negative',eng); }
+function _sntPct(v, d=1){ return `${v.toFixed(v!==0&&Math.abs(v)<10?d:0)}%`; }
+function _sntSigned(v, d=0){ return `${v>0?'+':v<0?'−':''}${Math.abs(v).toFixed(d)}`; }
+// Small-sample warning shown wherever a figure rests on too few mentions to trust
+function _sntFewTag(n, min=SNT_MIN_N){
+  return `<span class="snt-low" title="Only ${n.toLocaleString()} mention${n===1?'':'s'} (under ${min}). With this few, one or two posts can swing the percentages a lot — treat these numbers as a rough signal, not a result.">⚠ Few mentions</span>`;
+}
+// ▲/▼ change chip; goodUp=false where rising is bad (negative share), null where it's neither (neutral share)
+function _sntDelta(d, unit, goodUp=true, digits=1){
+  if (d==null || !isFinite(d)) return '<span class="snt-d na" title="No comparison period">—</span>';
+  const flat=Math.abs(d)<0.05, cls=flat||goodUp==null?'flat':((d>0)===goodUp?'good':'bad');
+  return `<span class="snt-d ${cls}">${flat?'•':d>0?'▲':'▼'} ${Math.abs(d).toFixed(digits)}${unit}</span>`;
+}
+
+// ── filter bar ───────────────────────────────────────────────────────────────
+function _sntCtx(){
+  const f=_snt.f, p=_sntPeriod(), nb=f.brands.size;
+  return `${f.metric==='engagement'?'⚡ Engagement-weighted':'📌 Mentions'} · ${f.orig?'Original posts':'Posts + comments'} · ${f.ch==='__all__'?'All platforms':_infEsc(f.ch)} · ${nb?`${nb} brand${nb>1?'s':''}`:'All brands'} · ${_infEsc(_sntRangeLbl(p.cur)||'All dates')}`;
+}
+function _sntRenderControls(){
+  const el=document.getElementById('sntControls'); if (!el) return;
+  const f=_snt.f, ps=_sntPeriods(), p=_sntPeriod();
+  const chs=Object.keys(_snt.chans).sort((a,b)=>_snt.chans[b]-_snt.chans[a]);
+  const tog=(attr,val,on,lbl)=>`<button type="button" class="bdd-metric-btn${on?' active':''}" data-${attr}="${val}">${lbl}</button>`;
+  el.innerHTML=`
+    <div class="inf-fgroup"><div class="inf-flabel">Weight by</div><div class="bdd-metric-toggle">${tog('snt-metric','mention',f.metric==='mention','📌 Mentions')}${tog('snt-metric','engagement',f.metric==='engagement','⚡ Engagement')}</div></div>
+    <div class="inf-fgroup"><div class="inf-flabel">Rows</div><div class="bdd-metric-toggle">${tog('snt-orig','0',!f.orig,'Posts + comments')}${tog('snt-orig','1',f.orig,'Original posts')}</div></div>
+    <div class="inf-fgroup"><div class="inf-flabel">Period</div>
+      <div class="snt-period"><select class="snt-select" id="sntPeriod" aria-label="Period">${ps.map(o=>`<option value="${o.k}"${o.k===p.k?' selected':''}>${_infEsc(o.l)}</option>`).join('')}</select>
+      <span class="snt-cmp">${p.prev?`${_infEsc(_sntRangeLbl(p.cur))} <span>vs</span> ${_infEsc(p.prevLbl||_sntRangeLbl(p.prev))}`:'No comparison period'}</span></div></div>
+    <div class="inf-fgroup"><div class="inf-flabel">Brands</div><div class="snt-ms" id="sntBrandMs"></div></div>
+    <div class="inf-fgroup" style="flex:1;min-width:240px"><div class="inf-flabel">Platform</div><div class="brand-pills">
+      <span class="brand-pill${f.ch==='__all__'?' active':''}" data-v="__all__" role="button" tabindex="0">All platforms</span>${chs.map(c=>`<span class="brand-pill${f.ch===c?' active':''}" data-v="${_infEsc(c)}" role="button" tabindex="0">${_infEsc(c)} <span class="ovd-ch-n">${_snt.chans[c].toLocaleString()}</span></span>`).join('')}</div></div>`;
+  el.querySelectorAll('[data-snt-metric]').forEach(b=>b.onclick=()=>{ f.metric=b.dataset.sntMetric; _sntRenderAll(); });
+  el.querySelectorAll('[data-snt-orig]').forEach(b=>b.onclick=()=>{ f.orig=b.dataset.sntOrig==='1'; _sntRenderAll(); });
+  el.querySelector('#sntPeriod').onchange=e=>{ f.period=e.target.value; _sntRenderAll(); };
+  el.querySelectorAll('.brand-pill[data-v]').forEach(p=>{ const go=()=>{ f.ch=p.dataset.v; _sntRenderAll(); }; p.onclick=go; p.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+  _sntBrandPicker(el.querySelector('#sntBrandMs'));
+}
+// Multi-select brand picker: everything checked = all brands (empty set)
+function _sntBrandPicker(host){
+  const f=_snt.f, all=_snt.brands;
+  const label=()=>{ const n=f.brands.size; return n===0?`All brands <span class="ovd-ch-n">${all.length}</span>`:n===1?_infEsc(_ovdLabel([...f.brands][0])):`${n} brands`; };
+  host.innerHTML=`<button type="button" class="snt-ms-btn" aria-haspopup="listbox" aria-expanded="false"><span class="lbl">${label()}</span><span class="ovd-ch-caret">▾</span></button>
+    <div class="snt-ms-menu" hidden>
+      ${all.length>8?`<input type="text" class="snt-ms-search" placeholder="Search ${all.length} brands…" aria-label="Search brands">`:''}
+      <div class="snt-ms-act"><button type="button" data-act="all">All</button><button type="button" data-act="top5">Top 5</button><button type="button" data-act="none">Clear</button></div>
+      <div class="snt-ms-list" role="listbox" aria-multiselectable="true">${all.map(b=>`<label class="snt-ms-opt" data-b="${_infEsc(b)}"><input type="checkbox" value="${_infEsc(b)}"${!f.brands.size||f.brands.has(b)?' checked':''}><span class="ovd-dot" style="background:${_sntColor(b)};margin:0"></span><span class="nm">${_infEsc(_ovdLabel(b))}</span><span class="ovd-ch-n">${(_snt.brandN[b]||0).toLocaleString()}</span><button type="button" class="only" data-only="${_infEsc(b)}" title="Show only this brand">Only</button></label>`).join('')}</div>
+    </div>`;
+  const btn=host.querySelector('.snt-ms-btn'), menu=host.querySelector('.snt-ms-menu'), q=host.querySelector('.snt-ms-search');
+  const sync=()=>{ menu.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=!f.brands.size||f.brands.has(c.value)); host.querySelector('.lbl').innerHTML=label(); _sntRenderBody(); };
+  const close=()=>{ menu.hidden=true; btn.setAttribute('aria-expanded','false'); document.removeEventListener('mousedown',outside,true); document.removeEventListener('keydown',esc,true); };
+  const outside=e=>{ if (!host.contains(e.target)) close(); };
+  const esc=e=>{ if (e.key==='Escape') { e.stopPropagation(); close(); btn.focus(); } };
+  btn.onclick=()=>{ if (!menu.hidden) return close(); menu.hidden=false; btn.setAttribute('aria-expanded','true'); document.addEventListener('mousedown',outside,true); document.addEventListener('keydown',esc,true); if (q) { q.value=''; q.dispatchEvent(new Event('input')); q.focus(); } };
+  if (q) q.oninput=()=>{ const t=q.value.trim().toLowerCase(); menu.querySelectorAll('.snt-ms-opt').forEach(o=>o.style.display=!t||o.dataset.b.toLowerCase().includes(t)?'':'none'); };
+  menu.querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=()=>{
+    const cur=f.brands.size?new Set(f.brands):new Set(all);
+    c.checked?cur.add(c.value):cur.delete(c.value);
+    f.brands = cur.size===all.length ? new Set() : cur;
+    if (!cur.size) f.brands=new Set(['__none__']);
+    sync();
+  });
+  menu.querySelectorAll('[data-only]').forEach(b=>b.onclick=e=>{ e.preventDefault(); e.stopPropagation(); f.brands=new Set([b.dataset.only]); sync(); });
+  menu.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{ const a=b.dataset.act; f.brands = a==='all'?new Set() : a==='top5'?new Set(all.slice(0,5)) : new Set(['__none__']); sync(); });
+}
+
+// ── render ───────────────────────────────────────────────────────────────────
+function _sntPanes(){ return SNT_PANES; }
+function _sntPane(){
+  if (!_snt.pane) { try { _snt.pane=localStorage.getItem(SNT_PANE_KEY)||''; } catch(_) { _snt.pane=''; } }
+  if (!_sntPanes().some(p=>p.k===_snt.pane)) _snt.pane='summary';
+  return _snt.pane;
+}
+function _sntRenderAll(){ _sntRenderControls(); _sntRenderBody(); }
+function _sntRenderBody(){
+  const body=document.getElementById('sntBody'); if (!body) return;
+  if (!_snt.rows.length) { body.innerHTML='<div class="bdd-placeholder">No rows with both a brand and a sentiment value in this file.</div>'; return; }
+  if (_snt.f.brands.has('__none__')) { body.innerHTML=_secNavHtml('snt', _sntPanes(), _sntPane(), _sntCtx())+'<div class="bdd-placeholder">Select at least one brand in the Brands filter.</div>'; return; }
+  const pane=_sntPane(), sec=k=>`class="ovd-pane" id="sntPane-${k}" role="tabpanel" aria-labelledby="sntSecTab-${k}"${pane===k?'':' hidden'}`;
+  const p=_sntPeriod(), base=_sntBase();
+  const ctx={ p, base, cur:_sntIn(base, p.cur), prev:p.prev?_sntIn(base, p.prev):null };
+  body.innerHTML = _secNavHtml('snt', _sntPanes(), pane, _sntCtx()) +
+    _sntPanes().map(x=>`<section ${sec(x.k)}><div id="sntIn-${x.k}"></div></section>`).join('');
+  _secNavWire(body, 'snt', _sntPanes(), ()=>_snt.pane, k=>{ _snt.pane=k; try { localStorage.setItem(SNT_PANE_KEY,k); } catch(_) {} });
+  _sntSummary(document.getElementById('sntIn-summary'), ctx);
+  _sntTrend(document.getElementById('sntIn-trend'), ctx);
+  _sntBrands(document.getElementById('sntIn-brands'), ctx);
+  _sntTopics(document.getElementById('sntIn-topics'), ctx);
+  _sntDrivers(document.getElementById('sntIn-drivers'), ctx);
+  _sntInsights(document.getElementById('sntInsights'), ctx);
+}
+
+// ── Summary ──────────────────────────────────────────────────────────────────
+function _sntSummary(el, ctx){
+  const a=_sntAgg(ctx.cur), b=ctx.prev?_sntAgg(ctx.prev):null, eng=_sntEng(), lens=eng?'engagement':'mentions';
+  const okPrev=b && b.n>0, dS=s=>okPrev?_sntShare(a,s)-_sntShare(b,s):null;
+  const k=(cls,val,lbl,sub,color)=>`<div class="bdd-kpi ${cls}"><div class="bdd-kpi-val"${color?` style="color:${color}"`:''}>${val}</div><div class="bdd-kpi-lbl">${lbl}</div><div class="bdd-kpi-sub">${sub}</div></div>`;
+  const vs=okPrev?' vs prev':'';
+  const net=_sntNet(a), netAlt=_sntNet(a,!eng);
+  const kpis=
+    k('', a.n.toLocaleString(), 'Mentions', `${_sntDelta(okPrev&&b.n?(a.n/b.n-1)*100:null,'%',true,0)}${vs}`) +
+    k('eng', _infFmt(a.e), 'Engagement', `${_sntDelta(okPrev&&b.e?(a.e/b.e-1)*100:null,'%',true,0)}${vs}`) +
+    k('view', _sntSigned(net,0), `Net sentiment`, `${_sntDelta(okPrev?net-_sntNet(b):null,' pts')}${vs}`, net>=0?'var(--pos)':'var(--neg)') +
+    k('pos', _sntPct(_sntShare(a,'positive')), 'Positive', `${_sntDelta(dS('positive'),' pts')}${vs}`, 'var(--pos)') +
+    k('neu', _sntPct(_sntShare(a,'neutral')), 'Neutral', `${_sntDelta(dS('neutral'),' pts',null)}${vs}`, 'var(--neu)') +
+    k('change', _sntPct(_sntShare(a,'negative')), 'Negative', `${_sntDelta(dS('negative'),' pts',false)}${vs}`, 'var(--neg)');
+
+  const mixBar=(lbl, x, sub)=>{ if (!x||!x.n) return `<div class="snt-mix-row"><div class="snt-mix-lbl">${lbl}<small>${sub||''}</small></div><div class="snt-mix-bar empty">No data</div><div class="snt-mix-n">—</div></div>`;
+    return `<div class="snt-mix-row"><div class="snt-mix-lbl">${lbl}<small>${sub||''}</small></div><div class="snt-mix-bar">${SNT_S.map(s=>{ const v=_sntShare(x,s); return v>0?`<div style="width:${v}%;background:${SENT_COLORS[s]}" title="${SNT_LBL[s]} ${v.toFixed(1)}%">${v>=8?v.toFixed(0)+'%':''}</div>`:''; }).join('')}</div><div class="snt-mix-n">${eng?_infFmt(x.e):x.n.toLocaleString()}<small>${lens}</small></div></div>`; };
+  const p=ctx.p;
+
+  // net sentiment by brand — diverging bars, change vs previous period
+  const brands=_sntBrandsInScope().map(br=>{ const cr=ctx.cur.filter(r=>r.brands.includes(br)); if (!cr.length) return null;
+    const ca=_sntAgg(cr), pa=ctx.prev?_sntAgg(ctx.prev.filter(r=>r.brands.includes(br))):null;
+    return { b:br, a:ca, net:_sntNet(ca), d:pa&&pa.n>=SNT_MIN_N&&ca.n>=SNT_MIN_N?_sntNet(ca)-_sntNet(pa):null }; }).filter(Boolean).sort((x,y)=>y.a.n-x.a.n).slice(0,12).sort((x,y)=>y.net-x.net);
+  const maxAbs=Math.max(10, ...brands.map(x=>Math.abs(x.net)));
+  const netRows=brands.map(x=>{ const w=Math.abs(x.net)/maxAbs*50, low=x.a.n<SNT_MIN_N;
+    return `<div class="snt-net-row${low?' low':''}" data-b="${_infEsc(x.b)}" role="button" tabindex="0" title="${_infEsc(_ovdLabel(x.b))}: net ${_sntSigned(x.net,1)} · ${x.a.n.toLocaleString()} mentions${low?' (few mentions — may not be reliable)':''} — click for posts">
+      <div class="snt-net-b"><span class="ovd-dot" style="background:${_sntColor(x.b)};margin:0"></span>${_infEsc(_ovdLabel(x.b))}</div>
+      <div class="snt-net-track"><i class="mid"></i><div class="snt-net-bar ${x.net>=0?'pos':'neg'}" style="${x.net>=0?`left:50%`:`right:50%`};width:${w}%"></div></div>
+      <div class="snt-net-v" style="color:${x.net>=0?'var(--pos)':'var(--neg)'}">${_sntSigned(x.net,0)}</div>
+      <div class="snt-net-d">${low?_sntFewTag(x.a.n):_sntDelta(x.d,'',true,0)}</div></div>`; }).join('');
+
+  const cov=[];
+  if (_snt.noSent) cov.push(`${_snt.noSent.toLocaleString()} rows without a sentiment value`);
+  if (_snt.noBrand) cov.push(`${_snt.noBrand.toLocaleString()} rows without a brand`);
+  if (_snt.noDate && p.cur && p.k!=='all') cov.push(`${_snt.noDate.toLocaleString()} undated rows`);
+
+  el.innerHTML=`<div id="sntInsights"></div>
+    <div class="bdd-kpi-row" style="margin-bottom:14px">${kpis}</div>
+    <div class="inf-grid-2">
+      <div class="card"><div class="bdd-section-title"><span>⚖️</span>Sentiment mix <span class="ovd-hint">share of ${lens}</span></div>
+        ${mixBar('This period', a, _sntRangeLbl(p.cur))}${p.prev?mixBar('Previous period', b, p.prevLbl||_sntRangeLbl(p.prev)):''}
+        <div class="inf-scatter-legend" style="margin-top:10px">${SNT_S.map(s=>`<span><span class="inf-legend-dot" style="background:${SENT_COLORS[s]}"></span>${SNT_LBL[s]}</span>`).join('')}<span style="margin-left:auto;font-weight:500">${eng?`by mentions: net ${_sntSigned(netAlt,0)}`:`weighted by engagement: net ${_sntSigned(netAlt,0)}`}</span></div></div>
+      <div class="card"><div class="bdd-section-title"><span>🏷</span>Net sentiment by brand <span class="ovd-hint">${brands.length<_sntBrandsInScope().length?`top ${brands.length} by volume · `:''}change vs previous period</span></div>
+        ${netRows||'<div class="bdd-placeholder">No brand mentions in this period</div>'}
+        <div class="snt-foot">Net = positive % − negative % (${lens}) · <span class="snt-low">⚠ Few mentions</span> = fewer than ${SNT_MIN_N} mentions, so the numbers may not be reliable</div></div>
+    </div>
+    ${cov.length?`<div class="snt-cov">ℹ️ Excluded from this tab: ${cov.join(' · ')}.</div>`:''}`;
+  el.querySelectorAll('.snt-net-row[data-b]').forEach(r=>{ const go=()=>_sntBrandModal(r.dataset.b, ctx); r.onclick=go; r.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+}
+
+// ── Brands scorecard ─────────────────────────────────────────────────────────
+const SNT_COLS=[
+  { k:'b', l:'Brand', s:x=>_ovdLabel(x.b).toLowerCase() },
+  { k:'n', l:'Mentions', num:1, s:x=>x.a.n },
+  { k:'dn', l:'Δ mentions', num:1, s:x=>x.dn, tip:'Change in mentions vs the previous period' },
+  { k:'mix', l:'Mix', s:x=>_sntShare(x.a,'positive') },
+  { k:'pos', l:'Positive', num:1, s:x=>_sntShare(x.a,'positive') },
+  { k:'neg', l:'Negative', num:1, s:x=>_sntShare(x.a,'negative') },
+  { k:'net', l:'Net', num:1, s:x=>x.net },
+  { k:'dnet', l:'Δ net', num:1, s:x=>x.dnet, tip:'Change in net sentiment vs the previous period (pts)' },
+  { k:'alt', l:'', num:1, s:x=>x.alt },
+  { k:'negE', l:'Neg. share of eng.', num:1, s:x=>_sntShare(x.a,'negative',true), tip:'Share of the brand\'s engagement that sits on negative mentions' },
+  { k:'topneg', l:'Top negative topic', s:x=>x.topNeg?x.topNeg.t:'' },
+];
+function _sntBrandRows(ctx){
+  return _sntBrandsInScope().map(br=>{
+    const cr=ctx.cur.filter(r=>r.brands.includes(br)); if (!cr.length) return null;
+    const a=_sntAgg(cr), pr=ctx.prev?ctx.prev.filter(r=>r.brands.includes(br)):null, pa=pr?_sntAgg(pr):null;
+    const neg=cr.filter(r=>r.s==='negative'), tm={}; neg.forEach(r=>r.topics.forEach(t=>tm[t]=(tm[t]||0)+(_sntEng()?r.e:1)));
+    const negTot=_sntEng()?a.w.negative:a.c.negative, tk=Object.keys(tm).sort((x,y)=>tm[y]-tm[x])[0];
+    const comparable=pa && pa.n>=SNT_MIN_N && a.n>=SNT_MIN_N;
+    return { b:br, a, pa, net:_sntNet(a), alt:_sntNet(a,!_sntEng()),
+      dn: pa&&pa.n?(a.n/pa.n-1)*100:null, dnet: comparable?_sntNet(a)-_sntNet(pa):null,
+      topNeg: tk?{ t:tk, share:negTot?tm[tk]/negTot*100:0 }:null };
+  }).filter(Boolean);
+}
+function _sntBrands(el, ctx){
+  const rows=_sntBrandRows(ctx), eng=_sntEng(), st=_snt.sort;
+  const cols=SNT_COLS.map(c=>c.k==='alt'?{...c, l:eng?'Net (mentions)':'Net (engagement)', tip:eng?'Net sentiment counting every mention equally':'Net sentiment weighted by engagement'}:c).filter(c=>c.k!=='dn'&&c.k!=='dnet'||ctx.prev);
+  const col=cols.find(c=>c.k===st.key)||cols[1];
+  // rows without a value (no comparison period / too small) always sink to the bottom
+  rows.sort((x,y)=>{ const p=col.s(x), q=col.s(y); if (p==null||q==null) return (p==null)-(q==null); return (p>q?1:p<q?-1:0)*st.dir; });
+  const cell=(x,k)=>{ const low=x.a.n<SNT_MIN_N;
+    switch(k){
+      case 'b': return `<td><span class="ovd-dot" style="background:${_sntColor(x.b)}"></span><b style="color:var(--text)">${_infEsc(_ovdLabel(x.b))}</b>${low?' '+_sntFewTag(x.a.n):''}</td>`;
+      case 'n': return `<td class="num" style="color:var(--text);font-weight:600">${x.a.n.toLocaleString()}</td>`;
+      case 'dn': return `<td class="num">${_sntDelta(x.dn,'%',true,0)}</td>`;
+      case 'mix': return `<td style="min-width:120px"><div class="snt-mini">${SNT_S.map(s=>{ const v=_sntShare(x.a,s); return v>0?`<div style="width:${v}%;background:${SENT_COLORS[s]}"></div>`:''; }).join('')}</div></td>`;
+      case 'pos': return `<td class="num" style="color:#0f9f76">${_sntPct(_sntShare(x.a,'positive'))}</td>`;
+      case 'neg': return `<td class="num" style="color:#dc2626">${_sntPct(_sntShare(x.a,'negative'))}</td>`;
+      case 'net': return `<td class="num" style="font-weight:700;color:${low?'var(--text3)':x.net>=0?'#0f9f76':'#dc2626'}">${_sntSigned(x.net,0)}</td>`;
+      case 'dnet': return `<td class="num">${_sntDelta(x.dnet,'',true,0)}</td>`;
+      case 'alt': return `<td class="num" style="color:var(--text2)">${_sntSigned(x.alt,0)}</td>`;
+      case 'negE': return `<td class="num">${_sntPct(_sntShare(x.a,'negative',true))}</td>`;
+      case 'topneg': return `<td style="white-space:normal;max-width:190px">${x.topNeg?`${_infEsc(_ovdLabel(x.topNeg.t))} <span style="color:var(--text3)">· ${x.topNeg.share.toFixed(0)}% of negative</span>`:'<span style="color:var(--text3)">—</span>'}</td>`;
+    }
+  };
+  el.innerHTML=`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px">
+      <div class="bdd-section-title" style="margin:0;border:0;padding:0"><span>🏆</span>Brand sentiment scorecard <span class="ovd-hint" style="margin-left:8px">${rows.length} brands · shares by ${eng?'engagement':'mentions'}</span></div>
+      <button class="btn-outline" id="sntScoreCsv">⬇ Export CSV</button></div>
+    ${rows.length?`<div class="table-wrap" style="max-height:620px"><table class="dt inf-table snt-score"><thead><tr>${cols.map(c=>`<th class="sortable${c.num?' num':''}${st.key===c.k?' sorted':''}" data-k="${c.k}"${c.tip?` title="${_infEsc(c.tip)}"`:''} tabindex="0">${c.l}${st.key===c.k?(st.dir>0?' ↑':' ↓'):''}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(x=>`<tr data-b="${_infEsc(x.b)}" tabindex="0" title="Show ${_infEsc(_ovdLabel(x.b))}'s top posts">${cols.map(c=>cell(x,c.k)).join('')}</tr>`).join('')}</tbody></table></div>`
+      :'<div class="bdd-placeholder">No brand mentions in this period</div>'}
+    <div class="snt-foot">Δ compares with ${ctx.p.prev?_infEsc(ctx.p.prevLbl||_sntRangeLbl(ctx.p.prev)):'—'} · <span class="snt-low">⚠ Few mentions</span> = fewer than ${SNT_MIN_N} mentions, so the numbers may not be reliable — Δ net is left blank unless both periods have ${SNT_MIN_N}+ · a mention tagged with two brands counts for each</div></div>`;
+  el.querySelectorAll('th.sortable').forEach(th=>{ const go=()=>{ const k=th.dataset.k; if (st.key===k) st.dir*=-1; else { st.key=k; st.dir=(k==='b'||k==='topneg')?1:-1; } _sntBrands(el, ctx); };
+    th.onclick=go; th.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+  el.querySelectorAll('tbody tr[data-b]').forEach(tr=>{ const go=()=>_sntBrandModal(tr.dataset.b, ctx); tr.onclick=go; tr.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); go(); } }; });
+  el.querySelector('#sntScoreCsv').onclick=()=>{
+    const head=['brand','mentions','mentions_change_pct','positive_pct','neutral_pct','negative_pct','net','net_change_pts','net_by_mentions','net_by_engagement','negative_share_of_engagement_pct','engagement','top_negative_topic','top_negative_topic_share_pct','small_sample'];
+    const out=[head].concat(rows.map(x=>[_ovdLabel(x.b), x.a.n, x.dn==null?'':x.dn.toFixed(1), ...SNT_S.map(s=>_sntShare(x.a,s).toFixed(2)), x.net.toFixed(1), x.dnet==null?'':x.dnet.toFixed(1),
+      _sntNet(x.a,false).toFixed(1), _sntNet(x.a,true).toFixed(1), _sntShare(x.a,'negative',true).toFixed(2), Math.round(x.a.e), x.topNeg?_ovdLabel(x.topNeg.t):'', x.topNeg?x.topNeg.share.toFixed(1):'', x.a.n<SNT_MIN_N?'yes':'no']));
+    _infCsv(out, `sentiment_scorecard_${(ctx.p.cur||['all'])[0]}_${new Date().toISOString().slice(0,10)}.csv`);
+  };
+}
+
+// ── Posts pop-up ─────────────────────────────────────────────────────────────
+// Top posts behind any number on the tab, switchable by sentiment.
+const SNT_TOP_N = 10;
+function _sntPostsModal(o){
+  const all=o.rows||[], by={ positive:[], neutral:[], negative:[] }; all.forEach(r=>by[r.s].push(r));
+  let mode = o.sent || (by.negative.length ? 'negative' : 'all');
+  const c=o.color||'var(--accent)', nm=_infEsc(o.title);
+  document.getElementById('sntPostsOverlay')?.remove();
+  const ov=document.createElement('div'); ov.id='sntPostsOverlay'; ov.className='camp-modal-overlay';
+  const close=()=>{ ov.remove(); document.removeEventListener('keydown',esc,true); };
+  const esc=e=>{ if (e.key==='Escape') { e.stopPropagation(); close(); } };
+  const render=()=>{
+    const list = mode==='all' ? all : by[mode], a=_sntAgg(all), eng=_sntEng();
+    const top=list.slice().sort((x,y)=>y.e-x.e).slice(0,SNT_TOP_N), sumTop=top.reduce((s,r)=>s+r.e,0), listE=list.reduce((s,r)=>s+r.e,0);
+    const seg=(k,l,n)=>`<button type="button" role="tab" class="sma-seg-btn${mode===k?' active':''}" aria-selected="${mode===k}" data-mode="${k}"${n?'':' disabled'}>${k!=='all'?`<span class="inf-legend-dot" style="background:${SENT_COLORS[k]}"></span>`:''}${l} <span style="opacity:.6">${n.toLocaleString()}</span></button>`;
+    ov.innerHTML=`<div class="camp-modal inf-modal" style="position:relative" role="dialog" aria-modal="true" aria-label="${nm}">
+      <button class="inf-close" title="Close (Esc)">✕</button>
+      <div class="inf-modal-head"><div class="ovd-eff-av" style="background:${o.color?o.color+'1f':'var(--accent-lt)'};color:${c};border-color:${o.color?o.color+'55':'var(--accent)'}">${_infEsc(String(o.title||'?').trim().charAt(0).toUpperCase())}</div>
+        <div style="min-width:0;padding-right:36px">
+          <div class="camp-modal-title" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nm}</div>
+          <div class="camp-modal-subtitle">${_infEsc(o.sub||'')}${o.sub?' · ':''}Sentiment tab filters</div>
+          <div class="inf-modal-meta"><div class="sma-seg sma-seg-sm" role="tablist" aria-label="Sentiment">${seg('negative','Negative',by.negative.length)}${seg('positive','Positive',by.positive.length)}${seg('neutral','Neutral',by.neutral.length)}${seg('all','All',all.length)}</div></div>
+        </div></div>
+      <div class="inf-modal-kpis">
+        <div class="bdd-kpi view"><div class="bdd-kpi-val">${_infFmt(a.n)}</div><div class="bdd-kpi-lbl">Mentions</div></div>
+        <div class="bdd-kpi eng"><div class="bdd-kpi-val">${_infFmt(a.e)}</div><div class="bdd-kpi-lbl">Engagement</div></div>
+        <div class="bdd-kpi pos"><div class="bdd-kpi-val" style="color:${_sntNet(a)>=0?'var(--pos)':'var(--neg)'}">${a.n?_sntSigned(_sntNet(a),0):'—'}</div><div class="bdd-kpi-lbl">Net sentiment${eng?' (eng.)':''}</div></div>
+        <div class="bdd-kpi change"><div class="bdd-kpi-val" style="color:var(--neg)">${a.n?_sntPct(_sntShare(a,'negative')):'—'}</div><div class="bdd-kpi-lbl">Negative${eng?' (eng.)':''}</div></div>
+      </div>
+      <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${top.length} ${mode==='all'?'':SNT_LBL[mode].toLowerCase()+' '}by engagement <span class="ovd-hint" style="text-transform:none;letter-spacing:0">${top.length&&listE?`together ${_ovdPct(sumTop,listE).toFixed(1)}% of their engagement`:''}</span></div>
+      <div class="inf-post-list">${top.length?top.map((r,i)=>{ const pl=_infUrl(_sntLink(r)), t=_sntText(r);
+        return `<div class="inf-post" style="border-left:3px solid ${SENT_COLORS[r.s]}"><div class="inf-post-top">
+          <span style="font-weight:700;color:var(--text)">#${i+1}</span><span class="inf-sent" style="background:${SENT_COLORS[r.s]}" title="${r.s}"></span>
+          <b style="color:var(--text)">${_infEsc(r.raw.user_name||'Unknown account')}</b><span>·</span><span>${_infEsc(r.ch)}</span><span>·</span><span>${_infEsc(r.day?_sntFmtDay(r.day,true):'no date')}</span>${r.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}${r.brands.length>1?`<span class="inf-chip int" title="${_infEsc(r.brands.join(', '))}">${r.brands.length} brands</span>`:''}
+          <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(r.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
+          <div class="inf-post-text">${_infEsc(t.slice(0,400)||'(no text)')}${t.length>400?'…':''}</div></div>`; }).join('')
+        :'<div class="bdd-placeholder">No posts here</div>'}</div></div>`;
+    ov.querySelector('.inf-close').onclick=close;
+    ov.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ mode=b.dataset.mode; render(); ov.querySelector(`[data-mode="${mode}"]`)?.focus(); });
+  };
+  ov.addEventListener('click',e=>{ if (e.target===ov) close(); });
+  document.addEventListener('keydown',esc,true);
+  render(); document.body.appendChild(ov); ov.querySelector('.inf-close')?.focus();
+}
+function _sntBrandModal(b, ctx, sent){
+  _sntPostsModal({ rows:ctx.cur.filter(r=>r.brands.includes(b)), title:_ovdLabel(b), sub:_sntRangeLbl(ctx.p.cur)||'All dates', color:_sntColor(b), sent });
+}
+
+// ── Trend ────────────────────────────────────────────────────────────────────
+// Full date range (ignores the Period filter, which is shaded instead) so the
+// selected window is seen in context. Negative spikes are flagged where the
+// negative share sits 2+ standard deviations above normal on a day with real volume.
+function _sntGran(){
+  if (_snt.gran) return _snt.gran;
+  const d=_snt.days, span=d.length?(Date.parse(d[d.length-1])-Date.parse(d[0]))/864e5:0;
+  return span<=62?'day':span<=270?'week':'month';
+}
+function _sntSpikes(buckets){
+  const ok=buckets.filter(b=>b.a.n>0), med=ok.length?ok.map(b=>b.a.n).sort((x,y)=>x-y)[ok.length>>1]:0;
+  const minVol=Math.max(10, med*0.3), el=ok.filter(b=>b.a.n>=minVol);
+  if (el.length<5) return { list:[], minVol, mu:null };
+  const sh=el.map(b=>_sntShare(b.a,'negative')), mu=sh.reduce((s,v)=>s+v,0)/sh.length, sd=Math.sqrt(sh.reduce((s,v)=>s+(v-mu)**2,0)/sh.length);
+  const list=el.filter(b=>{ const v=_sntShare(b.a,'negative'); return v>=mu+2*sd && v-mu>=5 && b.a.c.negative>=5; });
+  return { list, minVol, mu };
+}
+// Dated rows bucketed by day/week/month, plus the negative spikes among them
+function _sntTrendData(ctx, gran=_sntGran()){
+  const base=ctx.base.filter(r=>r.day), bm=new Map();
+  base.forEach(r=>{ const k=_bddOwnedBucket(r.day, gran); let b=bm.get(k); if (!b) { b={ k, rows:[] }; bm.set(k,b); } b.rows.push(r); });
+  const buckets=[...bm.values()].sort((x,y)=>x.k<y.k?-1:1); buckets.forEach(b=>b.a=_sntAgg(b.rows));
+  const sp=_sntSpikes(buckets);
+  return { gran, base, buckets, sp, spikes:sp.list.map(b=>({ k:b.k, gran, share:_sntShare(b.a,'negative'), n:b.a.n, mu:sp.mu, rows:b.rows })) };
+}
+function _sntTrend(el, ctx){
+  const view=_snt.trendView||'mix', eng=_sntEng();
+  const { gran, base, buckets, sp, spikes }=_sntTrendData(ctx); _snt.spikes=spikes;
+  const seg=(attr,val,cur,lbl)=>`<button type="button" role="tab" class="sma-seg-btn${cur===val?' active':''}" aria-selected="${cur===val}" data-${attr}="${val}">${lbl}</button>`;
+  const head=`<div class="ovd-trend-head"><div class="bdd-section-title" style="margin:0;padding:0;border:0"><span>📈</span>${view==='mix'?'Sentiment mix over time':'Net sentiment by brand'} <span class="ovd-hint">${view==='mix'?`share of ${eng?'engagement':'mentions'} · bars = volume · ▲ = negative spike`:'net = positive % − negative % · periods under 5 mentions are left out'}</span></div>
+    <div class="ovd-trend-ctl"><div class="sma-seg sma-seg-sm" role="tablist" aria-label="Trend view">${seg('snt-tv','mix',view,'Sentiment mix')}${seg('snt-tv','brands',view,'Net by brand')}</div>
+    <div class="sma-seg sma-seg-sm" role="tablist" aria-label="Trend period">${seg('snt-gran','day',gran,'Day')}${seg('snt-gran','week',gran,'Week')}${seg('snt-gran','month',gran,'Month')}</div></div></div>`;
+  if (buckets.length<2) { el.innerHTML=`<div class="card">${head}<div class="bdd-placeholder">Not enough dated data for a trend — need at least two ${gran}s.</div></div>`; _sntTrendWire(el, ctx); return; }
+
+  const W=1100, H=view==='mix'?250:300, VH=view==='mix'?60:0, L=46, R=14, T=18, B=26, n=buckets.length;
+  const x=i=>L+(n===1?(W-L-R)/2:i*(W-L-R)/(n-1)), bw=(W-L-R)/Math.max(1,n-1);
+  const inWin=(k,w)=>w && k>=_bddOwnedBucket(w[0],gran) && k<=_bddOwnedBucket(w[1],gran);
+  const band=(w,cls,lbl)=>{ const idx=buckets.map((b,i)=>inWin(b.k,w)?i:-1).filter(i=>i>=0); if (!idx.length||!w||ctx.p.k==='all') return '';
+    const x0=Math.max(L, x(idx[0])-bw/2), x1=Math.min(W-R, x(idx[idx.length-1])+bw/2);
+    return `<rect class="${cls}" x="${x0}" y="${T}" width="${Math.max(2,x1-x0)}" height="${H-T-B+VH}"/><text x="${x0+5}" y="${T-5}" font-size="10" fill="var(--text3)" font-weight="600">${lbl}</text>`; };
+  let g=band(ctx.p.prev,'snt-band prev','Previous')+band(ctx.p.cur,'snt-band cur','Selected period');
+  const step=Math.max(1, Math.ceil(n/12));
+  buckets.forEach((b,i)=>{ if (i%step===0) g+=`<text x="${x(i)}" y="${H+VH-B+16}" text-anchor="middle" font-size="10.5" fill="var(--text3)">${_bddOwnedBucketLabel(b.k,gran)}</text>`; });
+  let plot='', legend='';
+  if (view==='mix') {
+    const yy=v=>T+(H-T-B)*(1-v/100);
+    for (let i=0;i<=4;i++){ const v=i*25; g+=`<line x1="${L}" y1="${yy(v)}" x2="${W-R}" y2="${yy(v)}" stroke="var(--border)"/><text x="${L-6}" y="${yy(v)+4}" text-anchor="end" font-size="10.5" fill="var(--text3)">${v}%</text>`; }
+    // stacked: negative at the bottom so it is read against a fixed baseline
+    const order=['negative','neutral','positive'], acc=buckets.map(()=>0);
+    order.forEach(s=>{ const lo=acc.slice(), hi=buckets.map((b,i)=>acc[i]+=_sntShare(b.a,s));
+      const pts=hi.map((v,i)=>`${x(i).toFixed(1)},${yy(v).toFixed(1)}`).concat(lo.map((v,i)=>`${x(i).toFixed(1)},${yy(v).toFixed(1)}`).reverse()).join(' ');
+      plot+=`<polygon points="${pts}" fill="${SENT_COLORS[s]}" fill-opacity="${s==='neutral'?.55:.8}"/>`; });
+    const vmax=Math.max(1,...buckets.map(b=>eng?b.a.e:b.a.n)), vy0=H-B+VH;
+    buckets.forEach((b,i)=>{ const v=eng?b.a.e:b.a.n, h=v/vmax*(VH-12), small=b.a.n<sp.minVol;
+      plot+=`<rect x="${x(i)-Math.min(14,bw*0.35)}" y="${vy0-h}" width="${Math.min(28,bw*0.7)}" height="${h}" rx="2" fill="${small?'var(--border2)':'var(--text3)'}" opacity="${small?.6:.45}"/>`; });
+    g+=`<text x="${L-6}" y="${H-B+14}" text-anchor="end" font-size="9.5" fill="var(--text3)">vol.</text>`;
+    _snt.spikes.forEach(s=>{ const i=buckets.findIndex(b=>b.k===s.k); plot+=`<path d="M${x(i)-6},${T+11} L${x(i)+6},${T+11} L${x(i)},${T+1} Z" fill="var(--neg)" stroke="var(--surface)" stroke-width="1.2"/>`; });
+    legend=`<div class="inf-scatter-legend">${SNT_S.map(s=>`<span><span class="inf-legend-dot" style="background:${SENT_COLORS[s]}"></span>${SNT_LBL[s]}</span>`).join('')}<span><span class="inf-legend-dot" style="background:var(--text3);opacity:.45"></span>${eng?'Engagement':'Mentions'}</span>${_snt.spikes.length?'<span><span style="color:var(--neg)">▲</span> Negative spike</span>':''}<span style="margin-left:auto;font-weight:500">hover for detail · click a period for its posts</span></div>`;
+  } else {
+    const brands=_sntBrandsInScope().filter(b=>base.some(r=>r.brands.includes(b))).slice(0, 6);
+    _snt.trendHidden=_snt.trendHidden||new Set();
+    const ser=brands.map(b=>({ b, c:_sntColor(b), v:buckets.map(bk=>{ const a=_sntAgg(bk.rows.filter(r=>r.brands.includes(b))); return a.n>=5?_sntNet(a):null; }) }));
+    const vis=ser.filter(s=>!_snt.trendHidden.has(s.b)), vals=vis.flatMap(s=>s.v).filter(v=>v!=null);
+    const lim=Math.max(20, Math.ceil(Math.max(...vals.map(Math.abs),0)/10)*10), yy=v=>T+(H-T-B)*(1-(v+lim)/(2*lim));
+    for (let i=0;i<=4;i++){ const v=-lim+i*lim/2; g+=`<line x1="${L}" y1="${yy(v)}" x2="${W-R}" y2="${yy(v)}" stroke="${v===0?'var(--text3)':'var(--border)'}"${v===0?' stroke-dasharray="4 3"':''}/><text x="${L-6}" y="${yy(v)+4}" text-anchor="end" font-size="10.5" fill="var(--text3)">${_sntSigned(v,0)}</text>`; }
+    vis.forEach(s=>{ let d='', pen=false; s.v.forEach((v,i)=>{ if (v==null) { pen=false; return; } d+=`${pen?'L':'M'}${x(i).toFixed(1)},${yy(v).toFixed(1)} `; pen=true; });
+      plot+=`<path d="${d}" fill="none" stroke="${s.c}" stroke-width="2.2" stroke-linejoin="round"/>`+s.v.map((v,i)=>v==null?'':`<circle cx="${x(i).toFixed(1)}" cy="${yy(v).toFixed(1)}" r="2.6" fill="${s.c}"/>`).join(''); });
+    legend=`<div class="inf-scatter-legend">${ser.map(s=>`<span class="ovd-leg${_snt.trendHidden.has(s.b)?' off':''}" data-b="${_infEsc(s.b)}"><span class="inf-legend-dot" style="background:${s.c}"></span>${_infEsc(_ovdLabel(s.b))}</span>`).join('')}<span style="margin-left:auto;font-weight:500">${brands.length<_sntBrandsInScope().length?`top ${brands.length} brands by volume — pick brands in the filter · `:''}click a name to hide it</span></div>`;
+    el._ser=ser;
+  }
+  // invisible column per bucket for hover + click
+  const hits=buckets.map((b,i)=>`<rect class="snt-hit" data-i="${i}" x="${x(i)-bw/2}" y="${T}" width="${bw}" height="${H-T-B+VH}" fill="transparent"/>`).join('');
+  el.innerHTML=`<div class="card">${head}
+    <div class="ovd-eff-wrap snt-tr-wrap"><svg viewBox="0 0 ${W} ${H+VH}" style="width:100%;height:auto;display:block;font-family:Prompt,sans-serif">${g}${plot}<line class="snt-guide" y1="${T}" y2="${H-B+VH}" stroke="var(--text2)" stroke-dasharray="3 3" opacity="0"/>${hits}</svg><div class="ovd-eff-tip"></div></div>
+    ${legend}
+    ${view==='mix'?`<div class="snt-spikes">${_snt.spikes.length?`<span class="snt-spikes-lbl">⚠️ Negative spikes</span>${_snt.spikes.map((s,i)=>`<button type="button" class="snt-spike" data-s="${i}">${_bddOwnedBucketLabel(s.k,gran)} · <b>${s.share.toFixed(0)}%</b> negative <span>vs ${s.mu.toFixed(0)}% normal · ${s.n.toLocaleString()} mentions</span></button>`).join('')}`:`<span class="snt-spikes-lbl ok">✓ No unusual negative spikes</span><span class="snt-spikes-note">A spike = negative share 2+ standard deviations above normal, on a ${gran} with at least ${Math.ceil(sp.minVol)} mentions.</span>`}</div>`:''}
+  </div>`;
+  _sntTrendWire(el, ctx);
+
+  const wrap=el.querySelector('.snt-tr-wrap'), svg=wrap.querySelector('svg'), tip=wrap.querySelector('.ovd-eff-tip'), guide=svg.querySelector('.snt-guide');
+  const lbl=b=>gran==='week'?`Week of ${_bddOwnedBucketLabel(b.k,'day')}`:_bddOwnedBucketLabel(b.k,gran);
+  const show=(r,ev)=>{ const i=+r.dataset.i, b=buckets[i], a=b.a, isSp=_snt.spikes.some(s=>s.k===b.k);
+    guide.setAttribute('x1',x(i)); guide.setAttribute('x2',x(i)); guide.setAttribute('opacity','.6');
+    tip.innerHTML = `<div class="t">${lbl(b)}${isSp?' <span style="color:var(--neg)">▲ spike</span>':''}</div>
+      <div class="r"><span>Mentions</span><b>${a.n.toLocaleString()}</b></div><div class="r"><span>Engagement</span><b>${_infFmt(a.e)}</b></div>` +
+      (view==='mix' ? SNT_S.map(s=>`<div class="r"><span><span class="inf-legend-dot" style="background:${SENT_COLORS[s]};display:inline-block;margin-right:5px"></span>${SNT_LBL[s]}</span><b>${_sntShare(a,s).toFixed(1)}%</b></div>`).join('')+`<div class="r"><span>Net</span><b>${_sntSigned(_sntNet(a),0)}</b></div>`
+        : (el._ser||[]).filter(s=>!_snt.trendHidden.has(s.b)).map(s=>`<div class="r"><span><span class="inf-legend-dot" style="background:${s.c};display:inline-block;margin-right:5px"></span>${_infEsc(_ovdLabel(s.b))}</span><b>${s.v[i]==null?'—':_sntSigned(s.v[i],0)}</b></div>`).join('')) +
+      `${a.n<sp.minVol?`<div class="q" style="color:#b45309">⚠ Few mentions this ${gran} — the mix may not be reliable</div>`:''}<div class="hint">Click for this ${gran}'s posts</div>`;
+    tip.classList.add('on');
+    const wr=wrap.getBoundingClientRect(); let px=ev.clientX-wr.left, py=ev.clientY-wr.top; const tw=tip.offsetWidth, th=tip.offsetHeight;
+    let lx=px+14; if (lx+tw>wr.width) lx=px-14-tw; let ly=py-th-12; if (ly<0) ly=py+14;
+    tip.style.left=Math.max(0,lx)+'px'; tip.style.top=Math.min(Math.max(0,ly), Math.max(0,wr.height-th))+'px'; };
+  const hide=()=>{ tip.classList.remove('on'); guide.setAttribute('opacity','0'); };
+  svg.querySelectorAll('.snt-hit').forEach(r=>{ r.addEventListener('mousemove',ev=>show(r,ev)); r.addEventListener('mouseleave',hide);
+    r.addEventListener('click',()=>{ hide(); const b=buckets[+r.dataset.i]; _sntPostsModal({ rows:b.rows, title:lbl(b), sub:`Trend · ${gran}`, sent:_snt.spikes.some(s=>s.k===b.k)?'negative':undefined }); }); });
+  el.querySelectorAll('.snt-spike').forEach(btn=>btn.onclick=()=>{ const s=_snt.spikes[+btn.dataset.s]; _sntPostsModal({ rows:s.rows, title:`Negative spike · ${lbl(s)}`, sub:`${s.share.toFixed(0)}% negative vs ${s.mu.toFixed(0)}% normal`, sent:'negative', color:'#EF4444' }); });
+  el.querySelectorAll('.ovd-leg[data-b]').forEach(l=>l.onclick=()=>{ const b=l.dataset.b; _snt.trendHidden.has(b)?_snt.trendHidden.delete(b):_snt.trendHidden.add(b); _sntTrend(el, ctx); });
+}
+function _sntTrendWire(el, ctx){
+  el.querySelectorAll('[data-snt-tv]').forEach(b=>b.onclick=()=>{ _snt.trendView=b.dataset.sntTv; _sntTrend(el, ctx); });
+  el.querySelectorAll('[data-snt-gran]').forEach(b=>b.onclick=()=>{ _snt.gran=b.dataset.sntGran; _sntTrend(el, ctx); });
+}
+
+// ── Topics ───────────────────────────────────────────────────────────────────
+// Written for someone opening the tab for the first time: plain-language
+// takeaways, one bar per topic with a word verdict, then a brand × topic grid
+// that shows % positive and % negative directly. Scores stay one click away.
+const SNT_HM_MODES = {
+  pn:  { l:'Positive vs negative', d:'Each cell shows the share of mentions that are <b style="color:var(--pos)">● positive</b> and <b style="color:var(--neg)">● negative</b>. The cell turns <b style="color:var(--pos)">green</b> when positive wins and <b style="color:var(--neg)">red</b> when negative wins — the stronger the colour, the bigger the gap.' },
+  gap: { l:'Compared with other brands', d:'Each cell compares the brand with <b>all brands on the same topic</b>. <b style="color:var(--neg)">Red</b> = people feel worse about this brand than average on that topic, <b style="color:var(--pos)">green</b> = better. The number is the difference in points.' },
+  net: { l:'Net score', d:'<b>Net score</b> = % positive − % negative. <b>+20</b> means 20 points more positive than negative, <b>0</b> is balanced, below zero leans negative.' },
+};
+const SNT_TOPIC_GUIDE_KEY = 'inse-snt-topic-guide-off';
+// Net score → a word anyone can read
+function _sntVerdict(net){
+  if (net>=20)  return { l:'Positive',          ic:'😊', cls:'pos' };
+  if (net>=5)   return { l:'Leaning positive',  ic:'🙂', cls:'pos2' };
+  if (net>-5)   return { l:'Mixed',             ic:'😐', cls:'mid' };
+  if (net>-20)  return { l:'Leaning negative',  ic:'🙁', cls:'neg2' };
+  return               { l:'Negative',          ic:'😟', cls:'neg' };
+}
+function _sntVerdictChip(net){ const v=_sntVerdict(net); return `<span class="snt-vd ${v.cls}" title="Net score ${_sntSigned(net,0)} (% positive − % negative)"><span aria-hidden="true">${v.ic}</span>${v.l}</span>`; }
+
+function _sntTopics(el, ctx){
+  const mode=SNT_HM_MODES[_snt.topicMode]?_snt.topicMode:'pn', eng=_sntEng(), lens=eng?'engagement':'mentions';
+  const st=_snt.topicSort||(_snt.topicSort={ key:'n', dir:-1 }), sub=_sntRangeLbl(ctx.p.cur)||'All dates';
+  const cur=ctx.cur.filter(r=>r.topics.length), prevT=ctx.prev?ctx.prev.filter(r=>r.topics.length):null;
+  const tv={}; cur.forEach(r=>r.topics.forEach(t=>tv[t]=(tv[t]||0)+(eng?r.e:1)));
+  const allTopics=Object.keys(tv).sort((a,b)=>tv[b]-tv[a]), topics=allTopics.slice(0,10);
+  if (!topics.length) { el.innerHTML='<div class="card"><div class="bdd-placeholder">No topic tags in this period ("others" is excluded)</div></div>'; return; }
+  const P=a=>_sntShare(a,'positive'), N=a=>_sntShare(a,'negative'), pc=v=>`${v.toFixed(0)}%`;
+
+  const topicStats=allTopics.slice(0,12).map(t=>{ const rs=cur.filter(r=>r.topics.includes(t)), a=_sntAgg(rs), pa=prevT?_sntAgg(prevT.filter(r=>r.topics.includes(t))):null;
+    return { t, rs, a, net:_sntNet(a), d:pa&&pa.n>=SNT_CELL_MIN_N&&a.n>=SNT_CELL_MIN_N?_sntNet(a)-_sntNet(pa):null }; });
+  const avg={}; topics.forEach(t=>{ const a=_sntAgg(cur.filter(r=>r.topics.includes(t))); avg[t]={ a, net:_sntNet(a) }; });
+  const brands=_sntBrandsInScope().map(b=>{ const rs=cur.filter(r=>r.brands.includes(b)); return rs.length?{ b, rs, a:_sntAgg(rs) }:null; }).filter(Boolean);
+  brands.forEach(x=>x.cells=topics.map(t=>{ const rs=x.rs.filter(r=>r.topics.includes(t)), a=_sntAgg(rs); return { rs, a, net:_sntNet(a), gap:_sntNet(a)-avg[t].net, t }; }));
+  const multi=brands.length>1;
+
+  // ① key takeaways — plain sentences, only from slices with enough mentions to trust
+  const solid=SNT_CELL_MIN_N*2, cells=[]; brands.forEach(x=>x.cells.forEach(c=>{ if (c.a.n>=solid) cells.push({ x, c }); }));
+  const best=(arr,score)=>arr.reduce((m,o)=>m==null||score(o)>score(m)?o:m, null);
+  const fnd=[];
+  const pain=best(cells.filter(o=>o.c.net<0), o=>-o.c.net);
+  if (pain) fnd.push({ ic:'🔴', k:'Biggest problem', tone:'bad', t:`People are unhappy with <b>${_infEsc(_ovdLabel(pain.x.b))}</b> on <b>${_infEsc(_ovdLabel(pain.c.t))}</b> — <b>${pc(N(pain.c.a))}</b> of mentions are negative.`, rows:pain.c.rs, title:`${_ovdLabel(pain.x.b)} · ${_ovdLabel(pain.c.t)}`, color:_sntColor(pain.x.b), sent:'negative' });
+  const strong=best(cells.filter(o=>o.c.net>0), o=>o.c.net);
+  if (strong) fnd.push({ ic:'🟢', k:'Biggest strength', tone:'good', t:`<b>${_infEsc(_ovdLabel(strong.x.b))}</b> does best on <b>${_infEsc(_ovdLabel(strong.c.t))}</b> — <b>${pc(P(strong.c.a))}</b> positive vs ${pc(N(strong.c.a))} negative.`, rows:strong.c.rs, title:`${_ovdLabel(strong.x.b)} · ${_ovdLabel(strong.c.t)}`, color:_sntColor(strong.x.b), sent:'positive' });
+  const worstT=best(topicStats.filter(o=>o.a.n>=solid), o=>-o.net);
+  if (worstT && worstT.net<_sntNet(_sntAgg(cur))) fnd.push({ ic:'🗂', k:'Most criticised topic', tone:'bad', t:`<b>${_infEsc(_ovdLabel(worstT.t))}</b> gets the most complaints${multi?' across all brands':''} — <b>${pc(N(worstT.a))}</b> negative.`, rows:worstT.rs, title:_ovdLabel(worstT.t), sent:'negative' });
+  const gap=multi?best(cells.filter(o=>o.c.gap<=-10), o=>-o.c.gap):null;
+  if (gap) fnd.push({ ic:'↘️', k:'Worse than other brands', tone:'bad', t:`On <b>${_infEsc(_ovdLabel(gap.c.t))}</b>, <b>${_infEsc(_ovdLabel(gap.x.b))}</b> gets <b>${pc(N(gap.c.a))}</b> negative mentions — other brands average ${pc(N(avg[gap.c.t].a))}.`, rows:gap.c.rs, title:`${_ovdLabel(gap.x.b)} · ${_ovdLabel(gap.c.t)}`, color:_sntColor(gap.x.b), sent:'negative' });
+
+  // ② one bar per topic, most negative first, with a word verdict
+  const tov=topicStats.slice().sort((a,b)=>a.net-b.net);
+  const tovHtml=tov.map((o,i)=>{ const lo=o.a.n<SNT_CELL_MIN_N;
+    return `<div class="snt-tov${lo?' low':''}" data-i="${i}" role="button" tabindex="0" title="Click to read the posts about ${_infEsc(_ovdLabel(o.t))}">
+      <div class="snt-tov-t"><b>${_infEsc(_ovdLabel(o.t))}</b><small>${o.a.n.toLocaleString()} mentions${lo?' · '+_sntFewTag(o.a.n, SNT_CELL_MIN_N):''}</small></div>
+      <div class="snt-mix-bar">${SNT_S.map(s=>{ const v=_sntShare(o.a,s); return v>0?`<div style="width:${v}%;background:${SENT_COLORS[s]}" title="${SNT_LBL[s]} ${v.toFixed(0)}%">${v>=9?v.toFixed(0)+'%':''}</div>`:''; }).join('')}</div>
+      <div class="snt-tov-net">${_sntVerdictChip(o.net)}</div>
+      <div class="snt-tov-d">${ctx.prev?(o.d==null?'<span class="snt-d na">—</span>':Math.abs(o.d)<3?'<span class="snt-d flat">• Same</span>':`<span class="snt-d ${o.d>0?'good':'bad'}" title="Net score ${o.d>0?'up':'down'} ${Math.abs(o.d).toFixed(0)} pts vs previous period">${o.d>0?'▲ Better':'▼ Worse'}</span>`):''}</div></div>`; }).join('');
+
+  // ③ brand × topic grid
+  const fmt=c=>mode==='net'?_sntSigned(c.net,0):_sntSigned(c.gap,0);
+  const shade=(c)=>{ if (!c.a.n) return ''; const k=c.a.n<SNT_CELL_MIN_N?0.35:1;   // small samples muted so extremes don't draw the eye
+    const v=mode==='gap'?c.gap:c.net, span=mode==='gap'?30:60, t=Math.max(-1,Math.min(1,v/span));
+    const a=(Math.abs(t)<0.08?0.04:(mode==='pn'?0.07+0.38*Math.abs(t):0.08+0.72*Math.abs(t)))*k;   // pn stays light so the numbers stay readable
+    return `background-color:${t>=0?`rgba(29,201,151,${a.toFixed(2)})`:`rgba(239,68,68,${a.toFixed(2)})`};${a>0.5?'color:#fff':''}`; };
+  const sortVal=(x,ci)=>{ const c=x.cells[ci]; return c.a.n?(mode==='gap'?c.gap:c.net):null; };
+  const colIdx=topics.indexOf(st.key);
+  brands.sort((p,q)=>{ const g=x=>st.key==='n'?x.a.n:st.key==='b'?_ovdLabel(x.b).toLowerCase():colIdx>=0?sortVal(x,colIdx):x.a.n;
+    const a=g(p), b=g(q); if (a==null||b==null) return (a==null)-(b==null); return (a>b?1:a<b?-1:0)*st.dir; });
+  const shown=brands.slice(0,15);
+  const arr=k=>st.key===k?`<span class="ph-arr">${st.dir>0?'▲':'▼'}</span>`:'';
+  const mini=a=>`<span class="snt-hm-mix">${SNT_S.map(s=>{ const v=_sntShare(a,s); return v>0?`<i style="width:${v}%;background:${SENT_COLORS[s]}"></i>`:''; }).join('')}</span>`;
+  const pn=a=>`<span class="snt-hm-pn"><span class="p" title="Positive">● ${pc(P(a))}</span><span class="n" title="Negative">● ${pc(N(a))}</span></span>`;
+  const td=(c, ri, ci)=>{ if (!c.a.n) return '<td><div class="cv zero" title="No mentions">–</div></td>'; const lo=c.a.n<SNT_CELL_MIN_N;
+    const isAvg=ri<0, body=mode==='pn'?pn(c.a):isAvg&&mode==='gap'?`<span class="snt-hm-avg">${_sntVerdict(c.net).l}</span>${mini(c.a)}`:`${fmt(c)}${mini(c.a)}`;
+    return `<td class="c" tabindex="0" data-r="${ri}" data-c="${ci}"><div class="cv${lo?' low':''}${mode==='pn'?' pn':''}" style="${isAvg&&mode==='gap'?'':shade(c)}">${body}</div></td>`; };
+  const allCells=topics.map(t=>({ rs:cur.filter(r=>r.topics.includes(t)), a:avg[t].a, net:avg[t].net, gap:0, t }));
+  const segs=`<div class="sma-seg sma-seg-sm" role="tablist" aria-label="Grid shows">${Object.entries(SNT_HM_MODES).map(([k,o])=>`<button type="button" role="tab" class="sma-seg-btn${mode===k?' active':''}" aria-selected="${mode===k}" data-tm="${k}">${o.l}</button>`).join('')}</div>`;
+  const legend = mode==='gap'
+    ? `<span><span>Worse than other brands</span><i class="ovd-plat-scale" style="background:linear-gradient(90deg,rgba(239,68,68,.8),rgba(239,68,68,.06) 45%,rgba(29,201,151,.06) 55%,rgba(29,201,151,.8))"></i><span>Better than other brands</span></span>`
+    : `<span><span>More negative</span><i class="ovd-plat-scale" style="background:linear-gradient(90deg,rgba(239,68,68,${mode==='pn'?'.45':'.8'}),rgba(239,68,68,.05) 45%,rgba(29,201,151,.05) 55%,rgba(29,201,151,${mode==='pn'?'.45':'.8'}))"></i><span>More positive</span></span>`;
+  const guideOff=(()=>{ try { return localStorage.getItem(SNT_TOPIC_GUIDE_KEY)==='1'; } catch(_) { return false; } })();
+
+  el.innerHTML=`
+    ${guideOff?'':`<div class="snt-guide" role="note"><div class="snt-guide-h"><span>👋 How to read this page</span><button type="button" class="snt-guide-x" title="Hide this guide">Got it ✕</button></div>
+      <ol><li><b>Start with the takeaways</b> — the coloured cards sum up the biggest problem and strength.</li>
+        <li><b>Read the bars</b> — <span class="snt-k" style="background:${SENT_COLORS.positive}"></span>positive, <span class="snt-k" style="background:${SENT_COLORS.neutral}"></span>neutral, <span class="snt-k" style="background:${SENT_COLORS.negative}"></span>negative. The most criticised topics are at the top.</li>
+        <li><b>Click anything</b> — a card, a topic or a grid cell — to read the real posts behind it.</li></ol></div>`}
+    ${fnd.length?`<div class="snt-sec-lbl">Key takeaways</div><div class="ovd-plat-ins snt-ins">${fnd.map((o,i)=>`<button type="button" class="${o.tone}" data-f="${i}"><span class="ic">${o.ic}</span><span><div class="k">${o.k}</div><div class="v">${o.t}</div></span></button>`).join('')}</div>`:''}
+    <div class="card" style="margin-bottom:14px"><div class="bdd-section-title"><span>🗂</span>How do people feel about each topic? <span class="ovd-hint">${multi?'all selected brands':_infEsc(_ovdLabel(brands[0]?.b||''))} · ${lens}</span></div>
+      <p class="snt-plain">Each bar splits a topic's ${lens} into positive, neutral and negative. Topics are listed from <b>most negative</b> to <b>most positive</b>.</p>
+      <div class="snt-tov-head"><span>Topic</span><span><span class="snt-k" style="background:${SENT_COLORS.positive}"></span>Positive <span class="snt-k" style="background:${SENT_COLORS.neutral}"></span>Neutral <span class="snt-k" style="background:${SENT_COLORS.negative}"></span>Negative</span><span>Overall feeling</span><span>${ctx.prev?'vs last period':''}</span></div>
+      ${tovHtml}
+      <div class="snt-foot">"Overall feeling" compares positive with negative: 😊 Positive · 🙂 Leaning positive · 😐 Mixed · 🙁 Leaning negative · 😟 Negative${allTopics.length>tov.length?` · top ${tov.length} of ${allTopics.length} topics by volume`:''}</div></div>
+    ${multi?`<div class="card"><div class="ovd-plat-head"><div class="bdd-section-title"><span>🏷</span>Which brands do better or worse on each topic?</div><div class="ovd-plat-ctl"><span class="snt-ctl-lbl">Show as</span>${segs}</div></div>
+      <p class="ovd-plat-desc">${SNT_HM_MODES[mode].d} Hover a cell for details, click it to read the posts.</p>
+      <div class="ovd-plat-wrap"><div class="ovd-plat-scroll"><table class="ovd-plat snt-heat"><thead><tr>
+        <th class="sortable${st.key==='b'?' sorted':''}" data-k="b" tabindex="0"><div class="ph-name">Brand ${arr('b')}</div><div class="ph-sub">${brands.length} brands</div></th>
+        ${topics.map((t,ci)=>`<th class="sortable${st.key===t?' sorted':''}" data-k="${_infEsc(t)}" data-c="${ci}" tabindex="0" title="Sort brands by how they do on ${_infEsc(_ovdLabel(t))}"><div class="ph-name">${arr(t)}${_infEsc(_ovdLabel(t))}</div><div class="ph-sub">${tv[t].toLocaleString()} ${eng?'eng.':'mentions'}</div></th>`).join('')}
+        <th class="sortable tot${st.key==='n'?' sorted':''}" data-k="n" tabindex="0"><div class="ph-name">${arr('n')}Overall</div><div class="ph-sub">all topics</div></th></tr></thead>
+        <tbody><tr class="base"><th title="All selected brands combined — the average each brand is compared with">Average of all brands</th>${allCells.map((c,ci)=>td(c,-1,ci)).join('')}<td class="tot">${_sntVerdictChip(_sntNet(_sntAgg(cur)))}</td></tr>
+        ${shown.map((x,ri)=>`<tr><th title="${_infEsc(_ovdLabel(x.b))}"><span class="ovd-dot" style="background:${_sntColor(x.b)}"></span>${_infEsc(_ovdLabel(x.b))}</th>${x.cells.map((c,ci)=>td(c,ri,ci)).join('')}<td class="tot">${_sntVerdictChip(_sntNet(x.a))}<small>${x.a.n.toLocaleString()} mentions</small></td></tr>`).join('')}</tbody></table></div><div class="ovd-eff-tip"></div></div>
+      <div class="ovd-plat-foot">${legend}<span><i class="ovd-plat-lowkey"></i>Striped = fewer than ${SNT_CELL_MIN_N} mentions, may not be reliable</span>${allTopics.length>topics.length||brands.length>shown.length?`<span>Top ${topics.length} topics${brands.length>shown.length?` · ${shown.length} of ${brands.length} brands`:''} by volume</span>`:''}<span style="margin-left:auto">Click a topic name to sort brands</span></div></div>`
+    :`<div class="snt-cov">Pick two or more brands in the Brands filter to compare them topic by topic.</div>`}`;
+
+  el.querySelector('.snt-guide-x')?.addEventListener('click',()=>{ try { localStorage.setItem(SNT_TOPIC_GUIDE_KEY,'1'); } catch(_) {} el.querySelector('.snt-guide')?.remove(); });
+  el.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{ const o=fnd[+b.dataset.f]; _sntPostsModal({ rows:o.rows, title:o.title, sub, color:o.color, sent:o.sent }); });
+  el.querySelectorAll('.snt-tov').forEach(r=>{ const o=tov[+r.dataset.i], go=()=>_sntPostsModal({ rows:o.rs, title:_ovdLabel(o.t), sub }); r.onclick=go; r.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+  if (!multi) return;
+  el.querySelectorAll('[data-tm]').forEach(b=>b.onclick=()=>{ _snt.topicMode=b.dataset.tm; _sntTopics(el,ctx); });
+  el.querySelectorAll('thead th.sortable').forEach(th=>{ const go=()=>{ const k=th.dataset.k; if (st.key===k) st.dir*=-1; else { st.key=k; st.dir=k==='b'?1:-1; } _sntTopics(el,ctx); };
+    th.onclick=go; th.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+
+  // hover: highlight row + column and explain the cell in a sentence
+  const wrap=el.querySelector('.ovd-plat-wrap'), tip=wrap.querySelector('.ovd-eff-tip'), tbl=wrap.querySelector('table');
+  const cellOf=td=>{ const ri=+td.dataset.r, ci=+td.dataset.c; return { ci, row:ri<0?null:shown[ri], c:ri<0?allCells[ci]:shown[ri].cells[ci] }; };
+  const clear=()=>{ tip.classList.remove('on'); tbl.querySelectorAll('.hl,.col-hl').forEach(n=>n.classList.remove('hl','col-hl')); };
+  const show=(td,ev)=>{ const { ci, row, c }=cellOf(td), t=topics[ci], lo=c.a.n<SNT_CELL_MIN_N, v=_sntVerdict(c.net); clear();
+    td.closest('tr').classList.add('hl'); tbl.querySelector(`thead th[data-c="${ci}"]`)?.classList.add('col-hl');
+    const an=N(avg[t].a), g=row?c.gap:0;
+    const cmp=!row?'This is the average every brand is compared with.':Math.abs(g)<3?`About the same as other brands (${pc(an)} negative on average).`:g<0?`Worse than other brands — they average ${pc(an)} negative.`:`Better than other brands — they average ${pc(an)} negative.`;
+    tip.innerHTML=`<div class="t">${row?`<span class="ovd-dot" style="background:${_sntColor(row.b)};margin:0"></span>${_infEsc(_ovdLabel(row.b))}`:'Average of all brands'} <span style="color:var(--text3);font-weight:500">· ${_infEsc(_ovdLabel(t))}</span></div>
+      <div class="snt-tip-vd">${v.ic} <b>${v.l}</b></div>
+      ${SNT_S.map(s=>`<div class="r"><span><span class="inf-legend-dot" style="background:${SENT_COLORS[s]};display:inline-block;margin-right:5px"></span>${SNT_LBL[s]}</span><b>${pc(_sntShare(c.a,s))}</b></div>`).join('')}
+      <div class="r"><span>Mentions</span><b>${c.a.n.toLocaleString()}</b></div>
+      <div class="q" style="color:${!row||Math.abs(g)<3?'var(--text2)':g<0?'var(--neg)':'var(--pos)'};white-space:normal;max-width:240px">${cmp}</div>
+      ${lo?`<div class="q" style="color:#b45309">⚠ Few mentions — may not be reliable</div>`:''}<div class="hint">Click to read these posts</div>`;
+    tip.classList.add('on');
+    const wr=wrap.getBoundingClientRect(), cr=td.getBoundingClientRect(), px=ev&&ev.clientX!=null?ev.clientX-wr.left:cr.right-wr.left, py=ev&&ev.clientY!=null?ev.clientY-wr.top:cr.top-wr.top;
+    const tw=tip.offsetWidth, th=tip.offsetHeight; let lx=px+14; if (lx+tw>wr.width) lx=px-14-tw; let ly=py-th-12; if (ly<0) ly=py+14;
+    tip.style.left=Math.max(0,lx)+'px'; tip.style.top=Math.min(Math.max(0,ly), Math.max(0,wr.height-th))+'px'; };
+  const open=td=>{ const { ci, row, c }=cellOf(td); clear(); _sntPostsModal({ rows:c.rs, title:`${row?_ovdLabel(row.b):'All brands'} · ${_ovdLabel(topics[ci])}`, sub, color:row?_sntColor(row.b):undefined }); };
+  tbl.querySelectorAll('td.c').forEach(td=>{
+    td.addEventListener('mouseenter',ev=>show(td,ev)); td.addEventListener('mousemove',ev=>show(td,ev)); td.addEventListener('mouseleave',clear);
+    td.addEventListener('focus',()=>show(td)); td.addEventListener('blur',clear);
+    td.onclick=()=>open(td); td.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(td); } }; });
+}
+
+// ── Drivers ──────────────────────────────────────────────────────────────────
+// Which topics make up the negative (and positive) conversation, how that changed,
+// where negativity concentrates by platform, and the posts carrying the most weight.
+function _sntDriverRows(rows, prevRows, s){
+  const eng=_sntEng(), w=r=>eng?r.e:1;
+  const tot=rows.filter(r=>r.s===s).reduce((a,r)=>a+w(r),0), ptot=prevRows?prevRows.filter(r=>r.s===s).reduce((a,r)=>a+w(r),0):0;
+  const m={}; rows.forEach(r=>r.topics.forEach(t=>{ const x=m[t]||(m[t]={ t, v:0, all:[], hit:[] }); x.all.push(r); if (r.s===s) { x.v+=w(r); x.hit.push(r); } }));
+  const pm={}; (prevRows||[]).forEach(r=>{ if (r.s===s) r.topics.forEach(t=>pm[t]=(pm[t]||0)+w(r)); });
+  const untagged=rows.filter(r=>r.s===s && !r.topics.length).reduce((a,r)=>a+w(r),0);
+  const list=Object.values(m).filter(x=>x.v>0).map(x=>({ ...x, share:tot?x.v/tot*100:0, rate:_sntShare(_sntAgg(x.all), s),
+    d:prevRows&&ptot&&tot ? x.v/tot*100-(pm[x.t]||0)/ptot*100 : null })).sort((a,b)=>b.v-a.v);
+  return { list, tot, untagged:tot?untagged/tot*100:0 };
+}
+function _sntPlatRows(ctx){
+  const all=_sntAgg(ctx.cur), avgNeg=_sntShare(all,'negative'), m={};
+  ctx.cur.forEach(r=>(m[r.ch]||(m[r.ch]=[])).push(r));
+  return Object.entries(m).map(([ch,rs])=>{ const a=_sntAgg(rs), pr=ctx.prev?ctx.prev.filter(r=>r.ch===ch):null, pa=pr?_sntAgg(pr):null;
+    return { ch, rs, a, neg:_sntShare(a,'negative'), idx:avgNeg?_sntShare(a,'negative')/avgNeg*100:0, net:_sntNet(a), dnet:pa&&pa.n>=SNT_MIN_N&&a.n>=SNT_MIN_N?_sntNet(a)-_sntNet(pa):null }; })
+    .sort((a,b)=>b.a.n-a.a.n);
+}
+function _sntDrivers(el, ctx){
+  const eng=_sntEng(), lens=eng?'engagement':'mentions';
+  const drv=(s, title, ic)=>{ const D=_sntDriverRows(ctx.cur, ctx.prev, s), top=D.list.slice(0,8), max=Math.max(1,...top.map(x=>x.share)), c=SENT_COLORS[s];
+    return `<div class="card"><div class="bdd-section-title"><span>${ic}</span>${title} <span class="ovd-hint">share of all ${s} ${lens}${ctx.prev?' · change vs previous':''}</span></div>
+      ${top.length?top.map((x,i)=>`<div class="snt-drv" data-s="${s}" data-t="${_infEsc(x.t)}" role="button" tabindex="0" title="Show ${s} posts about ${_infEsc(_ovdLabel(x.t))}">
+        <div class="snt-drv-t"><b>${_infEsc(_ovdLabel(x.t))}</b><small>${x.rate.toFixed(0)}% of this topic is ${s} · ${x.all.length.toLocaleString()} mentions</small></div>
+        <div class="snt-drv-bar"><div style="width:${(x.share/max*100).toFixed(1)}%;background:${c}"></div></div>
+        <div class="snt-drv-v">${x.share.toFixed(0)}%</div>
+        <div class="snt-drv-d">${_sntDelta(x.d,' pts',s==='positive',1)}</div></div>`).join('')
+      :`<div class="bdd-placeholder">No ${s} mentions with a topic in this period</div>`}
+      <div class="snt-foot">A mention tagged with several topics counts for each${D.untagged>=1?` · ${D.untagged.toFixed(0)}% of ${s} ${lens} has no topic tag ("others" excluded)`:''}</div></div>`; };
+  const plat=_sntPlatRows(ctx);
+  const platHtml = _snt.f.ch!=='__all__'
+    ? `<div class="ovd-plat-note"><span>Filtered to <b>${_infEsc(_snt.f.ch)}</b> — clear the Platform filter to compare platforms.</span></div>`
+    : `<div class="table-wrap" style="max-height:none"><table class="dt inf-table snt-score snt-plat"><thead><tr><th>Platform</th><th class="num">Mentions</th><th>Mix</th><th class="num">Negative</th><th class="num" title="Platform's negative share ÷ the overall negative share. 100 = average, 150 = 1.5× more negative">Negativity index</th><th class="num">Net</th>${ctx.prev?'<th class="num">Δ net</th>':''}</tr></thead><tbody>${plat.map((p,i)=>{ const low=p.a.n<SNT_MIN_N;
+        return `<tr data-i="${i}" tabindex="0" title="Show ${_infEsc(p.ch)} posts"><td><span class="ph-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${_infChColor(p.ch)};margin-right:7px"></span><b style="color:var(--text)">${_infEsc(p.ch)}</b>${low?' '+_sntFewTag(p.a.n):''}</td>
+          <td class="num">${p.a.n.toLocaleString()}</td><td style="min-width:120px"><div class="snt-mini">${SNT_S.map(s=>{ const v=_sntShare(p.a,s); return v>0?`<div style="width:${v}%;background:${SENT_COLORS[s]}"></div>`:''; }).join('')}</div></td>
+          <td class="num" style="color:#dc2626">${_sntPct(p.neg)}</td>
+          <td class="num"><span class="snt-idx ${p.idx>=120&&!low?'hi':p.idx<=80&&!low?'lo':''}">${Math.round(p.idx)}</span></td>
+          <td class="num" style="font-weight:700;color:${low?'var(--text3)':p.net>=0?'#0f9f76':'#dc2626'}">${_sntSigned(p.net,0)}</td>${ctx.prev?`<td class="num">${_sntDelta(p.dnet,'',true,0)}</td>`:''}</tr>`; }).join('')}</tbody></table></div>`;
+  const posts=(s,title)=>{ const rs=ctx.cur.filter(r=>r.s===s).sort((a,b)=>b.e-a.e), top=rs.slice(0,5);
+    return `<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px"><div class="bdd-section-title" style="margin:0;border:0;padding:0"><span class="inf-legend-dot" style="background:${SENT_COLORS[s]};width:10px;height:10px"></span>${title}</div>${rs.length>5?`<button class="btn-outline snt-more" data-s="${s}" type="button">See top ${SNT_TOP_N} →</button>`:''}</div>
+      <div class="inf-post-list">${top.length?top.map((r,i)=>{ const pl=_infUrl(_sntLink(r)), t=_sntText(r); return `<div class="inf-post" style="border-left:3px solid ${SENT_COLORS[s]}"><div class="inf-post-top"><span style="font-weight:700;color:var(--text)">#${i+1}</span><b style="color:var(--text)">${_infEsc(r.brands.map(_ovdLabel).join(', '))}</b><span>·</span><span>${_infEsc(r.ch)}</span><span>·</span><span>${_infEsc(r.day?_sntFmtDay(r.day):'')}</span><span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(r.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div><div class="inf-post-text ovd-clamp">${_infEsc(t||'(no text)')}</div></div>`; }).join(''):`<div class="bdd-placeholder">No ${s} mentions in this period</div>`}</div></div>`; };
+  el.innerHTML=`<div class="inf-grid-2">${drv('negative','What drives negative','🔻')}${drv('positive','What drives positive','🔺')}</div>
+    <div class="card" style="margin-bottom:14px"><div class="bdd-section-title"><span>📡</span>Sentiment by platform <span class="ovd-hint">shares by ${lens} · index 100 = average negativity</span></div>${platHtml}</div>
+    <div class="inf-grid-2">${posts('negative','Top negative posts')}${posts('positive','Top positive posts')}</div>`;
+  const sub=_sntRangeLbl(ctx.p.cur)||'All dates';
+  el.querySelectorAll('.snt-drv').forEach(d=>{ const go=()=>_sntPostsModal({ rows:ctx.cur.filter(r=>r.topics.includes(d.dataset.t)), title:_ovdLabel(d.dataset.t), sub, sent:d.dataset.s }); d.onclick=go; d.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+  el.querySelectorAll('.snt-plat tbody tr').forEach(tr=>{ const p=plat[+tr.dataset.i], go=()=>_sntPostsModal({ rows:p.rs, title:p.ch, sub }); tr.onclick=go; tr.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); go(); } }; });
+  el.querySelectorAll('.snt-more').forEach(b=>b.onclick=()=>_sntPostsModal({ rows:ctx.cur, title:`Top ${b.dataset.s} posts`, sub, sent:b.dataset.s }));
+}
+
+// ── Insights (top of Summary) ────────────────────────────────────────────────
+// Up to four plain-language findings; each opens the posts or section behind it.
+function _sntInsights(el, ctx){
+  const ins=[], sub=_sntRangeLbl(ctx.p.cur)||'All dates', lens=_sntEng()?'engagement':'mentions';
+  const br=_sntBrandRows(ctx).filter(x=>x.a.n>=SNT_MIN_N);
+  const mover=br.filter(x=>x.dnet!=null).sort((a,b)=>Math.abs(b.dnet)-Math.abs(a.dnet))[0];
+  if (mover && Math.abs(mover.dnet)>=3) ins.push({ ic:mover.dnet<0?'📉':'📈', k:mover.dnet<0?'Biggest decline':'Biggest improvement', tone:mover.dnet<0?'bad':'good',
+    t:`<b>${_infEsc(_ovdLabel(mover.b))}</b> net sentiment ${mover.dnet<0?'fell':'rose'} <b>${Math.abs(mover.dnet).toFixed(0)} pts</b> to ${_sntSigned(mover.net,0)}.`, go:()=>_sntBrandModal(mover.b, ctx, mover.dnet<0?'negative':'positive') });
+  else { const low=br.slice().sort((a,b)=>a.net-b.net)[0]; if (low) ins.push({ ic:'🏷', k:'Lowest net sentiment', tone:low.net<0?'bad':'', t:`<b>${_infEsc(_ovdLabel(low.b))}</b> has the lowest net sentiment at <b>${_sntSigned(low.net,0)}</b>.`, go:()=>_sntBrandModal(low.b, ctx, 'negative') }); }
+  const D=_sntDriverRows(ctx.cur, ctx.prev, 'negative'), d0=D.list[0];
+  if (d0) ins.push({ ic:'🔻', k:'Top negative driver', tone:'bad', t:`<b>${_infEsc(_ovdLabel(d0.t))}</b> accounts for <b>${d0.share.toFixed(0)}%</b> of negative ${lens}${d0.d!=null&&Math.abs(d0.d)>=1?` (${d0.d>0?'▲':'▼'} ${Math.abs(d0.d).toFixed(0)} pts)`:''}.`,
+    go:()=>_sntPostsModal({ rows:ctx.cur.filter(r=>r.topics.includes(d0.t)), title:_ovdLabel(d0.t), sub, sent:'negative' }) });
+  if (_snt.f.ch==='__all__') { const pl=_sntPlatRows(ctx).filter(p=>p.a.n>=SNT_MIN_N).sort((a,b)=>b.idx-a.idx)[0];
+    if (pl && pl.idx>=120) ins.push({ ic:'📡', k:'Most negative platform', tone:'bad', t:`<b>${_infEsc(pl.ch)}</b> is <b>${(pl.idx/100).toFixed(1)}×</b> as negative as average (${pl.neg.toFixed(0)}% vs ${_sntShare(_sntAgg(ctx.cur),'negative').toFixed(0)}%).`, go:()=>_sntPostsModal({ rows:pl.rs, title:pl.ch, sub, sent:'negative' }) }); }
+  const T=_sntTrendData(ctx), inWin=s=>!ctx.p.cur||ctx.p.k==='all'||(s.rows.some(r=>r.day>=ctx.p.cur[0]&&r.day<=ctx.p.cur[1]));
+  const sp=T.spikes.filter(inWin).sort((a,b)=>b.share-a.share)[0];
+  if (sp) ins.push({ ic:'⚠️', k:'Negative spike', tone:'bad', t:`<b>${T.gran==='week'?'Week of ':''}${_bddOwnedBucketLabel(sp.k, T.gran==='week'?'day':T.gran)}</b> hit <b>${sp.share.toFixed(0)}%</b> negative vs ${sp.mu.toFixed(0)}% normal.`,
+    go:()=>_sntPostsModal({ rows:sp.rows, title:`Negative spike · ${_bddOwnedBucketLabel(sp.k, T.gran==='week'?'day':T.gran)}`, sub:`${sp.share.toFixed(0)}% negative vs ${sp.mu.toFixed(0)}% normal`, sent:'negative', color:'#EF4444' }) });
+  if (!ins.length) { el.innerHTML=''; return; }
+  el.innerHTML=`<div class="ovd-plat-ins snt-ins">${ins.slice(0,4).map((o,i)=>`<button type="button" class="${o.tone||''}" data-i="${i}"><span class="ic">${o.ic}</span><span><div class="k">${o.k}</div><div class="v">${o.t}</div></span></button>`).join('')}</div>`;
+  el.querySelectorAll('button[data-i]').forEach(b=>b.onclick=()=>ins[+b.dataset.i].go());
+}
 
 function renderCharts() {
   if (!reportData.topicRows.length) {
@@ -6554,545 +7268,8 @@ function renderCharts() {
   }
   document.getElementById('chartsEmpty').style.display='none';
   document.getElementById('chartsGrid').style.display='';
-
-  const brandsSorted = reportData.sentRows.map(r => r.brand);
-  // Anything that renders one element per brand unconditionally (donuts,
-  // stacked bars, the topic×brand×sentiment grid) is capped — see
-  // SENT_CHART_BRAND_CAP above. Filters themselves (dropdowns) still search
-  // the FULL brand list; only the always-rendered visuals are capped.
-  const brandsCapped = _topBrandsByVolume(brandsSorted, SENT_CHART_BRAND_CAP);
-
-  // ── 0. Overall sentiment health + trend over time ─────────────────────────
-  renderSentimentOverview();
-  renderSentimentTrendChart();
-
-  // ── 1. Sentiment Split by Brand ───────────────────────────────────────────
-  const sentBrand = {};
-  reportData.sentRows.forEach(r => {
-    sentBrand[r.brand] = { positive:r.positive, neutral:r.neutral, negative:r.negative };
-  });
-  renderSentimentStacked('sent-brand-stacked', sentBrand, brandsCapped, brandsSorted.length);
-
-  // ── 1b. Sentiment donut per brand ─────────────────────────────────────────
-  renderBrandDonuts(brandsCapped, brandsSorted.length);
-
-  // ── 2. Sentiment by Topic — filterable by brand ───────────────────────────
-  buildTopicSentBrandFilter(brandsSorted);
-  renderTopicSentBars();
-
-  // ── 3. Topic × Brand × Sentiment ─────────────────────────────────────────
-  buildBrandTopicSentFilter(brandsSorted);
-  renderBrandTopicSentiment(brandsSorted);
-}
-
-// ── Overall Sentiment Health (top-of-tab summary) ─────────────────────────────
-function renderSentimentOverview() {
-  const el = document.getElementById('sentOverviewKpis');
-  if (!el) return;
-  const rows = reportData.sentRows || [];
-  const pos = rows.reduce((a,r)=>a+(r.positive||0),0);
-  const neu = rows.reduce((a,r)=>a+(r.neutral||0),0);
-  const neg = rows.reduce((a,r)=>a+(r.negative||0),0);
-  const total = pos+neu+neg || 1;
-  const net = ((pos-neg)/total*100).toFixed(1);
-  const netColor = net >= 20 ? 'var(--pos)' : (net <= -20 ? 'var(--neg)' : 'var(--neu)');
-  const kpis = [
-    { val: (pos+neu+neg).toLocaleString(), lbl:'Total Mentions', sub:'across all brands', cls:'' },
-    { val: (net>=0?'+':'')+net+'%', lbl:'Net Sentiment', sub:'positive minus negative', cls:'', color:netColor },
-    { val: Math.round(pos/total*100)+'%', lbl:'Positive', sub: pos.toLocaleString()+' mentions', cls:'pos', color:'var(--pos)' },
-    { val: Math.round(neu/total*100)+'%', lbl:'Neutral', sub: neu.toLocaleString()+' mentions', cls:'neu', color:'var(--neu)' },
-    { val: Math.round(neg/total*100)+'%', lbl:'Negative', sub: neg.toLocaleString()+' mentions', cls:'neg', color:'var(--neg)' },
-  ];
-  el.innerHTML = kpis.map(k=>`
-    <div class="bdd-kpi ${k.cls}">
-      <div class="bdd-kpi-val" style="color:${k.color||'var(--text)'}">${k.val}</div>
-      <div class="bdd-kpi-lbl">${k.lbl}</div>
-      <div class="bdd-kpi-sub">${k.sub}</div>
-    </div>`).join('');
-}
-
-// ── Sentiment Trend Over Time ──────────────────────────────────────────────────
-// Reads straight from rawData (client-side) so it needs no changes to the
-// Python pipeline — buckets every dated row by day/week/month and plots the
-// % positive/neutral/negative mix per period. Percentage (not raw count) is
-// used deliberately so volume swings don't get mistaken for sentiment swings.
-let sentTrendGranularity = 'day'; // 'day' | 'week' | 'month'
-
-function _sentDateKey(dt, gran) {
-  if (!dt || isNaN(dt.getTime())) return null;
-  const y = dt.getFullYear(), m = dt.getMonth(), d = dt.getDate();
-  if (gran === 'month') return `${y}-${String(m+1).padStart(2,'0')}`;
-  if (gran === 'week') {
-    const dow = (dt.getDay() + 6) % 7; // Monday = 0
-    const mon = new Date(y, m, d - dow);
-    return `${mon.getFullYear()}-${String(mon.getMonth()+1).padStart(2,'0')}-${String(mon.getDate()).padStart(2,'0')}`;
-  }
-  return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
-
-function _buildSentimentTrendData() {
-  const sentCol = (typeof detectedSchemaConfig !== 'undefined' && detectedSchemaConfig && detectedSchemaConfig.sentimentCol) || 'sentiment';
-  const buckets = {};
-  (rawData||[]).forEach(row => {
-    const dateRaw = row.created_at||row.date||row.Date||row.Created_At||'';
-    if (!dateRaw) return;
-    const dt = new Date(dateRaw);
-    const key = _sentDateKey(dt, sentTrendGranularity);
-    if (!key) return;
-    const sentVal = String(row[sentCol]||'').trim().toLowerCase();
-    if (sentVal !== 'positive' && sentVal !== 'neutral' && sentVal !== 'negative') return;
-    if (!buckets[key]) buckets[key] = {positive:0,neutral:0,negative:0};
-    buckets[key][sentVal]++;
-  });
-  return Object.keys(buckets).sort().map(k => ({ key:k, ...buckets[k] }));
-}
-
-function renderSentimentTrendChart() {
-  const wrapEl = document.getElementById('sent-trend-chart');
-  if (!wrapEl) return;
-  const rows = _buildSentimentTrendData();
-  if (rows.length < 2) {
-    wrapEl.innerHTML = '<div class="xdim-empty-note">Not enough dated data for a sentiment trend — need at least two dated periods.</div>';
-    return;
-  }
-  const n = rows.length;
-  const padL = 22, padR = 22, padT = 12, padB = 22;
-  const STEP = 46;
-  const plotW = Math.max(560, (n-1)*STEP);
-  const W = plotW + padL + padR, H = 150;
-  // Cap how far the chart stretches — with few weekly/monthly buckets this
-  // stops the points spreading into huge, oddly-spaced gaps across the panel.
-  const MAX_STEP = 92;
-  const maxPlotW = Math.max(560, (n-1)*MAX_STEP);
-  const maxW = maxPlotW + padL + padR;
-  const plotH = H - padT - padB;
-  const xAt = i => n === 1 ? padL + plotW/2 : padL + (i/(n-1))*plotW;
-  const yAt = pct => padT + plotH - (Math.max(0,Math.min(100,pct))/100)*plotH;
-
-  const pct = rows.map(r => {
-    const total = (r.positive+r.neutral+r.negative) || 1;
-    return { positive: r.positive/total*100, neutral: r.neutral/total*100, negative: r.negative/total*100 };
-  });
-
-  const lines = ['positive','neutral','negative'].map(s => {
-    const pts = pct.map((v,i)=>`${xAt(i).toFixed(1)},${yAt(v[s]).toFixed(1)}`).join(' ');
-    return `<polyline points="${pts}" fill="none" stroke="${SENT_COLORS[s]}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
-  }).join('');
-
-  const points = ['positive','neutral','negative'].map((s) =>
-    pct.map((v,i) => `<circle class="xdim-trend-point" data-i="${i}" cx="${xAt(i).toFixed(1)}" cy="${yAt(v[s]).toFixed(1)}" r="3.5" fill="${SENT_COLORS[s]}" stroke="var(--surface)" stroke-width="1.5" opacity="0"/>`).join('')
-  ).join('');
-
-  const labels = rows.map((r,i) => `<text x="${xAt(i).toFixed(1)}" y="${H-6}" font-size="8.5" font-family="'Prompt',sans-serif" fill="var(--text3)" text-anchor="middle">${_esc(r.key.length>7?r.key.slice(5):r.key)}</text>`).join('');
-
-  wrapEl.innerHTML = `
-    <div class="xdim-trend-outer" id="xdimTrendOuter_sentTrend">
-      <div class="xdim-trend-wrap" id="xdimTrendWrap_sentTrend">
-        <div class="xdim-trend-canvas" style="min-width:${W}px;max-width:${maxW}px">
-          <svg class="xdim-trend-svg" id="xdimTrendSvg_sentTrend" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <line x1="${padL}" y1="${padT+plotH}" x2="${W-padR}" y2="${padT+plotH}" stroke="var(--border)" stroke-width="1"/>
-            ${lines}
-            ${points}
-            ${labels}
-            <line class="xdim-trend-hoverline" id="xdimHoverLine_sentTrend" x1="0" y1="${padT}" x2="0" y2="${padT+plotH}" stroke="var(--text3)" stroke-width="1" stroke-dasharray="3 2" opacity="0"/>
-          </svg>
-          <div class="xdim-trend-tooltip" id="xdimTrendTip_sentTrend" style="display:none"></div>
-        </div>
-      </div>
-      <div class="xdim-trend-fade left" id="xdimFadeLeft_sentTrend"></div>
-      <div class="xdim-trend-fade right" id="xdimFadeRight_sentTrend"></div>
-      <button type="button" class="xdim-trend-navbtn left" id="xdimNavLeft_sentTrend" aria-label="Scroll left">◀</button>
-      <button type="button" class="xdim-trend-navbtn right" id="xdimNavRight_sentTrend" aria-label="Scroll right">▶</button>
-    </div>`;
-
-  _setupSentTrendInteractivity(rows, pct, W, padL, padR);
-  _setupTrendScroll('sentTrend');
-}
-
-function _setupSentTrendInteractivity(rows, pct, vbWidth, padL, padR) {
-  const svg = document.getElementById('xdimTrendSvg_sentTrend');
-  const tip = document.getElementById('xdimTrendTip_sentTrend');
-  const hoverLine = document.getElementById('xdimHoverLine_sentTrend');
-  if (!svg || !tip || !hoverLine) return;
-  const n = rows.length;
-  const plotW = vbWidth - padL - padR;
-  const xAt = i => n === 1 ? padL + plotW/2 : padL + (i/(n-1))*plotW;
-  const points = svg.querySelectorAll('.xdim-trend-point');
-
-  function showAt(nearest) {
-    hoverLine.setAttribute('x1', xAt(nearest)); hoverLine.setAttribute('x2', xAt(nearest));
-    hoverLine.setAttribute('opacity','1');
-    points.forEach(p => p.setAttribute('opacity', parseInt(p.dataset.i)===nearest ? '1':'0'));
-    const r = rows[nearest], v = pct[nearest];
-    const rowsHtml = ['positive','neutral','negative'].map(s => {
-      return `<div class="xdim-tip-row"><span class="xdim-tip-dot" style="background:${SENT_COLORS[s]}"></span>${s}: <strong>${Math.round(v[s])}%</strong> <span style="color:var(--text3)">(${r[s].toLocaleString()})</span></div>`;
-    }).join('');
-    tip.innerHTML = `<div class="xdim-tip-date">${_esc(r.key)}</div>${rowsHtml}`;
-    tip.style.display = 'block';
-    const canvas = svg.parentElement;
-    const canvasWidth = canvas.offsetWidth;
-    const tipWidth = tip.offsetWidth || 150;
-    const px = xAt(nearest) * (canvas.offsetWidth / vbWidth);
-    let left = px + 14;
-    if (left + tipWidth > canvasWidth) left = px - tipWidth - 14;
-    tip.style.left = Math.max(0,left) + 'px';
-    tip.style.top = '4px';
-  }
-
-  svg.addEventListener('mousemove', (e) => {
-    const rect = svg.getBoundingClientRect();
-    const scaleX = vbWidth / rect.width;
-    const mouseX = (e.clientX - rect.left) * scaleX;
-    let nearest = 0, minDist = Infinity;
-    for (let i=0;i<n;i++){ const d=Math.abs(xAt(i)-mouseX); if (d<minDist){minDist=d;nearest=i;} }
-    showAt(nearest);
-  });
-  svg.addEventListener('mouseleave', () => {
-    hoverLine.setAttribute('opacity','0');
-    points.forEach(p=>p.setAttribute('opacity','0'));
-    tip.style.display = 'none';
-  });
-}
-
-// ── Stacked sentiment bar ─────────────────────────────────────────────────────
-function renderSentimentStacked(id, sentData, order, totalBrandCount) {
-  const el=document.getElementById(id); el.innerHTML='';
-  const leg=document.createElement('div'); leg.className='sent-legend';
-  ['positive','neutral','negative'].forEach(s=>{
-    const i=document.createElement('div'); i.className='sent-leg-item';
-    i.innerHTML=`<span class="sent-leg-dot" style="background:${SENT_COLORS[s]}"></span>${s}`;
-    leg.appendChild(i);
-  });
-  el.appendChild(leg);
-  if (totalBrandCount && totalBrandCount > order.length) {
-    const note = document.createElement('div');
-    note.className = 'sent-cap-note';
-    note.textContent = `Showing top ${order.length} of ${totalBrandCount.toLocaleString()} brands by volume — use Brand Deep-Dive for any other brand.`;
-    el.appendChild(note);
-  }
-  order.forEach(key=>{
-    const d=sentData[key]||{positive:0,neutral:0,negative:0};
-    const total=(d.positive||0)+(d.neutral||0)+(d.negative||0)||1;
-    const pp=Math.round(d.positive/total*100), np=Math.round(d.neutral/total*100), negp=100-pp-np;
-    const row=document.createElement('div'); row.className='stk-row';
-    const mkSeg=(color,pct,label,count)=>{
-      return `<div class="stk-seg" style="width:0%;background:${color}" title="${label} ${pct}% (${count.toLocaleString()})"><span class="stk-seg-lbl">${pct}%</span></div>`;
-    };
-    row.innerHTML=`
-      <div class="stk-lbl" title="${escapeHtml(key)}">${escapeHtml(key)}</div>
-      <div class="stk-track">
-        ${mkSeg(SENT_COLORS.positive,pp,'positive',d.positive)}
-        ${mkSeg(SENT_COLORS.neutral,np,'neutral',d.neutral)}
-        ${mkSeg(SENT_COLORS.negative,negp,'negative',d.negative)}
-      </div>
-      <div class="stk-total">${total.toLocaleString()}</div>`;
-    el.appendChild(row);
-    requestAnimationFrame(()=>{
-      const segs=row.querySelectorAll('.stk-seg');
-      segs[0].style.width=pp+'%'; segs[1].style.width=np+'%'; segs[2].style.width=negp+'%';
-    });
-  });
-}
-
-// ── Brand sentiment donut charts ──────────────────────────────────────────────
-function renderBrandDonuts(brandsSorted, totalBrandCount) {
-  const el = document.getElementById('brand-donuts');
-  el.innerHTML = '';
-  if (totalBrandCount && totalBrandCount > brandsSorted.length) {
-    const note = document.createElement('div');
-    note.className = 'sent-cap-note';
-    note.style.gridColumn = '1 / -1';
-    note.textContent = `Showing top ${brandsSorted.length} of ${totalBrandCount.toLocaleString()} brands by volume — use Brand Deep-Dive for any other brand.`;
-    el.appendChild(note);
-  }
-
-  brandsSorted.forEach(brand => {
-    const row = reportData.sentRows.find(r => r.brand === brand);
-    if (!row) return;
-
-    const pos = row.positive || 0;
-    const neu = row.neutral  || 0;
-    const neg = row.negative || 0;
-    const total = pos + neu + neg || 1;
-
-    const segs = [
-      { label:'Neutral',  val:neu, color:'#FFC145' },
-      { label:'Positive', val:pos, color:'#1DC997' },
-      { label:'Negative', val:neg, color:'#FF5050'  },
-    ];
-
-    // wrapper
-    const wrap = document.createElement('div');
-    wrap.className = 'brand-donut-wrap';
-
-    // brand name
-    const name = document.createElement('div');
-    name.className = 'brand-donut-name';
-    name.textContent = brand;
-    wrap.appendChild(name);
-
-    // canvas
-    const SIZE = 130, STROKE = 22, R = (SIZE - STROKE) / 2;
-    const canvasWrap = document.createElement('div');
-    canvasWrap.className = 'brand-donut-canvas';
-    canvasWrap.style.cssText = `width:${SIZE}px;height:${SIZE}px;position:relative;`;
-
-    const canvas = document.createElement('canvas');
-    canvas.width  = SIZE;
-    canvas.height = SIZE;
-    canvasWrap.appendChild(canvas);
-
-    // total label in centre
-    const centre = document.createElement('div');
-    centre.style.cssText = `
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      text-align:center; pointer-events:none;`;
-    centre.innerHTML = `
-      <div style="font-family:'Prompt',sans-serif;font-size:17px;font-weight:800;color:var(--text);line-height:1">${total.toLocaleString()}</div>
-      <div style="font-family:'Prompt',sans-serif;font-size:8px;color:var(--text3);margin-top:2px;letter-spacing:.5px">MENTIONS</div>`;
-    canvasWrap.appendChild(centre);
-    wrap.appendChild(canvasWrap);
-
-    // legend
-    const legend = document.createElement('div');
-    legend.className = 'brand-donut-legend';
-    segs.forEach(s => {
-      const pct = (s.val / total * 100).toFixed(0);
-      const row2 = document.createElement('div');
-      row2.className = 'brand-donut-leg-row';
-      row2.innerHTML = `
-        <span class="brand-donut-leg-dot" style="background:${s.color}"></span>
-        <span>${s.label}</span>
-        <span class="brand-donut-leg-val">${s.val.toLocaleString()}</span>
-        <span class="brand-donut-leg-pct">${pct}%</span>`;
-      legend.appendChild(row2);
-    });
-    wrap.appendChild(legend);
-    el.appendChild(wrap);
-
-    // Draw donut after DOM is ready
-    requestAnimationFrame(() => {
-      const ctx = canvas.getContext('2d');
-      const cx = SIZE / 2, cy = SIZE / 2;
-      let angle = -Math.PI / 2;
-
-      // background ring
-      ctx.beginPath();
-      ctx.arc(cx, cy, R, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
-      ctx.lineWidth = STROKE;
-      ctx.stroke();
-
-      segs.forEach(s => {
-        if (!s.val) return;
-        const sweep = (s.val / total) * Math.PI * 2;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, angle, angle + sweep);
-        ctx.strokeStyle = s.color;
-        ctx.lineWidth = STROKE;
-        ctx.lineCap = 'butt';
-        ctx.stroke();
-        angle += sweep;
-      });
-    });
-  });
-}
-
-// ── Topic sentiment brand filter pills ────────────────────────────────────────
-function buildTopicSentBrandFilter(brandsSorted) {
-  const c=document.getElementById('topic-sent-brand-filter');
-  buildBrandComboFilter(c, {
-    brands: brandsSorted,
-    current: activeTSBrand,
-    allLabel: 'All brands',
-    onSelect: (value) => { activeTSBrand = value; renderTopicSentBars(); },
-  });
-}
-
-// ── Sentiment by Topic — horizontal stacked bar per topic ─────────────────────
-function renderTopicSentBars() {
-  const el=document.getElementById('sent-topic-bars'); el.innerHTML='';
-  const buckets = activeTSBrand==='__all__'
-    ? reportData.allTopicSent
-    : (reportData.brandTopicSent[activeTSBrand]||{});
-
-  const leg=document.createElement('div'); leg.className='sent-legend'; leg.style.marginBottom='14px';
-  ['positive','neutral','negative'].forEach(s=>{
-    const i=document.createElement('div'); i.className='sent-leg-item';
-    i.innerHTML=`<span class="sent-leg-dot" style="background:${SENT_COLORS[s]}"></span>${s}`;
-    leg.appendChild(i);
-  });
-  el.appendChild(leg);
-
-  TOPIC_ORDER.forEach(topic=>{
-    const d=buckets[topic]||{positive:0,neutral:0,negative:0};
-    const pos=d.positive||0, neu=d.neutral||0, neg=d.negative||0;
-    const total=pos+neu+neg||1;
-    const pp=Math.round(pos/total*100), np=Math.round(neu/total*100), negp=100-pp-np;
-
-    const wrap=document.createElement('div');
-    wrap.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:11px;min-height:26px;';
-
-    const lbl=document.createElement('div');
-    lbl.style.cssText='font-family:"Prompt",sans-serif;font-size:9px;font-weight:700;color:var(--text);width:110px;flex-shrink:0;white-space:normal;word-break:break-word;line-height:1.25;letter-spacing:-.1px;';
-    lbl.textContent=topic;
-
-    const track=document.createElement('div');
-    track.style.cssText='flex:1;align-self:stretch;min-height:26px;display:flex;border-radius:5px;overflow:hidden;background:var(--border);';
-    ['positive','neutral','negative'].forEach((s,i)=>{
-      const seg=document.createElement('div');
-      const pctVal=[pp,np,negp][i];
-      const count=[pos,neu,neg][i];
-      seg.style.cssText=`width:0%;height:100%;background:${SENT_COLORS[s]};transition:width 0.6s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap;`;
-      seg.title=`${s}: ${count.toLocaleString()} (${pctVal}%)`;
-      if (true) {
-        const lbl=document.createElement('span');
-        lbl.style.cssText='font-family:"Prompt",sans-serif;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);pointer-events:none;line-height:1;';
-        lbl.textContent=pctVal+'%';
-        seg.appendChild(lbl);
-      }
-      track.appendChild(seg);
-      requestAnimationFrame(()=>{ seg.style.width=pctVal+'%'; });
-    });
-
-    const vals=document.createElement('div');
-    vals.style.cssText='display:flex;gap:10px;flex-shrink:0;';
-    [[pos,'#1DC997'],[neu,'#FFC145'],[neg,'#FF5050']].forEach(([v,c])=>{
-      const s=document.createElement('span');
-      s.style.cssText=`font-family:"Prompt",sans-serif;font-size:10px;color:${c};min-width:36px;text-align:right;`;
-      s.textContent=v.toLocaleString();
-      vals.appendChild(s);
-    });
-
-    wrap.appendChild(lbl); wrap.appendChild(track); wrap.appendChild(vals);
-    el.appendChild(wrap);
-  });
-}
-
-// ── Topic × Brand × Sentiment brand filter pills ──────────────────────────────
-// Single-select, same behavior as the "Sentiment by Attribute" filter above:
-// pick one brand to focus the grid, or "All brands" to reset.
-let activeBTSBrand = '__all__';
-
-function buildBrandTopicSentFilter(brandsSorted) {
-  const c = document.getElementById('bts-brand-filter');
-  if (!c) return;
-  if (activeBTSBrand !== '__all__' && !brandsSorted.includes(activeBTSBrand)) activeBTSBrand = '__all__';
-  buildBrandComboFilter(c, {
-    brands: brandsSorted,
-    current: activeBTSBrand,
-    allLabel: 'All brands',
-    onSelect: (value) => { activeBTSBrand = value; renderBrandTopicSentiment(brandsSorted); },
-  });
-}
-
-// ── Topic × Brand × Sentiment — vertical stacked bars ────────────────────────
-function renderBrandTopicSentiment(brandsSorted) {
-  const el=document.getElementById('brand-topic-sent-grid'); el.innerHTML='';
-
-  // This grid renders topics × 3 sentiment segments PER brand — with "All
-  // brands" selected that's unbounded DOM + animation work scaling with
-  // brand count, which is exactly what can freeze this tab. Cap it; picking
-  // a specific brand from the filter above still shows that one in full.
-  const allBrandsCount = brandsSorted.length;
-  const visibleBrands = activeBTSBrand === '__all__'
-    ? _topBrandsByVolume(brandsSorted, SENT_CHART_BRAND_CAP)
-    : brandsSorted.filter(b => b === activeBTSBrand);
-
-  const leg=document.createElement('div'); leg.className='sent-legend'; leg.style.marginBottom='18px';
-  ['positive','neutral','negative'].forEach(s=>{
-    const i=document.createElement('div'); i.className='sent-leg-item';
-    i.innerHTML=`<span class="sent-leg-dot" style="background:${SENT_COLORS[s]}"></span>${s}`;
-    leg.appendChild(i);
-  });
-  el.appendChild(leg);
-
-  // Column count follows the actual number of topics in this dataset —
-  // TOPIC_ORDER is schema-driven and won't always be 7.
-  const gridCols = `100px repeat(${TOPIC_ORDER.length},1fr)`;
-
-  const headerRow=document.createElement('div');
-  headerRow.style.cssText=`display:grid;grid-template-columns:${gridCols};gap:4px 8px;margin-bottom:6px;`;
-  headerRow.innerHTML='<div></div>'+TOPIC_ORDER.map(t=>
-    `<div style="font-family:'Prompt',sans-serif;font-size:10px;color:var(--text3);text-align:center;letter-spacing:.5px;">${t}</div>`
-  ).join('');
-  el.appendChild(headerRow);
-
-  if (activeBTSBrand === '__all__' && allBrandsCount > visibleBrands.length) {
-    const note = document.createElement('div');
-    note.className = 'sent-cap-note';
-    note.textContent = `Showing top ${visibleBrands.length} of ${allBrandsCount.toLocaleString()} brands by volume — pick a specific brand above to view any other one.`;
-    el.appendChild(note);
-  }
-
-  if (!visibleBrands.length) {
-    const empty=document.createElement('div');
-    empty.className='xdim-empty-note';
-    empty.textContent='No brands selected — pick at least one brand above.';
-    el.appendChild(empty);
-    return;
-  }
-
-  visibleBrands.forEach((brand,bi)=>{
-    const bt=reportData.brandTopicSent[brand]||{};
-    const row=document.createElement('div');
-    row.style.cssText=`display:grid;grid-template-columns:${gridCols};gap:4px 8px;margin-bottom:12px;align-items:end;`;
-
-    const brandTotal = TOPIC_ORDER.reduce((sum,t)=>{
-      const d=bt[t]||{}; return sum+(d.positive||0)+(d.neutral||0)+(d.negative||0);
-    }, 0);
-    const blbl=document.createElement('div');
-    blbl.style.cssText='display:flex;flex-direction:column;gap:3px;padding-bottom:4px;';
-    blbl.innerHTML=`<span style="font-family:'Prompt',sans-serif;font-size:11px;font-weight:700;color:var(--accent);">${brand}</span><span style="font-family:'Prompt',sans-serif;font-size:10px;color:var(--text3);">Total: <strong style="color:var(--text)">${brandTotal.toLocaleString()}</strong></span>`;
-    row.appendChild(blbl);
-
-    TOPIC_ORDER.forEach(topic=>{
-      const d=bt[topic]||{positive:0,neutral:0,negative:0};
-      const pos=d.positive||0, neu=d.neutral||0, neg=d.negative||0;
-      const rawTotal=pos+neu+neg;
-      const total=rawTotal||1;
-      const pp=Math.round(pos/total*100), np=Math.round(neu/total*100), negp=100-pp-np;
-
-      const cell=document.createElement('div');
-      cell.style.cssText='display:flex;flex-direction:column;align-items:center;gap:3px;';
-
-      const barWrap=document.createElement('div');
-      barWrap.style.cssText='width:100%;height:80px;display:flex;flex-direction:column-reverse;border-radius:4px;overflow:hidden;background:var(--border);cursor:pointer;';
-      barWrap.title='Click to view these posts in the Data Table';
-      barWrap.addEventListener('click', () => _drillDownToTable({ brand, topic }));
-
-      ['positive','neutral','negative'].forEach((s,i)=>{
-        const pct=parseFloat([pp,np,negp][i]);
-        const v=[pos,neu,neg][i];
-        const seg=document.createElement('div');
-        seg.style.cssText=`width:100%;height:0%;background:${SENT_COLORS[s]};transition:height 0.7s cubic-bezier(0.16,1,0.3,1);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;`;
-        seg.title=`${brand} · ${topic} · ${s}: ${v.toLocaleString()} (${pct}%) — click to view in Data Table`;
-        if (true) {
-          const lbl=document.createElement('span');
-          lbl.style.cssText='font-family:"Prompt",sans-serif;font-size:9px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.3);pointer-events:none;white-space:nowrap;';
-          lbl.textContent=pct+'%';
-          seg.appendChild(lbl);
-        }
-        barWrap.appendChild(seg);
-        requestAnimationFrame(()=>{ seg.style.height=pct+'%'; });
-      });
-
-      const tot=document.createElement('div');
-      tot.style.cssText='font-family:"Prompt",sans-serif;font-size:9px;font-weight:700;color:var(--text2);text-align:center;';
-      tot.textContent=rawTotal>0?rawTotal.toLocaleString():'—';
-
-      cell.appendChild(barWrap); cell.appendChild(tot);
-      row.appendChild(cell);
-    });
-
-    el.appendChild(row);
-
-    if (bi<visibleBrands.length-1) {
-      const sep=document.createElement('div');
-      sep.style.cssText='height:1px;background:var(--border);margin:2px 0 10px;';
-      el.appendChild(sep);
-    }
-  });
+  _sntBuild();
+  _sntRenderAll();
 }
 
 // ── TABLE ─────────────────────────────────────────────────────────────────────
@@ -7495,8 +7672,8 @@ function renderGrDonut(counts) {
   const total = counts.positive + counts.neutral + counts.negative || 1;
   const segs = [
     { key:'positive', label:'Positive', val:counts.positive, color:'#1DC997' },
-    { key:'neutral',  label:'Neutral',  val:counts.neutral,  color:'#FFC145' },
-    { key:'negative', label:'Negative', val:counts.negative, color:'#FF5050' },
+    { key:'neutral',  label:'Neutral',  val:counts.neutral,  color:'#F59E0B' },
+    { key:'negative', label:'Negative', val:counts.negative, color:'#EF4444' },
   ];
 
   // ── Canvas sizing — large enough to fit leader lines + labels on all sides ──
@@ -9358,8 +9535,8 @@ function renderBddSentDonut() {
 
   const segs = [
     { label:'Positive', val:row.positive, color:'#1DC997' },
-    { label:'Neutral',  val:row.neutral,  color:'#FFC145' },
-    { label:'Negative', val:row.negative, color:'#FF5050' },
+    { label:'Neutral',  val:row.neutral,  color:'#F59E0B' },
+    { label:'Negative', val:row.negative, color:'#EF4444' },
   ];
 
   const SIZE = 200, STROKE = 38, R = (SIZE - STROKE) / 2;
@@ -9613,7 +9790,7 @@ function renderBddTopicSentBars() {
     const negTrack = document.createElement('div');
     negTrack.style.cssText = 'width:100%;height:26px;border-radius:0 4px 4px 0;background:var(--bg);border:1px solid var(--border);border-left:none;overflow:hidden';
     const negFill = document.createElement('div');
-    negFill.style.cssText = 'height:100%;width:0%;background:#FF5050;border-radius:0 4px 4px 0;transition:width .65s cubic-bezier(.16,1,.3,1)';
+    negFill.style.cssText = 'height:100%;width:0%;background:#EF4444;border-radius:0 4px 4px 0;transition:width .65s cubic-bezier(.16,1,.3,1)';
     negFill.title = `Negative: ${neg.toLocaleString()}`;
     negTrack.appendChild(negFill);
     const negLabel = document.createElement('div');
@@ -9786,17 +9963,6 @@ document.getElementById('xdimFromBucket')?.addEventListener('change', (e) => {
 document.getElementById('xdimToBucket')?.addEventListener('change', (e) => {
   xdimToBucket = e.target.value;
   renderExtraDimensionPanels();
-});
-
-// Sentiment tab trend granularity toggle (Day/Week/Month)
-['Day','Week','Month'].forEach(cap => {
-  const btn = document.getElementById(`sentGran${cap}`);
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    sentTrendGranularity = btn.dataset.gran;
-    ['Day','Week','Month'].forEach(c => document.getElementById(`sentGran${c}`)?.classList.toggle('active', c===cap));
-    renderSentimentTrendChart();
-  });
 });
 
 // Brand Deep-Dive Compare (DoD/WoW/MoM) toggle + custom From/To pickers —
@@ -12987,7 +13153,7 @@ function renderBddOwned(){
   const earned = { n:e0.n, e:e0.e, days:Object.fromEntries(Object.entries(e0.days||{}).map(([d,v])=>[d,[v[0],v[1]]])) };
   _bddOwned.rows.forEach(r=>{ if (r.owned || !r.brands.includes(brand)) return; earned.n++; earned.e+=r.e; if (r.day) { const d=earned.days[r.day]||(earned.days[r.day]=[0,0]); d[0]++; d[1]+=r.e; } });
   _ownedPerfBuild(body, rows, earned,
-    { useEng: bddMetric === 'engagement', gran: bddGranularity, ctx:'brand', showGroup:false });
+    { useEng: bddMetric === 'engagement', gran: bddGranularity, ctx:'brand', showGroup:false, label:brand, color });
 }
 
 // Shared renderer for owned-media performance (Brand Deep-Dive + Campaign)
@@ -13000,19 +13166,21 @@ function _ownedPerfBuild(body, rows, earned, opt) {
   const ownShareVol = (rows.length+earned.n) ? rows.length/(rows.length+earned.n)*100 : 0;
   const med = _infMedian(posts.map(r=>r.e));
 
-  const k = (cls,val,lbl,sub)=>`<div class="bdd-kpi ${cls}"><div class="bdd-kpi-val">${val}</div><div class="bdd-kpi-lbl">${lbl}</div><div class="bdd-kpi-sub">${sub}</div></div>`;
-  const kpis = k('neu', rows.length.toLocaleString(), 'Total mention', `${posts.length.toLocaleString()} posts + ${replies.length.toLocaleString()} replies`) +
-    k('', posts.length.toLocaleString(), 'Owned posts', `${new Set(rows.map(r=>r.uid||r.name+r.ch)).size} owned accounts`) +
-    k('view', replies.length.toLocaleString(), 'Replies / comments', rows.length?`${(replies.length/rows.length*100).toFixed(0)}% of owned activity`:'—') +
-    k('eng', Math.round(eng).toLocaleString(), 'Owned engagement', `${ownShareEng.toFixed(1)}% of ${opt.ctx} engagement`) +
-    k('pos', _infFmt(posts.length?postEng/posts.length:0), 'Avg eng / post', `median ${_infFmt(med)}`) +
-    k('change', `${ownShareVol.toFixed(1)}%`, 'Owned share of voice', `${rows.length.toLocaleString()} owned vs ${earned.n.toLocaleString()} earned rows`);
+  // cards, accounts, trend bars and platforms open the matching top owned posts
+  const dr = (key, what) => ` own-click" data-own="${key}" role="button" tabindex="0" title="Show top owned posts — ${what}`;
+  const k = (cls,val,lbl,sub,key,what)=>`<div class="bdd-kpi ${cls}${key?dr(key,what):''}"><div class="bdd-kpi-val">${val}</div><div class="bdd-kpi-lbl">${lbl}</div><div class="bdd-kpi-sub">${sub}</div></div>`;
+  const kpis = k('neu', rows.length.toLocaleString(), 'Total mention', `${posts.length.toLocaleString()} posts + ${replies.length.toLocaleString()} replies`, 'all', 'all owned activity') +
+    k('', posts.length.toLocaleString(), 'Owned posts', `${new Set(rows.map(r=>r.uid||r.name+r.ch)).size} owned accounts`, 'posts', 'original posts') +
+    k('view', replies.length.toLocaleString(), 'Replies / comments', rows.length?`${(replies.length/rows.length*100).toFixed(0)}% of owned activity`:'—', 'replies', 'replies and comments') +
+    k('eng', Math.round(eng).toLocaleString(), 'Owned engagement', `${ownShareEng.toFixed(1)}% of ${opt.ctx} engagement`, 'all', 'all owned activity') +
+    k('pos', _infFmt(posts.length?postEng/posts.length:0), 'Avg eng / post', `median ${_infFmt(med)}`, 'posts', 'original posts') +
+    k('change', `${ownShareVol.toFixed(1)}%`, 'Owned share of voice', `${rows.length.toLocaleString()} owned vs ${earned.n.toLocaleString()} earned rows`, 'all', 'all owned activity');
 
   // accounts
   const am = new Map();
-  rows.forEach(r=>{ const key=r.uid||(r.ch+'|'+r.name); let a=am.get(key); if(!a){a={name:r.name,ch:r.ch,photo:r.photo,link:r.ulink,type:'BRANDS',grp:r.grp,grpRaw:r.grpRaw,posts:0,replies:0,eng:0,postEng:0};am.set(key,a);} if(!a.photo&&_infUrl(r.photo))a.photo=r.photo; if(!a.link&&_infUrl(r.ulink))a.link=r.ulink; r.o?(a.posts++,a.postEng+=r.e):a.replies++; a.eng+=r.e; });
+  rows.forEach(r=>{ const key=r.uid||(r.ch+'|'+r.name); let a=am.get(key); if(!a){a={name:r.name,ch:r.ch,photo:r.photo,link:r.ulink,type:'BRANDS',grp:r.grp,grpRaw:r.grpRaw,posts:0,replies:0,eng:0,postEng:0,rows:[]};am.set(key,a);} if(!a.photo&&_infUrl(r.photo))a.photo=r.photo; if(!a.link&&_infUrl(r.ulink))a.link=r.ulink; r.o?(a.posts++,a.postEng+=r.e):a.replies++; a.eng+=r.e; a.rows.push(r); });
   const accs = [...am.values()].sort((a,b)=>b.eng-a.eng);
-  const accRows = accs.map(a=>{ const lk=_infUrl(a.link); return `<tr>
+  const accRows = accs.map((a,ai)=>{ const lk=_infUrl(a.link); return `<tr class="${dr('acc:'+ai, _infEsc(a.name))}">
       <td><div class="inf-acc">${_infAvatar(a)}<div style="min-width:0"><div class="inf-acc-name" title="${_infEsc(a.name)}">${_infEsc(a.name)}</div>${lk?`<a class="inf-acc-link" href="${_infEsc(lk)}" target="_blank" rel="noopener">Profile ↗</a>`:''}</div></div></td>
       ${opt.showGroup?`<td><span class="inf-chip" style="background:${INF_MEDIA_COLORS.owned}1a;color:${INF_MEDIA_COLORS.owned};border-color:${INF_MEDIA_COLORS.owned}55" title="${_infEsc(a.grpRaw)}">${_infEsc(a.grp)}</span></td>`:''}<td>${_infEsc(a.ch)}</td><td class="num">${a.posts.toLocaleString()}</td><td class="num">${a.replies.toLocaleString()}</td>
       <td class="num" style="color:var(--text);font-weight:600">${Math.round(a.eng).toLocaleString()}</td>
@@ -13033,7 +13201,9 @@ function _ownedPerfBuild(body, rows, earned, opt) {
     let g=''; for (let i=0;i<=4;i++){ const y=T+(H-T-B)*(1-i/4); g+=`<line x1="${L}" y1="${y}" x2="${W-R}" y2="${y}" stroke="var(--border)"/><text x="${L-6}" y="${y+3}" text-anchor="end" font-size="9.5" fill="var(--text3)">${_infFmt(max*i/4)}</text>`; }
     const step = Math.max(1, Math.ceil(buckets.length/Math.max(2, Math.floor((W-L-R)/62))));
     const bars = buckets.map((b,i)=>{ const [o,e]=vals[i], x=L+i*bw+bw*0.15, w=bw*0.7, sc=(H-T-B)/max, ho=o*sc, he=e*sc, y0=H-B;
-      return `<g><title>${_bddOwnedBucketLabel(b, gran)} — owned ${Math.round(o).toLocaleString()} · earned ${Math.round(e).toLocaleString()} ${useEng?'engagement':'rows'}</title>
+      const own = bk.get(b).on > 0;
+      return `<g${own?` class="own-click" data-own="bucket:${b}" role="button" tabindex="0"`:''}><title>${_bddOwnedBucketLabel(b, gran)} — owned ${Math.round(o).toLocaleString()} · earned ${Math.round(e).toLocaleString()} ${useEng?'engagement':'rows'}${own?' · click for top owned posts':''}</title>
+        <rect x="${L+i*bw}" y="${T}" width="${bw}" height="${H-T-B}" fill="transparent"/>
         <rect x="${x}" y="${y0-ho}" width="${w}" height="${ho}" fill="${INF_MEDIA_COLORS.owned}" rx="1.5"/>
         <rect x="${x}" y="${y0-ho-he}" width="${w}" height="${he}" fill="${INF_MEDIA_COLORS.earned}" opacity=".45" rx="1.5"/>
         ${i%step===0?`<text x="${x+w/2}" y="${H-B+14}" text-anchor="middle" font-size="9.5" fill="var(--text3)">${_bddOwnedBucketLabel(b, gran)}</text>`:''}</g>`; }).join('');
@@ -13048,7 +13218,7 @@ function _ownedPerfBuild(body, rows, earned, opt) {
   const pm = {}; rows.forEach(r=>{ const x=pm[r.ch]||(pm[r.ch]={n:0,e:0,p:0}); x.n++; x.e+=r.e; if(r.o)x.p++; });
   const plist = Object.entries(pm).map(([ch,x])=>({ch,...x,v:useEng?x.e:x.n})).sort((a,b)=>b.v-a.v);
   const pmax = Math.max(...plist.map(p=>p.v),1), ptot = plist.reduce((s,p)=>s+p.v,0)||1;
-  const plat = plist.map(p=>`<div class="bdd-src-row"><div class="bdd-src-lbl" style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${_infChColor(p.ch)};display:inline-block"></span>${_infEsc(p.ch)}</div>
+  const plat = plist.map((p,pi)=>`<div class="bdd-src-row${dr('ch:'+pi, _infEsc(p.ch))}"><div class="bdd-src-lbl" style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${_infChColor(p.ch)};display:inline-block"></span>${_infEsc(p.ch)}</div>
     <div class="bdd-src-track"><div class="bdd-src-fill" style="width:${(p.v/pmax*100).toFixed(1)}%;background:${_infChColor(p.ch)}"></div></div>
     <div class="bdd-src-val">${_infFmt(p.v)} <span style="color:var(--text3);font-weight:400">(${(p.v/ptot*100).toFixed(0)}%)</span></div></div>`).join('');
 
@@ -13060,25 +13230,17 @@ function _ownedPerfBuild(body, rows, earned, opt) {
     return `<div class="bdd-oe-sec">
       <div class="bdd-oe-head"><span class="bdd-oe-title">${title}</span><span class="bdd-oe-total">Total ${fmt(t)}</span></div>
       <div class="bdd-oe-bar" title="Owned ${po.toFixed(1)}% · Earned ${pe.toFixed(1)}%">
-        <div style="width:${po.toFixed(2)}%;background:${oeC}"></div><div style="width:${pe.toFixed(2)}%;background:${eeC};opacity:.45"></div></div>
+        <div class="${dr('all','all owned activity')}" style="width:${po.toFixed(2)}%;background:${oeC}"></div><div style="width:${pe.toFixed(2)}%;background:${eeC};opacity:.45"></div></div>
       <div class="bdd-oe-legend">
-        <span><span class="inf-legend-dot" style="background:${oeC}"></span> Owned <b>${fmt(o)}</b> <span style="color:${oeC}">${po.toFixed(1)}%</span></span>
+        <span class="${dr('all','all owned activity')}"><span class="inf-legend-dot" style="background:${oeC}"></span> Owned <b>${fmt(o)}</b> <span style="color:${oeC}">${po.toFixed(1)}%</span></span>
         <span><span class="inf-legend-dot" style="background:${eeC};opacity:.45"></span> Earned <b>${fmt(e)}</b> <span style="color:${eeC}">${pe.toFixed(1)}%</span></span>
         ${ratio?`<span class="bdd-oe-ratio">${ratio}</span>`:''}</div></div>`;
   };
   const fmtInt = v => Math.round(v).toLocaleString();
   const oeHtml = oeCard('Total mention', rows.length, earned.n, fmtInt) + oeCard('Total engagement', eng, earned.e, fmtInt);
 
-  // top owned posts
-  const top = posts.slice().sort((a,b)=>b.e-a.e).slice(0,5);
-  const topHtml = top.length ? top.map((p,i)=>{ const pl=_infUrl(p.link); return `<div class="inf-post"><div class="inf-post-top">
-      <span style="font-weight:700;color:var(--text)">#${i+1}</span><span class="inf-sent" style="background:${INF_SENT_COLORS[p.sent]||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
-      <span>${_infEsc(p.name)}</span><span>·</span><span>${_infEsc(p.ch)}</span><span>·</span><span>${_infEsc(p.day)}</span>
-      <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-      <div class="inf-post-text">${_infEsc(p.text||'(no text)')}${String(p.text||'').length>=300?'…':''}</div></div>`; }).join('')
-    : '<div class="bdd-placeholder">No original posts from owned accounts (replies only)</div>';
-
   body.innerHTML = `
+    <div class="own-hint"><span aria-hidden="true">👆</span>Click any card, account, bar or platform to see its top owned posts</div>
     <div class="bdd-kpi-row" style="margin-bottom:14px">${kpis}</div>
     <div class="bdd-grid-2" style="margin-bottom:14px">
       <div><div class="bdd-owned-sub">Owned accounts</div>
@@ -13089,8 +13251,21 @@ function _ownedPerfBuild(body, rows, earned, opt) {
     <div class="bdd-grid-2 bdd-oe-grid" style="margin-bottom:14px">
       <div><div class="bdd-owned-sub">Owned ${useEng?'engagement':'activity'} by platform</div><div class="bdd-oe-panel">${plat||'<div class="bdd-placeholder">No owned rows</div>'}</div></div>
       <div><div class="bdd-owned-sub">Owned vs earned media</div><div class="bdd-oe-panel">${oeHtml}</div></div>
-    </div>
-    <div class="bdd-owned-sub">Top owned posts</div><div class="bdd-owned-posts" style="display:flex;flex-direction:column;gap:8px">${topHtml}</div>`;
+    </div>`;
+
+  // one delegated handler — survives the trend chart redrawing itself on resize
+  const scopeOf = key => {
+    const [kind, arg] = [key.split(':')[0], key.slice(key.indexOf(':')+1)];
+    if (kind==='posts')   return { rows, title:'Original posts', mode:'posts' };
+    if (kind==='replies') return { rows, title:'Replies & comments', mode:'replies' };
+    if (kind==='acc')     { const a=accs[+arg]; return a && { rows:a.rows, title:a.name||'Unknown account', sub:a.ch }; }
+    if (kind==='ch')      { const p=plist[+arg]; return p && { rows:rows.filter(r=>r.ch===p.ch), title:p.ch }; }
+    if (kind==='bucket')  return { rows:rows.filter(r=>_bddOwnedBucket(r.day, gran)===arg), title:(gran==='week'?'Week of ':'')+_bddOwnedBucketLabel(arg, gran) };
+    return { rows, title:'All owned activity' };
+  };
+  const openOwned = el => { const s=scopeOf(el.dataset.own); if (s) _ownedPostsModal({ ...s, brand:opt.label, color:opt.color, allEng:eng, ctx:opt.ctx }); };
+  body.onclick = e => { const el=e.target.closest('[data-own]'); if (el && body.contains(el) && !e.target.closest('a')) openOwned(el); };
+  body.onkeydown = e => { if (e.key!=='Enter' && e.key!==' ') return; const el=e.target.closest('[data-own]'); if (el) { e.preventDefault(); openOwned(el); } };
   const tEl = body.querySelector('.bdd-owned-trend');
   if (body._trendRO) { body._trendRO.disconnect(); body._trendRO = null; }
   if (tEl && _trendDraw) {
@@ -13100,6 +13275,58 @@ function _ownedPerfBuild(body, rows, earned, opt) {
     if (typeof ResizeObserver !== 'undefined') { body._trendRO = new ResizeObserver(() => requestAnimationFrame(paint)); body._trendRO.observe(tEl); }
     else window.addEventListener('resize', paint);
   }
+}
+
+
+function _ownedPostHtml(p, i, c){
+  const pl=_infUrl(p.link);
+  return `<div class="inf-post"${c?` style="border-left:3px solid ${c}"`:''}><div class="inf-post-top">
+      <span style="font-weight:700;color:var(--text)">#${i+1}</span><span class="inf-sent" style="background:${INF_SENT_COLORS[p.sent]||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
+      <span>${_infEsc(p.name)}</span><span>·</span><span>${_infEsc(p.ch)}</span><span>·</span><span>${_infEsc(p.day)}</span>${p.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">reply</span>'}
+      <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
+      <div class="inf-post-text">${_infEsc(p.text||'(no text)')}${String(p.text||'').length>=300?'…':''}</div></div>`;
+}
+// Top owned posts for one slice of the Owned Media Performance section (a card, account, bar or platform)
+const OWN_TOP_N = 10;
+function _ownedPostsModal(s){
+  const c = s.color || INF_MEDIA_COLORS.owned, all = s.rows || [];
+  const posts = all.filter(r=>r.o), replies = all.filter(r=>!r.o);
+  let mode = s.mode || (posts.length ? 'posts' : 'all');
+  document.getElementById('ownPostsOverlay')?.remove();
+  const ov=document.createElement('div'); ov.id='ownPostsOverlay'; ov.className='camp-modal-overlay';
+  const nm=_infEsc(s.title), brand=_infEsc(s.brand||'');
+  const render=()=>{
+    const list = mode==='posts'?posts : mode==='replies'?replies : all;
+    const n=list.length, eng=list.reduce((a,r)=>a+r.e,0), pos=list.filter(r=>r.sent==='positive').length, neg=list.filter(r=>r.sent==='negative').length;
+    const net=n?(pos-neg)/n*100:0, top=list.filter(r=>r.e>0).sort((a,b)=>b.e-a.e).slice(0,OWN_TOP_N), t5=top.reduce((a,p)=>a+p.e,0);
+    const seg=(k,l,cnt)=>`<button type="button" role="tab" class="sma-seg-btn${mode===k?' active':''}" aria-selected="${mode===k}" data-mode="${k}"${cnt?'':' disabled'}>${l} <span style="opacity:.6">${cnt.toLocaleString()}</span></button>`;
+    ov.innerHTML=`<div class="camp-modal inf-modal" style="position:relative" role="dialog" aria-modal="true" aria-label="Top owned posts · ${nm}">
+      <button class="inf-close" title="Close (Esc)">✕</button>
+      <div class="inf-modal-head"><div class="ovd-eff-av" style="background:${c}1f;color:${c};border-color:${c}55">${_infEsc(String(s.brand||s.title||'?').trim().charAt(0).toUpperCase())}</div>
+        <div style="min-width:0;padding-right:36px">
+          <div class="camp-modal-title" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Top owned posts · ${nm}</div>
+          <div class="camp-modal-subtitle">${brand?`${brand} · `:''}Owned Media Performance${s.sub?` · ${_infEsc(s.sub)}`:''} · current ${s.ctx==='campaign'?'Campaign selection':'Brand Deep-Dive filters'}</div>
+          <div class="inf-modal-meta"><span class="inf-chip int">${s.allEng?`${_ovdPct(eng,s.allEng).toFixed(1)}% of owned engagement`:''}</span>
+            <div class="sma-seg sma-seg-sm" role="tablist" aria-label="Show">${seg('posts','Posts',posts.length)}${seg('replies','Replies',replies.length)}${seg('all','All',all.length)}</div></div>
+        </div></div>
+      <div class="inf-modal-kpis">
+        <div class="bdd-kpi view"><div class="bdd-kpi-val">${_infFmt(n)}</div><div class="bdd-kpi-lbl">${mode==='posts'?'Posts':mode==='replies'?'Replies':'Rows'}</div></div>
+        <div class="bdd-kpi eng"><div class="bdd-kpi-val">${_infFmt(eng)}</div><div class="bdd-kpi-lbl">Engagement</div></div>
+        <div class="bdd-kpi pos"><div class="bdd-kpi-val">${_infFmt(n?eng/n:0)}</div><div class="bdd-kpi-lbl">Avg eng / ${mode==='replies'?'reply':'post'}</div></div>
+        <div class="bdd-kpi change"><div class="bdd-kpi-val" style="color:${net>=0?'var(--pos)':'var(--neg)'}">${n?(net>=0?'+':'')+net.toFixed(0):'—'}</div><div class="bdd-kpi-lbl">Net sentiment</div></div>
+      </div>
+      <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${top.length} by engagement <span class="ovd-hint" style="text-transform:none;letter-spacing:0">${top.length&&eng?`together ${_ovdPct(t5,eng).toFixed(1)}% of this slice's engagement`:''}</span></div>
+      <div class="inf-post-list">${top.length?top.map((p,i)=>_ownedPostHtml(p,i,c)).join(''):`<div class="bdd-placeholder">No ${mode==='replies'?'replies':'posts'} with engagement in this slice</div>`}</div></div>`;
+    ov.querySelector('.inf-close').onclick=close;
+    ov.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ mode=b.dataset.mode; render(); ov.querySelector(`[data-mode="${mode}"]`)?.focus(); });
+  };
+  const close=()=>{ ov.remove(); document.removeEventListener('keydown',esc,true); };
+  const esc=e=>{ if(e.key==='Escape'){ e.stopPropagation(); close(); } };
+  ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
+  document.addEventListener('keydown',esc,true);
+  render();
+  document.body.appendChild(ov);
+  ov.querySelector('.inf-close')?.focus();
 }
 
 
@@ -13266,7 +13493,8 @@ function renderCampOwned(){
   const days = rows.map(r=>r.day).concat(Object.keys(earned.days)).filter(Boolean).sort();
   const span = days.length ? (Date.parse(days[days.length-1])-Date.parse(days[0]))/864e5 : 0;
   const gran = span > 400 ? 'month' : span > 62 ? 'week' : 'day';
-  _ownedPerfBuild(body, rows, earned, { useEng:true, gran, ctx:'campaign', showGroup:true });
+  _ownedPerfBuild(body, rows, earned, { useEng:true, gran, ctx:'campaign', showGroup:true,
+    label: sel.size>1 ? `${sel.size} campaigns` : [...sel][0] });
 }
 
 // ════════════════════════════════════════════════════════════════════════
@@ -13628,6 +13856,72 @@ function _ovdPct(a,b){ return b ? a/b*100 : 0; }
 function _ovdNet(x){ return x.n ? (x.pos-x.neg)/x.n*100 : 0; }
 function _ovdTopKey(obj, useEng){ let best=null, bv=-1; Object.entries(obj).forEach(([k,v])=>{ const val=useEng?v.eng:v.n; if(val>bv){bv=val;best=k;} }); return best; }
 
+// ── section tabs ────────────────────────────────────────────────────────────
+// The dashboard is split into focused sections instead of one long scroll. All
+// sections are rendered (every chart only measures itself on hover), so switching
+// just toggles visibility and is instant. The open section is remembered per viewer.
+const OVD_PANES = [
+  { k:'share',    ic:'📣', l:'Share & Sentiment', d:'How much of the conversation each brand owns, and how people feel about it.' },
+  { k:'trend',    ic:'📈', l:'Trend',             d:'How each brand moves over time — click a point for that period\'s top posts.' },
+  { k:'channels', ic:'📡', l:'Platforms & Media', d:'Where the conversation happens, and who drives it: owned, KOL, influencer or earned.' },
+  { k:'topics',   ic:'🏷', l:'Topics',            d:'What people talk about for each brand.' },
+  { k:'perf',     ic:'🎯', l:'Performance',       d:'Volume versus engagement efficiency, plus the single best post for each brand.' },
+  { k:'score',    ic:'🏆', l:'Scorecard',         d:'Every key metric per brand in one sortable table — export it as CSV.' },
+];
+const OVD_PANE_KEY = 'inse-ovd-pane';
+function _ovdPanes(){ return OVD_PANES.filter(p=>p.k!=='topics'||_ovd.hasTopic); }
+function _ovdPane(){
+  if (!_ovd.pane) { try { _ovd.pane = localStorage.getItem(OVD_PANE_KEY) || ''; } catch(_) { _ovd.pane = ''; } }
+  if (!_ovdPanes().some(p=>p.k===_ovd.pane)) _ovd.pane = 'share';
+  return _ovd.pane;
+}
+function _ovdSecCtx(){
+  const f=_ovd.f;
+  return `${f.metric==='engagement'?'⚡ Engagement':'📌 Mentions'} · ${f.orig?'Original posts':'Posts + comments'} · ${f.ch==='__all__'?'All platforms':_infEsc(f.ch)}`;
+}
+function _ovdSecNav(pane){ return _secNavHtml('ovd', _ovdPanes(), pane, _ovdSecCtx()); }
+function _ovdSecWire(body){
+  _secNavWire(body, 'ovd', OVD_PANES, ()=>_ovd.pane, k=>{ _ovd.pane=k; try { localStorage.setItem(OVD_PANE_KEY, k); } catch(_) {} });
+}
+
+// ── Shared section tabs (Overview, Sentiment) ───────────────────────────────
+// A sticky tab bar that splits a long dashboard into panes `${id}Pane-${k}`.
+// All panes are rendered up front; switching only toggles visibility.
+function _secNavHtml(id, panes, pane, ctx){
+  const cur=panes.find(p=>p.k===pane)||panes[0];
+  return `<div class="ovd-sec"><div class="ovd-sec-bar" role="tablist" aria-label="Dashboard sections">${panes.map(p=>
+      `<button type="button" role="tab" class="ovd-sec-tab" id="${id}SecTab-${p.k}" data-pane="${p.k}" aria-controls="${id}Pane-${p.k}" aria-selected="${p.k===pane}" tabindex="${p.k===pane?0:-1}"><span class="ic" aria-hidden="true">${p.ic}</span>${p.l}</button>`).join('')}</div>
+    <div class="ovd-sec-meta"><span class="ovd-sec-desc">${cur.d}</span>${ctx?`<span class="ovd-sec-ctx" title="Filters applied to every section">${ctx}</span>`:''}</div></div>`;
+}
+function _secNavWire(body, id, panes, getPane, setPane){
+  const nav=body.querySelector('.ovd-sec'); if (!nav) return;
+  const tabs=[...nav.querySelectorAll('.ovd-sec-tab')], bar=nav.querySelector('.ovd-sec-bar');
+  // fade whichever edge hides more tabs when the bar is too narrow to show them all
+  const edges=()=>{ const max=bar.scrollWidth-bar.clientWidth; bar.classList.toggle('can-l', bar.scrollLeft>2); bar.classList.toggle('can-r', bar.scrollLeft<max-2); };
+  bar.addEventListener('scroll', edges, { passive:true });
+  if (window.ResizeObserver) new ResizeObserver(edges).observe(bar);
+  edges();
+  const go=(k, focus)=>{
+    if (k===getPane()) return;
+    setPane(k);
+    tabs.forEach(t=>{ const on=t.dataset.pane===k; t.setAttribute('aria-selected', on); t.tabIndex=on?0:-1; if (on && focus) t.focus(); });
+    body.querySelectorAll(':scope > .ovd-pane').forEach(p=>{ p.hidden = p.id!==`${id}Pane-${k}`; });
+    nav.querySelector('.ovd-sec-desc').textContent=(panes.find(p=>p.k===k)||{}).d||'';
+    const sel=tabs.find(t=>t.dataset.pane===k); sel?.scrollIntoView({block:'nearest', inline:'nearest'});
+    // if the bar is stuck to the top, bring the new section's start into view instead of landing mid-page
+    const sc=body.closest('.main-content');
+    if (sc) { const top=nav.getBoundingClientRect().top - sc.getBoundingClientRect().top; if (top<=1) sc.scrollTop += body.querySelector(`#${id}Pane-${k}`).getBoundingClientRect().top - nav.getBoundingClientRect().bottom; }
+  };
+  body._secGo = go;
+  tabs.forEach((t,i)=>{
+    t.onclick=()=>go(t.dataset.pane);
+    t.onkeydown=e=>{
+      const n = e.key==='ArrowRight'?i+1 : e.key==='ArrowLeft'?i-1 : e.key==='Home'?0 : e.key==='End'?tabs.length-1 : null;
+      if (n===null) return; e.preventDefault(); go(tabs[(n+tabs.length)%tabs.length].dataset.pane, true);
+    };
+  });
+}
+
 // ── main render ─────────────────────────────────────────────────────────────
 function renderOverviewDashboard(){
   const body = document.getElementById('ovdBody'); if (!body) return;
@@ -13648,28 +13942,39 @@ function renderOverviewDashboard(){
     _ovdK('view', `${totN?((pos-neg)/totN*100).toFixed(0):0}`, 'Net sentiment', 'positive % − negative %') +
     _ovdK('neu', lead?`${_ovdPct(_ovdVal(lead),totV).toFixed(0)}%`:'—', `Leader · ${lead?_infEsc(_ovdLabel(lead.b)):'—'}`, `share of ${_ovdMName().toLowerCase()}`);
 
+  const pane = _ovdPane(), sec = k => `class="ovd-pane" id="ovdPane-${k}" role="tabpanel" aria-labelledby="ovdSecTab-${k}"${pane===k?'':' hidden'}`;
   body.innerHTML = `
     <div class="bdd-kpi-row" style="margin-bottom:16px">${kpis}</div>
+    ${_ovdSecNav(pane)}
+    <section ${sec('share')}>
     <div class="inf-grid-2">
       <div class="card"><div class="bdd-section-title"><span>📣</span>Share of Voice vs Share of Engagement</div><div id="ovdSov"></div></div>
       <div class="card"><div class="bdd-section-title"><span>🎭</span>Sentiment by Brand <span class="ovd-hint">sorted by net sentiment</span></div><div id="ovdSent"></div></div>
     </div>
+    </section>
+    <section ${sec('trend')}>
     <div class="card" style="margin-bottom:14px"><div class="ovd-trend-head"><div class="bdd-section-title" style="margin:0;padding:0;border:0"><span>📈</span><span id="ovdTrendTitle">${_ovdTrendM()==='engagement'?'Engagement':'Mentions'} Trend by Brand</span> <span class="ovd-hint">hover a dot for details · click it for top posts · click the legend to hide / show a brand</span></div>
       <div class="ovd-trend-ctl"><div class="sma-seg sma-seg-sm" role="tablist" aria-label="Trend period"><button type="button" role="tab" class="sma-seg-btn${_ovd.f.gran==='day'?' active':''}" data-ovd-gran="day" title="Day over day">DoD</button><button type="button" role="tab" class="sma-seg-btn${_ovd.f.gran==='week'?' active':''}" data-ovd-gran="week" title="Week over week">WoW</button><button type="button" role="tab" class="sma-seg-btn${_ovd.f.gran==='month'?' active':''}" data-ovd-gran="month" title="Month over month">MoM</button></div>
       <div class="sma-seg sma-seg-sm" role="tablist" aria-label="Trend metric"><button type="button" role="tab" class="sma-seg-btn${_ovdTrendM()==='engagement'?' active':''}" data-ovd-trend="engagement">⚡ Engagement</button><button type="button" role="tab" class="sma-seg-btn${_ovdTrendM()!=='engagement'?' active':''}" data-ovd-trend="mention">📌 Mentions</button></div></div></div><div id="ovdTrend"></div></div>
-    <div class="inf-grid-2">
-      <div class="card"><div class="bdd-section-title"><span>📡</span>Platform Mix <span class="ovd-hint">share of each brand's ${_ovdMName().toLowerCase()}</span></div><div id="ovdPlat" style="overflow-x:auto"></div></div>
-      <div class="card"><div class="bdd-section-title"><span>🏠</span>Media Mix <span class="ovd-hint">who drives each brand's ${_ovdMName().toLowerCase()}</span></div><div id="ovdMedia"></div></div>
-    </div>
-    ${_ovd.hasTopic?`<div class="card" style="margin-bottom:14px"><div class="bdd-section-title"><span>🏷</span>Topic × Brand <span class="ovd-hint">${_ovdMName().toLowerCase()} · top topics, "others" excluded</span></div><div id="ovdTopic" style="overflow-x:auto"></div></div>`:''}
+    </section>
+    <section ${sec('channels')}>
+    <div class="card" style="margin-bottom:14px"><div id="ovdPlat"></div></div>
+    <div class="card" style="margin-bottom:14px"><div class="bdd-section-title"><span>🏠</span>Media Mix <span class="ovd-hint">who drives each brand's ${_ovdMName().toLowerCase()}</span></div><div id="ovdMedia"></div></div>
+    </section>
+    ${_ovd.hasTopic?`<section ${sec('topics')}><div class="card" style="margin-bottom:14px"><div class="bdd-section-title"><span>🏷</span>Topic × Brand <span class="ovd-hint">${_ovdMName().toLowerCase()} · top topics, "others" excluded</span></div><div id="ovdTopic" style="overflow-x:auto"></div></div></section>`:''}
+    <section ${sec('perf')}>
     <div class="inf-grid-2">
       <div class="card"><div class="bdd-section-title"><span>🎯</span>Efficiency Map <span class="ovd-hint">mentions vs engagement per mention · bubble = total engagement</span></div><div id="ovdEff"></div></div>
       <div class="card"><div class="bdd-section-title"><span>🔥</span>Top Post per Brand</div><div id="ovdTop" style="display:flex;flex-direction:column;gap:8px;max-height:430px;overflow-y:auto"></div></div>
     </div>
+    </section>
+    <section ${sec('score')}>
     <div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px">
       <div class="bdd-section-title" style="margin:0;border:0;padding:0"><span>🏆</span>Brand Scorecard</div>
       <button class="btn-outline" id="ovdExport">⬇ Export CSV</button></div>
-      <div class="table-wrap" style="max-height:none"><table class="dt inf-table ovd-score"><thead id="ovdScoreHead"></thead><tbody id="ovdScoreBody"></tbody></table></div></div>`;
+      <div class="table-wrap" style="max-height:none"><table class="dt inf-table ovd-score"><thead id="ovdScoreHead"></thead><tbody id="ovdScoreBody"></tbody></table></div></div>
+    </section>`;
+  _ovdSecWire(body);
 
   _ovdSov(agg, totN, totE);
   _ovdSent(agg);
@@ -13862,10 +14167,231 @@ function _ovdHeat(el, agg, cols, getCell, colLabel){
   }</tbody></table>`;
   void brands;
 }
+// ── Platform Mix ────────────────────────────────────────────────────────────
+// Brand × platform matrix with four lenses: mix (where a brand's volume comes
+// from), share (who owns each platform), index (over/under-weight vs the
+// all-brand mix) and engagement per mention. Platforms past the top 7 roll into
+// "Other" so every row still adds up. Cells open the top posts for that pair.
+const OVD_PLAT_VIEWS = {
+  mix:   { l:'Mix %',         d:m=>`<b>Mix</b> — each brand's ${m} split by platform. Rows add up to 100%. Shows where a brand's conversation lives.` },
+  share: { l:'Share %',       d:m=>`<b>Share of platform</b> — each brand's slice of a platform's total ${m}. Columns add up to 100%. Shows who leads each platform.` },
+  index: { l:'Index',         d:m=>`<b>Index vs average</b> — a brand's platform mix compared with the all-brand mix (${m}). <b>100</b> = in line with average, <b>200</b> = twice as concentrated, <b>50</b> = half.` },
+  epm:   { l:'Eng / mention', d:()=>`<b>Engagement per mention</b> — average engagement each mention earns on that platform. Compare quality of conversation, not volume.` },
+};
+const OVD_PLAT_MAXCOLS = 8, OVD_PLAT_MIN_N = 5;
+function _ovdPlatState(){ return _ovd.plat || (_ovd.plat = { view:'mix', sort:{ key:'total', dir:-1 } }); }
+function _ovdPlatData(agg, useEng){
+  const v=o=>useEng?o.eng:o.n, tot={};
+  agg.forEach(x=>Object.entries(x.ch).forEach(([c,o])=>{ const t=tot[c]||(tot[c]={n:0,eng:0}); t.n+=o.n; t.eng+=o.eng; }));
+  let chs=Object.keys(tot).sort((a,b)=>v(tot[b])-v(tot[a])), other=null;
+  if (chs.length>OVD_PLAT_MAXCOLS) { other=chs.slice(OVD_PLAT_MAXCOLS-1); chs=chs.slice(0,OVD_PLAT_MAXCOLS-1); }
+  const cols=chs.concat(other?['__other']:[]);
+  const cellOf=(m,c)=>{ if (c!=='__other') return m[c]||{n:0,eng:0}; const o={n:0,eng:0}; other.forEach(k=>{ if(m[k]){ o.n+=m[k].n; o.eng+=m[k].eng; } }); return o; };
+  const sum=cells=>cells.reduce((s,c)=>({n:s.n+c.n, eng:s.eng+c.eng}),{n:0,eng:0});
+  const base=cols.map(c=>cellOf(tot,c)), all=sum(base);
+  const rows=agg.map(x=>{ const cells=cols.map(c=>cellOf(x.ch,c)); return { x, cells, tot:sum(cells) }; });
+  return { cols, other, base, all, rows, v, useEng };
+}
+function _ovdPlatVal(view, D, cell, rowTot, j){
+  const v=D.v;
+  if (view==='mix')   return _ovdPct(v(cell), v(rowTot));
+  if (view==='share') return _ovdPct(v(cell), v(D.base[j]));
+  if (view==='index') { const avg=_ovdPct(v(D.base[j]), v(D.all)); return avg ? _ovdPct(v(cell), v(rowTot))/avg*100 : 0; }
+  return cell.n ? cell.eng/cell.n : 0;
+}
+function _ovdPlatFmt(view, val){
+  if (view==='mix'||view==='share') return `${val.toFixed(val>0&&val<10?1:0)}%`;
+  if (view==='index') return Math.round(val).toLocaleString();
+  return _infFmt(val);
+}
+function _ovdPlatColLabel(c, D){ return c==='__other' ? `Other (${D.other.length})` : c; }
+// [background, text colour]; index uses a diverging orange ← 100 → blue scale on log2
+function _ovdPlatShade(view, val, max){
+  if (view==='index') {
+    const l=Math.max(-1, Math.min(1, Math.log2(val/100)));
+    const a=Math.abs(l)<0.07 ? 0.05 : 0.1+0.8*Math.abs(l);
+    return [l>=0?`rgba(37,99,235,${a.toFixed(2)})`:`rgba(234,88,12,${a.toFixed(2)})`, a>0.55?'#fff':''];
+  }
+  const a=0.06+0.84*Math.min(1, max?val/max:0);
+  return [`rgba(37,99,235,${a.toFixed(2)})`, a>0.55?'#fff':''];
+}
+
 function _ovdPlat(agg, useEng){
-  const tot={}; agg.forEach(x=>Object.entries(x.ch).forEach(([c,v])=>tot[c]=(tot[c]||0)+(useEng?v.eng:v.n)));
-  const cols=Object.keys(tot).sort((a,b)=>tot[b]-tot[a]).slice(0,8);
-  _ovdHeat(document.getElementById('ovdPlat'), agg, cols, (x,c)=>{ const v=x.ch[c]?(useEng?x.ch[c].eng:x.ch[c].n):0, t=useEng?x.eng:x.n; return {val:v,pct:_ovdPct(v,t)}; });
+  const el=document.getElementById('ovdPlat'); if (!el) return;
+  const st=_ovdPlatState(), view=st.view, mName=_ovdMName().toLowerCase();
+  const head=`<div class="ovd-plat-head"><div class="bdd-section-title"><span>📡</span>Platform Mix</div>
+    <div class="ovd-plat-ctl"><div class="sma-seg sma-seg-sm" role="tablist" aria-label="Platform Mix view">${Object.entries(OVD_PLAT_VIEWS).map(([k,o])=>`<button type="button" role="tab" class="sma-seg-btn${view===k?' active':''}" aria-selected="${view===k}" data-plat-view="${k}">${o.l}</button>`).join('')}</div>
+    <button type="button" class="btn-outline" id="ovdPlatCsv" title="Download brand × platform data (long format, all platforms)">⬇ CSV</button></div></div>`;
+  const wire=()=>{
+    el.querySelectorAll('[data-plat-view]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.platView; _ovdPlat(agg, useEng); });
+    const csv=el.querySelector('#ovdPlatCsv'); if (csv) csv.onclick=()=>_ovdPlatExport(agg);
+  };
+
+  // A single-platform filter leaves nothing to compare — say so instead of drawing one column
+  if (_ovd.f.ch!=='__all__') {
+    el.innerHTML=head+`<div class="ovd-plat-note"><span>The dashboard is filtered to <b>${_infEsc(_ovd.f.ch)}</b>, so there are no other platforms to compare.</span><button type="button" class="btn-outline" id="ovdPlatAll">Show all platforms</button></div>`;
+    wire(); el.querySelector('#ovdPlatAll').onclick=()=>{ _ovd.f.ch='__all__'; renderOverviewDashboard(); };
+    return;
+  }
+  const D=_ovdPlatData(agg, useEng);
+  if (!D.cols.length || !D.all.n) { el.innerHTML=head+'<div class="bdd-placeholder">No platform data for the current filters</div>'; wire(); return; }
+  const v=D.v, lowN=c=>(view==='index'||view==='epm') && c.n>0 && c.n<OVD_PLAT_MIN_N;
+
+  // Values per cell for the active view, plus the colour scale's max (low-sample cells don't set the scale)
+  D.rows.forEach(r=>{ r.vals=r.cells.map((c,j)=>_ovdPlatVal(view, D, c, r.tot, j)); });
+  const baseVals=D.base.map((c,j)=>_ovdPlatVal(view, D, c, D.all, j));
+  const max=Math.max(0, ...D.rows.flatMap(r=>r.vals.filter((_,j)=>r.cells[j].n && !lowN(r.cells[j]))));
+
+  // Sort
+  if (st.sort.key!=='total' && st.sort.key!=='brand' && !D.cols.includes(st.sort.key)) st.sort={ key:'total', dir:-1 };
+  const totVal=r=>view==='epm' ? (r.tot.n?r.tot.eng/r.tot.n:0) : v(r.tot);
+  const sk=st.sort.key, sj=D.cols.indexOf(sk);
+  const list=D.rows.slice().sort((a,b)=>{
+    const p=sk==='brand'?_ovdLabel(a.x.b).toLowerCase():sk==='total'?totVal(a):a.vals[sj];
+    const q=sk==='brand'?_ovdLabel(b.x.b).toLowerCase():sk==='total'?totVal(b):b.vals[sj];
+    return (p>q?1:p<q?-1:0)*st.sort.dir;
+  });
+  const arr=k=>st.sort.key===k?`<span class="ph-arr">${st.sort.dir>0?'▲':'▼'}</span>`:'';
+  const maxColShare=Math.max(...D.base.map(c=>_ovdPct(v(c),v(D.all))), 1);
+
+  const thead=`<tr><th class="sortable${sk==='brand'?' sorted':''}" data-k="brand" tabindex="0"><div class="ph-name">Brand ${arr('brand')}</div><div class="ph-sub">${list.length} brands</div></th>${
+    D.cols.map((c,j)=>{ const sh=_ovdPct(v(D.base[j]),v(D.all)), col=c==='__other'?'var(--text3)':_infChColor(c);
+      return `<th class="sortable${sk===c?' sorted':''}" data-k="${_infEsc(c)}" data-c="${j}" tabindex="0" title="${c==='__other'?_infEsc(D.other.join(', '))+'\n':''}Sort by ${_infEsc(_ovdPlatColLabel(c,D))}">
+        <div class="ph-name">${arr(c)}<span class="ph-dot" style="background:${col}"></span>${_infEsc(_ovdPlatColLabel(c,D))}</div>
+        <div class="ph-sub">${_infFmt(v(D.base[j]))} · ${sh.toFixed(sh<10?1:0)}%</div>
+        <div class="ph-bar"><i style="width:${(sh/maxColShare*100).toFixed(1)}%;background:${col}"></i></div></th>`; }).join('')
+    }<th class="sortable tot${sk==='total'?' sorted':''}" data-k="total" tabindex="0"><div class="ph-name">${arr('total')}${view==='epm'?'Overall':'Total'}</div><div class="ph-sub">${view==='epm'?'eng / mention':mName}</div></th></tr>`;
+
+  const cellHtml=(val, c, r, j, isBase)=>{
+    if (!c.n) return `<td><div class="cv zero">–</div></td>`;
+    const [bg, fg]=isBase?['','']:_ovdPlatShade(view, val, max), lo=lowN(c);
+    const sub=view==='epm' ? `n=${c.n.toLocaleString()}` : _infFmt(v(c));
+    return `<td class="c" tabindex="0" data-r="${isBase?-1:r}" data-c="${j}"><div class="cv${lo?' low':''}" style="${bg?`background-color:${bg};`:''}${fg?`color:${fg}`:''}">${_ovdPlatFmt(view,val)}<small>${sub}</small></div></td>`;
+  };
+  const totCell=t=>view==='epm'
+    ? `<td class="tot">${_infFmt(t.n?t.eng/t.n:0)}<small>${t.n.toLocaleString()} mentions</small></td>`
+    : `<td class="tot">${_infFmt(v(t))}<small>${_ovdPct(v(t),v(D.all)).toFixed(1)}% of all</small></td>`;
+  const baseRow=`<tr class="base"><th title="All brands combined — the benchmark each brand is compared against">All brands</th>${D.base.map((c,j)=>cellHtml(baseVals[j], c, -1, j, true)).join('')}${totCell(D.all)}</tr>`;
+  const bodyRows=list.map(r=>{ const i=D.rows.indexOf(r), nm=_infEsc(_ovdLabel(r.x.b));
+    return `<tr data-r="${i}"><th title="${nm}"><span class="ovd-dot" style="background:${_ovdColor(r.x.b)}"></span>${nm}</th>${r.cells.map((c,j)=>cellHtml(r.vals[j], c, i, j, false)).join('')}${totCell(r.tot)}</tr>`; }).join('');
+
+  // Insights — each one is a shortcut into the matching cell's top posts
+  const ins=[], solid=(r,j)=>r.cells[j].n>=OVD_PLAT_MIN_N;
+  const bj=D.base.reduce((m,c,j)=>v(c)>v(D.base[m])?j:m, 0);
+  ins.push({ ic:'🏟', k:'Biggest platform', r:-1, c:bj, t:`<b>${_infEsc(_ovdPlatColLabel(D.cols[bj],D))}</b> carries <b>${_ovdPct(v(D.base[bj]),v(D.all)).toFixed(0)}%</b> of all ${mName}.` });
+  const best=(fn,ok)=>{ let o=null; D.rows.forEach((r,i)=>r.cells.forEach((c,j)=>{ if(!ok(r,j)) return; const s=fn(r,j); if(o===null||s>o.s) o={s,i,j}; })); return o; };
+  const conc=best((r,j)=>_ovdPct(v(r.cells[j]),v(r.tot)), (r,j)=>r.cells[j].n>0 && D.cols[j]!=='__other' && r.tot.n>=OVD_PLAT_MIN_N);
+  if (conc) ins.push({ ic:'⚠️', k:'Most concentrated', r:conc.i, c:conc.j, t:`<b>${_infEsc(_ovdLabel(D.rows[conc.i].x.b))}</b> depends on <b>${_infEsc(D.cols[conc.j])}</b> for <b>${conc.s.toFixed(0)}%</b> of its ${mName}.` });
+  // ignore tiny platforms here — a 0.5% platform makes a big index out of a handful of posts
+  const over=best((r,j)=>_ovdPlatVal('index',D,r.cells[j],r.tot,j), (r,j)=>solid(r,j) && D.cols[j]!=='__other' && _ovdPct(v(D.base[j]),v(D.all))>=5);
+  if (over && over.s>=120) ins.push({ ic:'📈', k:'Strongest over-index', r:over.i, c:over.j, t:`<b>${_infEsc(_ovdLabel(D.rows[over.i].x.b))}</b> on <b>${_infEsc(D.cols[over.j])}</b> — <b>${(over.s/100).toFixed(1)}×</b> the average mix.` });
+  const epm=best((r,j)=>r.cells[j].eng/r.cells[j].n, solid);
+  if (epm) { const pa=D.base[epm.j].n?D.base[epm.j].eng/D.base[epm.j].n:0;
+    ins.push({ ic:'⚡', k:'Best eng / mention', r:epm.i, c:epm.j, t:`<b>${_infEsc(_ovdLabel(D.rows[epm.i].x.b))}</b> on <b>${_infEsc(_ovdPlatColLabel(D.cols[epm.j],D))}</b> — <b>${_infFmt(epm.s)}</b> per mention${pa?` (platform avg ${_infFmt(pa)})`:''}.` }); }
+
+  const scale=view==='index'
+    ? `<span><span>Under</span><i class="ovd-plat-scale" style="background:linear-gradient(90deg,rgba(234,88,12,.9),rgba(234,88,12,.05) 45%,rgba(37,99,235,.05) 55%,rgba(37,99,235,.9))"></i><span>Over · 100 = average</span></span>`
+    : `<span><span>Low</span><i class="ovd-plat-scale" style="background:linear-gradient(90deg,rgba(37,99,235,.06),rgba(37,99,235,.9))"></i><span>High</span></span>`;
+  el.innerHTML = head + `<p class="ovd-plat-desc">${OVD_PLAT_VIEWS[view].d(mName)}</p>
+    <div class="ovd-plat-wrap"><div class="ovd-plat-scroll"><table class="ovd-plat"><thead>${thead}</thead><tbody>${baseRow}${bodyRows}</tbody></table></div><div class="ovd-eff-tip"></div></div>
+    ${ins.length?`<div class="ovd-plat-ins">${ins.map(o=>`<button type="button" data-r="${o.r}" data-c="${o.c}"><span class="ic">${o.ic}</span><span><div class="k">${o.k}</div><div class="v">${o.t}</div></span></button>`).join('')}</div>`:''}
+    <div class="ovd-plat-foot">${scale}${view==='index'||view==='epm'?`<span><i class="ovd-plat-lowkey"></i>Fewer than ${OVD_PLAT_MIN_N} mentions — read with caution</span>`:''}<span>Click a column to sort · click a cell for its top posts</span><span style="margin-left:auto">A mention tagged with two brands counts for each</span></div>`;
+  wire();
+
+  // Sorting
+  el.querySelectorAll('thead th.sortable').forEach(th=>{
+    const go=()=>{ const k=th.dataset.k; if (st.sort.key===k) st.sort.dir*=-1; else st.sort={ key:k, dir:k==='brand'?1:-1 }; _ovdPlat(agg, useEng); };
+    th.onclick=go; th.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } };
+  });
+
+  // Hover crosshair + tooltip, click → top posts
+  const wrap=el.querySelector('.ovd-plat-wrap'), tip=wrap.querySelector('.ovd-eff-tip'), tbl=wrap.querySelector('table');
+  const pair=(ri,j)=>{ const r=ri<0?null:D.rows[ri]; return { r, c:r?r.cells[j]:D.base[j], t:r?r.tot:D.all }; };
+  const tipHtml=(ri,j)=>{
+    const {r,c,t}=pair(ri,j), colT=D.base[j], col=D.cols[j];
+    const idx=_ovdPlatVal('index',D,c,t,j), pa=colT.n?colT.eng/colT.n:0, e=c.n?c.eng/c.n:0;
+    return `<div class="t">${r?`<span class="ovd-dot" style="background:${_ovdColor(r.x.b)};margin:0"></span>${_infEsc(_ovdLabel(r.x.b))}`:'All brands'} <span style="color:var(--text3);font-weight:500">· ${_infEsc(_ovdPlatColLabel(col,D))}</span></div>
+      <div class="r"><span>Mentions</span><b>${c.n.toLocaleString()} <span style="color:var(--text3);font-weight:500">(${_ovdPct(c.n,t.n).toFixed(1)}%)</span></b></div>
+      <div class="r"><span>Engagement</span><b>${Math.round(c.eng).toLocaleString()} <span style="color:var(--text3);font-weight:500">(${_ovdPct(c.eng,t.eng).toFixed(1)}%)</span></b></div>
+      ${r?`<div class="r"><span>Share of platform</span><b>${_ovdPct(v(c),v(colT)).toFixed(1)}%</b></div>
+      <div class="r"><span>Index vs average</span><b style="color:${idx>=120?'var(--accent)':idx<=80?'#ea580c':'var(--text)'}">${Math.round(idx)}</b></div>`:''}
+      <div class="r"><span>Eng / mention</span><b>${_infFmt(e)}${r&&pa?` <span style="color:var(--text3);font-weight:500">vs ${_infFmt(pa)} avg</span>`:''}</b></div>
+      ${c.n<OVD_PLAT_MIN_N?`<div class="q" style="color:#b45309">Small sample — ${c.n} mention${c.n===1?'':'s'}</div>`:''}
+      <div class="hint">Click to see top posts</div>`;
+  };
+  const clear=()=>{ tip.classList.remove('on'); tbl.querySelectorAll('.hl,.col-hl').forEach(n=>n.classList.remove('hl','col-hl')); };
+  const show=(td,ev)=>{
+    const ri=+td.dataset.r, j=+td.dataset.c; clear();
+    td.closest('tr').classList.add('hl'); tbl.querySelector(`thead th[data-c="${j}"]`)?.classList.add('col-hl');
+    tip.innerHTML=tipHtml(ri,j); tip.classList.add('on');
+    const wr=wrap.getBoundingClientRect(), cr=td.getBoundingClientRect();
+    const px=ev&&ev.clientX!=null?ev.clientX-wr.left:cr.right-wr.left, py=ev&&ev.clientY!=null?ev.clientY-wr.top:cr.top-wr.top;
+    const tw=tip.offsetWidth, th=tip.offsetHeight; let lx=px+14; if (lx+tw>wr.width) lx=px-14-tw; lx=Math.max(0,lx);
+    let ly=py-th-12; if (ly<0) ly=py+14; ly=Math.min(ly, Math.max(0, wr.height-th));
+    tip.style.left=lx+'px'; tip.style.top=ly+'px';
+  };
+  const open=(ri,j)=>{ clear(); _ovdPlatModal(ri<0?null:D.rows[ri].x.b, D.cols[j], D); };
+  tbl.querySelectorAll('td.c').forEach(td=>{
+    td.addEventListener('mouseenter',ev=>show(td,ev)); td.addEventListener('mousemove',ev=>show(td,ev)); td.addEventListener('mouseleave',clear);
+    td.addEventListener('focus',()=>show(td)); td.addEventListener('blur',clear);
+    td.addEventListener('click',()=>open(+td.dataset.r,+td.dataset.c));
+    td.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(+td.dataset.r,+td.dataset.c); } });
+  });
+  el.querySelectorAll('.ovd-plat-ins button').forEach(b=>b.onclick=()=>open(+b.dataset.r,+b.dataset.c));
+}
+
+// Top posts for one brand (or all brands when b is null) on one platform column
+function _ovdPlatModal(b, col, D){
+  const inCol=col==='__other' ? (ch=>D.other.includes(ch)) : (ch=>ch===col);
+  const colLbl=_ovdPlatColLabel(col,D), c=b?_ovdColor(b):'var(--accent)', nm=b?_infEsc(_ovdLabel(b)):'All brands';
+  const rows=_ovdRows().filter(r=>inCol(r.ch) && (b?r.brands.includes(b):r.brands.length));
+  const n=rows.length, eng=rows.reduce((a,r)=>a+r.e,0), pos=rows.filter(r=>r.sent==='positive').length, neg=rows.filter(r=>r.sent==='negative').length;
+  const net=n?(pos-neg)/n*100:0, posts=rows.filter(r=>r.e>0).sort((a,b2)=>b2.e-a.e).slice(0,5), t5=posts.reduce((a,p)=>a+p.e,0);
+  const brandRows=b?_ovdRows().filter(r=>r.brands.includes(b)):_ovdRows().filter(r=>r.brands.length), brandE=brandRows.reduce((a,r)=>a+r.e,0);
+  const platRows=_ovdRows().filter(r=>inCol(r.ch) && r.brands.length), platE=platRows.reduce((a,r)=>a+r.e,0);
+  document.getElementById('ovdEffOverlay')?.remove();
+  const ov=document.createElement('div'); ov.id='ovdEffOverlay'; ov.className='camp-modal-overlay';
+  ov.innerHTML=`<div class="camp-modal inf-modal" style="position:relative" role="dialog" aria-modal="true" aria-label="${nm} on ${_infEsc(colLbl)}">
+    <button class="inf-close" title="Close (Esc)">✕</button>
+    <div class="inf-modal-head"><div class="ovd-eff-av" style="background:${b?c+'1f':'var(--accent-lt)'};color:${c};border-color:${b?c+'55':'var(--accent)'}">${_infEsc(String(b?_ovdLabel(b):'A').trim().charAt(0).toUpperCase())}</div>
+      <div style="min-width:0;padding-right:36px">
+        <div class="camp-modal-title" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nm} · ${_infEsc(colLbl)}</div>
+        <div class="camp-modal-subtitle">Platform Mix · top ${posts.length} posts by engagement under the current dashboard filters</div>
+        <div class="inf-modal-meta">${b?`<span class="inf-chip int">${_ovdPct(eng,brandE).toFixed(1)}% of the brand's engagement</span><span class="inf-chip int">${_ovdPct(eng,platE).toFixed(1)}% of ${_infEsc(colLbl)} engagement</span>`:`<span class="inf-chip int">${_ovdPct(eng,brandE).toFixed(1)}% of all engagement</span>`}${col==='__other'?`<span class="inf-chip int" title="${_infEsc(D.other.join(', '))}">${D.other.length} platforms</span>`:''}</div>
+      </div></div>
+    <div class="inf-modal-kpis">
+      <div class="bdd-kpi view"><div class="bdd-kpi-val">${_infFmt(n)}</div><div class="bdd-kpi-lbl">Mentions</div></div>
+      <div class="bdd-kpi eng"><div class="bdd-kpi-val">${_infFmt(eng)}</div><div class="bdd-kpi-lbl">Engagement</div></div>
+      <div class="bdd-kpi pos"><div class="bdd-kpi-val">${_infFmt(n?eng/n:0)}</div><div class="bdd-kpi-lbl">Eng / mention</div></div>
+      <div class="bdd-kpi change"><div class="bdd-kpi-val" style="color:${net>=0?'var(--pos)':'var(--neg)'}">${n?(net>=0?'+':'')+net.toFixed(0):'—'}</div><div class="bdd-kpi-lbl">Net sentiment</div></div>
+    </div>
+    <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${posts.length} posts by engagement <span class="ovd-hint" style="text-transform:none;letter-spacing:0">${posts.length&&eng?`together ${_ovdPct(t5,eng).toFixed(1)}% of this cell's engagement`:''}</span></div>
+    <div class="inf-post-list">${posts.length?posts.map((p,j)=>{ const pl=_infUrl(p.link);
+      return `<div class="inf-post" style="border-left:3px solid ${c}"><div class="inf-post-top">
+        <span class="ovd-eff-rank" style="background:${b?c+'1a':'var(--accent-lt)'};color:${c}">#${j+1}</span>
+        <span class="inf-sent" style="background:${(typeof INF_SENT_COLORS!=='undefined'&&INF_SENT_COLORS[p.sent])||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
+        <b style="color:var(--text)">${_infEsc(p.name||'Unknown account')}</b><span>·</span><span>${_infEsc(p.ch||'')}</span><span>·</span><span>${_infEsc(p.day||'')}</span>${p.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}
+        <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()} <span style="color:var(--text3);font-weight:500">(${_ovdPct(p.e,eng).toFixed(1)}%)</span></span>
+        ${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
+        <div class="inf-post-text">${_infEsc(p.txt||'(no text)')}</div></div>`; }).join(''):'<div class="bdd-placeholder">No posts with engagement for this brand on this platform</div>'}</div></div>`;
+  const close=()=>{ ov.remove(); document.removeEventListener('keydown',esc,true); };
+  const esc=e=>{ if(e.key==='Escape'){ e.stopPropagation(); close(); } };
+  ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
+  ov.querySelector('.inf-close').onclick=close;
+  document.addEventListener('keydown',esc,true);
+  document.body.appendChild(ov);
+}
+
+// Long format (one row per brand × platform, every platform — no "Other" roll-up) so it pivots cleanly
+function _ovdPlatExport(agg){
+  const tot={}; agg.forEach(x=>Object.entries(x.ch).forEach(([c,o])=>{ const t=tot[c]||(tot[c]={n:0,eng:0}); t.n+=o.n; t.eng+=o.eng; }));
+  const all=Object.values(tot).reduce((s,t)=>({n:s.n+t.n,eng:s.eng+t.eng}),{n:0,eng:0});
+  const out=[['brand','platform','mentions','engagement','eng_per_mention','mix_pct_of_brand_mentions','mix_pct_of_brand_engagement','share_pct_of_platform_mentions','share_pct_of_platform_engagement','index_mentions','index_engagement']];
+  agg.forEach(x=>{ const bt=Object.values(x.ch).reduce((s,o)=>({n:s.n+o.n,eng:s.eng+o.eng}),{n:0,eng:0});
+    Object.keys(tot).sort((a,b)=>tot[b].eng-tot[a].eng).forEach(c=>{ const o=x.ch[c]; if (!o||!o.n) return;
+      const mixN=_ovdPct(o.n,bt.n), mixE=_ovdPct(o.eng,bt.eng), avgN=_ovdPct(tot[c].n,all.n), avgE=_ovdPct(tot[c].eng,all.eng);
+      out.push([_ovdLabel(x.b), c, o.n, Math.round(o.eng), Math.round(o.eng/o.n), mixN.toFixed(2), mixE.toFixed(2), _ovdPct(o.n,tot[c].n).toFixed(2), _ovdPct(o.eng,tot[c].eng).toFixed(2), avgN?(mixN/avgN*100).toFixed(0):'', avgE?(mixE/avgE*100).toFixed(0):'']); }); });
+  _infCsv(out, `platform_mix_${new Date().toISOString().slice(0,10)}.csv`);
 }
 function _ovdTopic(agg, useEng){
   const tot={}; agg.forEach(x=>Object.entries(x.top).forEach(([t,v])=>tot[t]=(tot[t]||0)+(useEng?v.eng:v.n)));
