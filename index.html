@@ -1125,7 +1125,82 @@ table.dt.inf-table td.num,table.dt.inf-table th.num{text-align:right;font-family
 .inf-modal-kpis .bdd-kpi{padding:12px 14px}
 .inf-modal-kpis .bdd-kpi-val{font-size:20px}
 .inf-post-list{overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:8px;padding-right:4px}
-.inf-post{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--surface)}
+.inf-post{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--surface);display:flow-root}
+/* More Breakdowns */
+.xb-switch{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--text2);cursor:pointer;padding:6px 0}
+.xb-switch input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+.xb-col{margin-bottom:14px}
+.xb-col-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.xb-col-title{font-size:14px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.xb-type{font-size:10px;font-weight:700;border-radius:10px;padding:2px 8px}
+.xb-type.rich{background:var(--accent-lt);color:var(--accent)}
+.xb-type.sparse{background:#F59E0B1f;color:#b45309}
+.xb-cov{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:11px;color:var(--text3)}
+.xb-cov b{color:var(--text)}
+.xb-cov-bar{width:120px;height:6px;border-radius:3px;background:var(--bg);overflow:hidden;flex-shrink:0}
+.xb-cov-bar i{display:block;height:100%;background:var(--accent);border-radius:3px}
+.xb-row{display:grid;grid-template-columns:minmax(120px,1.1fr) minmax(0,2fr) 70px 70px 150px 62px 70px;gap:10px;align-items:center;padding:7px 6px;border-radius:7px;cursor:pointer;transition:background .12s}
+.xb-row:hover,.xb-row:focus-visible{background:var(--surface2);outline:none}
+.xb-row.other{opacity:.65}
+.xb-row-h{cursor:default;font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border);border-radius:0;padding-bottom:8px;margin-bottom:2px}
+.xb-row-h:hover{background:none}
+.xb-row-h .r{text-align:right}
+.xb-row-name{font-size:12.5px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.xb-row-bar{height:14px;background:var(--bg);border-radius:4px;overflow:hidden}
+.xb-row-fill{display:flex;height:100%;border-radius:4px;overflow:hidden}
+.xb-row-fill i{display:block;height:100%}
+.xb-row-v{text-align:right;font-size:12.5px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums}
+.xb-row-v small{display:block;font-size:10px;font-weight:500;color:var(--text3)}
+.xb-row-r,.xb-row-neg{text-align:right;font-size:11.5px;color:var(--text2);font-variant-numeric:tabular-nums}
+.xb-row-neg{color:#dc2626}
+.xb-row-d{text-align:right}
+table.dt.xb-tbl tbody tr{cursor:pointer}
+table.dt.xb-tbl tbody tr:hover td{background:var(--accent-lt)}
+.xb-pt{cursor:pointer}
+.xb-pt:hover circle,.xb-pt:focus circle{stroke-width:3}
+.xb-pt:focus{outline:none}
+.xb-quads{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}
+.xb-q{border:1px solid var(--border);border-top:3px solid var(--c);border-radius:var(--r);padding:10px 12px;background:var(--surface)}
+.xb-q-h{font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px}
+.xb-q-h small{display:block;font-size:10.5px;font-weight:500;color:var(--text3);margin-top:1px}
+.xb-q-chip{font-family:"Prompt",sans-serif;font-size:11.5px;font-weight:600;color:var(--text);background:var(--surface2);border:1px solid var(--border);border-radius:14px;padding:3px 10px;margin:0 6px 6px 0;cursor:pointer;transition:border-color .12s}
+.xb-q-chip:hover,.xb-q-chip:focus-visible{border-color:var(--c);outline:none}
+.xb-q-chip span{font-weight:500;color:var(--text3);font-size:10.5px}
+.xb-q-none{font-size:11px;color:var(--text3)}
+.snt-d.up{color:var(--accent);background:var(--accent-lt)}
+.snt-d.down{color:#b45309;background:#F59E0B1f}
+.xb-ct-ctl{gap:8px}
+.xb-ct td{min-width:66px}
+.ovd-plat tr.xb-hl th,.ovd-plat tr.xb-hl td{background:var(--accent-lt)}
+.xb-bm-ins{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.xb-bm-pill{font-family:"Prompt",sans-serif;font-size:11.5px;color:var(--text);border-radius:16px;padding:4px 11px;cursor:pointer;border:1px solid var(--border);background:var(--surface)}
+.xb-bm-pill.bad{background:var(--neg-lt);border-color:#EF444455}
+.xb-bm-pill.good{background:var(--pos-lt);border-color:#1DC99755}
+.xb-bm-pill:hover,.xb-bm-pill:focus-visible{border-color:var(--accent);outline:none}
+.xb-sig{display:inline-block;font-size:10.5px;font-weight:700;border-radius:10px;padding:1px 8px;white-space:nowrap;cursor:help}
+.xb-sig.yes{background:var(--accent-lt);color:var(--accent)}
+.xb-sig.no{background:var(--surface2);color:var(--text3)}
+.xb-sig.few{background:#F59E0B1f;color:#b45309}
+.xb-mv-col{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;margin-right:4px}
+[data-theme="dark"] .xb-bm-pill.bad{background:#3f1515}
+[data-theme="dark"] .xb-bm-pill.good{background:#0f3b2e}
+@media(max-width:900px){.xb-row{grid-template-columns:minmax(100px,1fr) minmax(0,1.4fr) 62px 130px 56px}.xb-row-r,.xb-row-d,.xb-row-h>div:nth-child(4),.xb-row-h>div:nth-child(7){display:none}}
+/* Video transcript (subtitle column) — collapsed under the post text */
+.post-sub{margin-top:6px;font-size:11.5px}
+.post-sub summary{display:inline-flex;align-items:center;gap:4px;cursor:pointer;list-style:none;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-lt);border-radius:6px;padding:2px 9px;user-select:none}
+.post-sub summary::-webkit-details-marker{display:none}
+.post-sub summary::after{content:'▾';font-size:9px;margin-left:2px}
+.post-sub[open] summary::after{content:'▴'}
+.post-sub summary:hover{filter:brightness(.97)}
+.post-sub summary:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.post-sub-txt{margin-top:6px;padding:8px 10px;border-left:3px solid var(--accent);background:var(--surface2);border-radius:0 6px 6px 0;color:var(--text2);line-height:1.55;white-space:pre-wrap;max-height:180px;overflow-y:auto}
+.sub-chip{display:inline-block;margin-left:6px;font-size:10px;font-weight:600;color:var(--accent);background:var(--accent-lt);border-radius:5px;padding:0 5px;cursor:help;vertical-align:1px}
+/* Post thumbnail (image column) — floats right in post cards, its own column in ranked lists */
+.post-img{float:right;display:block;width:76px;height:76px;margin:0 0 6px 12px;border-radius:8px;overflow:hidden;background:var(--surface2);border:1px solid var(--border);flex-shrink:0;transition:box-shadow .15s,transform .15s}
+.post-img img{display:block;width:100%;height:100%;object-fit:cover}
+.post-img:hover{box-shadow:0 0 0 2px var(--accent);transform:scale(1.03)}
+.post-img.col{float:none;margin:0;width:88px;height:88px;align-self:flex-start}
+@media(max-width:600px){.post-img{width:60px;height:60px}.post-img.col{width:64px;height:64px}}
 .inf-post-top{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--text3);margin-bottom:5px;flex-wrap:wrap;font-family:"Prompt",sans-serif}
 .inf-post-text{font-size:12.5px;color:var(--text2);line-height:1.55;white-space:pre-wrap;word-break:break-word}
 .inf-sent{width:8px;height:8px;border-radius:50%;display:inline-block}
@@ -1538,6 +1613,9 @@ table.ovd-plat{width:100%;border-collapse:separate;border-spacing:0;font-variant
 .ovd-eff-tip .tp{display:flex;justify-content:space-between;gap:10px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border);font-weight:600}
 .ovd-eff-tip .tp b{color:var(--text)}
 .ovd-eff-tip .tpt{font-size:10.5px;color:var(--text3);line-height:1.45;margin-top:2px;max-width:240px;white-space:normal}
+.ovd-eff-tip .tp-row{display:flex;gap:8px;align-items:flex-start;margin-top:2px}
+.ovd-eff-tip .tp-img{width:56px;height:56px;object-fit:cover;border-radius:6px;border:1px solid var(--border);flex-shrink:0;background:var(--surface2)}
+.ovd-eff-tip .tp-row .tpt{margin-top:0}
 .ovd-eff-tip .hint{margin-top:7px;font-size:10px;font-weight:700;color:var(--accent)}
 .ovd-eff-chip.pin{border-color:var(--accent);background:var(--accent-lt);color:var(--accent)}
 .ovd-tr-wrap svg .ovd-tl{transition:opacity .15s}
@@ -2518,6 +2596,11 @@ table.dt.ovd-score td{max-width:none}
           <div class="empty-sub" id="extrasEmptySub">This tab shows a breakdown for any column beyond Brand, Topic &amp; Campaign — like Product, Sub-Attribute, or Business Unit — whenever the uploaded file has one.</div>
         </div>
         <div id="extrasContent" style="display:none">
+          <div class="page-header"><div class="page-title">More Breakdowns — <span>categories beyond Brand, Topic &amp; Campaign</span></div></div>
+          <div class="ovd-controls" id="xbControls"></div>
+          <div id="xbBody"><div class="bdd-placeholder">Preparing the breakdowns…</div></div>
+          <!-- Original per-column panels: kept (hidden) so the existing pipeline code keeps working -->
+          <div id="xdimLegacy" hidden>
           <div class="page-header" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
             <div class="page-title">More Breakdowns — <span>columns beyond Brand, Topic &amp; Campaign</span></div>
             <div style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap">
@@ -2545,6 +2628,7 @@ table.dt.ovd-score td{max-width:none}
             </div>
           </div>
           <div id="extraDimensionsGrid" style="display:flex;flex-direction:column;gap:16px"></div>
+          </div>
         </div>
       </div>
 
@@ -3451,10 +3535,10 @@ function registerFile(file, slot) {
   // review modal is already open and unconfirmed, just re-merge the text
   // instead of re-running detection (which would discard the user's edits).
   if (csvFile1) {
-    if (_schemaModalOpen) {
-      remergeWithoutResettingReview();
+    if (_schemaModalOpen && slot===2) {
+      remergeWithoutResettingReview();   // File 2 added: keep the user's column picks
     } else {
-      triggerPipeline();
+      triggerPipeline();                 // File 1 (new or replaced): detect its columns again
     }
   }
 }
@@ -3672,11 +3756,12 @@ function _sampleValuesFor(col, sampleRows, n=3) {
   return [...new Set(vals)].slice(0,n);
 }
 
+// Escapes for text AND attribute values (the old textContent trick left quote marks unescaped)
 function _esc(s) {
-  const d = document.createElement('div');
-  d.textContent = String(s ?? '');
-  return d.innerHTML;
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
+// Sentiment value as a CSS class: only the three known values, never raw file text
+function _sentCls(s){ s=String(s||'').trim().toLowerCase(); return s==='positive'||s==='neutral'||s==='negative' ? s : ''; }
 
 const _ROLE_META = {
   brand:    { icon:'🏷️', name:'Brand',    hint:'the main thing you\'re tracking' },
@@ -3911,6 +3996,11 @@ document.getElementById('schemaConfirmBtn').addEventListener('click', () => {
     showToast('Please pick one column as the Brand', 'error');
     return;
   }
+  // The pipeline rewrites columns named Brands / Topics / Campaign with whichever column holds that role,
+  // so a column with one of those names can't also be kept as Extra info.
+  const _clash=[['Brands','brandDim','Brand'],['Topics','topicDim','Topic'],['Campaign','campaignDim','Campaign']]
+    .find(([col,key])=>(confirmedSchemaConfig.extraDims||[]).some(d=>d.column===col) && confirmedSchemaConfig[key]!==col);
+  if (_clash) { showToast('The ' + _clash[0] + ' column cannot be Extra info — set it as the ' + _clash[2] + ' or choose Ignore', 'error', 7000); return; }
   const headers = detectedSchemaConfig.allHeaders || Object.keys(rawData[0]||{});
   const required = [
     ['sentimentCol', 'sentiment'], ['idCol', 'id'], ['engagementCol', 'engagement_score'],
@@ -4431,6 +4521,516 @@ function renderExtraDimensionPanels() {
     });
     return { label: p.label, metricKey, values: sorted, dim: p };
   });
+  try { _xbRender(); } catch(e) { console.error('[breakdowns]', e); }
+}
+
+// ════════════════════════════════════════════════════════════════════════
+// MORE BREAKDOWNS — analysis of the extra category columns (Detail, Intention…)
+// Row-level data comes from the pandas df (every row) and is loaded once per
+// upload. Post text, images and transcripts are fetched from pandas only when
+// someone opens the posts behind a number, which keeps the payload small.
+// A row tagged with several values of one column counts once for each value.
+// ════════════════════════════════════════════════════════════════════════
+const XB_MIN_N = 20;            // fewer mentions than this → flagged as too few to trust
+const XB_PANE_KEY = 'inse-xb-pane';
+// display-only fixes for taxonomy typos / spacing (the data itself is untouched)
+const XB_LABEL_FIX = { parcitipation:'participation', 'information/news':'information / news' };
+const _xb = { key:null, loaded:false, loading:false, rows:[], dims:[], brands:[], chans:{}, days:[], hasCamp:false,
+  f:{ metric:'mention', brand:'__all__', ch:'__all__', scope:'all', period:null, hideOthers:true }, pane:null, mx:{}, ct:{}, bm:{}, mv:{} };
+
+function _xbIsOther(v){ return /^others?$/i.test(String(v).trim()); }
+function _xbLabel(v){ const k=String(v||'').trim(), fx=XB_LABEL_FIX[k.toLowerCase()]||k; return _ovdLabel(fx); }
+function _xbColor(b){ try { if ((reportData.sentRows||[]).some(r=>r.brand===b)) return bddColor(b); } catch(_) {} const i=_xb.brands.indexOf(b); return BDD_COLORS[(i<0?0:i)%BDD_COLORS.length]; }
+function _xbEng(){ return _xb.f.metric==='engagement'; }
+
+async function _xbLoad(){
+  if (_xb.loading || typeof pyodide==='undefined' || !pyodide) return;
+  const dims=((confirmedSchemaConfig||{}).extraDims||[]).filter(d=>d && d.column);
+  _xb.loading=true; _xb._replies=null;
+  try {
+    pyodide.globals.set('_xb_dims_json', JSON.stringify(dims));
+    const raw = await pyodide.runPythonAsync(`
+import json as _json_xb
+_xb_dims = _json_xb.loads(_xb_dims_json)
+def _xb_s(c):
+    return df[c].where(df[c].notna(), '').astype(str).tolist() if c in df.columns else [''] * len(df)
+def _xb_id(c):
+    # ids as clean strings: missing → '' (not 'nan'), whole floats → '123' (not '123.0'), BOM/quotes stripped
+    if c not in df.columns: return [''] * len(df)
+    def _one(v):
+        if v is None or (isinstance(v, float) and v != v): return ''
+        if isinstance(v, float) and v.is_integer(): return str(int(v))
+        return str(v).lstrip('\\ufeff').strip().strip('"')
+    return [_one(v) for v in df[c].tolist()]
+_xb_o = df['is_origin'].astype(str).str.strip().str.lower().isin(['true','1','yes','t']) if 'is_origin' in df.columns else pd.Series(True, index=df.index)
+_xb_e = pd.to_numeric(df['engagement_score'], errors='coerce').fillna(0) if 'engagement_score' in df.columns else pd.Series(0.0, index=df.index)
+_xb_dt = pd.to_datetime(df['created_at'], format='%Y %b %d %H:%M:%S', errors='coerce') if 'created_at' in df.columns else pd.Series(pd.NaT, index=df.index)
+if 'created_at' in df.columns and _xb_dt.isna().mean() > 0.5:
+    _xb_dt = pd.to_datetime(df['created_at'], errors='coerce')
+_xb_out = {'dims': [d for d in _xb_dims if d['column'] in df.columns], 'hasCamp': 'Campaign' in df.columns}
+_xb_out['rows'] = {'b': _xb_s('Brands'), 't': _xb_s('Topics'), 'c': _xb_s('Campaign'), 'src': _xb_s('source'),
+  'o': _xb_o.astype(bool).tolist(), 's': _xb_s('sentiment'), 'e': _xb_e.astype(float).tolist(),
+  'day': _xb_dt.dt.strftime('%Y-%m-%d').fillna('').tolist(),
+  'ts': ((_xb_dt - pd.Timestamp('1970-01-01')) // pd.Timedelta('1s')).fillna(0).astype('int64').tolist(),
+  'id': _xb_id('id'), 'th': _xb_id('origin_id'), 'g': _xb_s('account_group')}
+for _xb_d in _xb_out['dims']:
+    _xb_out['rows']['x_' + _xb_d['column']] = _xb_s(_xb_d['column'])
+_json_xb.dumps(_xb_out, ensure_ascii=False)
+`);
+    const d=JSON.parse(typeof raw==='string'?raw:raw.toString()), R=d.rows, junk=/^(nan|null|none)$/i, bjunk=/^(others?|nan|null|none)$/i;
+    _xb.dims=d.dims.map(x=>({ col:x.column, label:x.label||x.column })); _xb.hasCamp=!!d.hasCamp;
+    const bc={}, cc={}, ds=new Set();
+    _xb.rows=R.b.map((_,i)=>{
+      const brands=_infSplit(R.b[i]).filter(x=>!bjunk.test(x)), x={};
+      _xb.dims.forEach(dm=>{ x[dm.col]=_infSplit(R['x_'+dm.col][i]).filter(v=>!junk.test(v)); });
+      const ch=normalizeChannel(R.src[i]); brands.forEach(b=>bc[b]=(bc[b]||0)+1); cc[ch]=(cc[ch]||0)+1; if (R.day[i]) ds.add(R.day[i]);
+      return { i, brands, topics:_infSplit(R.t[i]).filter(v=>!bjunk.test(v)), camps:_infSplit(R.c[i]).filter(v=>!bjunk.test(v)), ch, o:!!R.o[i],
+        s:String(R.s[i]||'').trim().toLowerCase(), e:Number(R.e[i])||0, day:R.day[i], ts:Number(R.ts[i])||0, id:R.id[i], th:R.th[i], g:R.g[i], x };
+    });
+    _xb.brands=Object.keys(bc).sort((a,b)=>bc[b]-bc[a]); _xb.chans=cc; _xb.days=[...ds].sort();
+    const ps=_periodsFromDays(_xb.days); if (!ps.some(p=>p.k===_xb.f.period)) _xb.f.period=(ps.find(p=>p.k==='month')||ps.find(p=>p.k==='d7')||ps[ps.length-1]).k;
+    if (_xb.f.brand!=='__all__' && !bc[_xb.f.brand]) _xb.f.brand='__all__';
+    if (_xb.f.ch!=='__all__' && !cc[_xb.f.ch]) _xb.f.ch='__all__';
+    _xb.loaded=true;
+  } catch(e) { console.error('[breakdowns] load failed:', e); const b=document.getElementById('xbBody'); if (b) b.innerHTML='<div class="bdd-placeholder">Could not load the breakdowns — check the console</div>'; }
+  finally { _xb.loading=false; }
+  if (_xb.loaded) _xbRender();
+}
+
+// Entry point (called whenever the tab renders). Reloads after a new upload.
+function _xbRender(){
+  const body=document.getElementById('xbBody'); if (!body) return;
+  const key=reportData.extraDimensions;
+  if (_xb.key!==key) { _xb.key=key; _xb.loaded=false; _xb.rows=[]; }
+  if (!_xb.loaded) { body.innerHTML='<div class="bdd-placeholder">Preparing the breakdowns…</div>'; _xbLoad(); return; }
+  if (!_xb.dims.length) { body.innerHTML='<div class="bdd-placeholder">No extra category columns in this file.</div>'; return; }
+  _xbRenderControls(); _xbRenderBody();
+}
+
+// ── filters ──────────────────────────────────────────────────────────────────
+function _xbPeriod(){ const ps=_periodsFromDays(_xb.days); return ps.find(p=>p.k===_xb.f.period)||ps[ps.length-1]; }
+function _xbBase(){ const f=_xb.f; return _xb.rows.filter(r=>(f.brand==='__all__'||r.brands.includes(f.brand)) && (f.ch==='__all__'||r.ch===f.ch) && (f.scope==='all'||(f.scope==='posts'?r.o:!r.o))); }
+function _xbIn(rows, win){ return win ? rows.filter(r=>r.day && r.day>=win[0] && r.day<=win[1]) : rows; }
+function _xbCtx(){ const p=_xbPeriod(), base=_xbBase(); return { p, base, cur:_xbIn(base,p.cur), prev:p.prev?_xbIn(base,p.prev):null }; }
+function _xbCtxLabel(){ const f=_xb.f, p=_xbPeriod();
+  return `${f.metric==='engagement'?'⚡ Engagement':'📌 Mentions'} · ${f.brand==='__all__'?'All brands':_infEsc(_ovdLabel(f.brand))} · ${f.ch==='__all__'?'All platforms':_infEsc(f.ch)} · ${f.scope==='all'?'Posts + comments':f.scope==='posts'?'Posts only':'Comments only'} · ${_infEsc(_sntRangeLbl(p.cur)||'All dates')}${f.hideOthers?' · "others" hidden':''}`; }
+function _xbRenderControls(){
+  const el=document.getElementById('xbControls'); if (!el) return;
+  const f=_xb.f, ps=_periodsFromDays(_xb.days), p=_xbPeriod(), chs=Object.keys(_xb.chans).sort((a,b)=>_xb.chans[b]-_xb.chans[a]);
+  const tog=(attr,val,on,lbl)=>`<button type="button" class="bdd-metric-btn${on?' active':''}" data-${attr}="${val}">${lbl}</button>`;
+  el.innerHTML=`
+    <div class="inf-fgroup"><div class="inf-flabel">View by</div><div class="bdd-metric-toggle">${tog('xb-metric','mention',f.metric==='mention','📌 Mentions')}${tog('xb-metric','engagement',f.metric==='engagement','⚡ Engagement')}</div></div>
+    <div class="inf-fgroup"><div class="inf-flabel">Rows</div><div class="bdd-metric-toggle">${tog('xb-scope','all',f.scope==='all','All')}${tog('xb-scope','posts',f.scope==='posts','Posts')}${tog('xb-scope','comments',f.scope==='comments','Comments')}</div></div>
+    <div class="inf-fgroup"><div class="inf-flabel">Period</div><div class="snt-period"><select class="snt-select" id="xbPeriod" aria-label="Period">${ps.map(o=>`<option value="${o.k}"${o.k===p.k?' selected':''}>${_infEsc(o.l)}</option>`).join('')}</select>
+      <span class="snt-cmp">${p.prev?`${_infEsc(_sntRangeLbl(p.cur))} <span>vs</span> ${_infEsc(p.prevLbl||_sntRangeLbl(p.prev))}`:'No comparison period'}</span></div></div>
+    <div class="inf-fgroup"><div class="inf-flabel">Brand</div><select class="snt-select" id="xbBrand" aria-label="Brand"><option value="__all__">All brands (${_xb.brands.length})</option>${_xb.brands.map(b=>`<option value="${_infEsc(b)}"${f.brand===b?' selected':''}>${_infEsc(_ovdLabel(b))}</option>`).join('')}</select></div>
+    <div class="inf-fgroup"><div class="inf-flabel">Platform</div><select class="snt-select" id="xbCh" aria-label="Platform"><option value="__all__">All platforms</option>${chs.map(c=>`<option value="${_infEsc(c)}"${f.ch===c?' selected':''}>${_infEsc(c)} (${_xb.chans[c].toLocaleString()})</option>`).join('')}</select></div>
+    <div class="inf-fgroup"><div class="inf-flabel">"Others"</div><label class="xb-switch" title="'Others' = mentions with no specific category. Hiding it makes shares add up across real categories."><input type="checkbox" id="xbHideOthers"${f.hideOthers?' checked':''}><span>Hide uncategorised</span></label></div>`;
+  el.querySelectorAll('[data-xb-metric]').forEach(b=>b.onclick=()=>{ f.metric=b.dataset.xbMetric; _xbRender(); });
+  el.querySelectorAll('[data-xb-scope]').forEach(b=>b.onclick=()=>{ f.scope=b.dataset.xbScope; _xbRender(); });
+  el.querySelector('#xbPeriod').onchange=e=>{ f.period=e.target.value; _xbRender(); };
+  el.querySelector('#xbBrand').onchange=e=>{ f.brand=e.target.value; _xbRender(); };
+  el.querySelector('#xbCh').onchange=e=>{ f.ch=e.target.value; _xbRender(); };
+  el.querySelector('#xbHideOthers').onchange=e=>{ f.hideOthers=e.target.checked; _xbRender(); };
+}
+
+// ── shared maths ─────────────────────────────────────────────────────────────
+// per-value aggregate for one column: { v, rows, n, e, pos, neu, neg }
+function _xbValues(rows, col, keepOthers){
+  const m=new Map();
+  rows.forEach(r=>{ (r.x[col]||[]).forEach(v=>{ if (!keepOthers && _xbIsOther(v)) return; let a=m.get(v); if (!a) { a={ v, rows:[], n:0, e:0, positive:0, neutral:0, negative:0 }; m.set(v,a); } a.rows.push(r); a.n++; a.e+=r.e; if (a[r.s]!=null) a[r.s]++; }); });
+  return [...m.values()];
+}
+function _xbAggOf(rows){ const a={ n:0, e:0, positive:0, neutral:0, negative:0 }; rows.forEach(r=>{ a.n++; a.e+=r.e; if (a[r.s]!=null) a[r.s]++; }); return a; }
+function _xbNet(a){ return a.n?(a.positive-a.negative)/a.n*100:0; }
+function _xbNegPct(a){ return a.n?a.negative/a.n*100:0; }
+function _xbVal(a){ return _xbEng()?a.e:a.n; }
+function _xbCoverage(rows, col){
+  let tagged=0, multi=0; rows.forEach(r=>{ const real=(r.x[col]||[]).filter(v=>!_xbIsOther(v)); if (real.length) tagged++; if (real.length>1) multi++; });
+  return { tagged, multi, total:rows.length, pct:rows.length?tagged/rows.length*100:0 };
+}
+function _xbIsSparse(cov){ return cov.tagged < Math.max(50, cov.total*0.02); }
+function _xbDelta(d, unit, goodUp=true){ return _sntDelta(d, unit, goodUp, 0); }
+
+// ── posts pop-up (details fetched from pandas on demand) ─────────────────────
+async function _xbDetails(idxs){
+  if (!idxs.length) return [];
+  pyodide.globals.set('_xb_idx_json', JSON.stringify(idxs));
+  const raw = await pyodide.runPythonAsync(`
+import json as _json_xb2
+_xb_ix = _json_xb2.loads(_xb_idx_json)
+_xb_sub = df.iloc[_xb_ix]
+def _xb_g(r, c, n=None):
+    v = r[c] if c in _xb_sub.columns else ''
+    v = '' if v is None or (isinstance(v, float) and v != v) else str(v)
+    return v[:n] if n else v
+_json_xb2.dumps([{'u': _xb_g(r,'user_name'), 'txt': (_xb_g(r,'text',600) if _xb_g(r,'text').strip() not in ('','null') else _xb_g(r,'title',600)),
+  'link': _xb_g(r,'link'), 'img': _xb_g(r,'image'), 'sub': _xb_g(r,'subtitle',2000)} for _, r in _xb_sub.iterrows()], ensure_ascii=False)
+`);
+  return JSON.parse(typeof raw==='string'?raw:raw.toString());
+}
+function _xbPostsModal(o){
+  const all=o.rows||[], by={ positive:[], neutral:[], negative:[] }; all.forEach(r=>{ if (by[r.s]) by[r.s].push(r); });
+  let mode=o.sent||'all', reqId=0;
+  const c=o.color||'var(--accent)', nm=_infEsc(o.title);
+  document.getElementById('xbPostsOverlay')?.remove();
+  const ov=document.createElement('div'); ov.id='xbPostsOverlay'; ov.className='camp-modal-overlay';
+  const close=()=>{ ov.remove(); document.removeEventListener('keydown',esc,true); };
+  const esc=e=>{ if (e.key==='Escape') { e.stopPropagation(); close(); } };
+  const render=async()=>{
+    const list=mode==='all'?all:by[mode], a=_xbAggOf(all), top=list.slice().sort((x,y)=>y.e-x.e).slice(0,10), my=++reqId;
+    const seg=(k,l,n)=>`<button type="button" role="tab" class="sma-seg-btn${mode===k?' active':''}" data-mode="${k}"${n?'':' disabled'}>${k!=='all'?`<span class="inf-legend-dot" style="background:${SENT_COLORS[k]}"></span>`:''}${l} <span style="opacity:.6">${n.toLocaleString()}</span></button>`;
+    ov.innerHTML=`<div class="camp-modal inf-modal" style="position:relative" role="dialog" aria-modal="true" aria-label="${nm}">
+      <button class="inf-close" title="Close (Esc)">✕</button>
+      <div class="camp-modal-title" style="padding-right:40px">${nm}</div>
+      <div class="camp-modal-subtitle">${_infEsc(o.sub||'')} · More Breakdowns filters</div>
+      <div class="inf-modal-meta" style="margin:10px 0"><div class="sma-seg sma-seg-sm" role="tablist" aria-label="Sentiment">${seg('all','All',all.length)}${seg('negative','Negative',by.negative.length)}${seg('positive','Positive',by.positive.length)}${seg('neutral','Neutral',by.neutral.length)}</div></div>
+      <div class="inf-modal-kpis">
+        <div class="bdd-kpi view"><div class="bdd-kpi-val">${_infFmt(a.n)}</div><div class="bdd-kpi-lbl">Mentions</div></div>
+        <div class="bdd-kpi eng"><div class="bdd-kpi-val">${_infFmt(a.e)}</div><div class="bdd-kpi-lbl">Engagement</div></div>
+        <div class="bdd-kpi pos"><div class="bdd-kpi-val">${a.n?_sntVerdictChip(_xbNet(a)):'—'}</div><div class="bdd-kpi-lbl">Overall feeling</div></div>
+        <div class="bdd-kpi change"><div class="bdd-kpi-val" style="color:var(--neg)">${a.n?_xbNegPct(a).toFixed(1)+'%':'—'}</div><div class="bdd-kpi-lbl">Negative</div></div>
+      </div>
+      <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${top.length} by engagement</div>
+      <div class="inf-post-list" id="xbPostList"><div class="bdd-placeholder">Loading posts…</div></div></div>`;
+    ov.querySelector('.inf-close').onclick=close;
+    ov.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ mode=b.dataset.mode; render(); });
+    let det=[]; try { det=await _xbDetails(top.map(r=>r.i)); } catch(e) { console.error(e); }
+    if (my!==reqId || !ov.isConnected) return;
+    ov.querySelector('#xbPostList').innerHTML = top.length ? top.map((r,i)=>{ const d=det[i]||{}, pl=_infUrl(d.link);
+      return `<div class="inf-post" style="border-left:3px solid ${SENT_COLORS[r.s]||'var(--border2)'}">${_postImg(d.img)}<div class="inf-post-top">
+        <span style="font-weight:700;color:var(--text)">#${i+1}</span><span class="inf-sent" style="background:${SENT_COLORS[r.s]||'var(--border2)'}" title="${_infEsc(r.s||'no sentiment')}"></span>
+        <b style="color:var(--text)">${_infEsc(d.u||'Unknown account')}</b><span>·</span><span>${_infEsc(r.ch)}</span><span>·</span><span>${_infEsc(r.day?_sntFmtDay(r.day,true):'')}</span>${r.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}
+        <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(r.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
+        <div class="inf-post-text">${_infEsc(d.txt||'(no text)')}${String(d.txt||'').length>=600?'…':''}</div>${_postSub(d.sub)}</div>`; }).join('')
+      : '<div class="bdd-placeholder">No posts here</div>';
+  };
+  ov.addEventListener('click',e=>{ if (e.target===ov) close(); });
+  document.addEventListener('keydown',esc,true);
+  document.body.appendChild(ov); render();
+}
+
+// ── body + sections ──────────────────────────────────────────────────────────
+function _xbPanes(){
+  const P=[
+    { k:'cols',   ic:'📊', l:'Categories',      d:'Every category column at a glance — how much is categorised, what leads, and how people feel.' },
+    { k:'matrix', ic:'🎯', l:'Priority matrix', d:'What to fix first: categories people talk about most against how they feel about them.' },
+    { k:'xtab',   ic:'🔀', l:'Cross-tab',       d:'Any two dimensions against each other — e.g. which details complaints mention, or which brand leads on taste.' },
+    { k:'bench',  ic:'⚖️', l:'Benchmark',       d:'Each brand against the competitor average, category by category.' },
+    { k:'movers', ic:'📈', l:'Movers',          d:'What changed versus the previous period — and whether the change is big enough to trust.' },
+    { k:'care',   ic:'🎧', l:'Intent & care',   d:'Why people post — the customer-care queue, what complaints are about, advocacy, and whether brands reply.', need:()=>!!_xbIntentDim() },
+  ];
+  return P.filter(p=>!p.need || p.need());
+}
+function _xbPane(){ if (!_xb.pane) { try { _xb.pane=localStorage.getItem(XB_PANE_KEY)||''; } catch(_) { _xb.pane=''; } } if (!_xbPanes().some(p=>p.k===_xb.pane)) _xb.pane='cols'; return _xb.pane; }
+function _xbRenderBody(){
+  const body=document.getElementById('xbBody'); if (!body) return;
+  const ctx=_xbCtx(), pane=_xbPane(), panes=_xbPanes(), sec=k=>`class="ovd-pane" id="xbPane-${k}" role="tabpanel" aria-labelledby="xbSecTab-${k}"${pane===k?'':' hidden'}`;
+  body.innerHTML=_secNavHtml('xb', panes, pane, _xbCtxLabel()) + panes.map(x=>`<section ${sec(x.k)}><div id="xbIn-${x.k}"></div></section>`).join('');
+  _secNavWire(body, 'xb', panes, ()=>_xb.pane, k=>{ _xb.pane=k; try { localStorage.setItem(XB_PANE_KEY,k); } catch(_) {} });
+  const R={ cols:_xbCols, matrix:_xbMatrix, xtab:typeof _xbXtab==='function'?_xbXtab:null, bench:typeof _xbBench==='function'?_xbBench:null, movers:typeof _xbMovers==='function'?_xbMovers:null, care:typeof _xbCare==='function'?_xbCare:null };
+  panes.forEach(x=>{ const fn=R[x.k], el=document.getElementById('xbIn-'+x.k); if (fn && el) { try { fn(el, ctx); } catch(e) { console.error('[breakdowns] '+x.k, e); el.innerHTML='<div class="bdd-placeholder">This section could not be drawn — check the console</div>'; } } });
+}
+
+// ── Categories ───────────────────────────────────────────────────────────────
+function _xbCols(el, ctx){
+  const f=_xb.f, eng=_xbEng(), unit=eng?'engagement':'mentions';
+  el.innerHTML=_xb.dims.map((dm,di)=>{
+    const cov=_xbCoverage(ctx.cur, dm.col), sparse=_xbIsSparse(cov);
+    const vals=_xbValues(ctx.cur, dm.col, !f.hideOthers).sort((a,b)=>_xbIsOther(a.v)-_xbIsOther(b.v) || _xbVal(b)-_xbVal(a));
+    const pv=ctx.prev?new Map(_xbValues(ctx.prev, dm.col, true).map(a=>[a.v,a])):null;
+    const tot=vals.reduce((s,a)=>s+_xbVal(a),0)||1, max=Math.max(1,...vals.map(_xbVal));
+    const rare=vals.filter(a=>!_xbIsOther(a.v) && a.n<Math.max(10, cov.tagged*0.005)).map(a=>_xbLabel(a.v));
+    const covBar=`<div class="xb-cov" title="${cov.tagged.toLocaleString()} of ${cov.total.toLocaleString()} mentions have a specific ${_infEsc(dm.label)} value"><div class="xb-cov-bar"><i style="width:${cov.pct.toFixed(1)}%"></i></div><span><b>${cov.pct.toFixed(0)}%</b> categorised · ${cov.tagged.toLocaleString()} of ${cov.total.toLocaleString()} mentions${cov.multi?` · ${cov.multi.toLocaleString()} with 2+ values`:''}</span></div>`;
+    const head=`<div class="xb-col-head"><div><div class="xb-col-title">${_infEsc(dm.label)} <span class="xb-type ${sparse?'sparse':'rich'}">${sparse?'Low coverage':`${vals.filter(a=>!_xbIsOther(a.v)).length} categories`}</span></div>${covBar}</div>
+      <button type="button" class="btn-outline xb-csv" data-di="${di}">⬇ CSV</button></div>`;
+    if (sparse) {
+      const rows=vals.filter(a=>!_xbIsOther(a.v)).sort((a,b)=>b.n-a.n);
+      return `<div class="card xb-col">${head}<div class="snt-cov">Only ${cov.tagged.toLocaleString()} mention${cov.tagged===1?'':'s'} carry a ${_infEsc(dm.label)} value, so a chart would mislead — here is the full list instead.</div>
+        ${rows.length?`<div class="table-wrap" style="max-height:none"><table class="dt inf-table xb-tbl"><thead><tr><th>${_infEsc(dm.label)}</th><th class="num">Mentions</th><th class="num">Engagement</th><th>Brands</th><th>Overall feeling</th></tr></thead><tbody>${rows.map((a,ri)=>`<tr data-di="${di}" data-v="${_infEsc(a.v)}" tabindex="0"><td><b style="color:var(--text)">${_infEsc(_xbLabel(a.v))}</b></td><td class="num">${a.n}</td><td class="num">${_infFmt(a.e)}</td><td>${_infEsc([...new Set(a.rows.flatMap(r=>r.brands))].slice(0,4).map(_ovdLabel).join(', ')||'—')}</td><td>${_sntVerdictChip(_xbNet(a))}</td></tr>`).join('')}</tbody></table></div>`:'<div class="bdd-placeholder">No tagged mentions in this period</div>'}</div>`;
+    }
+    const rowsHtml=vals.map(a=>{ const v=_xbVal(a), p=pv?pv.get(a.v):null, dn=p&&p.n?(a.n/p.n-1)*100:null, few=a.n<XB_MIN_N, other=_xbIsOther(a.v);
+      return `<div class="xb-row${other?' other':''}" data-di="${di}" data-v="${_infEsc(a.v)}" role="button" tabindex="0" title="Click to read the posts">
+        <div class="xb-row-name">${_infEsc(other?'Uncategorised (others)':_xbLabel(a.v))}${few?' '+_sntFewTag(a.n, XB_MIN_N):''}</div>
+        <div class="xb-row-bar"><div class="xb-row-fill" style="width:${(v/max*100).toFixed(1)}%">${SNT_S.map(s=>a[s]?`<i style="width:${a[s]/a.n*100}%;background:${SENT_COLORS[s]}"></i>`:'').join('')}</div></div>
+        <div class="xb-row-v">${_infFmt(v)}<small>${(v/tot*100).toFixed(1)}%</small></div>
+        <div class="xb-row-r" title="Engagement per mention">⌀${_infFmt(a.n?a.e/a.n:0)}</div>
+        <div class="xb-row-s">${_sntVerdictChip(_xbNet(a))}</div>
+        <div class="xb-row-neg" title="Negative share">${_xbNegPct(a).toFixed(1)}%</div>
+        <div class="xb-row-d">${ctx.prev?_xbDelta(dn,'%'):''}</div></div>`; }).join('');
+    return `<div class="card xb-col">${head}
+      <div class="xb-row xb-row-h"><div>Category</div><div>Share of ${unit} · bar colour = sentiment mix</div><div class="r">${eng?'Engagement':'Mentions'}</div><div class="r">Eng/mention</div><div>Overall feeling</div><div class="r">Negative</div><div class="r">${ctx.prev?'vs prev':''}</div></div>
+      ${rowsHtml||'<div class="bdd-placeholder">No mentions in this period</div>'}
+      <div class="snt-foot">${f.hideOthers?'Shares are of categorised mentions ("others" hidden)':'Shares include uncategorised "others"'} · a mention with several values counts for each${rare.length?` · rarely used: ${_infEsc(rare.slice(0,6).join(', '))}${rare.length>6?'…':''}`:''}</div></div>`;
+  }).join('');
+  const open=(di,v)=>{ const dm=_xb.dims[+di], rows=ctx.cur.filter(r=>(r.x[dm.col]||[]).includes(v)); _xbPostsModal({ rows, title:`${dm.label} · ${_xbIsOther(v)?'Uncategorised':_xbLabel(v)}`, sub:_sntRangeLbl(ctx.p.cur)||'All dates' }); };
+  el.querySelectorAll('[data-v][data-di]').forEach(n=>{ const go=()=>open(n.dataset.di, n.dataset.v); n.onclick=go; n.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+  el.querySelectorAll('.xb-csv').forEach(b=>b.onclick=()=>{ const dm=_xb.dims[+b.dataset.di], vals=_xbValues(ctx.cur, dm.col, true).sort((a,c)=>c.n-a.n), pv=ctx.prev?new Map(_xbValues(ctx.prev, dm.col, true).map(a=>[a.v,a])):null;
+    const out=[[dm.label,'mentions','engagement','eng_per_mention','positive','neutral','negative','net_sentiment','negative_pct', ...(pv?['mentions_prev','mentions_change_pct']:[])]].concat(vals.map(a=>{ const p=pv?pv.get(a.v):null;
+      return [_xbLabel(a.v), a.n, Math.round(a.e), Math.round(a.n?a.e/a.n:0), a.positive, a.neutral, a.negative, _xbNet(a).toFixed(1), _xbNegPct(a).toFixed(2), ...(pv?[p?p.n:0, p&&p.n?((a.n/p.n-1)*100).toFixed(1):'']:[])]; }));
+    _infCsv(out, `breakdown_${dm.col}_${(ctx.p.cur||['all'])[0]}.csv`); });
+}
+
+// ── Priority matrix (importance × performance) ───────────────────────────────
+function _xbRichDims(ctx){ return _xb.dims.filter(dm=>!_xbIsSparse(_xbCoverage(ctx.cur, dm.col))); }
+function _xbDimPicker(id, dims, cur){ return `<select class="snt-select" id="${id}" aria-label="Column">${dims.map(d=>`<option value="${_infEsc(d.col)}"${d.col===cur?' selected':''}>${_infEsc(d.label)}</option>`).join('')}</select>`; }
+function _xbMatrix(el, ctx){
+  const dims=_xbRichDims(ctx);
+  if (!dims.length) { el.innerHTML='<div class="card"><div class="bdd-placeholder">No column has enough categorised mentions for a priority matrix.</div></div>'; return; }
+  if (!dims.some(d=>d.col===_xb.mx.col)) _xb.mx.col=dims[0].col;
+  const dm=dims.find(d=>d.col===_xb.mx.col), eng=_xbEng();
+  const vals=_xbValues(ctx.cur, dm.col, false).filter(a=>a.n>0), tot=vals.reduce((s,a)=>s+_xbVal(a),0)||1;
+  const pts=vals.map(a=>({ a, x:_xbVal(a)/tot*100, y:_xbNet(a), few:a.n<XB_MIN_N }));
+  const solid=pts.filter(p=>!p.few);
+  const xMid=solid.length?100/solid.length:0, yMid=_xbNet(_xbAggOf(ctx.cur.filter(r=>(r.x[dm.col]||[]).some(v=>!_xbIsOther(v)))));
+  const quad=p=>p.x>=xMid ? (p.y<yMid?'fix':'promote') : (p.y<yMid?'watch':'gem');
+  const Q={ fix:{ l:'Fix now', d:'talked about a lot, felt worse than average', c:'#EF4444' }, promote:{ l:'Strengths to promote', d:'talked about a lot, felt better than average', c:'#1DC997' }, watch:{ l:'Watch', d:'smaller, but felt worse than average', c:'#F59E0B' }, gem:{ l:'Hidden strengths', d:'smaller, felt better than average', c:'#2563EB' } };
+  const W=640,H=380,L=56,R=18,T=26,B=42, xMax=Math.max(xMid*2, ...pts.map(p=>p.x))*1.1||1, ys=pts.map(p=>p.y), yLo=Math.min(-10, ...ys, yMid)-8, yHi=Math.max(10, ...ys, yMid)+8;
+  const sx=v=>L+v/xMax*(W-L-R), sy=v=>T+(yHi-v)/(yHi-yLo)*(H-T-B), emax=Math.max(1,...pts.map(p=>p.a.e));
+  let g='';
+  g+=`<rect x="${sx(xMid)}" y="${sy(yMid)}" width="${W-R-sx(xMid)}" height="${H-B-sy(yMid)}" fill="#EF4444" opacity=".06"/><rect x="${sx(xMid)}" y="${T}" width="${W-R-sx(xMid)}" height="${sy(yMid)-T}" fill="#1DC997" opacity=".06"/>`;
+  for (let i=0;i<=4;i++){ const vx=xMax*i/4, vy=yLo+(yHi-yLo)*i/4; g+=`<text x="${sx(vx)}" y="${H-B+15}" text-anchor="middle" font-size="10" fill="var(--text3)">${vx.toFixed(0)}%</text><text x="${L-6}" y="${sy(vy)+3}" text-anchor="end" font-size="10" fill="var(--text3)">${_sntSigned(vy,0)}</text>`; }
+  g+=`<line x1="${sx(xMid)}" y1="${T}" x2="${sx(xMid)}" y2="${H-B}" stroke="var(--text3)" stroke-dasharray="4 4"/><line x1="${L}" y1="${sy(yMid)}" x2="${W-R}" y2="${sy(yMid)}" stroke="var(--text3)" stroke-dasharray="4 4"/>`;
+  g+=`<text x="${W-R-6}" y="${H-B-8}" text-anchor="end" font-size="11" font-weight="700" fill="#EF4444">FIX NOW</text><text x="${W-R-6}" y="${T+12}" text-anchor="end" font-size="11" font-weight="700" fill="#0f9f76">STRENGTHS TO PROMOTE</text><text x="${L+6}" y="${H-B-8}" font-size="11" font-weight="700" fill="#b45309">WATCH</text><text x="${L+6}" y="${T+12}" font-size="11" font-weight="700" fill="#2563EB">HIDDEN STRENGTHS</text>`;
+  // labels: biggest bubbles first; try right / left / above / below and skip a label rather than overlap
+  // (skipped ones still show on hover and in the quadrant lists)
+  const placed=[], hit=b=>placed.some(o=>!(b.x2<o.x1||b.x1>o.x2||b.y2<o.y1||b.y1>o.y2));
+  const dots=pts.sort((a,b)=>b.a.e-a.a.e).map(p=>{ const r=7+20*Math.sqrt(p.a.e/emax), q=Q[quad(p)], cx=sx(p.x), cy=sy(p.y), nm=_xbLabel(p.a.v), w=nm.length*6.3+4, h=13;
+    const tries=[[cx+r+4,cy+4,'start'],[cx-r-4,cy+4,'end'],[cx,cy-r-5,'middle'],[cx,cy+r+13,'middle']].map(([tx,ty,an])=>{ const x1=an==='start'?tx:an==='end'?tx-w:tx-w/2; return { tx, ty, an, b:{ x1, x2:x1+w, y1:ty-h+2, y2:ty+2 } }; })
+      .filter(t=>t.b.x1>=L-2 && t.b.x2<=W-R+2 && t.b.y1>=T-4 && t.b.y2<=H-B+2);
+    const pk=tries.find(t=>!hit(t.b)); if (pk) placed.push(pk.b);
+    return `<g class="xb-pt" data-v="${_infEsc(p.a.v)}" tabindex="0" role="button"><circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r.toFixed(1)}" fill="${q.c}" fill-opacity="${p.few?.15:.45}" stroke="${q.c}" stroke-width="1.4"${p.few?' stroke-dasharray="3 2"':''}><title>${_infEsc(nm)}: ${p.x.toFixed(1)}% of ${eng?'engagement':'mentions'} · net ${_sntSigned(p.y,0)} · ${p.a.n.toLocaleString()} mentions${p.few?' (few mentions)':''} — click for posts</title></circle>
+      ${pk?`<text x="${pk.tx.toFixed(1)}" y="${pk.ty.toFixed(1)}" text-anchor="${pk.an}" font-size="11" font-weight="600" fill="var(--text)" stroke="var(--surface)" stroke-width="3" paint-order="stroke" style="pointer-events:none">${_infEsc(nm)}</text>`:''}</g>`; }).join('');
+  const lists=Object.entries(Q).map(([k,q])=>{ const ps=pts.filter(p=>!p.few && quad(p)===k).sort((a,b)=>b.x-a.x);
+    return `<div class="xb-q" style="--c:${q.c}"><div class="xb-q-h">${q.l}<small>${q.d}</small></div>${ps.length?ps.map(p=>`<button type="button" class="xb-q-chip" data-v="${_infEsc(p.a.v)}">${_infEsc(_xbLabel(p.a.v))} <span>${p.x.toFixed(0)}% · ${_sntSigned(p.y,0)}</span></button>`).join(''):'<span class="xb-q-none">—</span>'}</div>`; }).join('');
+  el.innerHTML=`<div class="card"><div class="ovd-plat-head"><div class="bdd-section-title"><span>🎯</span>Priority matrix</div><div class="ovd-plat-ctl"><span class="snt-ctl-lbl">Column</span>${_xbDimPicker('xbMxDim', dims, dm.col)}</div></div>
+    <p class="snt-plain">Each bubble is a <b>${_infEsc(dm.label)}</b> category. <b>Right</b> = people talk about it more (share of ${eng?'engagement':'mentions'}); <b>up</b> = they feel better about it (net sentiment). Bubble size = engagement. The dashed lines are the averages, so the bottom-right corner is what to fix first.</p>
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block;font-family:Prompt,sans-serif">${g}${dots}
+      <text x="${(L+W-R)/2}" y="${H-6}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text3)">Share of ${eng?'engagement':'mentions'} → talked about more</text>
+      <text x="14" y="${(T+H-B)/2}" text-anchor="middle" font-size="11" font-weight="700" fill="var(--text3)" transform="rotate(-90 14 ${(T+H-B)/2})">Net sentiment → felt better</text></svg>
+    <div class="xb-quads">${lists}</div>
+    <div class="snt-foot">Averages: ${xMid.toFixed(1)}% share (equal split across ${solid.length} categories) · net ${_sntSigned(yMid,0)} (all categorised mentions) · faint dashed bubbles have fewer than ${XB_MIN_N} mentions and are left out of the lists · "others" is never plotted</div></div>`;
+  el.querySelector('#xbMxDim').onchange=e=>{ _xb.mx.col=e.target.value; _xbMatrix(el, ctx); };
+  const open=v=>_xbPostsModal({ rows:ctx.cur.filter(r=>(r.x[dm.col]||[]).includes(v)), title:`${dm.label} · ${_xbLabel(v)}`, sub:_sntRangeLbl(ctx.p.cur)||'All dates' });
+  el.querySelectorAll('[data-v]').forEach(n=>{ n.onclick=()=>open(n.dataset.v); n.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(n.dataset.v); } }; });
+}
+
+// ── Cross-tab ────────────────────────────────────────────────────────────────
+// Dimensions a row can be split by; each returns the list of values for a row.
+function _xbAxes(){
+  const hide=_xb.f.hideOthers, A=[
+    { k:'brand', l:'Brand', get:r=>r.brands, lbl:_ovdLabel },
+    { k:'topic', l:'Topic', get:r=>r.topics, lbl:_ovdLabel },
+    { k:'platform', l:'Platform', get:r=>[r.ch], lbl:v=>v },
+    { k:'type', l:'Post or comment', get:r=>[r.o?'Post':'Comment'], lbl:v=>v },
+    { k:'sentiment', l:'Sentiment', get:r=>SNT_S.includes(r.s)?[r.s]:[], lbl:v=>SNT_LBL[v]||v },
+  ];
+  if (_xb.hasCamp) A.push({ k:'campaign', l:'Campaign', get:r=>r.camps, lbl:v=>v });
+  _xb.dims.forEach(dm=>A.push({ k:'x:'+dm.col, l:dm.label, get:r=>(r.x[dm.col]||[]).filter(v=>!(hide&&_xbIsOther(v))), lbl:v=>_xbIsOther(v)?'Others':_xbLabel(v), dim:true }));
+  return A;
+}
+function _xbXtab(el, ctx){
+  const A=_xbAxes(), st=_xb.ct, eng=_xbEng();
+  const dimAxes=A.filter(a=>a.dim);
+  if (!A.some(a=>a.k===st.r)) st.r=(dimAxes.find(a=>/detail|attribute|aspect/i.test(a.l))||dimAxes[0]||A[0]).k;
+  if (!A.some(a=>a.k===st.c) || st.c===st.r) st.c=(dimAxes.find(a=>a.k!==st.r)||A.find(a=>a.k==='brand')).k;
+  st.mode=st.mode||'row';
+  const ra=A.find(a=>a.k===st.r), ca=A.find(a=>a.k===st.c);
+  const w=r=>eng?r.e:1, cell=new Map(), rt=new Map(), cty=new Map(); let grand=0;
+  ctx.cur.forEach(r=>{ const rv=ra.get(r), cv=ca.get(r); if (!rv.length||!cv.length) return; const x=w(r);
+    rv.forEach(a=>{ rt.set(a,(rt.get(a)||0)+x); cv.forEach(b=>{ const k=a+'\u0001'+b; let c=cell.get(k); if (!c) { c={ v:0, rows:[] }; cell.set(k,c); } c.v+=x; c.rows.push(r); }); });
+    cv.forEach(b=>cty.set(b,(cty.get(b)||0)+x)); grand+=x; });
+  const rows=[...rt.keys()].sort((a,b)=>rt.get(b)-rt.get(a)).slice(0,15), cols=[...cty.keys()].sort((a,b)=>cty.get(b)-cty.get(a)).slice(0,12);
+  const val=(a,b)=>{ const c=cell.get(a+'\u0001'+b); if (!c) return null; const v=c.v;
+    return st.mode==='count'?v : st.mode==='row'?v/rt.get(a)*100 : st.mode==='col'?v/cty.get(b)*100 : (cty.get(b)&&grand? (v/rt.get(a))/(cty.get(b)/grand)*100 : null); };
+  const fmt=v=>v==null?'–':st.mode==='count'?_infFmt(v):st.mode==='index'?Math.round(v):v.toFixed(v<10?1:0)+'%';
+  const vals=[]; rows.forEach(a=>cols.forEach(b=>{ const v=val(a,b); if (v!=null) vals.push(v); }));
+  const vmax=Math.max(1,...vals);
+  const shade=v=>{ if (v==null) return ''; if (st.mode==='index') { const l=Math.max(-1,Math.min(1,Math.log2(v/100))), a=Math.abs(l)<.07?.04:.08+.75*Math.abs(l); return `background-color:${l>=0?`rgba(37,99,235,${a.toFixed(2)})`:`rgba(234,88,12,${a.toFixed(2)})`};${a>.55?'color:#fff':''}`; }
+    const a=.05+.8*Math.min(1,v/vmax); return `background-color:rgba(37,99,235,${a.toFixed(2)});${a>.55?'color:#fff':''}`; };
+  const pick=(id,cur)=>`<select class="snt-select" id="${id}">${A.map(a=>`<option value="${_infEsc(a.k)}"${a.k===cur?' selected':''}>${_infEsc(a.l)}</option>`).join('')}</select>`;
+  const modes={ count:eng?'Engagement':'Count', row:'Row %', col:'Column %', index:'Index' };
+  const help={ count:`Raw ${eng?'engagement':'mentions'} in each combination.`, row:`Read across: “of all ${_infEsc(ra.l)} = X mentions, what share also has each ${_infEsc(ca.l)}?” (rows can add up to more than 100% when mentions carry several values)`, col:`Read down: “of all ${_infEsc(ca.l)} = Y mentions, what share also has each ${_infEsc(ra.l)}?” (columns can add up to more than 100% when mentions carry several values)`, index:'100 = the combination happens as often as expected; 200 = twice as often (over-represented), 50 = half. Blue = over, orange = under.' };
+  el.innerHTML=`<div class="card"><div class="ovd-plat-head"><div class="bdd-section-title"><span>🔀</span>Cross-tab explorer</div>
+      <div class="ovd-plat-ctl xb-ct-ctl"><span class="snt-ctl-lbl">Rows</span>${pick('xbCtR',st.r)}<button type="button" class="btn-outline" id="xbCtSwap" title="Swap rows and columns">⇄</button><span class="snt-ctl-lbl">Columns</span>${pick('xbCtC',st.c)}
+      <div class="sma-seg sma-seg-sm" role="tablist">${Object.entries(modes).map(([k,l])=>`<button type="button" role="tab" class="sma-seg-btn${st.mode===k?' active':''}" data-ctm="${k}">${l}</button>`).join('')}</div>
+      <button type="button" class="btn-outline" id="xbCtCsv">⬇ CSV</button></div></div>
+    <p class="snt-plain">${help[st.mode]} Click a cell to read its posts.</p>
+    ${rows.length&&cols.length?`<div class="ovd-plat-wrap"><div class="ovd-plat-scroll"><table class="ovd-plat xb-ct"><thead><tr><th><div class="ph-name">${_infEsc(ra.l)} ↓ · ${_infEsc(ca.l)} →</div></th>${cols.map((b,ci)=>`<th data-c="${ci}"><div class="ph-name">${_infEsc(ca.lbl(b))}</div><div class="ph-sub">${_infFmt(cty.get(b))}</div></th>`).join('')}<th class="tot"><div class="ph-name">Total</div></th></tr></thead>
+      <tbody>${rows.map((a,ri)=>`<tr><th title="${_infEsc(ra.lbl(a))}">${_infEsc(ra.lbl(a))}</th>${cols.map((b,ci)=>{ const v=val(a,b); return v==null?'<td><div class="cv zero">–</div></td>':`<td class="c" tabindex="0" data-r="${ri}" data-c="${ci}" title="${_infEsc(ra.lbl(a))} × ${_infEsc(ca.lbl(b))}: ${_infFmt(cell.get(a+'\u0001'+b).v)} ${eng?'engagement':'mentions'}"><div class="cv" style="${shade(v)}">${fmt(v)}</div></td>`; }).join('')}<td class="tot">${_infFmt(rt.get(a))}</td></tr>`).join('')}</tbody></table></div></div>
+      <div class="ovd-plat-foot"><span>Top ${rows.length} rows × ${cols.length} columns by volume</span><span>A mention with several values counts in each</span>${_xb.f.hideOthers?'<span>"others" hidden</span>':''}</div>`
+      :'<div class="bdd-placeholder">No mentions have both of these in this period.</div>'}</div>`;
+  el.querySelector('#xbCtR').onchange=e=>{ st.r=e.target.value; if (st.c===st.r) st.c=null; _xbXtab(el,ctx); };
+  el.querySelector('#xbCtC').onchange=e=>{ st.c=e.target.value; if (st.c===st.r) st.r=null; _xbXtab(el,ctx); };
+  el.querySelector('#xbCtSwap').onclick=()=>{ [st.r,st.c]=[st.c,st.r]; _xbXtab(el,ctx); };
+  el.querySelectorAll('[data-ctm]').forEach(b=>b.onclick=()=>{ st.mode=b.dataset.ctm; _xbXtab(el,ctx); });
+  el.querySelectorAll('td.c').forEach(td=>{ const go=()=>{ const a=rows[+td.dataset.r], b=cols[+td.dataset.c]; _xbPostsModal({ rows:cell.get(a+'\u0001'+b).rows, title:`${ra.lbl(a)} × ${ca.lbl(b)}`, sub:`${ra.l} × ${ca.l} · ${_sntRangeLbl(ctx.p.cur)||'All dates'}` }); };
+    td.onclick=go; td.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+  el.querySelector('#xbCtCsv').onclick=()=>{ const out=[[`${ra.l} \\ ${ca.l}`, ...cols.map(b=>ca.lbl(b)), 'total']].concat(rows.map(a=>[ra.lbl(a), ...cols.map(b=>{ const v=val(a,b); return v==null?'':(st.mode==='count'?Math.round(v):v.toFixed(2)); }), Math.round(rt.get(a))]));
+    _infCsv(out, `crosstab_${st.r}_by_${st.c}_${st.mode}.csv`.replace(/[^\w.-]+/g,'_')); };
+}
+
+// ── Benchmark (each brand vs the competitor average, per category) ───────────
+function _xbBench(el, ctx){
+  const dims=_xbRichDims(ctx);
+  if (!dims.length) { el.innerHTML='<div class="card"><div class="bdd-placeholder">No column has enough categorised mentions to benchmark.</div></div>'; return; }
+  if (!dims.some(d=>d.col===_xb.bm.col)) _xb.bm.col=dims[0].col;
+  const dm=dims.find(d=>d.col===_xb.bm.col), st=_xb.bm; st.view=st.view||'gap';
+  // benchmarking compares brands, so it ignores the Brand filter but keeps the others
+  const f=_xb.f, rows=_xbIn(_xb.rows.filter(r=>(f.ch==='__all__'||r.ch===f.ch) && (f.scope==='all'||(f.scope==='posts'?r.o:!r.o))), ctx.p.cur);
+  const cats=_xbValues(rows, dm.col, false).sort((a,b)=>b.n-a.n).slice(0,10).map(a=>a.v);
+  const brands=_xb.brands.filter(b=>rows.some(r=>r.brands.includes(b))).slice(0,10);
+  // one pass: per brand × category, plus each category's total over brand-tagged rows.
+  // competitor average = category total minus rows that mention the brand (exact, since those rows are excluded whole)
+  const bset=new Set(brands), cset=new Set(cats), M={}, T={}, add=(a,r)=>{ a.n++; a.e+=r.e; if (a[r.s]!=null) a[r.s]++; };
+  brands.forEach(b=>{ M[b]={}; cats.forEach(c=>{ M[b][c]={ rs:[], a:{ n:0, e:0, positive:0, neutral:0, negative:0 } }; }); });
+  cats.forEach(c=>{ T[c]={ n:0, e:0, positive:0, neutral:0, negative:0 }; });
+  rows.forEach(r=>{ if (!r.brands.length) return; const cs=(r.x[dm.col]||[]).filter(c=>cset.has(c)); if (!cs.length) return;
+    cs.forEach(c=>{ add(T[c], r); r.brands.forEach(b=>{ if (bset.has(b)) { M[b][c].rs.push(r); add(M[b][c].a, r); } }); }); });
+  const comp=(b,c)=>{ const t=T[c], m=M[b][c].a; return { n:t.n-m.n, e:t.e-m.e, positive:t.positive-m.positive, neutral:t.neutral-m.neutral, negative:t.negative-m.negative }; };
+  const G={}; brands.forEach(b=>{ G[b]={}; cats.forEach(c=>{ const a=M[b][c].a, o=comp(b,c); G[b][c]= a.n>=XB_MIN_N && o.n>=XB_MIN_N ? _xbNet(a)-_xbNet(o) : null; }); });
+  const all=[]; brands.forEach(b=>cats.forEach(c=>{ if (G[b][c]!=null) all.push({ b, c, g:G[b][c] }); }));
+  all.sort((x,y)=>x.g-y.g);
+  const worst=all.slice(0,3), best=all.slice(-3).reverse().filter(x=>x.g>0);
+  const shade=v=>{ if (v==null) return ''; const t=Math.max(-1,Math.min(1,v/(st.view==='gap'?30:60))), a=Math.abs(t)<.08?.04:.08+.72*Math.abs(t); return `background-color:${t>=0?`rgba(29,201,151,${a.toFixed(2)})`:`rgba(239,68,68,${a.toFixed(2)})`};${a>.5?'color:#fff':''}`; };
+  const hl=f.brand!=='__all__'?f.brand:null;
+  el.innerHTML=`<div class="card"><div class="ovd-plat-head"><div class="bdd-section-title"><span>⚖️</span>Attribute benchmark</div>
+      <div class="ovd-plat-ctl"><span class="snt-ctl-lbl">Column</span>${_xbDimPicker('xbBmDim', dims, dm.col)}
+      <div class="sma-seg sma-seg-sm" role="tablist"><button type="button" role="tab" class="sma-seg-btn${st.view==='gap'?' active':''}" data-bv="gap">Gap vs competitors</button><button type="button" role="tab" class="sma-seg-btn${st.view==='net'?' active':''}" data-bv="net">Net sentiment</button></div></div></div>
+    <p class="snt-plain">${st.view==='gap'?`Each cell = the brand's net sentiment on that ${_infEsc(dm.label)} category <b>minus</b> the average of all other brands. <b style="color:var(--neg)">−18</b> means 18 points worse than competitors.`:`Each cell = the brand's net sentiment (% positive − % negative) on that ${_infEsc(dm.label)} category.`} Cells with fewer than ${XB_MIN_N} mentions are left blank. Click a cell for its posts.</p>
+    ${all.length?`<div class="xb-bm-ins">${worst.map(x=>`<button type="button" class="xb-bm-pill bad" data-b="${_infEsc(x.b)}" data-cat="${_infEsc(x.c)}">🔻 <b>${_infEsc(_ovdLabel(x.b))}</b> on ${_infEsc(_xbLabel(x.c))}: ${Math.abs(x.g).toFixed(0)} pts below competitors</button>`).join('')}${best.map(x=>`<button type="button" class="xb-bm-pill good" data-b="${_infEsc(x.b)}" data-cat="${_infEsc(x.c)}">🔺 <b>${_infEsc(_ovdLabel(x.b))}</b> on ${_infEsc(_xbLabel(x.c))}: ${x.g.toFixed(0)} pts above</button>`).join('')}</div>`:''}
+    ${brands.length&&cats.length?`<div class="ovd-plat-wrap"><div class="ovd-plat-scroll"><table class="ovd-plat xb-ct"><thead><tr><th><div class="ph-name">Brand</div></th>${cats.map(c=>`<th><div class="ph-name">${_infEsc(_xbLabel(c))}</div></th>`).join('')}</tr></thead>
+      <tbody>${brands.map(b=>`<tr${b===hl?' class="xb-hl"':''}><th><span class="ovd-dot" style="background:${_xbColor(b)}"></span>${_infEsc(_ovdLabel(b))}</th>${cats.map(c=>{ const m=M[b][c], v=st.view==='gap'?G[b][c]:(m.a.n>=XB_MIN_N?_xbNet(m.a):null);
+        return v==null?`<td><div class="cv zero" title="${m.a.n} mentions — too few">${m.a.n?'·':'–'}</div></td>`:`<td class="c" tabindex="0" data-b="${_infEsc(b)}" data-cat="${_infEsc(c)}" title="${_infEsc(_ovdLabel(b))} · ${_infEsc(_xbLabel(c))}: net ${_sntSigned(_xbNet(m.a),0)} vs competitors ${_sntSigned(_xbNet(comp(b,c)),0)} · ${m.a.n} mentions"><div class="cv" style="${shade(v)}">${_sntSigned(v,0)}<small>${m.a.n.toLocaleString()} mentions</small></div></td>`; }).join('')}</tr>`).join('')}</tbody></table></div></div>`
+      :'<div class="bdd-placeholder">Not enough brand mentions in this period.</div>'}
+    <div class="snt-foot">Top ${brands.length} brands × top ${cats.length} categories by volume · the Brand filter is ignored here (benchmarking needs every brand)${hl?' — your selected brand is highlighted':''} · competitor average = all other brands' mentions combined</div></div>`;
+  el.querySelector('#xbBmDim').onchange=e=>{ st.col=e.target.value; _xbBench(el,ctx); };
+  el.querySelectorAll('[data-bv]').forEach(b=>b.onclick=()=>{ st.view=b.dataset.bv; _xbBench(el,ctx); });
+  el.querySelectorAll('[data-b][data-cat]').forEach(n=>{ const go=()=>{ const b=n.dataset.b, c=n.dataset.cat; _xbPostsModal({ rows:M[b][c].rs, title:`${_ovdLabel(b)} · ${_xbLabel(c)}`, sub:`${dm.label} · ${_sntRangeLbl(ctx.p.cur)||'All dates'}`, color:_xbColor(b) }); };
+    n.onclick=go; n.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+}
+
+// ── Movers (change vs previous period, with a significance check) ────────────
+// Share change is tested with a two-proportion z-test; |z| ≥ 1.96 ≈ 95% confidence.
+function _xbZ(c1,n1,c2,n2){ if (!n1||!n2) return 0; const p1=c1/n1, p2=c2/n2, p=(c1+c2)/(n1+n2), se=Math.sqrt(p*(1-p)*(1/n1+1/n2)); return se?(p1-p2)/se:0; }
+function _xbMovers(el, ctx){
+  if (!ctx.prev) { el.innerHTML='<div class="card"><div class="bdd-placeholder">Pick a Period with a comparison (e.g. Latest month or Last 7 days) to see what moved.</div></div>'; return; }
+  const st=_xb.mv, dims=_xb.dims; st.col=st.col||'__all__';
+  const use=st.col==='__all__'?dims:dims.filter(d=>d.col===st.col);
+  const out=[];
+  use.forEach(dm=>{
+    const cn=ctx.cur.filter(r=>(r.x[dm.col]||[]).some(v=>!_xbIsOther(v))).length, pn=ctx.prev.filter(r=>(r.x[dm.col]||[]).some(v=>!_xbIsOther(v))).length;
+    const cur=new Map(_xbValues(ctx.cur, dm.col, false).map(a=>[a.v,a])), prev=new Map(_xbValues(ctx.prev, dm.col, false).map(a=>[a.v,a]));
+    new Set([...cur.keys(), ...prev.keys()]).forEach(v=>{
+      const a=cur.get(v)||{ n:0, e:0, positive:0, neutral:0, negative:0, rows:[] }, b=prev.get(v)||{ n:0, e:0, positive:0, neutral:0, negative:0 };
+      const sa=cn?a.n/cn*100:0, sb=pn?b.n/pn*100:0, z=_xbZ(a.n,cn,b.n,pn), enough=a.n>=XB_MIN_N||b.n>=XB_MIN_N;
+      const dNet=a.n>=XB_MIN_N&&b.n>=XB_MIN_N?_xbNet(a)-_xbNet(b):null, zNeg=a.n>=XB_MIN_N&&b.n>=XB_MIN_N?_xbZ(a.negative,a.n,b.negative,b.n):0;
+      out.push({ dm, v, a, b, sa, sb, ds:sa-sb, z, enough, dNet, zNeg, dn:b.n?(a.n/b.n-1)*100:null });
+    });
+  });
+  out.sort((x,y)=>(y.enough-x.enough) || Math.abs(y.z)-Math.abs(x.z));
+  const sig=x=>!x.enough?'<span class="xb-sig few" title="Too few mentions in both periods to judge">Too few</span>':Math.abs(x.z)>=1.96?`<span class="xb-sig yes" title="z = ${x.z.toFixed(1)} — a real shift (≈95% confidence)">Significant</span>`:`<span class="xb-sig no" title="z = ${x.z.toFixed(1)} — could be normal variation">Not significant</span>`;
+  const top=out.slice(0,25);
+  el.innerHTML=`<div class="card"><div class="ovd-plat-head"><div class="bdd-section-title"><span>📈</span>Biggest movers</div>
+      <div class="ovd-plat-ctl"><span class="snt-ctl-lbl">Column</span><select class="snt-select" id="xbMvDim"><option value="__all__">All columns</option>${dims.map(d=>`<option value="${_infEsc(d.col)}"${d.col===st.col?' selected':''}>${_infEsc(d.label)}</option>`).join('')}</select>
+      <button type="button" class="btn-outline" id="xbMvCsv">⬇ CSV</button></div></div>
+    <p class="snt-plain">${_infEsc(_sntRangeLbl(ctx.p.cur))} compared with ${_infEsc(ctx.p.prevLbl||_sntRangeLbl(ctx.p.prev))}. <b>Share</b> = the category's slice of categorised mentions, so a busier month doesn't inflate it. <b>Significant</b> means the shift is unlikely to be chance.</p>
+    ${top.length?`<div class="table-wrap" style="max-height:620px"><table class="dt inf-table xb-tbl"><thead><tr><th>Category</th><th class="num">Mentions</th><th class="num">Share now</th><th class="num">Share before</th><th class="num">Share change</th><th>Confidence</th><th class="num" title="Change in net sentiment (pts), shown when both periods have ${XB_MIN_N}+ mentions">Feeling change</th></tr></thead>
+      <tbody>${top.map((x,i)=>`<tr data-i="${i}" tabindex="0" title="Click for this period's posts"><td><span class="xb-mv-col">${_infEsc(x.dm.label)}</span> <b style="color:var(--text)">${_infEsc(_xbLabel(x.v))}</b></td><td class="num">${x.a.n.toLocaleString()} <span style="color:var(--text3)">← ${x.b.n.toLocaleString()}</span></td>
+        <td class="num">${x.sa.toFixed(1)}%</td><td class="num" style="color:var(--text3)">${x.sb.toFixed(1)}%</td><td class="num">${_sntDelta(x.ds,' pts',null,1).replace('snt-d flat', Math.abs(x.ds)<0.05?'snt-d flat':'snt-d '+(x.ds>0?'up':'down'))}</td><td>${sig(x)}</td>
+        <td class="num">${x.dNet==null?'<span style="color:var(--text3)">—</span>':_sntDelta(x.dNet,' pts',true,0)}</td></tr>`).join('')}</tbody></table></div>`:'<div class="bdd-placeholder">No categorised mentions in these periods.</div>'}
+    <div class="snt-foot">Sorted by confidence of the share change · "others" excluded · Feeling change = net sentiment now minus before</div></div>`;
+  el.querySelector('#xbMvDim').onchange=e=>{ st.col=e.target.value; _xbMovers(el,ctx); };
+  el.querySelectorAll('tbody tr[data-i]').forEach(tr=>{ const x=top[+tr.dataset.i], go=()=>_xbPostsModal({ rows:x.a.rows||[], title:`${x.dm.label} · ${_xbLabel(x.v)}`, sub:_sntRangeLbl(ctx.p.cur) }); tr.onclick=go; tr.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); go(); } }; });
+  el.querySelector('#xbMvCsv').onclick=()=>{ const o=[['column','category','mentions_now','mentions_before','share_now_pct','share_before_pct','share_change_pts','z_score','significant','net_change_pts']].concat(out.map(x=>[x.dm.label, _xbLabel(x.v), x.a.n, x.b.n, x.sa.toFixed(2), x.sb.toFixed(2), x.ds.toFixed(2), x.z.toFixed(2), !x.enough?'too few':Math.abs(x.z)>=1.96?'yes':'no', x.dNet==null?'':x.dNet.toFixed(1)]));
+    _infCsv(o, `movers_${(ctx.p.cur||['all'])[0]}.csv`); };
+}
+
+// ── Intent & customer care ───────────────────────────────────────────────────
+// Works on any column that records why people post (named "intent…", or whose
+// values include complaint / enquiry / request).
+const XB_INTENT = {
+  complaint:/complain/i, enquiry:/enquir|inquir|question/i, request:/request/i,
+  advocacy:/compliment|recommend|praise/i, participation:/parti?ci?pat|parcitipation|contest|giveaway/i,
+};
+function _xbIntentDim(){
+  return _xb.dims.find(d=>/intent|purpose/i.test(d.label+' '+d.col)) ||
+    _xb.dims.find(d=>{ const vs=new Set(); _xb.rows.slice(0,8000).forEach(r=>(r.x[d.col]||[]).forEach(v=>vs.add(v))); return [...vs].some(v=>XB_INTENT.complaint.test(v)||XB_INTENT.enquiry.test(v)); }) || null;
+}
+function _xbIntentKind(v){ for (const k of ['complaint','enquiry','request','advocacy','participation']) if (XB_INTENT[k].test(v)) return k; return null; }
+// owned-account replies per thread, built once per load (account_group classified via 🏷 Account groups)
+function _xbReplyIndex(){
+  if (_xb._replies && _xb._repliesVer===_xb.rows.length) return _xb._replies;
+  const cache=new Map(), idx=new Map();
+  _xb.rows.forEach(r=>{ if (r.o || !r.g || !r.th || /^(nan|none|null)$/i.test(r.th)) return; let info=cache.get(r.g); if (info===undefined) { info=_acctRowInfo(r.g); cache.set(r.g, info); }
+    if (!info.owned) return; (idx.get(r.th)||idx.set(r.th,[]).get(r.th)).push({ ts:r.ts, grp:info.ownedLabel, id:r.id }); });
+  idx.forEach(l=>l.sort((a,b)=>a.ts-b.ts));
+  _xb._replies=idx; _xb._repliesVer=_xb.rows.length; return idx;
+}
+function _xbCare(el, ctx){
+  const dm=_xbIntentDim(); if (!dm) { el.innerHTML=''; return; }
+  const kindsOf=r=>[...new Set((r.x[dm.col]||[]).map(_xbIntentKind).filter(Boolean))];
+  const tagged=ctx.cur.filter(r=>(r.x[dm.col]||[]).some(v=>!_xbIsOther(v)));
+  const by=k=>ctx.cur.filter(r=>kindsOf(r).includes(k)), byPrev=k=>ctx.prev?ctx.prev.filter(r=>kindsOf(r).includes(k)):null;
+  const comp=by('complaint'), enq=by('enquiry'), req=by('request'), adv=by('advocacy'), par=by('participation');
+  const care=ctx.cur.filter(r=>kindsOf(r).some(k=>k==='complaint'||k==='enquiry'||k==='request'));
+  const careP=ctx.prev?ctx.prev.filter(r=>kindsOf(r).some(k=>k==='complaint'||k==='enquiry'||k==='request')):null;
+  const d=(a,b)=>b&&b.length?(a.length/b.length-1)*100:null;
+  const k=(cls,val,lbl,sub)=>`<div class="bdd-kpi ${cls}"><div class="bdd-kpi-val">${val}</div><div class="bdd-kpi-lbl">${lbl}</div><div class="bdd-kpi-sub">${sub}</div></div>`;
+  const vs=ctx.prev?' vs prev':'';
+  const kpis=k('view', care.length.toLocaleString(), 'Care queue', `enquiries + requests + complaints · ${_sntDelta(d(care,careP),'%',false,0)}${vs}`)+
+    k('change', comp.length.toLocaleString(), 'Complaints', `${tagged.length?(comp.length/tagged.length*100).toFixed(1):0}% of intent-tagged · ${_sntDelta(d(comp,byPrev('complaint')),'%',false,0)}${vs}`)+
+    k('', enq.length.toLocaleString(), 'Enquiries', `${_sntDelta(d(enq,byPrev('enquiry')),'%',null,0)}${vs}`)+
+    k('neu', req.length.toLocaleString(), 'Requests', `${_sntDelta(d(req,byPrev('request')),'%',null,0)}${vs}`)+
+    k('pos', adv.length.toLocaleString(), 'Advocacy', `compliments + recommendations · ${_sntDelta(d(adv,byPrev('advocacy')),'%',true,0)}${vs}`)+
+    k('eng', par.length.toLocaleString(), 'Participation', `${_infFmt(par.length?par.reduce((s,r)=>s+r.e,0)/par.length:0)} engagement per mention`);
+
+  // care queue + response tracking per brand
+  const RI=_xbReplyIndex();
+  const brands=[...new Set(care.flatMap(r=>r.brands))];
+  const rows=brands.map(b=>{
+    const items=care.filter(r=>r.brands.includes(b)); let answered=0; const times=[]; const cc={};
+    items.forEach(r=>{ cc[r.ch]=(cc[r.ch]||0)+1; const key=r.o?r.id:r.th, l=RI.get(key); if (!l) return;
+      const rep=l.find(x=>x.id!==r.id && x.ts>=r.ts && _ovdBrandOwnsRow(b,{ owned:true, grp:x.grp })); if (rep) { answered++; times.push(rep.ts-r.ts); } });
+    times.sort((a,c)=>a-c);
+    const n=kd=>items.filter(r=>kindsOf(r).includes(kd)).length;
+    return { b, items, enq:n('enquiry'), req:n('request'), comp:n('complaint'), total:items.length, top:Object.keys(cc).sort((a,c)=>cc[c]-cc[a])[0]||'—', answered, med:times.length?times[times.length>>1]:null };
+  }).sort((a,b)=>b.total-a.total);
+  const dur=s=>{ if (s==null) return '—'; const m=s/60; return m<60?`${Math.max(1,Math.round(m))} min`:m<2880?`${(m/60).toFixed(m<600?1:0)} h`:`${(m/1440).toFixed(1)} days`; };
+  const queue=rows.length?`<div class="table-wrap" style="max-height:none"><table class="dt inf-table xb-tbl"><thead><tr><th>Brand</th><th class="num">Enquiries</th><th class="num">Requests</th><th class="num">Complaints</th><th class="num">Care queue</th><th>Busiest platform</th><th class="num" title="Care items followed by a reply from the brand's own (owned media) account in the same thread">Brand replied</th><th class="num" title="Median time from the item to the brand's reply">Median reply time</th></tr></thead>
+    <tbody>${rows.map((x,i)=>{ const pct=x.total?x.answered/x.total*100:0; return `<tr data-ci="${i}" tabindex="0" title="Click for this brand's care items"><td><span class="ovd-dot" style="background:${_xbColor(x.b)}"></span><b style="color:var(--text)">${_infEsc(_ovdLabel(x.b))}</b></td><td class="num">${x.enq.toLocaleString()}</td><td class="num">${x.req.toLocaleString()}</td><td class="num" style="color:${x.comp?'#dc2626':'var(--text3)'};font-weight:${x.comp?700:400}">${x.comp.toLocaleString()}</td>
+      <td class="num" style="font-weight:700;color:var(--text)">${x.total.toLocaleString()}</td><td>${_infEsc(x.top)}</td>
+      <td class="num">${x.answered?`<span class="snt-d ${pct>=50?'good':pct>=20?'flat':'bad'}">${pct.toFixed(0)}%</span> <span style="color:var(--text3);font-size:10.5px">${x.answered}/${x.total}</span>`:'<span style="color:var(--text3)">0%</span>'}</td><td class="num">${dur(x.med)}</td></tr>`; }).join('')}</tbody></table></div>`:'<div class="bdd-placeholder">No enquiries, requests or complaints in this period.</div>';
+
+  // complaint drivers: which categories of another column complaints cite more than usual
+  const det=_xbRichDims(ctx).find(x=>x.col!==dm.col);
+  let drivers='';
+  if (det && comp.length) {
+    const cv=_xbValues(comp, det.col, false), base=_xbValues(ctx.cur, det.col, false), bm=new Map(base.map(a=>[a.v,a]));
+    const cTot=comp.filter(r=>(r.x[det.col]||[]).some(v=>!_xbIsOther(v))).length, aTot=ctx.cur.filter(r=>(r.x[det.col]||[]).some(v=>!_xbIsOther(v))).length;
+    const list=cv.map(a=>{ const b=bm.get(a.v), sc=cTot?a.n/cTot*100:0, sa=b&&aTot?b.n/aTot*100:0; return { a, sc, idx:sa?sc/sa:null }; }).sort((x,y)=>y.a.n-x.a.n).slice(0,8);
+    const mx=Math.max(1,...list.map(x=>x.sc));
+    drivers=`<div class="card"><div class="bdd-section-title"><span>🔻</span>What complaints are about <span class="ovd-hint">${_infEsc(det.label)} · ${cTot.toLocaleString()} categorised complaints</span></div>
+      ${list.length?list.map((x,i)=>`<div class="snt-drv" data-dv="${_infEsc(x.a.v)}" role="button" tabindex="0" title="Read these complaints">
+        <div class="snt-drv-t"><b>${_infEsc(_xbLabel(x.a.v))}</b><small>${x.a.n.toLocaleString()} complaint${x.a.n===1?'':'s'}</small></div>
+        <div class="snt-drv-bar"><div style="width:${(x.sc/mx*100).toFixed(1)}%;background:#EF4444"></div></div>
+        <div class="snt-drv-v">${x.sc.toFixed(0)}%</div>
+        <div class="snt-drv-d">${x.idx==null?'':x.idx>=1.2?`<span class="snt-d bad" title="Share among complaints ÷ share among all mentions">${x.idx.toFixed(1)}× usual</span>`:x.idx<=0.8?`<span class="snt-d good">${x.idx.toFixed(1)}× usual</span>`:'<span class="snt-d flat">≈ usual</span>'}</div></div>`).join(''):'<div class="bdd-placeholder">Complaints carry no categorised '+_infEsc(det.label)+'.</div>'}
+      <div class="snt-foot">% = share of complaints citing the category · “× usual” compares with how often all mentions cite it</div></div>`;
+  }
+  // advocacy & participation by brand
+  const advB=[...new Set([...adv,...par].flatMap(r=>r.brands))].map(b=>{ const a=adv.filter(r=>r.brands.includes(b)), p=par.filter(r=>r.brands.includes(b)); return { b, a, p, pe:p.length?p.reduce((s,r)=>s+r.e,0)/p.length:0 }; }).sort((x,y)=>(y.a.length+y.p.length)-(x.a.length+x.p.length)).slice(0,10);
+  const advocacy=`<div class="card"><div class="bdd-section-title"><span>💚</span>Advocacy &amp; participation <span class="ovd-hint">compliments, recommendations, contest entries</span></div>
+    ${advB.length?`<div class="table-wrap" style="max-height:none"><table class="dt inf-table xb-tbl"><thead><tr><th>Brand</th><th class="num">Advocacy</th><th class="num">Participation</th><th class="num">Eng / participation</th></tr></thead><tbody>${advB.map((x,i)=>`<tr data-ai="${i}" tabindex="0" title="Read these posts"><td><span class="ovd-dot" style="background:${_xbColor(x.b)}"></span><b style="color:var(--text)">${_infEsc(_ovdLabel(x.b))}</b></td><td class="num" style="color:#0f9f76;font-weight:700">${x.a.length.toLocaleString()}</td><td class="num">${x.p.length.toLocaleString()}</td><td class="num">${x.p.length?_infFmt(x.pe):'—'}</td></tr>`).join('')}</tbody></table></div>`:'<div class="bdd-placeholder">No advocacy or participation in this period.</div>'}</div>`;
+
+  el.innerHTML=`<div class="bdd-kpi-row" style="margin-bottom:14px">${kpis}</div>
+    <div class="card" style="margin-bottom:14px"><div class="bdd-section-title"><span>🎧</span>Customer-care queue &amp; brand replies <span class="ovd-hint">${_infEsc(dm.label)} = enquiry, request or complaint</span></div>${queue}
+      <div class="snt-foot">“Brand replied” = a comment from the brand's own account (account_group classified as Owned media in 🏷 Account groups) later in the same thread. Only threads inside this export can be checked, so treat it as a lower bound.</div></div>
+    <div class="inf-grid-2">${drivers||'<div></div>'}${advocacy}</div>`;
+  const sub=_sntRangeLbl(ctx.p.cur)||'All dates';
+  el.querySelectorAll('tr[data-ci]').forEach(tr=>{ const x=rows[+tr.dataset.ci], go=()=>_xbPostsModal({ rows:x.items, title:`${_ovdLabel(x.b)} · care queue`, sub, color:_xbColor(x.b) }); tr.onclick=go; tr.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); go(); } }; });
+  el.querySelectorAll('[data-dv]').forEach(n=>{ const go=()=>_xbPostsModal({ rows:comp.filter(r=>(r.x[det.col]||[]).includes(n.dataset.dv)), title:`Complaints · ${_xbLabel(n.dataset.dv)}`, sub, sent:'negative' }); n.onclick=go; n.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }; });
+  el.querySelectorAll('tr[data-ai]').forEach(tr=>{ const x=advB[+tr.dataset.ai], go=()=>_xbPostsModal({ rows:[...new Set([...x.a,...x.p])], title:`${_ovdLabel(x.b)} · advocacy & participation`, sub, color:_xbColor(x.b) }); tr.onclick=go; tr.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); go(); } }; });
 }
 
 function copyXdimPanel(idx) {
@@ -4470,7 +5070,13 @@ function copyXdimPanel(idx) {
   });
 }
 
+let _mergedTwoFiles = false;   // true when File 2 was appended — duplicate posts are then removed by id
+function _dedupeMerged(rows){
+  if (!_mergedTwoFiles) return rows;
+  const seen=new Set(); return rows.filter(r=>{ const k=String(r.id||''); if (!k) return true; if (seen.has(k)) return false; seen.add(k); return true; });
+}
 async function mergeCsvFiles() {
+  _mergedTwoFiles = false;
   let text1 = await readFileAsText(csvFile1);
   let mergedText = text1;
   if (csvFile2) {
@@ -4478,8 +5084,15 @@ async function mergeCsvFiles() {
     text1 = text1.replace(/^\uFEFF/, '');
     text2 = text2.replace(/^\uFEFF/, '');
     const lines2 = text2.split('\n');
+    // the second file's rows are appended under the first file's header, so the columns must match exactly
+    const h1 = text1.split('\n')[0].replace(/\r$/,'').trim(), h2 = (lines2[0]||'').replace(/^\uFEFF/,'').replace(/\r$/,'').trim();
+    if (h1 !== h2) {
+      showToast('File 2 has different columns from File 1, so it was NOT merged — only File 1 is used', 'error', 8000);
+      return text1;
+    }
     const body2 = lines2.slice(1).filter(l => l.trim()).join('\n');
     mergedText = text1.trimEnd() + '\n' + body2;
+    _mergedTwoFiles = true;
     document.getElementById('fileBadge2').textContent =
       document.getElementById('fileBadge2').textContent.replace('✔','🔗');
   }
@@ -4495,7 +5108,7 @@ async function triggerPipeline() {
     const mergedText = await mergeCsvFiles();
     setStep('step0','done');
 
-    rawData = parseCSV(mergedText);
+    rawData = _dedupeMerged(parseCSV(mergedText));
     const totalLabel = csvFile2
       ? `${rawData.length.toLocaleString()} rows (2 files merged)`
       : `${rawData.length.toLocaleString()} rows`;
@@ -4534,7 +5147,7 @@ async function triggerPipeline() {
 async function remergeWithoutResettingReview() {
   try {
     const mergedText = await mergeCsvFiles();
-    rawData = parseCSV(mergedText);
+    rawData = _dedupeMerged(parseCSV(mergedText));
     const totalLabel = `${rawData.length.toLocaleString()} rows (2 files merged)`;
     document.getElementById('fileBadge').textContent = `✔ ${csvFile1.name}\n${totalLabel}`;
     _pendingMergedText = mergedText;
@@ -4558,7 +5171,7 @@ async function continuePipelineAfterSchemaConfirm() {
     console.log(`[pipeline] step1 done in ${(performance.now()-_t1).toFixed(0)}ms`);
     setStep('step1','done');
 
-    await runMainPipeline();
+    if (await runMainPipeline() === false) { _hidePipelineOverlay(); return; }   // error already shown
     // Preserve the engagement-descending order Python already computed —
     // do NOT re-sort here, or charts fall back out of sync with the report table.
     TOPIC_ORDER = Object.keys(reportData.allTopicSent || {});
@@ -4578,6 +5191,10 @@ async function continuePipelineAfterSchemaConfirm() {
     setStatus('ready', totalLabel);
     _hidePipelineOverlay();
     showToast(`Pipeline complete — ${totalLabel}`, 'success', 4000);
+    // already sitting on a lazily computed tab? compute it now for the new file
+    const _at=document.querySelector('.tab-btn.active')?.dataset.tab;
+    if (_at==='extras') ensureExtraDimensionsComputed().then(()=>{ if (document.querySelector('.tab-btn[data-tab="extras"]')?.classList.contains('active')) renderExtraDimensionPanels(); });
+    if (_at==='brand') ensureBrandTrendComputed().then(()=>{ if (document.querySelector('.tab-btn[data-tab="brand"]')?.classList.contains('active')) updateBrandDeepDive(); });
   } catch(e) {
     setStatus('error', 'Pipeline error — check console');
     console.error('Pipeline error:', e);
@@ -4610,6 +5227,7 @@ function parseLine(line) {
 
 async function pushDFtoPyodide(csvText, schemaCfg) {
   pyodide.globals.set('_csv_data', csvText);
+  pyodide.globals.set('_merged_two_files', !!_mergedTwoFiles);
   pyodide.globals.set('_schema_cfg_json', JSON.stringify(schemaCfg));
   await pyodide.runPythonAsync(`
 import pandas as pd, numpy as np, io, json
@@ -4618,6 +5236,9 @@ from datetime import date
 _schema_cfg = json.loads(_schema_cfg_json)
 
 df = pd.read_csv(io.StringIO(_csv_data), low_memory=False)
+# two merged exports can overlap (e.g. weeks 1-2 + week 2): keep each post once
+if _merged_two_files and 'id' in df.columns:
+    df = df.drop_duplicates(subset=['id'], keep='first').reset_index(drop=True)
 df.columns = [c.lstrip('\\ufeff') for c in df.columns]
 # Normalise common column name variants (case differences between files)
 if 'Source' in df.columns and 'source' not in df.columns:
@@ -5184,7 +5805,7 @@ _gr_keep = [c for c in ['id','source','text','sentiment','created_at','date','en
                          'view_count','comment_count','like_count','share_count','retweet_count','reply_count',
                          'Brands','Topics','Campaign','campaign','Detail','detail','Category','category',
                          'link','Link','url','URL','post_url','post_link','permalink','source_url',
-                         'title','Title','page','Page',
+                         'title','Title','page','Page','image',
                          'branch','Branch','location','Location'] if c in _gr_df.columns]
 _gr_df = _gr_df[_gr_keep] if _gr_keep else _gr_df
 # Serialise NaN as None → null in JSON so JS doesn't see "nan" strings
@@ -5251,7 +5872,7 @@ _json_diag.dumps(_d)
       setStatus('error','Pipeline error — check console');
       console.error(`[pipeline] ${stepId} FAILED after ${_ms}ms:`, e.toString());
       showToast(`Pipeline error at ${stepId} — check console`, 'error', 6000);
-      return;
+      return false;   // caller stops here instead of rendering the previous file's results
     }
   }
 
@@ -5295,6 +5916,14 @@ _json_diag.dumps(_d)
   _infReset();
   _bddOwnedReset();
   _ovdReset();
+  // Lazily computed per-tab data (brand trend, extra-dimension panels) belongs to the previous
+  // file — without this reset a second upload would never recompute them.
+  _brandTrendComputed = false; _extraDimsComputed = false; _extraDimsComputedGrans = new Set();
+  _acctCacheClear();
+  // Old AI reports describe the previous file; any stream still running stops writing.
+  _aiEpoch++;
+  ['bdd','camp','gr','inf'].forEach(p=>{ const c=document.getElementById(p+'AiOutputCard'); if (c) c.style.display='none';
+    const b=document.getElementById(p+'AiOutputBody'); if (b) b.innerHTML=''; const m=document.getElementById(p+'AiOutputMeta'); if (m) m.textContent=''; });
 
   // Build CSV download blob
   const csvStr = await pyodide.runPythonAsync(`
@@ -6164,17 +6793,17 @@ function renderCampPosts() {
         <div class="bdd-post-meta">
           ${src  ? `<span class="bdd-post-source" style="border-left:3px solid ${srcColor};padding-left:6px">${escapeHtml(src)}</span>` : ''}
           ${date ? `<span class="bdd-post-date">📅 ${escapeHtml(date)}</span>` : ''}
-          ${sent ? `<span class="badge ${sent}" style="font-size:10px">${sent}</span>` : ''}
+          ${sent ? `<span class="badge ${_sentCls(sent)}" style="font-size:10px">${escapeHtml(sent)}</span>` : ''}
           ${hasLink ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="bdd-post-link">↗ View post</a>` : ''}
         </div>
-        <div class="bdd-post-text">${escapeHtml(text)}</div>
+        <div class="bdd-post-text">${escapeHtml(text)}</div>${_postSub(row.subtitle)}
         <div class="bdd-post-stats">
           ${eng      ? `<span class="bdd-post-stat">⚡ <strong>${eng.toLocaleString()}</strong> engagement</span>` : ''}
           ${comments ? `<span class="bdd-post-stat">💬 <strong>${comments.toLocaleString()}</strong> comments</span>` : ''}
           ${views    ? `<span class="bdd-post-stat">👁 <strong>${views.toLocaleString()}</strong> views</span>` : ''}
           ${likes    ? `<span class="bdd-post-stat">❤️ <strong>${likes.toLocaleString()}</strong> likes</span>` : ''}
         </div>
-      </div>`;
+      </div>${_postImg(row.image, 'col')}`;
     el.appendChild(item);
   });
 
@@ -6503,11 +7132,12 @@ function applyFilters() {
   const search=_parseBoolSearch(document.getElementById('tableSearch')?.value);
   filteredData=rawData.filter(row=>{
     if(activeBrands.size>0){
-      const b=(row.Brands||'').toLowerCase();
-      if(![...activeBrands].some(ab=>b.includes(ab.toLowerCase()))) return false;
+      // exact brand match ('Chang' must not also match 'Chang Classic')
+      const bl=_infSplit(row.Brands).map(x=>x.toLowerCase());
+      if(![...activeBrands].some(ab=>bl.includes(String(ab).toLowerCase()))) return false;
     }
     if(search){
-      const hay=(_tableColDefs.length ? _tableColDefs.map(d=>row[d.key]) : [row.text,row.Brands,row.source,row.Topics,row.sentiment]).join(' ').toLowerCase();
+      const hay=(_tableColDefs.length ? _tableColDefs.map(d=>row[d.key]) : [row.text,row.Brands,row.source,row.Topics,row.sentiment]).concat([_subVal(row.subtitle)]).join(' ').toLowerCase();
       if(!_boolSearchMatch(hay,search)) return false;
     }
     return true;
@@ -6658,13 +7288,15 @@ function _sntBuild(){
 
 // Period options: the latest calendar month, the last 7/30/90 days (each against the window
 // right before it, offered only when the file fully covers that earlier window) and all dates.
-function _sntPeriods(){
-  const days=_snt.days; if (!days.length) return [{ k:'all', l:'All dates', cur:null, prev:null }];
+function _sntPeriods(){ return _periodsFromDays(_snt.days); }
+// Shared by the Sentiment and More Breakdowns tabs; days = sorted 'YYYY-MM-DD' list
+function _periodsFromDays(days){
+  if (!days.length) return [{ k:'all', l:'All dates', cur:null, prev:null }];
   const min=days[0], max=days[days.length-1], out=[];
   const ym=max.slice(0,7), [y,mo]=ym.split('-').map(Number), pd=new Date(y, mo-2, 1);
   const pym=`${pd.getFullYear()}-${String(pd.getMonth()+1).padStart(2,'0')}`;
   const monthLbl=s=>new Date(s+'-01T00:00:00').toLocaleDateString('en-GB',{month:'short',year:'numeric'});
-  if (days.some(d=>d.startsWith(pym))) {
+  if (min <= pym+'-01') {   // only when the file covers the previous month from its first day (a partial month would inflate growth)
     // a month still in progress is compared with the same days of the month before (1–28 Oct vs 1–28 Sep), a complete one with the whole month
     const lastDay=new Date(y, mo, 0).getDate(), prevLast=new Date(y, mo-1, 0).getDate(), md=Number(max.slice(8,10));
     const full=md>=lastDay, pTo=full?prevLast:Math.min(md, prevLast);
@@ -6791,8 +7423,8 @@ function _sntSummary(el, ctx){
   const vs=okPrev?' vs prev':'';
   const net=_sntNet(a), netAlt=_sntNet(a,!eng);
   const kpis=
-    k('', a.n.toLocaleString(), 'Mentions', `${_sntDelta(okPrev&&b.n?(a.n/b.n-1)*100:null,'%',true,0)}${vs}`) +
     k('eng', _infFmt(a.e), 'Engagement', `${_sntDelta(okPrev&&b.e?(a.e/b.e-1)*100:null,'%',true,0)}${vs}`) +
+    k('', a.n.toLocaleString(), 'Mentions', `${_sntDelta(okPrev&&b.n?(a.n/b.n-1)*100:null,'%',true,0)}${vs}`) +
     k('view', _sntSigned(net,0), `Net sentiment`, `${_sntDelta(okPrev?net-_sntNet(b):null,' pts')}${vs}`, net>=0?'var(--pos)':'var(--neg)') +
     k('pos', _sntPct(_sntShare(a,'positive')), 'Positive', `${_sntDelta(dS('positive'),' pts')}${vs}`, 'var(--pos)') +
     k('neu', _sntPct(_sntShare(a,'neutral')), 'Neutral', `${_sntDelta(dS('neutral'),' pts',null)}${vs}`, 'var(--neu)') +
@@ -6929,11 +7561,11 @@ function _sntPostsModal(o){
       </div>
       <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${top.length} ${mode==='all'?'':SNT_LBL[mode].toLowerCase()+' '}by engagement <span class="ovd-hint" style="text-transform:none;letter-spacing:0">${top.length&&listE?`together ${_ovdPct(sumTop,listE).toFixed(1)}% of their engagement`:''}</span></div>
       <div class="inf-post-list">${top.length?top.map((r,i)=>{ const pl=_infUrl(_sntLink(r)), t=_sntText(r);
-        return `<div class="inf-post" style="border-left:3px solid ${SENT_COLORS[r.s]}"><div class="inf-post-top">
+        return `<div class="inf-post" style="border-left:3px solid ${SENT_COLORS[r.s]}">${_postImg(r.raw.image)}<div class="inf-post-top">
           <span style="font-weight:700;color:var(--text)">#${i+1}</span><span class="inf-sent" style="background:${SENT_COLORS[r.s]}" title="${r.s}"></span>
           <b style="color:var(--text)">${_infEsc(r.raw.user_name||'Unknown account')}</b><span>·</span><span>${_infEsc(r.ch)}</span><span>·</span><span>${_infEsc(r.day?_sntFmtDay(r.day,true):'no date')}</span>${r.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}${r.brands.length>1?`<span class="inf-chip int" title="${_infEsc(r.brands.join(', '))}">${r.brands.length} brands</span>`:''}
           <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(r.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-          <div class="inf-post-text">${_infEsc(t.slice(0,400)||'(no text)')}${t.length>400?'…':''}</div></div>`; }).join('')
+          <div class="inf-post-text">${_infEsc(t.slice(0,400)||'(no text)')}${t.length>400?'…':''}</div>${_postSub(r.raw.subtitle)}</div>`; }).join('')
         :'<div class="bdd-placeholder">No posts here</div>'}</div></div>`;
     ov.querySelector('.inf-close').onclick=close;
     ov.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{ mode=b.dataset.mode; render(); ov.querySelector(`[data-mode="${mode}"]`)?.focus(); });
@@ -7228,7 +7860,7 @@ function _sntDrivers(el, ctx){
           <td class="num" style="font-weight:700;color:${low?'var(--text3)':p.net>=0?'#0f9f76':'#dc2626'}">${_sntSigned(p.net,0)}</td>${ctx.prev?`<td class="num">${_sntDelta(p.dnet,'',true,0)}</td>`:''}</tr>`; }).join('')}</tbody></table></div>`;
   const posts=(s,title)=>{ const rs=ctx.cur.filter(r=>r.s===s).sort((a,b)=>b.e-a.e), top=rs.slice(0,5);
     return `<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px"><div class="bdd-section-title" style="margin:0;border:0;padding:0"><span class="inf-legend-dot" style="background:${SENT_COLORS[s]};width:10px;height:10px"></span>${title}</div>${rs.length>5?`<button class="btn-outline snt-more" data-s="${s}" type="button">See top ${SNT_TOP_N} →</button>`:''}</div>
-      <div class="inf-post-list">${top.length?top.map((r,i)=>{ const pl=_infUrl(_sntLink(r)), t=_sntText(r); return `<div class="inf-post" style="border-left:3px solid ${SENT_COLORS[s]}"><div class="inf-post-top"><span style="font-weight:700;color:var(--text)">#${i+1}</span><b style="color:var(--text)">${_infEsc(r.brands.map(_ovdLabel).join(', '))}</b><span>·</span><span>${_infEsc(r.ch)}</span><span>·</span><span>${_infEsc(r.day?_sntFmtDay(r.day):'')}</span><span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(r.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div><div class="inf-post-text ovd-clamp">${_infEsc(t||'(no text)')}</div></div>`; }).join(''):`<div class="bdd-placeholder">No ${s} mentions in this period</div>`}</div></div>`; };
+      <div class="inf-post-list">${top.length?top.map((r,i)=>{ const pl=_infUrl(_sntLink(r)), t=_sntText(r); return `<div class="inf-post" style="border-left:3px solid ${SENT_COLORS[s]}">${_postImg(r.raw.image)}<div class="inf-post-top"><span style="font-weight:700;color:var(--text)">#${i+1}</span><b style="color:var(--text)">${_infEsc(r.brands.map(_ovdLabel).join(', '))}</b><span>·</span><span>${_infEsc(r.ch)}</span><span>·</span><span>${_infEsc(r.day?_sntFmtDay(r.day):'')}</span><span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(r.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div><div class="inf-post-text ovd-clamp">${_infEsc(t||'(no text)')}</div>${_postSub(r.raw.subtitle)}</div>`; }).join(''):`<div class="bdd-placeholder">No ${s} mentions in this period</div>`}</div></div>`; };
   el.innerHTML=`<div class="inf-grid-2">${drv('negative','What drives negative','🔻')}${drv('positive','What drives positive','🔺')}</div>
     <div class="card" style="margin-bottom:14px"><div class="bdd-section-title"><span>📡</span>Sentiment by platform <span class="ovd-hint">shares by ${lens} · index 100 = average negativity</span></div>${platHtml}</div>
     <div class="inf-grid-2">${posts('negative','Top negative posts')}${posts('positive','Top positive posts')}</div>`;
@@ -7386,14 +8018,16 @@ function renderTable(){
     cols.forEach(col=>{
       const td=document.createElement('td'),val=row[col.key]||'';
       if(col.kind==='sentiment') td.innerHTML=`<span class="badge ${_esc(String(val).toLowerCase())}">${_esc(val)}</span>`;
-      else{td.textContent=val;td.title=val;}
+      else{td.textContent=val;td.title=val;
+        const sv=/^(text|Text|review|Review|title|Title)$/.test(col.key)?_subVal(row.subtitle):'';
+        if(sv){ const ch=document.createElement('span'); ch.className='sub-chip'; ch.textContent='🎙 transcript'; ch.title='Video transcript (searchable): '+(sv.length>400?sv.slice(0,400)+'…':sv); td.prepend(ch); }}
       tr.appendChild(td);
     });
     // Link column
     const tdLink=document.createElement('td');
-    const href=getLinkField(row);
+    const href=_infUrl(getLinkField(row));   // http(s) only, escaped below
     tdLink.innerHTML=href
-      ? `<a href="${href}" target="_blank" rel="noopener noreferrer" class="bdd-post-link" style="font-size:10px">🔗 Open</a>`
+      ? `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" class="bdd-post-link" style="font-size:10px">🔗 Open</a>`
       : `<span style="font-size:10px;color:var(--text3);">—</span>`;
     tr.appendChild(tdLink);
     tb.appendChild(tr);
@@ -7600,6 +8234,7 @@ function _grSelectBrand() {
   document.querySelectorAll('.gr-rev-pill').forEach(b => b.classList.toggle('active', b.dataset.rev === 'all'));
   document.querySelectorAll('input[name="grWcSent"]').forEach(r => { r.checked = r.value === 'all'; });
   renderGrDashboard();
+  if (typeof renderGrRawTable==='function') renderGrRawTable();   // Raw Data tab follows the brand too
   // Sync AI panel pills if it's open
   if (document.getElementById('gr-panel-ai')?.classList.contains('active')) {
     populateGrAiBrandPills();
@@ -8064,8 +8699,8 @@ function renderGrExampleReviews() {
     const item = document.createElement('div');
     item.className = 'gr-review-item';
 
-    const linkHtml = link
-      ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="gr-review-link">🔗 View on Google</a>`
+    const linkHtml = _infUrl(link)   // http(s) only — blocks javascript: links
+      ? `<a href="${escapeHtml(_infUrl(link))}" target="_blank" rel="noopener noreferrer" class="gr-review-link">🔗 View on Google</a>`
       : '<span class="gr-review-no-link">no link</span>';
 
     item.innerHTML = `
@@ -8077,10 +8712,10 @@ function renderGrExampleReviews() {
         </div>
         <div class="gr-review-text">${escapeHtml(text || '(no text)')}</div>
         <div class="gr-review-foot">
-          ${sent ? `<span class="gr-review-sent ${sent}">${sent}</span>` : ''}
+          ${sent ? `<span class="gr-review-sent ${_sentCls(sent)}">${escapeHtml(sent)}</span>` : ''}
           ${linkHtml}
         </div>
-      </div>`;
+      </div>${_postImg(r.image, 'col')}`;
     el.appendChild(item);
   });
 
@@ -8261,10 +8896,10 @@ function renderGrRawTable() {
         const td = document.createElement('td');
         if (c.toLowerCase() === 'sentiment') {
           const s = String(val).toLowerCase();
-          td.innerHTML = val ? `<span class="badge ${s}">${escapeHtml(val)}</span>` : '';
+          td.innerHTML = val ? `<span class="badge ${_sentCls(s)}">${escapeHtml(val)}</span>` : '';
         } else if (c.toLowerCase() === 'link' || c.toLowerCase() === 'url') {
-          if (val) {
-            td.innerHTML = `<a href="${escapeHtml(val)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:600">🔗 Open</a>`;
+          if (_infUrl(val)) {
+            td.innerHTML = `<a href="${escapeHtml(_infUrl(val))}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:600">🔗 Open</a>`;
           }
         } else {
           td.textContent = val;
@@ -8417,6 +9052,7 @@ function populateGrAiBrandPills() {
     renderGrDashBrandPills();
     _grUpdateActiveBrandLabel();
     _grAiUpdatePostCount();
+    renderGrDashboard(); if (typeof renderGrRawTable==='function') renderGrRawTable();
   });
   container.appendChild(allPill);
 
@@ -8431,6 +9067,7 @@ function populateGrAiBrandPills() {
       renderGrDashBrandPills();
       _grUpdateActiveBrandLabel();
       _grAiUpdatePostCount();
+      renderGrDashboard(); if (typeof renderGrRawTable==='function') renderGrRawTable();
     });
     container.appendChild(pill);
   });
@@ -8459,7 +9096,7 @@ function _grAiGetFilteredTexts() {
   let rows = _grAiGetRows().filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null');
   if (sortBy==='engagement') rows=rows.slice().sort((a,b)=>(parseFloat(b.engagement_score)||0)-(parseFloat(a.engagement_score)||0));
   return rows.slice(0,max).map(row=>({
-    text:       String(row.text||'').trim(),
+    text:       _aiTextWithSub(row.text, row.subtitle),
     engagement: parseFloat(row.engagement_score)||0,
     sentiment:  String(row.sentiment||'').toLowerCase(),
     source:     String(row.source||row.Source||''),
@@ -8605,7 +9242,7 @@ _keep_cols = [c for c in ['id','source','Source','text','Text','sentiment','crea
     'engagement_score','view_count','comment_count','like_count','share_count','retweet_count','reply_count',
     'Brands','Topics','Campaign','campaign','Detail','detail','Category','category',
     'link','Link','url','URL','post_url','post_link','permalink','source_url',
-    'title','Title','page','Page',
+    'title','Title','page','Page','image','subtitle',
     'branch','Branch','location','Location'] if c in _all_df2.columns]
 _all_df2 = _all_df2[_keep_cols] if _keep_cols else _all_df2
 _all_df2.to_json(orient='records', force_ascii=False)
@@ -8921,13 +9558,14 @@ _json_xd.dumps({'data': _extra_dimensions, 'timings': _xdim_timings})
 // ── AI SUMMARY ────────────────────────────────────────────────────────────────
 let aiApiKey    = '';
 let geminiApiKey = '';
+let _aiEpoch = 0;                 // bumped on every new upload; running AI streams for the old file stop writing
+const _aiStream = { text:'' };    // text received so far by the current stream (kept if the connection drops)
 let aiProvider  = 'gemini';  // 'gemini'
 
 const AI_MODELS = {
   gemini: [
     { value: 'gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash-Lite'},
-    { value: 'gemini-2.5-flash',      label: 'Gemini 2.5 Flash'},
-    { value: 'gemini-2.5-pro',        label: 'Gemini 2.5 Pro'},
+    { value: 'gemini-3.5-flash-lite', label: 'Gemini 3.5 Flash-Lite'},
   ],
 };
 
@@ -10080,17 +10718,17 @@ function renderBddTopPosts() {
         <div class="bdd-post-meta">
           ${src  ? `<span class="bdd-post-source" style="border-left:3px solid ${srcColor};padding-left:6px">${escapeHtml(src)}</span>` : ''}
           ${date ? `<span class="bdd-post-date">📅 ${escapeHtml(date)}</span>` : ''}
-          ${sent ? `<span class="badge ${sent}" style="font-size:10px">${sent}</span>` : ''}
+          ${sent ? `<span class="badge ${_sentCls(sent)}" style="font-size:10px">${escapeHtml(sent)}</span>` : ''}
           ${hasLink ? `<a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="bdd-post-link" title="Open original post">↗ View post</a>` : ''}
         </div>
-        <div class="bdd-post-text">${escapeHtml(text)}</div>
+        <div class="bdd-post-text">${escapeHtml(text)}</div>${_postSub(row.subtitle)}
         <div class="bdd-post-stats">
           ${eng      ? `<span class="bdd-post-stat" title="Engagement score">⚡ <strong>${eng.toLocaleString()}</strong> engagement</span>` : ''}
           ${comments ? `<span class="bdd-post-stat" title="Comments">💬 <strong>${comments.toLocaleString()}</strong> comments</span>` : ''}
           ${views    ? `<span class="bdd-post-stat" title="Views">👁 <strong>${views.toLocaleString()}</strong> views</span>` : ''}
           ${likes    ? `<span class="bdd-post-stat" title="Likes">❤️ <strong>${likes.toLocaleString()}</strong> likes</span>` : ''}
         </div>
-      </div>`;
+      </div>${_postImg(row.image, 'col')}`;
     el.appendChild(item);
   });
 
@@ -10212,6 +10850,9 @@ function populateBddAiFilters() {
   const drop    = document.getElementById('bddAiMsDropSource');
   if (!pillsEl || !drop) return;
 
+  // channels the user switched off stay off when the pills are rebuilt for the same brand
+  const keepOff = pillsEl.dataset.brand===String(bddActiveBrand||'') ? new Set([...pillsEl.querySelectorAll('.ch-pill:not(.active)')].map(x=>x.dataset.channel)) : new Set();
+  pillsEl.dataset.brand = String(bddActiveBrand||'');
   // Scope to active brand rows so we only show channels that brand actually has
   const brandPool = bddActiveBrand ? pool.filter(row => {
     let b = String(row.Brands||row.brands||'').trim();
@@ -10240,7 +10881,7 @@ function populateBddAiFilters() {
 
   toShow.forEach(ch => {
     const pill = document.createElement('button');
-    pill.className = 'ch-pill active'; // start all selected
+    pill.className = 'ch-pill' + (keepOff.has(ch) ? '' : ' active'); // all selected, except channels the user switched off for this brand
     pill.dataset.channel = ch;
     pill.textContent = ch;
     pill.addEventListener('click', () => {
@@ -10336,7 +10977,7 @@ function _bddAiGetFilteredTexts() {
   let rows = _bddAiGetRows().filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null');
   if (sortBy==='engagement') rows=rows.slice().sort((a,b)=>(parseFloat(b.engagement_score)||0)-(parseFloat(a.engagement_score)||0));
   return rows.slice(0,max).map(row=>({
-    text:       String(row.text||'').trim(),
+    text:       _aiTextWithSub(row.text, row.subtitle),
     engagement: parseFloat(row.engagement_score)||0,
     sentiment:  row.sentiment||'',
     source:     row.source||'',
@@ -10725,12 +11366,10 @@ async function _runGeminiStream({ model, system, user, outputBody, onDone, onErr
         systemInstruction: { parts: [{ text: system }] },
         contents: [{ role: 'user', parts: [{ text: user }] }],
         generationConfig: {
-          maxOutputTokens: maxTokens ? maxTokens : safeModel === 'gemini-2.5-pro' ? 32000
-                         : safeModel === 'gemini-2.5-flash' ? 16000
-                         : 8192,
+          maxOutputTokens: maxTokens ? maxTokens : safeModel === 'gemini-3.5-flash-lite' ? 16000 : 8192,
           temperature: 0.7,
-          ...(safeModel === 'gemini-2.5-pro' || safeModel === 'gemini-2.5-flash'
-            ? { thinkingConfig: { thinkingBudget: 0 } } : {}),
+          // 3.x takes a thinking level (cannot be fully off — "minimal" is lowest).
+          ...(safeModel === 'gemini-3.5-flash-lite' ? { thinkingConfig: { thinkingLevel: 'minimal' } } : {}),
         },
       }),
     });
@@ -10745,39 +11384,49 @@ async function _runGeminiStream({ model, system, user, outputBody, onDone, onErr
       }
       throw new Error(msg);
     }
-    let fullText='', buffer='', _renderPending=false, _streamDone=false;
+    let fullText='', buffer='', _renderPending=false, _streamDone=false, blocked='';
+    const epoch=_aiEpoch;   // a new upload bumps this — stop writing a report for the old file
+    _aiStream.text='';
     outputBody.innerHTML='';
     const reader=response.body.getReader(), decoder=new TextDecoder();
     while (true) {
       const { done, value } = await reader.read(); if (done) break;
+      if (epoch!==_aiEpoch) { try { reader.cancel(); } catch(_) {} _aiStream.text=''; outputBody.innerHTML=''; onError('Stopped — a new file was uploaded.'); return; }
       buffer += decoder.decode(value, { stream:true });
       const lines = buffer.split('\n'); buffer = lines.pop();
       for (const line of lines) {
         if (!line.startsWith('data: ')) continue;
         const data = line.slice(6).trim(); if (!data||data==='[DONE]') continue;
-        try {
-          const evt = JSON.parse(data);
-          const chunk = evt?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (chunk) {
-            fullText += chunk;
-            if (!_renderPending) {
-              _renderPending = true;
-              requestAnimationFrame(() => {
-                if (_streamDone) return; // final render already happened — don't overwrite it
-                outputBody.innerHTML = renderAiMarkdown(fullText) + '<span class="ai-cursor"></span>';
-                outputBody.scrollTop = outputBody.scrollHeight;
-                _renderPending = false;
-              });
-            }
+        let evt; try { evt = JSON.parse(data); } catch(_) { continue; }   // partial / non-JSON line
+        // errors and safety blocks arrive as stream events, not HTTP errors — surface them
+        if (evt?.error) throw new Error(evt.error.message || 'The AI service returned an error');
+        if (evt?.promptFeedback?.blockReason) blocked = `The request was blocked by the AI's safety filter (${evt.promptFeedback.blockReason}). Try fewer or different posts.`;
+        const fin = evt?.candidates?.[0]?.finishReason;
+        if (fin && /SAFETY|RECITATION|BLOCKLIST|PROHIBITED/.test(fin) && !fullText) blocked = `The AI stopped without an answer (${fin}). Try fewer or different posts.`;
+        const chunk = evt?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (chunk) {
+          fullText += chunk; _aiStream.text = fullText;
+          if (!_renderPending) {
+            _renderPending = true;
+            requestAnimationFrame(() => {
+              if (_streamDone) return; // final render already happened — don't overwrite it
+              outputBody.innerHTML = renderAiMarkdown(fullText) + '<span class="ai-cursor"></span>';
+              outputBody.scrollTop = outputBody.scrollHeight;
+              _renderPending = false;
+            });
           }
-        } catch(_) {}
+        }
       }
     }
     _streamDone = true;
+    if (epoch!==_aiEpoch) { _aiStream.text=''; outputBody.innerHTML=''; onError('Stopped — a new file was uploaded.'); return; }
+    if (!fullText.trim()) throw new Error(blocked || 'The AI returned no text. Please try again, or reduce the number of posts.');
     outputBody.innerHTML = renderAiMarkdown(fullText);
     onDone(fullText);
   } catch(e) {
-    outputBody.innerHTML = '';
+    // keep whatever already arrived (e.g. the connection dropped mid-report) instead of wiping it
+    const partial=_aiStream.text; _aiStream.text='';
+    outputBody.innerHTML = partial ? renderAiMarkdown(partial)+'<div class="ai-partial-note">⚠ The report stopped early — this is only part of it.</div>' : '';
     onError(e.message);
   }
 }
@@ -11100,7 +11749,7 @@ function _campAiGetFilteredTexts() {
   let rows = _campAiGetRows().filter(r => String(r.text||'').trim() && String(r.text||'').trim() !== 'null');
   if (sortBy === 'engagement') rows = rows.slice().sort((a,b) => (parseFloat(b.engagement_score)||0) - (parseFloat(a.engagement_score)||0));
   return rows.slice(0, max).map(row => ({
-    text:       String(row.text||'').trim(),
+    text:       _aiTextWithSub(row.text, row.subtitle),
     engagement: parseFloat(row.engagement_score)||0,
     sentiment:  row.sentiment||'',
     source:     row.source||'',
@@ -11802,6 +12451,25 @@ function _infFmt(n) {
 }
 function _infEsc(s){ return escapeHtml(String(s ?? '')); }
 function _infUrl(u){ u = String(u||'').trim(); return /^https?:\/\//i.test(u) ? u : ''; }
+// Spoken transcript of a video post (the "subtitle" column — speech-to-text, TikTok in
+// practice). Collapsed by default and only rendered when the row has one, so other
+// posts look exactly as before.
+function _subVal(v){ const s=String(v==null?'':v).trim(); return !s || /^(null|nan|none)$/i.test(s) ? '' : s; }
+function _postSub(v){
+  const s=_subVal(v); if (!s) return '';
+  return `<details class="post-sub"><summary title="Speech-to-text of the video — may contain recognition errors">🎙 What's said in the video</summary><div class="post-sub-txt">${_infEsc(s)}</div></details>`;
+}
+// Post text for AI prompts, with the video transcript appended when there is one
+function _aiTextWithSub(text, sub){
+  const t=String(text||'').trim(), s=_subVal(sub); if (!s) return t;
+  return `${t}\n    [Video transcript — speech-to-text, may be noisy: ${s.length>500?s.slice(0,500)+'…':s}]`;
+}
+// Post thumbnail from the "image" column. Lazy-loaded; removes itself if the URL
+// is broken or expired (some CDN links are signed and time out). Click = full image.
+function _postImg(url, cls){
+  const u=_infUrl(url); if (!u) return '';
+  return `<a class="post-img${cls?' '+cls:''}" href="${_infEsc(u)}" target="_blank" rel="noopener noreferrer" title="Open the image"><img src="${_infEsc(u)}" alt="Post image" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.remove()"></a>`;
+}
 function _infMedian(arr){ if(!arr.length) return 0; const a=arr.slice().sort((x,y)=>x-y); const m=a.length>>1; return a.length%2?a[m]:(a[m-1]+a[m])/2; }
 function _infSplit(v){
   let s = String(v ?? '').trim();
@@ -11863,7 +12531,7 @@ if _inf_out['hasCols']:
     _inf_fc = pd.to_numeric(_inf_sub['influencer_follower_count'], errors='coerce') if 'influencer_follower_count' in _inf_sub.columns else pd.Series(float('nan'), index=_inf_sub.index)
     _inf_out['rows'] = {
         'id': _inf_s('id'), 'uid': _inf_s('user_id'), 'src': _inf_s('source'), 'dt': _inf_s('created_at'),
-        'sent': _inf_s('sentiment'), 'link': _inf_s('link'), 'text': _inf_s('text', 400), 'brands': _inf_s('Brands'),
+        'sent': _inf_s('sentiment'), 'link': _inf_s('link'), 'text': _inf_s('text', 400), 'brands': _inf_s('Brands'), 'img': _inf_s('image'), 'sub': _inf_s('subtitle', 2000),
         'name': _inf_s('user_name'), 'photo': _inf_s('user_photo'), 'ulink': _inf_s('user_link'),
         'ints': _inf_s('influencer_interests'), 'type': _inf_s('influencer_type'), 'tier': _inf_s('influencer_audience_size'),
         'grp': _inf_s('account_group'),
@@ -11884,7 +12552,7 @@ _json_inf.dumps(_inf_out, ensure_ascii=False)
         let tier = String(R.tier[i]||'').trim().toUpperCase(); if (!tier) tier = 'UNKNOWN';
         _inf.rows.push({
           id:R.id[i], uid:R.uid[i], src:R.src[i], ch:normalizeChannel(R.src[i]), dt:R.dt[i],
-          sent:String(R.sent[i]||'').toLowerCase(), link:R.link[i], text:R.text[i], brands:_infSplit(R.brands[i]),
+          sent:String(R.sent[i]||'').toLowerCase(), link:R.link[i], text:R.text[i], brands:_infSplit(R.brands[i]), img:R.img?R.img[i]:'', sub:R.sub?R.sub[i]:'',
           name:R.name[i], photo:R.photo[i], ulink:R.ulink[i], ints:_infSplit(R.ints[i]),
           type, tier, fol:R.fol[i], o:!!R.o[i], e:Number(R.e[i])||0,
           grpAll,
@@ -12543,12 +13211,12 @@ function _infOpenAccount(key) {
     <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Posts by engagement</div>
     <div class="inf-post-list">${posts.map(p=>{
       const pl = _infUrl(p.link);
-      return `<div class="inf-post"><div class="inf-post-top">
+      return `<div class="inf-post">${_postImg(p.img)}<div class="inf-post-top">
         <span class="inf-sent" style="background:${INF_SENT_COLORS[p.sent]||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
         <span>${_infEsc(String(p.dt||'').slice(0,11))}</span><span>·</span><span>${_infEsc(p.ch)}</span>${p.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}
         <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()}</span>
         ${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-        <div class="inf-post-text">${_infEsc(p.text||'(no text)')}${String(p.text||'').length>=400?'…':''}</div></div>`;
+        <div class="inf-post-text">${_infEsc(p.text||'(no text)')}${String(p.text||'').length>=400?'…':''}</div>${_postSub(p.sub)}</div>`;
     }).join('')}</div></div>`;
   const close = ()=>{ ov.remove(); document.removeEventListener('keydown', esc, true); };
   const esc = e=>{ if (e.key==='Escape') { e.stopPropagation(); close(); } };
@@ -12827,7 +13495,7 @@ function _infAiContext(posts) {
   const postLines = posts.map((r,i)=>{
     const meta = [`@${r.name}`, ...(_inf.hasGroup?[_infAiMediaTag(r)]:[]), r.ch, `${_infTypeLabel(r.type)}/${r.tier}`, r.fol!=null?`${_infFmt(r.fol)} followers`:'followers n/a',
       `eng ${_infAiNum(r.e)}`, r.sent||'no sentiment', r.brands.length?`brands: ${r.brands.join(', ')}`:'no brand', String(r.dt||'').slice(0,11), r.o?'post':'comment'];
-    return `[${i+1}] ${meta.join(' | ')}\n${String(r.text||'').replace(/\s+\n/g,'\n').trim()}`;
+    return `[${i+1}] ${meta.join(' | ')}\n${_aiTextWithSub(String(r.text||'').replace(/\s+\n/g,'\n'), r.sub)}`;
   });
 
   return `DATASET CONTEXT
@@ -12973,7 +13641,7 @@ async function _infAiRun() {
   showToast(`Analysing ${posts.length.toLocaleString()} influencer posts with Gemini…`, 'info', 3000);
 
   // 8 sections × 3 paragraphs is long (longer still in Thai) — give it room.
-  const maxTokens = model === 'gemini-2.5-pro' ? 32000 : model === 'gemini-2.5-flash' ? 24000 : 16384;
+  const maxTokens = model === 'gemini-3.5-flash-lite' ? 24000 : 16384;
   await _runGeminiStream({ model, system, user, outputBody: body, maxTokens,
     onDone: full => {
       btn.classList.remove('running'); btn.disabled = false;
@@ -13071,7 +13739,7 @@ if _bo['hasGroup']:
         'uid': _bo_col('user_id'), 'name': _bo_col('user_name'), 'photo': _bo_col('user_photo'), 'ulink': _bo_col('user_link'),
         'src': _bo_col('source'), 'day': _bo_day[_bo_own].tolist(), 'o': _bo_orig[_bo_own].astype(bool).tolist(),
         'e': _bo_eng[_bo_own].astype(float).tolist(), 'sent': _bo_sent[_bo_own].tolist(), 'text': _bo_col('text', 300),
-        'link': _bo_col('link'), 'grp': _bo_col('account_group'), 'brands': _bo_col('Brands'),
+        'link': _bo_col('link'), 'grp': _bo_col('account_group'), 'brands': _bo_col('Brands'), 'img': _bo_col('image'), 'sub': _bo_col('subtitle', 2000),
         'id': _bo_col('id'), 'camps': _bo_col('Campaign'),
     }
     # Earned rows that carry a real campaign tag (kept row-level so multi-campaign selections can be de-duplicated)
@@ -13107,7 +13775,7 @@ _json_bo.dumps(_bo, ensure_ascii=False)
     _bddOwned.rows = [];
     for (let i=0;i<n;i++) _bddOwned.rows.push({
       uid:R.uid[i], name:R.name[i], photo:R.photo[i], ulink:R.ulink[i], ch:normalizeChannel(R.src[i]), day:R.day[i],
-      o:!!R.o[i], e:Number(R.e[i])||0, sent:R.sent[i], text:R.text[i], link:R.link[i],
+      o:!!R.o[i], e:Number(R.e[i])||0, sent:R.sent[i], text:R.text[i], link:R.link[i], img:R.img?R.img[i]:'', sub:R.sub?R.sub[i]:'',
       id:R.id?R.id[i]:'', camps:R.camps?_infSplit(R.camps[i]):[],
       grpAll:R.grp[i], brands:_infSplit(R.brands[i]),
     });
@@ -13151,7 +13819,8 @@ function renderBddOwned(){
   // earned = mentions from accounts with no group (from pandas) + mentions from non-owned groups (KOL rosters, media lists…)
   const e0 = _bddOwned.earned[brand] || { n:0, e:0, posts:0, days:{} };
   const earned = { n:e0.n, e:e0.e, days:Object.fromEntries(Object.entries(e0.days||{}).map(([d,v])=>[d,[v[0],v[1]]])) };
-  _bddOwned.rows.forEach(r=>{ if (r.owned || !r.brands.includes(brand)) return; earned.n++; earned.e+=r.e; if (r.day) { const d=earned.days[r.day]||(earned.days[r.day]=[0,0]); d[0]++; d[1]+=r.e; } });
+  const _mine=new Set(rows);   // this brand's owned rows; another brand's owned page mentioning it counts as earned
+  _bddOwned.rows.forEach(r=>{ if (_mine.has(r) || !r.brands.includes(brand)) return; earned.n++; earned.e+=r.e; if (r.day) { const d=earned.days[r.day]||(earned.days[r.day]=[0,0]); d[0]++; d[1]+=r.e; } });
   _ownedPerfBuild(body, rows, earned,
     { useEng: bddMetric === 'engagement', gran: bddGranularity, ctx:'brand', showGroup:false, label:brand, color });
 }
@@ -13280,11 +13949,11 @@ function _ownedPerfBuild(body, rows, earned, opt) {
 
 function _ownedPostHtml(p, i, c){
   const pl=_infUrl(p.link);
-  return `<div class="inf-post"${c?` style="border-left:3px solid ${c}"`:''}><div class="inf-post-top">
+  return `<div class="inf-post"${c?` style="border-left:3px solid ${c}"`:''}>${_postImg(p.img)}<div class="inf-post-top">
       <span style="font-weight:700;color:var(--text)">#${i+1}</span><span class="inf-sent" style="background:${INF_SENT_COLORS[p.sent]||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
       <span>${_infEsc(p.name)}</span><span>·</span><span>${_infEsc(p.ch)}</span><span>·</span><span>${_infEsc(p.day)}</span>${p.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">reply</span>'}
       <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-      <div class="inf-post-text">${_infEsc(p.text||'(no text)')}${String(p.text||'').length>=300?'…':''}</div></div>`;
+      <div class="inf-post-text">${_infEsc(p.text||'(no text)')}${String(p.text||'').length>=300?'…':''}</div>${_postSub(p.sub)}</div>`;
 }
 // Top owned posts for one slice of the Owned Media Performance section (a card, account, bar or platform)
 const OWN_TOP_N = 10;
@@ -13522,11 +14191,19 @@ try { _acct.saved = JSON.parse(localStorage.getItem(ACCT_STORE_KEY) || '{}') || 
 
 function _acctKey(v){ return String(v||'').replace(/^\[|\]$/g,'').trim().replace(/\s+/g,' ').toLowerCase(); }
 function _acctSplit(raw){ return _infSplit(raw).map(x=>x.trim()).filter(x=>x && !/^(nan|null|none)$/i.test(x)); }
+// Brand list and per-value suggestions are cached: classification runs once per grouped row,
+// and rebuilding the brand list from every row each time was quadratic on large files.
+// The cache follows the row arrays it was built from, so new data rebuilds it automatically.
+let _acctBrandCache=null, _acctBrandSrc=[], _acctSuggestCache=new Map();
+function _acctCacheClear(){ _acctBrandCache=null; _acctBrandSrc=[]; _acctSuggestCache=new Map(); }
 function _acctBrandList(){
+  const src=[_bddOwned.rows, _inf.rows, _bddOwned.earned];
+  if (_acctBrandCache && src.every((s,i)=>s===_acctBrandSrc[i])) return _acctBrandCache;
   const set = new Set(Object.keys(_bddOwned.earned||{}));
   (_bddOwned.rows||[]).forEach(r=>r.brands.forEach(b=>set.add(b)));
   (_inf.rows||[]).forEach(r=>r.brands.forEach(b=>set.add(b)));
-  return [...set].filter(Boolean);
+  _acctBrandCache=[...set].filter(Boolean); _acctBrandSrc=src; _acctSuggestCache=new Map();
+  return _acctBrandCache;
 }
 // Automatic suggestion for one account_group value.
 // Rules run in this order (first match wins):
@@ -13598,7 +14275,9 @@ function _acctSuggest(value){
 function _acctResolve(value){
   const s = _acct.saved[_acctKey(value)];
   if (s && ACCT_CATS[s.cat]) return { cat:s.cat, label:s.label || _infGroupLabel(value), saved:true };
-  const g = _acctSuggest(value); return { cat:g.cat, label:g.label, saved:false, sure:g.sure, why:g.why };
+  _acctBrandList();   // refreshes the suggestion cache if the underlying rows changed
+  let g = _acctSuggestCache.get(value); if (!g) { g = _acctSuggest(value); _acctSuggestCache.set(value, g); }
+  return { cat:g.cat, label:g.label, saved:false, sure:g.sure, why:g.why };
 }
 // Classify a row's raw account_group string
 function _acctRowInfo(raw){
@@ -13637,6 +14316,7 @@ function _acctApplyRow(r){
 }
 function _acctRefreshViews(){
   _acctApplyAll();
+  if (_xb.loaded) { _xb._replies=null; if (document.querySelector('.tab-btn[data-tab="extras"]')?.classList.contains('active')) _xbRender(); }
   if (_inf.loaded) renderInfluencerTab();
   if (_bddOwned.loaded) { renderBddOwned(); renderCampOwned(); }
   if (_ovd.loaded) { _ovdReclassify(); if (document.getElementById('ov-panel-dashboard')?.classList.contains('active')) renderOverviewDashboard(); }
@@ -13657,7 +14337,8 @@ function _acctRenderBanners(){
 // ── Settings panel ──────────────────────────────────────────────────────────
 async function openAccountGroups(){
   if (!rawData.length || typeof pyodide==='undefined' || !pyodide) { showToast('Upload a CSV first', 'info'); return; }
-  if (!_bddOwned.loaded) { showToast('Reading account groups…', 'info', 1500); await _bddOwnedLoad(); }
+  if (!_bddOwned.loaded) { showToast('Reading account groups…', 'info', 1500); await _bddOwnedLoad();
+    for (let i=0; i<150 && _bddOwned.loading; i++) await new Promise(r=>setTimeout(r,200)); }   // a load already in progress
   if (!_bddOwned.hasGroup) { showToast('This file has no account_group column', 'info', 3500); return; }
   document.getElementById('acctOverlay')?.remove();
   const groups = _acctAllGroups();
@@ -13803,6 +14484,8 @@ _ov['rows'] = {
     'uid': _ov_s('user_id'), 'name': _ov_s('user_name'), 'g': _ov_s('account_group'),
     'inf': _ov_inf.astype(bool).tolist(),
     'txt': _ov_txt.where(_ov_keep, '').tolist(), 'link': pd.Series(_ov_s('link'), index=df.index).where(_ov_keep, '').tolist(),
+    'img': pd.Series(_ov_s('image'), index=df.index).where(_ov_keep, '').tolist(),
+    'sub': pd.Series(_ov_s('subtitle'), index=df.index).where(_ov_keep, '').str.slice(0, 2000).tolist(),
 }
 _json_ov.dumps(_ov, ensure_ascii=False)
 `);
@@ -13816,7 +14499,7 @@ _json_ov.dumps(_ov, ensure_ascii=False)
       const g=R.g[i], acct = g ? _acctRowInfo(g) : null;
       _ovd.rows[i] = { id:R.id[i], brands:br, topics:_infSplit(R.t[i]).filter(x=>!/^(others?|nan|null|none)$/i.test(x)),
         ch:normalizeChannel(R.src[i]), day:R.day[i], sent:String(R.s[i]||'').toLowerCase(), e:Number(R.e[i])||0, o:!!R.o[i],
-        uid:R.uid[i], name:R.name[i], grpAll:g, inf:!!R.inf[i], txt:R.txt[i], link:R.link[i],
+        uid:R.uid[i], name:R.name[i], grpAll:g, inf:!!R.inf[i], txt:R.txt[i], link:R.link[i], img:R.img?R.img[i]:'', sub:R.sub?R.sub[i]:'',
         owned: acct?acct.owned:false, grp: acct&&acct.owned?acct.ownedLabel:'', kol: acct?acct.kol:[] };
     }
     _ovd.brands = Object.keys(bc).sort((a,b)=>bc[b]-bc[a]);
@@ -13935,8 +14618,8 @@ function renderOverviewDashboard(){
   const pos = agg.reduce((s,x)=>s+x.pos,0), neg = agg.reduce((s,x)=>s+x.neg,0);
   const lead = agg[0];
 
-  const kpis = _ovdK('', uniqRows.toLocaleString(), 'Total mentions', `${agg.length} brands · ${totN.toLocaleString()} brand mentions`) +
-    _ovdK('eng', Math.round(uniqE).toLocaleString(), 'Total engagement', `${Math.round(uniqRows?uniqE/uniqRows:0).toLocaleString()} per mention`) +
+  const kpis = _ovdK('eng', Math.round(uniqE).toLocaleString(), 'Total engagement', `${Math.round(uniqRows?uniqE/uniqRows:0).toLocaleString()} per mention`) +
+    _ovdK('', uniqRows.toLocaleString(), 'Total mentions', `${agg.length} brands · ${totN.toLocaleString()} brand mentions`) +
     _ovdK('pos', `${_ovdPct(pos,totN).toFixed(0)}%`, 'Positive', `${pos.toLocaleString()} brand mentions`) +
     _ovdK('change', `${_ovdPct(neg,totN).toFixed(1)}%`, 'Negative', `${neg.toLocaleString()} brand mentions`) +
     _ovdK('view', `${totN?((pos-neg)/totN*100).toFixed(0):0}`, 'Net sentiment', 'positive % − negative %') +
@@ -14145,13 +14828,13 @@ function _ovdTrendModal(b, buckets, i, gran, sr){
     </div>
     <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${posts.length} posts by engagement <span class="ovd-hint" style="text-transform:none;letter-spacing:0">${posts.length&&eng?`together ${_ovdPct(t5,eng).toFixed(1)}% of this period's engagement`:''}</span></div>
     <div class="inf-post-list">${posts.length?posts.map((p,j)=>{ const pl=_infUrl(p.link);
-      return `<div class="inf-post" style="border-left:3px solid ${c}"><div class="inf-post-top">
+      return `<div class="inf-post" style="border-left:3px solid ${c}">${_postImg(p.img)}<div class="inf-post-top">
         <span class="ovd-eff-rank" style="background:${c}1a;color:${c}">#${j+1}</span>
         <span class="inf-sent" style="background:${(typeof INF_SENT_COLORS!=='undefined'&&INF_SENT_COLORS[p.sent])||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
         <b style="color:var(--text)">${_infEsc(p.name||'Unknown account')}</b><span>·</span><span>${_infEsc(p.ch||'')}</span><span>·</span><span>${_infEsc(p.day||'')}</span>${p.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}
         <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()} <span style="color:var(--text3);font-weight:500">(${_ovdPct(p.e,eng).toFixed(1)}%)</span></span>
         ${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-        <div class="inf-post-text">${_infEsc(p.txt||'(no text)')}</div></div>`; }).join(''):'<div class="bdd-placeholder">No posts with engagement for this brand in this period</div>'}</div></div>`;
+        <div class="inf-post-text">${_infEsc(p.txt||'(no text)')}</div>${_postSub(p.sub)}</div>`; }).join(''):'<div class="bdd-placeholder">No posts with engagement for this brand in this period</div>'}</div></div>`;
   const close=()=>{ ov.remove(); document.removeEventListener('keydown',esc,true); };
   const esc=e=>{ if(e.key==='Escape'){ e.stopPropagation(); close(); } };
   ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
@@ -14367,13 +15050,13 @@ function _ovdPlatModal(b, col, D){
     </div>
     <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${posts.length} posts by engagement <span class="ovd-hint" style="text-transform:none;letter-spacing:0">${posts.length&&eng?`together ${_ovdPct(t5,eng).toFixed(1)}% of this cell's engagement`:''}</span></div>
     <div class="inf-post-list">${posts.length?posts.map((p,j)=>{ const pl=_infUrl(p.link);
-      return `<div class="inf-post" style="border-left:3px solid ${c}"><div class="inf-post-top">
+      return `<div class="inf-post" style="border-left:3px solid ${c}">${_postImg(p.img)}<div class="inf-post-top">
         <span class="ovd-eff-rank" style="background:${b?c+'1a':'var(--accent-lt)'};color:${c}">#${j+1}</span>
         <span class="inf-sent" style="background:${(typeof INF_SENT_COLORS!=='undefined'&&INF_SENT_COLORS[p.sent])||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
         <b style="color:var(--text)">${_infEsc(p.name||'Unknown account')}</b><span>·</span><span>${_infEsc(p.ch||'')}</span><span>·</span><span>${_infEsc(p.day||'')}</span>${p.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}
         <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()} <span style="color:var(--text3);font-weight:500">(${_ovdPct(p.e,eng).toFixed(1)}%)</span></span>
         ${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-        <div class="inf-post-text">${_infEsc(p.txt||'(no text)')}</div></div>`; }).join(''):'<div class="bdd-placeholder">No posts with engagement for this brand on this platform</div>'}</div></div>`;
+        <div class="inf-post-text">${_infEsc(p.txt||'(no text)')}</div>${_postSub(p.sub)}</div>`; }).join(''):'<div class="bdd-placeholder">No posts with engagement for this brand on this platform</div>'}</div></div>`;
   const close=()=>{ ov.remove(); document.removeEventListener('keydown',esc,true); };
   const esc=e=>{ if(e.key==='Escape'){ e.stopPropagation(); close(); } };
   ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
@@ -14472,7 +15155,8 @@ function _ovdEff(agg){
       <div class="r"><span>vs average</span><b style="color:${vs>=0?'var(--pos)':'var(--neg)'}">${vs>=0?'+':''}${vs.toFixed(0)}%</b></div>
       <div class="r"><span>Net sentiment</span><b style="color:${net>=0?'var(--pos)':'var(--neg)'}">${net>=0?'+':''}${net.toFixed(0)}</b></div>
       <div class="q" style="color:${qc}">${ql}</div>
-      ${x.top5&&x.top5.length?`<div class="tp"><span>Top post</span><b>⚡ ${Math.round(x.top5[0].e).toLocaleString()}</b></div><div class="tpt">${_infEsc(String(x.top5[0].txt||'(no text)').slice(0,90))}${String(x.top5[0].txt||'').length>90?'…':''}</div>`:''}
+      ${x.top5&&x.top5.length?(()=>{ const tp=x.top5[0], iu=_infUrl(tp.img);
+        return `<div class="tp"><span>Top post</span><b>⚡ ${Math.round(tp.e).toLocaleString()}</b></div><div class="tp-row">${iu?`<img class="tp-img" src="${_infEsc(iu)}" alt="" width="56" height="56" referrerpolicy="no-referrer" onerror="this.remove()">`:''}<div class="tpt">${_infEsc(String(tp.txt||'(no text)').slice(0,90))}${String(tp.txt||'').length>90?'…':''}</div></div>`; })():''}
       <div class="hint">Click to see top 5 posts</div>`;
     const wr=wrap.getBoundingClientRect(), sr=svg.getBoundingClientRect(), scale=sr.width/W, {cx,cy,r}=geo[k];
     let px=(sr.left-wr.left)+cx*scale, py=(sr.top-wr.top)+cy*scale;
@@ -14510,13 +15194,13 @@ function _ovdEff(agg){
       </div>
       <div class="bdd-section-title" style="margin-bottom:8px"><span>📝</span>Top ${posts.length} posts by engagement <span class="ovd-hint" style="text-transform:none;letter-spacing:0">${posts.length?`together ${_ovdPct(t5,x.eng).toFixed(1)}% of the brand's engagement`:''}</span></div>
       <div class="inf-post-list">${posts.length?posts.map((p,i)=>{ const pl=_infUrl(p.link);
-        return `<div class="inf-post" style="border-left:3px solid ${c}"><div class="inf-post-top">
+        return `<div class="inf-post" style="border-left:3px solid ${c}">${_postImg(p.img)}<div class="inf-post-top">
           <span class="ovd-eff-rank" style="background:${c}1a;color:${c}">#${i+1}</span>
           <span class="inf-sent" style="background:${(typeof INF_SENT_COLORS!=='undefined'&&INF_SENT_COLORS[p.sent])||'var(--border2)'}" title="${_infEsc(p.sent||'no sentiment')}"></span>
           <b style="color:var(--text)">${_infEsc(p.name||'Unknown account')}</b><span>·</span><span>${_infEsc(p.ch||'')}</span><span>·</span><span>${_infEsc(p.day||'')}</span>${p.o?'':'<span class="inf-chip int" style="font-family:Prompt,sans-serif">comment</span>'}
           <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()} <span style="color:var(--text3);font-weight:500">(${_ovdPct(p.e,x.eng).toFixed(1)}%)</span></span>
           ${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-          <div class="inf-post-text">${_infEsc(p.txt||'(no text)')}</div></div>`; }).join(''):'<div class="bdd-placeholder">No posts with engagement for this brand under the current filters</div>'}</div></div>`;
+          <div class="inf-post-text">${_infEsc(p.txt||'(no text)')}</div>${_postSub(p.sub)}</div>`; }).join(''):'<div class="bdd-placeholder">No posts with engagement for this brand under the current filters</div>'}</div></div>`;
     const close=()=>{ ov.remove(); document.removeEventListener('keydown',esc,true); };
     const esc=e=>{ if(e.key==='Escape'){ e.stopPropagation(); close(); } };
     ov.addEventListener('click',e=>{ if(e.target===ov) close(); });
@@ -14534,10 +15218,10 @@ function _ovdEff(agg){
 function _ovdTopPosts(agg){
   const el=document.getElementById('ovdTop');
   const list=agg.filter(x=>x.best).sort((a,b)=>b.best.e-a.best.e);
-  el.innerHTML = list.length ? list.map(x=>{ const p=x.best, pl=_infUrl(p.link); return `<div class="inf-post" style="border-left:3px solid ${_ovdColor(x.b)}">
+  el.innerHTML = list.length ? list.map(x=>{ const p=x.best, pl=_infUrl(p.link); return `<div class="inf-post" style="border-left:3px solid ${_ovdColor(x.b)}">${_postImg(p.img)}
       <div class="inf-post-top"><b style="color:var(--text)">${_infEsc(_ovdLabel(x.b))}</b><span>·</span><span>${_infEsc(p.name)}</span><span>·</span><span>${_infEsc(p.ch)}</span><span>·</span><span>${_infEsc(p.day)}</span>
         <span style="margin-left:auto;color:var(--text);font-weight:600">⚡ ${Math.round(p.e).toLocaleString()}</span>${pl?`<a class="inf-acc-link" href="${_infEsc(pl)}" target="_blank" rel="noopener">View ↗</a>`:''}</div>
-      <div class="inf-post-text ovd-clamp">${_infEsc(p.txt)}</div></div>`; }).join('')
+      <div class="inf-post-text ovd-clamp">${_infEsc(p.txt)}</div>${_postSub(p.sub)}</div>`; }).join('')
     : '<div class="bdd-placeholder">No original posts with text for the current filters</div>';
 }
 const OVD_COLS=[
