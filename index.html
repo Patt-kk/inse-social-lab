@@ -15852,7 +15852,7 @@ function _rptShareSets(D){
   if (_ovd.f.ch==='__all__') sets.push({ t:'Share of Channel', get:eng=>_socData(D.agg,eng,order) });
   if (_ovd.hasTopic && _sotData(D.agg,true,order).cols.length) sets.push({ t:'Share of Topic', get:eng=>_sotData(D.agg,eng,order), white:true });
   sets.push({ t:'Share of Sentiment', get:eng=>_sosData(D.bRows,eng,ob,r=>r.sent,SC), white:true });
-  sets.forEach(x=>{ x.e=x.get(true); x.m=x.get(false); x.colOf=x.e.color||_socColor; x.lblOf=x.e.lbl||(c=>_socLbl(x.e.D.other.length>=x.m.D.other.length?x.e:x.m,c));
+  sets.forEach(x=>{ x.e=x.get(true); x.m=x.get(false); x.colOf=x.e.color||_socColor; x.lblOf=x.e.lbl||(c=>_socLbl((x.e.D.other||[]).length>=(x.m.D.other||[]).length?x.e:x.m,c));   // other is null when every channel has its own column
     x.cols=[...new Set([...x.e.cols, ...x.m.cols])].filter(c=>[x.e,x.m].some(S=>S.all.segs[S.cols.indexOf(c)]?.v>0)); });   // both rows share one legend: every column used by either
   return { ob, sets };
 }
@@ -17111,6 +17111,10 @@ function _rptOutline(D, on){   // the outline page: numbered groups with the pag
     else if (k==='method') add('Data Coverage', 'Measurement & definitions'); });
   return out;
 }
+const APP_VERSION='v5.39.3';   // shown in the Report studio header, so a stale copy of the file is easy to spot
+function _rptSafePage(s, fn){   // one page that fails to build shows a note instead of blanking the whole preview
+  try { return fn(); } catch (e) { console.error('Report page '+s+' failed:', e); return `<div class="rpt-empty">This page couldn’t be built from this data (${_infEsc(e.message||String(e))}). Untick it in Slides &amp; headlines, or send this message to the team.</div>`; }
+}
 function _rptPages(D, H){
   const S=RPT_SIZES[_rpt.size], k=_rpt.kit, rc=k.color, vars=`--pw:${S.w}px;--ph:${S.h}px;--rc:${rc};--ac:${k.color2||'#3774FF'}`;
   const on=_rptPageList(), period=_rptPeriod(D), E=_infEsc, T=_rptTitles(D);
@@ -17142,7 +17146,7 @@ function _rptPages(D, H){
     return `<section class="rpt-page" style="${vars}">
       <div class="rpt-kick">${E(_rptKicker(s,D))}</div>${cLogo}
       <h1 class="rpt-h1${tl>52?' xs':tl>38?' sm':''}">${_rptTone(title)}</h1>${msg?`<div class="rpt-msg">${E(msg)}</div>`:''}
-      <div class="rpt-body">${(()=>{ const main=own?libBody[s]:body[s](), pn=_rptPanelsFor(s), L=_rptLayFor(s);
+      <div class="rpt-body">${(()=>{ const main=own?libBody[s]:_rptSafePage(s, body[s]), pn=_rptPanelsFor(s), L=_rptLayFor(s);
         if (L) { const pct=r=>`left:${(r.x*100).toFixed(2)}%;top:${(r.y*100).toFixed(2)}%;width:${(r.w*100).toFixed(2)}%;height:${(r.h*100).toFixed(2)}%`; let aside='';
           if (L.t && pn.length) { const wpx=L.t.w*(S.w-96), hpx=L.t.h*(S.h-250), wide=wpx/hpx>2.2, src=_rptPanelSrc(pn);
             const P2=wide?_rptPanelFit(pn, Math.max(20,((wpx-230)/2)/6.6), Math.max(3,2*(hpx-30)/19.5)):_rptPanelFit(pn, Math.max(18,(wpx-40)/6.6), Math.max(3,(hpx-70)/19.5));
@@ -17160,7 +17164,13 @@ function _rptPages(D, H){
 let _rptTimer=0;
 function _rptLater(){ clearTimeout(_rptTimer); _rptTimer=setTimeout(_rptPreview, 180); }
 function _rptPreview(){
-  const el=document.getElementById('rptPrev'); if (!el) return; _rptChkSync();
+  const el=document.getElementById('rptPrev'); if (!el) return;
+  try { _rptPreviewDraw(el); } catch (e) { console.error('Report preview failed:', e);   // say what broke instead of a blank pane
+    const NL=String.fromCharCode(10), det=APP_VERSION+' · '+(e.message||e)+NL+String(e.stack||'').split(NL).slice(1,6).join(NL);
+    el.innerHTML=`<div class="rpt-empty" style="padding:40px;text-align:left"><b>The preview couldn’t be built from this data.</b><p>Please send this to the team:</p><pre style="white-space:pre-wrap;font-size:11px;background:#F3F5FA;padding:10px;border-radius:8px;user-select:all">${_infEsc(det)}</pre></div>`; }
+}
+function _rptPreviewDraw(el){
+  _rptChkSync();
   const S=RPT_SIZES[_rpt.size], D=_rptData(), pages=_rptPages(D,_rptHeads(D)), grid=_rpt.view==='grid', E=_infEsc, top=el.scrollTop;
   const avail=el.clientWidth-44, cols=grid?(avail>900?3:2):1, sc=Math.min(1, Math.max(.12, (avail-(cols-1)*16)/cols/S.w));
   const keys=_rptPageList(), editable=k=>!/^(div|ai):/.test(k) && !['cover','thanks'].includes(k) && !/#[1-9]\d*$/.test(k);
@@ -17395,7 +17405,7 @@ function _rptNav(root){
     writing:`${_rpt.aiDocs.length} text · ${recos} recommendation${recos===1?'':'s'}`, events:`${_rpt.events.length} event${_rpt.events.length===1?'':'s'}`, brand:_rpt.kit.client||'No client name yet' };
   nav.innerHTML=RPT_PANES.map(([k,ic,l])=>`<button type="button" data-pane="${k}" class="${(_rpt.pane||'setup')===k?'on':''}" aria-current="${(_rpt.pane||'setup')===k}" title="${E(l)} — ${E(sub[k])}"><span class="ic">${ic}</span><span><b>${E(l)}</b><small>${E(sub[k])}</small></span></button>`).join('');
   nav.querySelectorAll('[data-pane]').forEach(b=>b.onclick=()=>{ _rpt.pane=b.dataset.pane; _rptForm(root); root.querySelector('.rpt-form').scrollTop=0; });
-  const n=_rptPageList().length; root.querySelector('#rptStSub').textContent=`${n} page${n===1?'':'s'} · ${RPT_TPL[_rpt.tpl].l} · ${RPT_SIZES[_rpt.size].l}${_rpt.kit.client?' · '+_rpt.kit.client:''}`;
+  const n=_rptPageList().length; root.querySelector('#rptStSub').textContent=`${n} page${n===1?'':'s'} · ${RPT_TPL[_rpt.tpl].l} · ${RPT_SIZES[_rpt.size].l}${_rpt.kit.client?' · '+_rpt.kit.client:''} · ${APP_VERSION}`;
 }
 function _rptChecks(){   // what to look at before exporting: warn = would show in the deck, info = good to know
   const out=[], E=_infEsc, keys=_rptPageList();
