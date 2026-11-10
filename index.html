@@ -2041,7 +2041,7 @@ svg.sc-zsvg.zoomed{cursor:grab}
 .grw .c{flex:1;min-height:0;width:100%;object-fit:contain;object-position:50% 15%;margin-top:6px}.grw .e{margin:auto;color:#8890A8;font-size:12px}
 .rpt-kh.rpt-grai{position:absolute;top:0;right:0;bottom:64px;width:40%;border-radius:0;background:#F3F5FA;padding:22px 26px 14px}
 .rpt-grai .hd{align-self:flex-start;background:#141B4D;color:#fff;font-size:15px;font-weight:600;letter-spacing:3px;text-transform:uppercase;padding:8px 22px;border-radius:4px;margin-bottom:14px}
-.rpt-grai .h{color:var(--rc)}
+.rpt-grai .h{color:var(--rc)}.rpt-grai .kh-b{flex:1;min-height:0}.rpt-grai .kh-b.c2{column-count:2;column-gap:22px;column-fill:auto}.rpt-grai .kh-b.c2 .h{break-after:avoid}.rpt-grai .kh-b.c2 .li,.rpt-grai .kh-b.c2 p{break-inside:avoid-column}
 .rpt-gr-hint{margin:auto 8px;padding:18px;border:1.5px dashed #C9CED9;border-radius:12px;color:#8890A8;font-size:13px;text-align:center;line-height:1.5}
 #rptPrint .rpt-gr-hint{display:none}
 /* Voice of Customer: sentiment pie left, three topic boxes right */
@@ -16054,7 +16054,37 @@ function _rptGrText(){   // the ticked lines back as text; a heading stays only 
     out.push(b.k==='li'?`- ${b.t}`:b.k==='num'?`${b.n}. ${b.t}`:b.k==='q'?`> ${b.t}`:b.t); });
   return out.join('\n');
 }
-function _rptGrAi(cpl=64, cap=28){ const t=_rptGrText(); return t.trim() ? _rptPanelFit([{ title:'', body:t }], cpl, cap) : null; }   // the picked lines, fitted to the panel
+function _rptGrOpt(){ return _rpt.grOpt||(_rpt.grOpt={ mode:'all', size:'auto', cols:'auto' }); }   // Summary & Key Topic panel: full analysis or picked lines · text size · columns
+const RPT_GR_STEPS=[1, 0.92, 0.85, 0.78, 0.72, 0.66, 0.6, 0.55, 0.5];   // auto-fit shrinks in these steps until everything fits
+const _rptGrMeasCache={};
+function _rptGrFits(blocks, f, cols){   // does this text fit the PDF panel? measured off-screen with the page's own CSS
+  const S=RPT_SIZES[_rpt.size]; let host=document.getElementById('rptGrMeas');
+  if (!host) { host=document.createElement('section'); host.id='rptGrMeas'; host.className='rpt-page'; host.setAttribute('aria-hidden','true'); document.body.appendChild(host); }
+  host.style.cssText=`--pw:${S.w}px;--ph:${S.h}px;position:fixed;left:-20000px;top:0;visibility:hidden;pointer-events:none`;
+  host.innerHTML=`<aside class="rpt-kh rpt-grai"><div class="hd">Summary &amp; Key Topic</div><div class="kh-b${cols===2?' c2':''}" style="font-size:${(12.5*f).toFixed(1)}px">${_rptAiColHtml(blocks)}</div></aside>`;
+  const el=host.querySelector('.kh-b'); return el.scrollHeight<=el.clientHeight+1 && el.scrollWidth<=el.clientWidth+1;
+}
+function _rptGrAi(ppt){   // the panel's text fitted to it: { f, blocks, cut, cols }
+  const o=_rptGrOpt(), t=o.mode==='pick'?_rptGrText():(_rptAiLast.gr?.text||''); if (!t.trim()) return null;
+  if (!ppt && document.body) {   // PDF: measure, so the text is as large as the panel allows
+    const key=JSON.stringify([t, o.size, o.cols, _rpt.size, document.fonts?.check?.('400 12px Prompt')]); if (_rptGrMeasCache[key]) return _rptGrMeasCache[key];
+    const blocks=_rptMdBlocks(t), steps=o.size==='auto'?[1, 0.95, 0.9, 0.85, 0.8, 0.76, 0.72, 0.68, 0.64, 0.6, 0.56, 0.52, 0.5]:[o.size/100];
+    const best=c=>{ for (const f of steps) if (_rptGrFits(blocks, f, c)) return { f, blocks, cut:false, used:0, cols:c }; return null; };
+    let r; if (o.cols!=='auto') r=best(+o.cols); else { const a=best(1); r=a&&a.f>=0.78?a:(()=>{ const b2=best(2); return b2&&(!a||b2.f>a.f+0.04)?b2:a; })(); }   // 2 columns only when they read clearly larger
+    if (!r) { const c=o.cols==='auto'?1:+o.cols, e=_rptPanelFit([{ title:'', body:t }], ...(c===2?[30,54]:[64,28]), [steps[steps.length-1]]); r={ ...e, cut:true, cols:c }; }   // nothing fits: smallest size, the end cut
+    return (_rptGrMeasCache[key]=r); }
+  const it=[{ title:'', body:t }], dim=c=>ppt?(c===2?[33,58]:[70,30]):(c===2?[30,54]:[64,28]);   // characters per line and lines per panel at 100%
+  const fit=c=>({ ..._rptPanelFit(it, ...dim(c), o.size==='auto'?RPT_GR_STEPS:[o.size/100]), cols:c });
+  if (o.cols!=='auto') return fit(+o.cols);
+  const a=fit(1); if (!a.cut && a.f>=0.78) return a;   // one column while the text stays comfortably large
+  const b=fit(2); return !b.cut && (a.cut || b.f>a.f) ? b : a;
+}
+function _rptSplitCols(blocks){   // two columns of about equal length, split between blocks
+  const len=b=>String(b.t).length+40, tot=blocks.reduce((a,b)=>a+len(b),0); let acc=0, cut=blocks.length;
+  for (let j=0;j<blocks.length;j++) { if (j>0 && acc+len(blocks[j])/2>tot/2) { cut=j; break; } acc+=len(blocks[j]); }
+  if (cut>0 && blocks[cut-1]?.k==='h') cut--;   // a heading stays with its text
+  return [blocks.slice(0,cut), blocks.slice(cut)];
+}
 function _rptGrPage(D){
   const G=_grRpt(), E=_infEsc; if (!G.tot) return '<div class="rpt-empty">No Google reviews with a sentiment label in this file</div>';
   const SC={ positive:RPT_POS, neutral:RPT_NEU, negative:RPT_NEG }, L={ positive:'Positive', neutral:'Neutral', negative:'Negative' }, K=['positive','neutral','negative'];
@@ -16068,7 +16098,7 @@ function _rptGrPage(D){
 }
 function _rptGrPanel(){   // the full-height Summary & Key Topic panel: part of the page, so ✥ Layout moves only the charts
   const ai=_rptGrAi();   // blank until the Google Review AI analysis is generated; the hint shows in the preview only
-  return `<aside class="rpt-kh rpt-grai"><div class="hd">Summary &amp; Key Topic</div>${ai?`<div class="kh-b" style="font-size:${(12.5*ai.f).toFixed(1)}px">${_rptAiColHtml(ai.blocks)}${ai.cut?'<p class="kh-more">Full text in the speaker notes.</p>':''}</div>`
+  return `<aside class="rpt-kh rpt-grai"><div class="hd">Summary &amp; Key Topic</div>${ai?`<div class="kh-b${ai.cols===2?' c2':''}" style="font-size:${(12.5*ai.f).toFixed(1)}px">${_rptAiColHtml(ai.blocks)}${ai.cut?'<p class="kh-more">Full text in the speaker notes.</p>':''}</div>`
     :'<div class="rpt-gr-hint">Generate the analysis in <b>Google Review › ✦ AI Analysis</b> and it fills this panel.<br>Until then the panel stays blank in the PDF and PowerPoint.</div>'}</aside>`;
 }
 // ── Voice of Customer: sentiment of mentions, plus the AI analysis sorted into three topics ──
@@ -16082,7 +16112,7 @@ function _rptVocState(b){   // which finished AI analysis feeds the slide, and w
   if (b) { const d=_rpt.vocs?.[b]; if (!d) return null; const blocks=_rptMdBlocks(d.text);   // a brand's slide: that brand's Voice of Customer analysis
     if (!d.as) { const as={}; let t=''; blocks.forEach((x,i)=>{ if (x.k==='h') t=_vocTopic(x.t); else if (t) as[i]=t; }); d.as=as; }
     return { src:'bdd', as:d.as, blocks, srcs:['bdd'], brand:b }; }
-  const srcs=['bdd','gr','camp','inf'].filter(k=>_rptAiLast[k]?.text?.trim()); if (!srcs.length) return null;
+  const srcs=['bdd','camp','inf'].filter(k=>_rptAiLast[k]?.text?.trim()); if (!srcs.length) return null;   // a Google Review analysis belongs to the Google Reviews slide only
   let v=_rpt.voc; const src=v&&srcs.includes(v.src)?v.src:srcs[0], d=_rptAiLast[src], run=d.at.getTime(), blocks=_rptMdBlocks(d.text);
   if (!v||v.src!==src||v.run!==run) { const as={}; let t=''; blocks.forEach((b,i)=>{ if (b.k==='h') t=_vocTopic(b.t); else if (t) as[i]=t; }); v=_rpt.voc={ src, run, as }; }
   return { ...v, blocks, srcs };
@@ -17101,8 +17131,11 @@ function _rptAiBar(pfx, body){   // the call to action under a finished analysis
   body=body||document.getElementById(pfx+'AiOutputBody'); const d=_rptAiLast[pfx]; if (!body||!d) return;
   let bar=document.getElementById(pfx+'AiRptBar'); if (!bar) { bar=document.createElement('div'); bar.id=pfx+'AiRptBar'; bar.className='rpt-add-bar'; body.after(bar); }
   const n=_rpt.aiDocs.filter(x=>x.src===pfx && x.run===d.at.getTime()).length, E=_infEsc, vb=d.voc, vs=!vb?'':!_rpt.vocs?.[vb]?'new':_rpt.vocs[vb].run===d.at.getTime()?'in':'old', B=vb?E(_rptB(vb)):'';   // a brand's VoC: not on the report yet · this run is on it · an older run is on it
-  const feeds=[...(pfx==='gr'&&grData.length?['the <b>Summary &amp; Key Topic</b> panel on the Google Reviews slide']:[]), 'the <b>Voice of Customer</b> slide'];
-  bar.innerHTML=vb ? `<div class="ic">${vs==='in'?'✓':vs==='old'?'↻':'🗣'}</div><div class="tx"><b>${vs==='in'?`On the report: Voice of Customer · ${B}`:vs==='old'?`${B} already has a Voice of Customer slide, from an earlier run`:`Voice of Customer for ${B}`}</b>
+  const feeds=['the <b>Voice of Customer</b> slide'], grOn=!_rpt.on||_rpt.on.has('grs'), grOld=_rpt.aiDocs.filter(x=>x.src==='gr').length;
+  bar.innerHTML=pfx==='gr' ? `<div class="ic">${grOn?'✓':'⭐'}</div><div class="tx"><b>${grOn?'Shown on the Google Reviews slide':'The Google Reviews slide is turned off'}</b>
+      <small>This analysis fills the <b>Summary &amp; Key Topic</b> panel on the Google Reviews – Monthly Summary slide only — it is not added as separate pages. Choose the full analysis or selected lines, text size and columns in Report › Writing &amp; text.${grOld?` <b>${grOld} page${grOld===1?' was':'s were'} added from a Google Review analysis earlier</b> — remove ${grOld===1?'it':'them'} to keep the text in the panel only.`:''}</small></div>
+    <div class="ac">${grOn?'':'<button type="button" class="rpt-add-btn" data-a="gron"><span class="pl">＋</span> Turn on the slide</button>'}<button type="button" class="${grOn?'rpt-add-btn':'rpt-add-sec'}" data-a="open">Adjust in Report studio →</button>${grOld?`<button type="button" class="rpt-add-sec" data-a="grrm">Remove ${grOld} separate page${grOld===1?'':'s'}</button>`:''}</div>`
+  : vb ? `<div class="ic">${vs==='in'?'✓':vs==='old'?'↻':'🗣'}</div><div class="tx"><b>${vs==='in'?`On the report: Voice of Customer · ${B}`:vs==='old'?`${B} already has a Voice of Customer slide, from an earlier run`:`Voice of Customer for ${B}`}</b>
       <small>${vs==='in'?'This analysis fills the brand’s Voice of Customer slide — its sentiment pie and the Compliment, Area of Improvement and Enquiry &amp; Suggestion boxes. Fine-tune the lines in Report › Writing &amp; text.'
         :vs==='old'?`Update the slide to show this new analysis instead (${B}’s line sorting in Writing &amp; text starts over), or keep the earlier one.`
         :`Add a Voice of Customer slide for ${B}: the brand’s sentiment pie of mentions and these three topics. Run it for more brands to get one slide per brand.`}</small></div>
@@ -17110,10 +17143,15 @@ function _rptAiBar(pfx, body){   // the call to action under a finished analysis
   : `<div class="ic">${n?'✓':'📄'}</div><div class="tx"><b>${n?`${n} section${n===1?'':'s'} of this analysis ${n===1?'is':'are'} in your report`:'Put this analysis in your report'}</b>
       <small>Add its sections as report pages or as Key Highlight text on a slide. It also feeds ${feeds.join(' and ')} — choose its lines in Report › Writing &amp; text.</small></div>
     <div class="ac"><button type="button" class="rpt-add-btn" data-a="add"><span class="pl">＋</span> ${n?'Add more sections':'Add to report'}</button><button type="button" class="rpt-add-sec" data-a="open">Open Report studio →</button></div>`;
-  bar.querySelector('[data-a="add"]').onclick=()=>_rptAiPick(pfx);
+  bar.querySelector('[data-a="add"]')?.addEventListener('click',()=>_rptAiPick(pfx));
+  bar.querySelector('[data-a="gron"]')?.addEventListener('click',()=>{ if (!_rpt.on) _rpt.on=new Set(RPT_TPL[_rpt.tpl].secs); _rpt.on.add('grs'); _xpSync(); _rptAiBar('gr'); showToast('Google Reviews slide turned on','success',2000); });
+  bar.querySelector('[data-a="grrm"]')?.addEventListener('click',()=>{ _rpt.aiDocs=_rpt.aiDocs.filter(x=>x.src!=='gr'); _xpSync(); _rptAiBar('gr'); showToast('Separate Google Review pages removed — the text stays in the panel','success',2500);
+    const rov=document.getElementById('rptOv'); if (rov?.offsetParent && !rov.classList.contains('empty')) { _rptForm(rov); _rptPreview(); } });
   bar.querySelector('[data-a="voc"]')?.addEventListener('click',()=>_rptVocAdd(vb, d));
   bar.querySelector('[data-a="open"]').onclick=()=>{ _rpt.pane='writing'; document.querySelector('.tab-btn[data-tab="studio"]')?.click(); };
-  const hb=document.getElementById(pfx+'AiRptBtn'); if (hb) { hb.innerHTML=vb?(vs==='in'?`<span class="pl">✓</span> VoC slide · ${B}`:vs==='old'?`<span class="pl">↻</span> Update VoC slide · ${B}`:`<span class="pl">＋</span> Add VoC slide · ${B}`):n?`<span class="pl">✓</span> In report (${n}) · add more`:'<span class="pl">＋</span> Add to report';
+  const hb=document.getElementById(pfx+'AiRptBtn'); if (hb && pfx==='gr') { hb.innerHTML=`<span class="pl">${grOn?'✓':'⭐'}</span> ${grOn?'On the Google Reviews slide':'Google Reviews slide off'}`; hb.title='This analysis fills the Summary & Key Topic panel — open the Report studio to adjust it';
+    hb.onclick=()=>{ _rpt.pane='writing'; document.querySelector('.tab-btn[data-tab="studio"]')?.click(); }; return; }
+  if (hb) { hb.innerHTML=vb?(vs==='in'?`<span class="pl">✓</span> VoC slide · ${B}`:vs==='old'?`<span class="pl">↻</span> Update VoC slide · ${B}`:`<span class="pl">＋</span> Add VoC slide · ${B}`):n?`<span class="pl">✓</span> In report (${n}) · add more`:'<span class="pl">＋</span> Add to report';
     hb.onclick=vb?(vs==='in'?()=>{ _rpt.pane='writing'; document.querySelector('.tab-btn[data-tab="studio"]')?.click(); }:()=>_rptVocAdd(vb, d)):()=>_rptAiPick(pfx); }
 }
 function _rptVocAdd(b, d){   // one Voice of Customer slide per brand: its own analysis, its own sentiment
@@ -17124,6 +17162,7 @@ function _rptVocAdd(b, d){   // one Voice of Customer slide per brand: its own a
   const rov=document.getElementById('rptOv'); if (rov?.offsetParent && !rov.classList.contains('empty')) { _rptForm(rov); _rptPreview(); }
 }
 function _rptAiPick(pfx){
+  if (pfx==='gr') { _rpt.pane='writing'; document.querySelector('.tab-btn[data-tab="studio"]')?.click(); return; }   // a Google Review analysis lives in its slide's panel, never as pages
   const d=_rptAiLast[pfx]; if (!d) return; const E=_infEsc, secs=_rptAiSections(d.text), run=d.at.getTime();
   const had=new Set(_rpt.aiDocs.filter(x=>x.src===pfx&&x.run===run).map(x=>x.title));
   if (!secs.length) { showToast('This analysis has no text to add','info'); return; }
@@ -17351,10 +17390,10 @@ function _rptLayFor(k){   // the user's layout for this page (first page of a sl
   return { c:L.c, t:_rptPanelsFor(k).length ? (L.t||_rptLayDefault(k).t||{ x:0.665, y:0, w:0.335, h:1 }) : null };   // the text box comes and goes with the slide's text
 }
 function _rptPanelSrc(pn){ const ai=[...new Set(pn.filter(x=>x.src!=='own').map(x=>RPT_AI_SRC[x.src]))]; return ai.length?`AI analysis · ${ai.join(', ')}`:''; }
-function _rptPanelFit(items, cpl0, cap0){   // pick the largest font step at which the panel text fits; beyond the smallest, cut it short
-  const blocks=items.flatMap((it,i)=>[...(items.length>1||i?[{ k:'h', t:it.title }]:[]), ..._rptMdBlocks(it.body)]);
-  for (const f of [1, 0.9, 0.8, 0.72]) { const cpl=cpl0/f, cap=cap0/f, cost=b=>Math.ceil(String(b.t).replace(/\*\*/g,'').length/(cpl-(b.k==='p'||b.k==='h'?0:4)))+(b.k==='h'?0.8:0.4);
-    if (blocks.reduce((a,b)=>a+cost(b),0)<=cap || f===0.72) { let used=0, out=[], cut=false; for (const b of blocks) { const c=cost(b); if (used+c>cap) { cut=true; break; } out.push(b); used+=c; }
+function _rptPanelFit(items, cpl0, cap0, steps=[1, 0.9, 0.8, 0.72]){   // pick the largest font step at which the panel text fits; beyond the smallest, cut it short
+  const blocks=items.flatMap((it,i)=>[...(items.length>1||i?[{ k:'h', t:it.title }]:[]), ..._rptMdBlocks(it.body)]), last=steps[steps.length-1];
+  for (const f of steps) { const cpl=cpl0/f, cap=cap0/f, cost=b=>Math.ceil(String(b.t).replace(/\*\*/g,'').length/(cpl-(b.k==='p'||b.k==='h'?0:4)))+(b.k==='h'?0.8:0.4);
+    if (blocks.reduce((a,b)=>a+cost(b),0)<=cap || f===last) { let used=0, out=[], cut=false; for (const b of blocks) { const c=cost(b); if (used+c>cap) { cut=true; break; } out.push(b); used+=c; }
       return { f, blocks:out, cut, used }; } }
 }
 function _rptMsg(s, H){   // the key message under a page title: the drafted (or edited) headline on data pages
@@ -17397,7 +17436,7 @@ function _rptOutline(D, on){   // the outline page: numbered groups with the pag
     else if (k==='method') add('Data Coverage', 'Measurement & definitions'); });
   return out;
 }
-const APP_VERSION='v5.43.1';   // shown in the Report studio header, so a stale copy of the file is easy to spot
+const APP_VERSION='v5.44.1';   // shown in the Report studio header, so a stale copy of the file is easy to spot
 function _rptSafePage(s, fn){   // one page that fails to build shows a note instead of blanking the whole preview
   try { return fn(); } catch (e) { console.error('Report page '+s+' failed:', e); return `<div class="rpt-empty">This page couldn’t be built from this data (${_infEsc(e.message||String(e))}). Untick it in Slides &amp; headlines, or send this message to the team.</div>`; }
 }
@@ -17554,19 +17593,26 @@ function _rptForm(ov){
             <select data-aiplace="${i}" title="Which slide">${RPT_ON_SLIDE.has(x.mode)?'':`<option value="">After the tab sections</option>`}${tg.map(t=>`<option value="${E(t.key)}"${t.key===x.place?' selected':''}>${RPT_ON_SLIDE.has(x.mode)?'On':'After'}: ${E(t.l)}</option>`).join('')}</select></div>
           ${RPT_ON_SLIDE.has(x.mode)&&!tg.some(t=>t.key===x.place)?'<div class="rpt-hint rpt-warn">Pick a slide — until then it prints as its own page.</div>':''}
           <div class="ed"${_rptOpenEd===x.id?'':' hidden'}><input type="text" data-aiti="${i}" value="${E(x.title)}" maxlength="120"><textarea data-aitx="${i}" rows="7" placeholder="Type the text for this slide. Start lines with - for bullets; **bold** works.">${E(x.body)}</textarea></div></li>`).join('')}</ol>`
-        : '<div class="rpt-hint">Add your own text to any slide, or run an AI Analysis (Google Review, Brand Deep-Dive, Campaign or Influencer tab) and click <b>＋ Add to report</b> on the result.</div>'}
+        : '<div class="rpt-hint">Add your own text to any slide, or run an AI Analysis (Brand Deep-Dive, Campaign or Influencer tab) and click <b>＋ Add to report</b> on the result. A Google Review analysis goes into the Google Reviews slide’s panel instead (below).</div>'}
       ${_rpt.aiDocs.length?'<div class="rpt-hint">Text on a slide becomes a Key Highlight box beside or below its chart or table — the slide rearranges to fit both, long text steps down in size, and the full text always goes in the speaker notes. AI text is marked as AI-generated. Use **bold** and "- " bullets; ✎ edits.</div>':''}</div>
     ${grData.length?(()=>{ const S=_rptGrPickState();   // Google Reviews slide: which lines of the AI analysis go into its Summary & Key Topic panel
       if (!S) return `<div class="rpt-grp"><div class="rpt-lbl">Google Reviews · Summary &amp; Key Topic</div><div class="rpt-hint">Run <b>Google Review › ✦ AI Analysis</b>, then tick the lines to show in the panel on the Google Reviews slide. Until then the panel stays blank.</div></div>`;
-      const items=S.blocks.map((b,i)=>({ ...b, i })).filter(b=>b.k!=='h'), on=items.filter(b=>!S.off.has(b.i)).length, F=_rptGrAi(), plain=t=>String(t).replace(/\*\*/g,'');
+      const O=_rptGrOpt(), pick=O.mode==='pick', items=S.blocks.map((b,i)=>({ ...b, i })).filter(b=>b.k!=='h'), on=items.filter(b=>!S.off.has(b.i)).length, F=_rptGrAi(), plain=t=>String(t).replace(/\*\*/g,'');
+      const seg2=(name,opts,cur)=>`<div class="rpt-seg" data-grseg="${name}">${opts.map(([v,l])=>`<button type="button" data-v="${v}" class="${String(v)===String(cur)?'on':''}">${l}</button>`).join('')}</div>`;
       let sec=-1; const rows=S.blocks.map((b,i)=>{ if (b.k==='h') { sec=i; return `<label class="h"><input type="checkbox" data-grh="${i}"> ${E(plain(b.t))}</label>`; }
         return `<label class="it${S.off.has(i)?' off':''}" title="${E(plain(b.t))}"><input type="checkbox" data-gri="${i}" data-grs="${sec}"${S.off.has(i)?'':' checked'}><span>${E(plain(b.t).slice(0,180))}${plain(b.t).length>180?'…':''}</span></label>`; }).join('');
-      const fit=!F?'<span class="rpt-fit warn">Nothing ticked — the panel stays blank</span>':F.cut?'<span class="rpt-fit warn">Too long for the panel — the end is cut (the full analysis stays in the speaker notes). Untick lines until this says it fits.</span>'
-        :`<span class="rpt-fit ok">✓ Fits the panel${F.f<1?` (text at ${Math.round(F.f*100)}% size)`:''}</span>`;
-      return `<div class="rpt-grp"><div class="rpt-lbl">Google Reviews · Summary &amp; Key Topic <span class="rpt-badge">${on} of ${items.length} lines</span></div>
-        <div class="rpt-hint">Tick the vital lines of the Google Review AI analysis to show in the panel on the Google Reviews slide.</div>
+      const how=F?`${F.cols===2?'2 columns':'1 column'}, text at ${Math.round(F.f*100)}%`:'';
+      const fit=!F?'<span class="rpt-fit warn">Nothing ticked — the panel stays blank</span>'
+        :F.cut?`<span class="rpt-fit warn">Too long for the panel at this size (${how}) — the end is cut; the full analysis stays in the speaker notes. ${O.size==='auto'?(pick?'Untick some lines.':'Switch to Selected lines and untick some.'):'Choose a smaller size or Auto-fit.'}</span>`
+        :`<span class="rpt-fit ok">✓ ${pick?'The selected lines fit':'The full analysis fits'} the panel · ${how}</span>`;
+      return `<div class="rpt-grp"><div class="rpt-lbl">Google Reviews · Summary &amp; Key Topic${pick?` <span class="rpt-badge">${on} of ${items.length} lines</span>`:''}</div>
+        <div class="rpt-hint">What the panel on the Google Reviews slide shows, from the latest Google Review AI analysis.</div>
+        <div class="rpt-f"><span>Show</span>${seg2('mode',[['all','Full analysis'],['pick','Selected lines']],O.mode)}</div>
+        <div class="rpt-row2"><label class="rpt-f"><span>Text size</span><select id="rptGrSize">${[['auto','Auto-fit (largest that fits)'],...[60,70,80,90,100,110,120].map(v=>[v,v+'%'])].map(([v,l])=>`<option value="${v}"${String(v)===String(O.size)?' selected':''}>${l}</option>`).join('')}</select></label>
+          <div class="rpt-f"><span>Columns</span>${seg2('cols',[['auto','Auto'],[1,'1'],[2,'2']],O.cols)}</div></div>
+        ${pick?`<div class="rpt-hint" style="margin-top:6px">Tick the vital lines to show.</div>
         <div class="rpt-ai"><button type="button" class="rpt-mini" data-grall="1">Select all</button><button type="button" class="rpt-mini" data-grall="0">Clear</button></div>
-        <div class="rpt-grpick">${rows}</div><div class="rpt-hint">${fit}</div></div>`; })():''}
+        <div class="rpt-grpick">${rows}</div>`:''}<div class="rpt-hint">${fit}</div></div>`; })():''}
     ${(()=>{ const VB=_rptVocBrands(), eb=VB.includes(_rpt.vocEdit)?_rpt.vocEdit:(VB[0]||null), V=_rptVocState(eb), lbl='Voice of Customer · three topics';   // which lines of an AI analysis fill the Voice of Customer slide's boxes
       if (!V) return `<div class="rpt-grp"><div class="rpt-lbl">${lbl}</div><div class="rpt-hint">Run an AI Analysis — best: <b>Brand Deep-Dive › ✦ AI Analysis › Voice of Customer</b>, which writes exactly the slide's three topics. Then sort its lines into Compliment, Area of Improvement and Enquiry &amp; Suggestion here. Until then the boxes stay blank.</div></div>`;
       const L=_rptVocLines(eb), F=_rptVocFit(L), plain=t=>String(t).replace(/\*\*/g,'');
@@ -17659,6 +17705,9 @@ function _rptForm(ov){
   el.querySelector('#rptVocBrand')?.addEventListener('change', e=>{ _rpt.vocEdit=e.target.value; redo(); });
   el.querySelector('#rptVocRm')?.addEventListener('click', ()=>{ const b=el.querySelector('#rptVocBrand')?.value; if (!b) return;
     delete _rpt.vocs[b]; _rpt.vocList=_rpt.vocList.filter(x=>x!==b); _rpt.vocEdit=''; _xpSync(); _rptAiBar('bdd'); showToast(`Voice of Customer slide for ${_rptB(b)} removed`,'info',2000); redo(); });
+  // Google Reviews panel: what it shows, text size, columns
+  el.querySelectorAll('[data-grseg]').forEach(sg=>sg.querySelectorAll('button').forEach(b=>b.onclick=()=>{ const o=_rptGrOpt(), v=b.dataset.v; o[sg.dataset.grseg]=sg.dataset.grseg==='cols'&&v!=='auto'?+v:v; redo(); }));
+  el.querySelector('#rptGrSize')?.addEventListener('change', e=>{ const v=e.target.value; _rptGrOpt().size=v==='auto'?'auto':+v; redo(); });
   // Google Reviews panel: picked lines
   const grSync=()=>{ el.querySelectorAll('[data-grh]').forEach(h=>{ const bs=[...el.querySelectorAll(`[data-grs="${h.dataset.grh}"]`)], n=bs.filter(b=>b.checked).length;
     h.checked=n===bs.length&&n>0; h.indeterminate=n>0&&n<bs.length; }); };
@@ -18250,7 +18299,7 @@ async function _rptBuildPptx(){
           s.addImage({ data:_grFacePng(pos), x:x+hw-0.38, y:cy+0.03, w:0.24, h:0.24 });
           if (png) s.addImage({ data:png, x:x+(hw-iw)/2, y:cy+0.36, w:iw, h:ih }); else s.addText('No review text', T({ x, y:cy+0.36, w:hw, h:ch-0.4, align:'center', color:'8890A8' })); });
       }
-      const PX=W*0.6, ai=_rptGrAi(70, 30);
+      const PX=W*0.6, ai=_rptGrAi(true);
       s.addShape(P.ShapeType.rect,{ x:PX+0.35, y:0.3, w:3.0, h:0.42, fill:{ color:'141B4D' }, line:{ color:'141B4D', width:0 } });
       s.addText('SUMMARY & KEY TOPIC', T({ x:PX+0.35, y:0.3, w:3.0, h:0.42, fontSize:13, bold:true, color:'FFFFFF', align:'center', valign:'middle', charSpacing:2 }));
       if (ai) { const fs=10.5*ai.f, runs2=t=>String(t).split(/(\*\*[^*]+\*\*)/).filter(Boolean).map(x=>/^\*\*/.test(x)?{ text:x.slice(2,-2), options:{ bold:true } }:{ text:x.replace(/(^|[^*])\*([^*\s][^*]*)\*/g,'$1$2'), options:{} });
@@ -18258,8 +18307,10 @@ async function _rptBuildPptx(){
           if (b.k==='num') r.unshift({ text:`${b.n}.  `, options:{ bold:true, color:rc } });
           const { bullet, ...ro }=o;   // a bullet on a later run would start a new bullet: it goes on the paragraph's first run only
           return r.map((x,j)=>({ text:x.text, options:{ ...ro, ...(j===0&&bullet?{ bullet }:{}), ...sp, ...x.options, ...(j===r.length-1?{ breakLine:true }:{}) } })); };
-        const body=ai.blocks.flatMap(para); if (ai.cut) body.push({ text:'Full text in the speaker notes.', options:{ italic:true, color:'8890A8', fontSize:fs*0.85 } });
-        s.addText(body, T({ x:PX+0.35, y:0.88, w:W-PX-0.7, h:Hh-0.68-1.0, fontSize:fs, valign:'top', lineSpacingMultiple:1.05 })); }
+        const more={ text:'Full text in the speaker notes.', options:{ italic:true, color:'8890A8', fontSize:fs*0.85 } }, pw=W-PX-0.7, ph=Hh-0.68-1.0;
+        if (ai.cols===2) { const cw=(pw-0.3)/2; _rptSplitCols(ai.blocks).forEach((bl,c)=>{ const t=bl.flatMap(para); if (c===1 && ai.cut) t.push(more);
+            if (t.length) s.addText(t, T({ x:PX+0.35+c*(cw+0.3), y:0.88, w:cw, h:ph, fontSize:fs, valign:'top', lineSpacingMultiple:1.05 })); }); }
+        else { const body=ai.blocks.flatMap(para); if (ai.cut) body.push(more); s.addText(body, T({ x:PX+0.35, y:0.88, w:pw, h:ph, fontSize:fs, valign:'top', lineSpacingMultiple:1.05 })); } }
     }
     if (k==='posts') {
       if (!posts.length) s.addText('No posts with engagement', T({ x:M, y:by, w:bw, h:bh, align:'center', color:'8890A8' }));
