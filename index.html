@@ -346,6 +346,15 @@ table.dt tbody td{padding:9px 14px;font-size:12px;color:var(--text2);max-width:2
 .gr-chart-empty{padding:28px 20px;text-align:center;color:var(--text3);font-size:13px;font-style:italic}
 
 /* ── CLEAR BUTTON (used by AI Copy) ── */
+.voc-scope{margin-top:12px;border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface2)}
+.voc-scope .vs-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}.voc-scope .vs-h span{font-size:13px;font-weight:700;color:var(--text)}.voc-scope .vs-h small{font-size:11.5px;color:var(--text3)}
+.voc-scope .vs-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.voc-scope .vs-i{background:var(--surface);border:1px solid var(--border);border-left:4px solid;border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.voc-scope .vs-i b{font-size:12px;color:var(--text)}.voc-scope .vs-i span{font-size:12px;color:var(--text2);font-variant-numeric:tabular-nums}
+.voc-scope .vs-i.pos{border-left-color:#1DC997}.voc-scope .vs-i.neg{border-left-color:#EF4444}.voc-scope .vs-i.neu{border-left-color:#F59E0B}
+.voc-scope .vs-t{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;font-weight:600;color:var(--text);cursor:pointer;flex-wrap:wrap}.voc-scope .vs-t span{font-weight:400;color:var(--text3)}
+.voc-scope .vs-w{margin-top:6px;font-size:11.5px;color:#B45309}
+@media (max-width:760px){.voc-scope .vs-g{grid-template-columns:1fr}}
 .rpt-ai-acts{display:inline-flex;align-items:center;gap:10px}
 .rpt-add-btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:8px;padding:8px 15px;background:linear-gradient(135deg,#2563EB,#7C3AED);color:#fff;font:600 12.5px INSE Digits,Prompt,Noto Sans Thai,Leelawadee UI,Thonburi,Tahoma,sans-serif;cursor:pointer;box-shadow:0 2px 10px rgba(37,99,235,.28);transition:transform .15s,box-shadow .15s,filter .15s;white-space:nowrap}
 .rpt-add-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(37,99,235,.38);filter:brightness(1.06)}.rpt-add-btn:focus-visible{outline:2px solid #7C3AED;outline-offset:2px}
@@ -3843,6 +3852,16 @@ table.dt.ovd-score td{max-width:none}
                     <span class="at-desc">Compliments, areas of improvement, enquiries & suggestions — for the report slide</span>
                   </span>
                 </button>
+              </div>
+              <div class="voc-scope" id="bddVocScope" style="display:none">
+                <div class="vs-h"><span>🗣 Voice of Customer data</span><small>What customers say: brand posts with no opinion are left out</small></div>
+                <div class="vs-g">
+                  <div class="vs-i pos"><b>Positive — posts and comments</b><span data-voc-pos></span></div>
+                  <div class="vs-i neg"><b>Negative — posts and comments</b><span data-voc-neg></span></div>
+                  <div class="vs-i neu"><b data-voc-neu-l>Neutral — comments only</b><span data-voc-neu></span></div>
+                </div>
+                <label class="vs-t"><input type="checkbox" id="bddVocNeuOnly" checked> Neutral: comments only <span>(recommended — neutral posts are mostly the brand's own announcements, news and listings)</span></label>
+                <div class="vs-w" data-voc-warn style="display:none"></div>
               </div>
             </div>
 
@@ -9635,7 +9654,7 @@ function populateGrAiModelSelect() {
     const opt = document.createElement('option');
     opt.value = m.value; opt.textContent = m.label; sel.appendChild(opt);
   });
-  sel.value = 'gemini-2.5-flash-lite';
+  sel.value = 'gemini-3.5-flash-lite';
 }
 
 function populateGrAiBrandPills() {
@@ -9772,7 +9791,7 @@ document.getElementById('grAiRunBtn').addEventListener('click', async () => {
   const outputBody = document.getElementById('grAiOutputBody');
   const errEl      = document.getElementById('grAiError');
   const metaEl     = document.getElementById('grAiOutputMeta');
-  const model      = document.getElementById('grAiModel')?.value || 'gemini-2.5-flash-lite';
+  const model      = document.getElementById('grAiModel')?.value || 'gemini-3.5-flash-lite';
   const sents      = grAiMsGetValues('Sent');
   const sent       = sents[0]==='__all__'?'all sentiments':sents.join(', ');
   const brandLabel = grAiActiveBrand || 'All Brands';
@@ -9868,7 +9887,7 @@ import json as _json
 _all_df2 = df.copy()
 _all_df2 = _all_df2.where(_all_df2.notna(), other=None)
 # Only keep columns useful to the UI to reduce payload size
-_keep_cols = [c for c in ['id','source','Source','text','Text','sentiment','created_at','date',
+_keep_cols = [c for c in ['id','source','Source','text','Text','sentiment','created_at','date','is_origin',
     'engagement_score','view_count','comment_count','like_count','share_count','retweet_count','reply_count',
     'Brands','Topics','Campaign','campaign','Detail','detail','Category','category',
     'link','Link','url','URL','post_url','post_link','permalink','source_url',
@@ -10194,10 +10213,13 @@ let aiProvider  = 'gemini';  // 'gemini'
 
 const AI_MODELS = {
   gemini: [
-    { value: 'gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash-Lite'},
-    { value: 'gemini-3.5-flash-lite', label: 'Gemini 3.5 Flash-Lite'},
+    { value: 'gemini-3.5-flash-lite',  label: 'Gemini 3.5 Flash-Lite · fastest'},
+    { value: 'gemini-3.5-flash',       label: 'Gemini 3.5 Flash · balanced'},
+    { value: 'gemini-3.1-pro-preview', label: 'Gemini 3.1 Pro (preview) · deepest'},   // newest Pro in the Gemini API — 3.5 Pro is not released there yet
   ],
 };
+function _aiThink(m){ return { thinkingConfig:{ thinkingLevel:m==='gemini-3.5-flash-lite'?'minimal':'low' } }; }   // Gemini 3.x always thinks: keep it short so answers stay quick
+function _aiMaxTok(m, lite, other){ return m==='gemini-3.5-flash-lite'?lite:other; }   // Flash and Pro spend part of the output budget on thinking
 
 // Initialise model selectors on page load
 populateBddAiModelSelect();
@@ -11424,7 +11446,7 @@ function setBddAiType(type) {
     if (pillsEl) { pillsEl.style.opacity=''; pillsEl.style.pointerEvents=''; }
     if (srcLock) srcLock.style.display='none';
   }
-  _bddAiUpdatePostCount();
+  _bddAiUpdatePostCount(); _bddVocScopeNote();
 }
 
 // Populate the BDD AI model selector from the same AI_MODELS list
@@ -11436,7 +11458,7 @@ function populateBddAiModelSelect() {
     const opt = document.createElement('option');
     opt.value = m.value; opt.textContent = m.label; sel.appendChild(opt);
   });
-  sel.value = 'gemini-2.5-flash-lite';
+  sel.value = 'gemini-3.5-flash-lite';
 }
 
 function bddAiMsToggle(key) {
@@ -11603,10 +11625,21 @@ function _bddAiGetRows() {
   });
 }
 
+// Voice of Customer scope: positive and negative posts and comments, neutral COMMENTS only — neutral posts are mostly the
+// brand's own announcements, news and listings, not customers speaking
+let bddVocNeuComments = true;
+function _bddIsComment(row){ if (!row || !('is_origin' in row) || row.is_origin==null || row.is_origin==='') return null;   // null = the file can't tell
+  return !['true','1','yes','t'].includes(String(row.is_origin).trim().toLowerCase()); }
+function _bddVocKeep(row){ if (bddAiAnalysisType!=='voc' || !bddVocNeuComments) return true;
+  return String(row.sentiment||'').trim().toLowerCase()!=='neutral' || _bddIsComment(row)!==false; }
+function _bddVocScope(rows){   // counts behind the scope note: sentiment × post / comment
+  const c={ positive:{ p:0, c:0 }, negative:{ p:0, c:0 }, neutral:{ p:0, c:0 }, skip:0, unknown:0 };
+  rows.forEach(r=>{ const s=String(r.sentiment||'').trim().toLowerCase(), k=_bddIsComment(r); if (k===null) c.unknown++; if (!c[s]) return;
+    if (!_bddVocKeep(r)) { c.skip++; return; } c[s][k?'c':'p']++; }); return c; }
 function _bddAiGetFilteredTexts() {
   const max    = parseInt(document.getElementById('bddAiMaxPosts').value)||1000;
   const sortBy = document.getElementById('bddAiSortBy').value;
-  let rows = _bddAiGetRows().filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null');
+  let rows = _bddAiGetRows().filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null'&&_bddVocKeep(r));
   if (sortBy==='engagement') rows=rows.slice().sort((a,b)=>(parseFloat(b.engagement_score)||0)-(parseFloat(a.engagement_score)||0));
   return rows.slice(0,max).map(row=>({
     text:       _aiTextWithSub(row.text, row.subtitle),
@@ -11616,6 +11649,7 @@ function _bddAiGetFilteredTexts() {
     title:      row.title||row.page||'',
     created_at: row.created_at||row.date||'',
     user_name:  row.user_name||row.author||'',
+    kind:       _bddIsComment(row)===true?'comment':_bddIsComment(row)===false?'post':'',
   }));
 }
 
@@ -11623,8 +11657,8 @@ function _bddAiUpdatePostCount() {
   if (!rawData.length||!bddActiveBrand) return;
   const max      = parseInt(document.getElementById('bddAiMaxPosts').value)||1000;
   const sortBy   = document.getElementById('bddAiSortBy').value;
-  const total    = _bddAiGetRows().length;
-  const withText = _bddAiGetRows().filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null').length;
+  const all      = _bddAiGetRows(), kept=all.filter(_bddVocKeep), total=kept.length;
+  const withText = kept.filter(r=>String(r.text||'').trim()&&String(r.text||'').trim()!=='null').length;
   const forAI    = Math.min(withText, max);
   const noText   = total - withText;
   const capped   = withText > max;
@@ -11636,6 +11670,17 @@ function _bddAiUpdatePostCount() {
   const sorted = sortBy==='engagement' ? ' · sorted by engagement' : '';
   const el = document.getElementById('bddAiPostCount');
   if (el) el.innerHTML = `${total.toLocaleString()} posts matched${note}${sorted}`;
+  _bddVocScopeNote(all);
+}
+function _bddVocScopeNote(all){   // the Voice of Customer data card: what goes in, with live counts
+  const box=document.getElementById('bddVocScope'); if (!box) return; box.style.display=bddAiAnalysisType==='voc'?'':'none';
+  if (bddAiAnalysisType!=='voc') return; const c=_bddVocScope(all||_bddAiGetRows()), n=v=>v.toLocaleString();
+  box.querySelector('[data-voc-pos]').textContent=`${n(c.positive.p)} posts · ${n(c.positive.c)} comments`;
+  box.querySelector('[data-voc-neg]').textContent=`${n(c.negative.p)} posts · ${n(c.negative.c)} comments`;
+  box.querySelector('[data-voc-neu]').textContent=bddVocNeuComments?`${n(c.neutral.c)} comments${c.skip?` · ${n(c.skip)} neutral posts left out`:''}`:`${n(c.neutral.p)} posts · ${n(c.neutral.c)} comments`;
+  box.querySelector('[data-voc-neu-l]').textContent=bddVocNeuComments?'Neutral — comments only':'Neutral — posts and comments';
+  const w=box.querySelector('[data-voc-warn]'); w.style.display=c.unknown?'':'none';
+  if (c.unknown) w.textContent=`${n(c.unknown)} row${c.unknown===1?' has':'s have'} no post / comment flag (is_origin) and ${c.unknown===1?'is':'are'} kept.`;
 }
 
 ['bddAiMaxPosts','bddAiSortBy'].forEach(id=>{
@@ -11717,12 +11762,15 @@ function _buildBddVocPrompts(rows) {   // Voice of Customer: the report slide's 
   const brand=bddActiveBrand||'the selected brand', sources=bddAiMsGetValues('Source'), source=sources[0]==='__all__'?'all channels':sources.join(', ');
   const instruction=document.getElementById('bddAiInstruction').value.trim(), sortBy=document.getElementById('bddAiSortBy').value;
   const sortCtx=sortBy==='engagement'?'Posts are ordered by highest engagement score first.':'Posts are in their original order.';
-  const postsBlock=rows.map((r,i)=>`[${i+1}] [eng:${r.engagement}] [${r.sentiment}] [${r.source}] ${r.text}`).join('\n');
+  const postsBlock=rows.map((r,i)=>`[${i+1}] [eng:${r.engagement}] [${r.sentiment}] [${r.source}]${r.kind?` [${r.kind}]`:''} ${r.text}`).join('\n');
+  const scope=bddVocNeuComments?'all positive and negative posts and comments, plus neutral COMMENTS only (neutral brand posts — announcements, news, listings — are left out)':'all posts and comments of every sentiment';
   // a data snapshot the model may quote, so numbers come from the data rather than guesses
   const n=rows.length||1, pc=v=>(v/n*100).toFixed(1)+'%', sc={}, ch={}; let eng=0;
   rows.forEach(r=>{ const k=String(r.sentiment||'').toLowerCase(); sc[k]=(sc[k]||0)+1; const c=ch[r.source]||(ch[r.source]={ n:0, e:0 }); c.n++; c.e+=r.engagement||0; eng+=r.engagement||0; });
   const chs=Object.entries(ch).sort((x,y)=>y[1].n-x[1].n).slice(0,6).map(([k,v])=>`${k} ${pc(v.n)} of posts, ${eng?(v.e/eng*100).toFixed(1):'0.0'}% of engagement`).join('; ');
-  const snapshot=`Posts analysed: ${rows.length.toLocaleString()} · total engagement ${Math.round(eng).toLocaleString()}
+  const kc=k=>rows.filter(r=>r.kind===k).length;
+  const snapshot=`Scope: ${scope}
+Items analysed: ${rows.length.toLocaleString()} (${kc('post').toLocaleString()} posts, ${kc('comment').toLocaleString()} comments) · total engagement ${Math.round(eng).toLocaleString()}
 Sentiment: ${pc(sc.positive||0)} positive, ${pc(sc.neutral||0)} neutral, ${pc(sc.negative||0)} negative
 Channels: ${chs||'—'}`;
   const system=`Act as a senior social listening strategist writing the "Voice of Customer" slide of a monthly report for a Brand Manager and COO.
@@ -11754,7 +11802,8 @@ ${sortCtx}
 DATA SNAPSHOT
 ${snapshot}
 
-Each post: [index] [eng:<score>] [<sentiment>] [<source>] <text>
+Each item: [index] [eng:<score>] [<sentiment>] [<source>] [post|comment] <text>
+Comments are customers replying in threads: weigh them as direct customer voice.
 
 --- POSTS START ---
 ${postsBlock}
@@ -12049,10 +12098,10 @@ async function _runGeminiStream({ model, system, user, outputBody, onDone, onErr
         systemInstruction: { parts: [{ text: system }] },
         contents: [{ role: 'user', parts: [{ text: user }] }],
         generationConfig: {
-          maxOutputTokens: maxTokens ? maxTokens : safeModel === 'gemini-3.5-flash-lite' ? 16000 : 8192,
+          maxOutputTokens: maxTokens ? maxTokens : _aiMaxTok(safeModel, 16000, 24000),
           temperature: 0.7,
           // 3.x takes a thinking level (cannot be fully off — "minimal" is lowest).
-          ...(safeModel === 'gemini-3.5-flash-lite' ? { thinkingConfig: { thinkingLevel: 'minimal' } } : {}),
+          ..._aiThink(safeModel),
         },
       }),
     });
@@ -12190,7 +12239,7 @@ document.getElementById('bddAiRunBtn').addEventListener('click', async () => {
   const errEl      = document.getElementById('bddAiError');
   const metaEl     = document.getElementById('bddAiOutputMeta');
   const sources    = bddAiMsGetValues('Source');
-  const model      = document.getElementById('bddAiModel')?.value || 'gemini-2.5-flash-lite';
+  const model      = document.getElementById('bddAiModel')?.value || 'gemini-3.5-flash-lite';
 
   btn.classList.add('running'); btn.disabled=true;
   errEl.style.display='none';
@@ -12272,7 +12321,7 @@ function populateCampAiModelSelect() {
     const opt = document.createElement('option');
     opt.value = m.value; opt.textContent = m.label; sel.appendChild(opt);
   });
-  sel.value = 'gemini-2.5-flash-lite';
+  sel.value = 'gemini-3.5-flash-lite';
 }
 
 // Campaign pills in the AI hero header — same layout/colours as Dashboard, synced via shared campActiveCampaign
@@ -12690,7 +12739,7 @@ document.getElementById('campAiRunBtn')?.addEventListener('click', async () => {
   const errEl      = document.getElementById('campAiError');
   const metaEl     = document.getElementById('campAiOutputMeta');
   const sources    = campAiMsGetValues('Source');
-  const model      = document.getElementById('campAiModel')?.value || 'gemini-2.5-flash-lite';
+  const model      = document.getElementById('campAiModel')?.value || 'gemini-3.5-flash-lite';
 
   btn.classList.add('running'); btn.disabled = true;
   errEl.style.display = 'none';
@@ -12750,6 +12799,7 @@ document.getElementById('bddAiTypeSocial')?.addEventListener('click', () => setB
 document.getElementById('bddAiTypeBrand')?.addEventListener('click', () => setBddAiType('brand'));
 document.getElementById('bddAiTypeSentiment')?.addEventListener('click', () => setBddAiType('sentiment'));
 document.getElementById('bddAiTypeVoc')?.addEventListener('click', () => setBddAiType('voc'));
+document.getElementById('bddVocNeuOnly')?.addEventListener('change', e => { bddVocNeuComments=e.target.checked; _bddAiUpdatePostCount(); });
 
 // BDD AI — ms-dropdowns (trigger + delegated option clicks)
 // Source is now handled by inline ch-pill buttons; only Sent uses ms-dropdown
@@ -14202,7 +14252,7 @@ function _infAiInit() {
   const sel = document.getElementById('infAiModel');
   if (sel && !sel.options.length) {
     AI_MODELS.gemini.forEach(m=>{ const o=document.createElement('option'); o.value=m.value; o.textContent=m.label; sel.appendChild(o); });
-    sel.value = 'gemini-2.5-flash-lite';
+    sel.value = 'gemini-3.5-flash-lite';
   }
   _infAiRefreshScope();
 }
@@ -14460,7 +14510,7 @@ async function _infAiRun() {
 
   const btn = document.getElementById('infAiRunBtn');
   const card = document.getElementById('infAiOutputCard'), body = document.getElementById('infAiOutputBody');
-  const model = document.getElementById('infAiModel').value || 'gemini-2.5-flash-lite';
+  const model = document.getElementById('infAiModel').value || 'gemini-3.5-flash-lite';
   const { system, user } = _infAiPrompts(posts);
   const custom = !!document.getElementById('infAiInstruction').value.trim();
 
@@ -14473,7 +14523,7 @@ async function _infAiRun() {
   showToast(`Analysing ${posts.length.toLocaleString()} influencer posts with Gemini…`, 'info', 3000);
 
   // 8 sections × 3 paragraphs is long (longer still in Thai) — give it room.
-  const maxTokens = model === 'gemini-3.5-flash-lite' ? 24000 : 16384;
+  const maxTokens = _aiMaxTok(model, 24000, 32000);
   await _runGeminiStream({ model, system, user, outputBody: body, maxTokens,
     onDone: full => {
       btn.classList.remove('running'); btn.disabled = false;
@@ -17436,7 +17486,7 @@ function _rptOutline(D, on){   // the outline page: numbered groups with the pag
     else if (k==='method') add('Data Coverage', 'Measurement & definitions'); });
   return out;
 }
-const APP_VERSION='v5.44.1';   // shown in the Report studio header, so a stale copy of the file is easy to spot
+const APP_VERSION='v5.45.1';   // shown in the Report studio header, so a stale copy of the file is easy to spot
 function _rptSafePage(s, fn){   // one page that fails to build shows a note instead of blanking the whole preview
   try { return fn(); } catch (e) { console.error('Report page '+s+' failed:', e); return `<div class="rpt-empty">This page couldn’t be built from this data (${_infEsc(e.message||String(e))}). Untick it in Slides &amp; headlines, or send this message to the team.</div>`; }
 }
@@ -17759,7 +17809,7 @@ async function _rptAiDraft(model, lang){
   const safe=_ALLOWED_AI_MODELS.has(model)?model:AI_MODELS.gemini[0].value;
   const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${safe}:generateContent?key=${encodeURIComponent(geminiApiKey)}`,{ method:'POST', headers:{ 'Content-Type':'application/json' },
     body:JSON.stringify({ systemInstruction:{ parts:[{ text:system }] }, contents:[{ role:'user', parts:[{ text:user }] }],
-      generationConfig:{ temperature:0.4, maxOutputTokens:4096, responseMimeType:'application/json', ...(safe==='gemini-3.5-flash-lite'?{ thinkingConfig:{ thinkingLevel:'minimal' } }:{}) } }) });
+      generationConfig:{ temperature:0.4, maxOutputTokens:_aiMaxTok(safe, 4096, 12000), responseMimeType:'application/json', ..._aiThink(safe) } }) });
   const j=await res.json().catch(()=>({}));
   if (!res.ok) { const m=j?.error?.message||`HTTP ${res.status}`; throw new Error(res.status===429?`Gemini rate limit — wait a moment and try again (${m})`:res.status===400||res.status===403?`Gemini rejected the request — check the API key (${m})`:`Gemini error: ${m}`); }
   if (j?.promptFeedback?.blockReason) throw new Error(`Gemini blocked the request (${j.promptFeedback.blockReason})`);
