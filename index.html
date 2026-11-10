@@ -2047,7 +2047,7 @@ svg.sc-zsvg.zoomed{cursor:grab}
 .grc .t div{display:flex;align-items:center;justify-content:center;color:#fff;font-size:8px;font-weight:700;overflow:hidden;white-space:nowrap}
 .rpt-gr .bot{flex:1;min-height:0;display:flex;gap:14px;padding-top:16px}.rpt-gr .sep{width:0;border-left:1.5px dashed #D9DEEA}
 .grw{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column}.grw .t{display:flex;align-items:center;justify-content:center;gap:8px}.grw .t img{width:22px;height:22px}
-.grw .c{flex:1;min-height:0;width:100%;object-fit:contain;object-position:50% 15%;margin-top:6px}.grw .e{margin:auto;color:#8890A8;font-size:12px}
+.grw .c{flex:1;min-height:0;width:100%;object-fit:contain;object-position:50% 50%;margin-top:6px}.grw .e{margin:auto;color:#8890A8;font-size:12px}
 .rpt-kh.rpt-grai{position:absolute;top:0;right:0;bottom:64px;width:40%;border-radius:0;background:#F3F5FA;padding:22px 26px 14px}
 .rpt-grai .hd{align-self:flex-start;background:#141B4D;color:#fff;font-size:15px;font-weight:600;letter-spacing:3px;text-transform:uppercase;padding:8px 22px;border-radius:4px;margin-bottom:14px}
 .rpt-grai .h{color:var(--rc)}.rpt-grai .kh-b{flex:1;min-height:0}.rpt-grai .kh-b.c2{column-count:2;column-gap:22px;column-fill:auto}.rpt-grai .kh-b.c2 .h{break-after:avoid}.rpt-grai .kh-b.c2 .li,.rpt-grai .kh-b.c2 p{break-inside:avoid-column}
@@ -16059,18 +16059,32 @@ function _grRpt(){
   return { n, perDay:n/days, c, tot:c.positive+c.neutral+c.negative, cats:list, pos:top(words.positive), neg:top(words.negative) };
 }
 const _grCloudCache={};
-function _grCloudPng(top, pal, W, H){   // a word cloud as a picture (PDF and PowerPoint): biggest words in the middle, placed on a spiral, same layout every time
+const GR_CLOUD_W=360, GR_CLOUD_H=190;   // the slide's word-cloud picture (PDF and PowerPoint), about the shape of its box
+function _grCloudPng(top, pal, W=GR_CLOUD_W, H=GR_CLOUD_H){   // a word cloud as a picture: biggest words in the middle, on a spiral that reaches the corners, same layout every time.
+  // Every word is measured by its real ink (Thai tone marks above, vowels below), so nothing is clipped; when the words don't all fit,
+  // the whole cloud shrinks a step and is laid out again, so the full cloud shows instead of the tail being dropped
   if (!top.length) return '';
   const key=JSON.stringify([top, pal[0], W, H, document.fonts?.check?.('700 16px Prompt')]); if (_grCloudCache[key]) return _grCloudCache[key];
-  const S=2, cv=document.createElement('canvas'); cv.width=W*S; cv.height=H*S; const g=cv.getContext('2d'); g.scale(S,S);
-  const FF='Prompt,"Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif', mx=top[0][1], mn=top[top.length-1][1], rg=Math.max(1,mx-mn), placed=[];
-  const hit=(x,y,w,h)=>placed.some(q=>x<q.x+q.w+3&&x+w+3>q.x&&y<q.y+q.h+1&&y+h+1>q.y);
-  top.forEach(([w,cnt],i)=>{ const f0=Math.round(9+Math.sqrt((cnt-mn)/rg)*21);
-    for (const fs of [f0, Math.max(8, Math.round(f0*0.72))]) { g.font=`700 ${fs}px ${FF}`; const tw=g.measureText(w).width, th=fs*1.12; if (tw>W-8) continue;
-      for (let r=0; r<=W/2; r+=3) { const n=r?Math.max(8,Math.round(r*0.5)):1;
-        for (let j=0;j<n;j++) { const a=j/n*Math.PI*2+i*0.9, x=W/2+r*Math.cos(a)-tw/2, y=H/2+r*Math.sin(a)*H/W-th/2;
-          if (x<3||y<2||x+tw>W-3||y+th>H-2||hit(x,y,tw,th)) continue;
-          placed.push({ x, y, w:tw, h:th }); g.fillStyle=pal[i%pal.length]; g.fillText(w, x, y+fs*0.9); return; } } } });
+  const FF='Prompt,"Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif', mx=top[0][1], mn=top[top.length-1][1], rg=Math.max(1,mx-mn), M=3, GX=2.5, GY=1.5;
+  const g0=document.createElement('canvas').getContext('2d');
+  const box=(w,fs)=>{ g0.font=`700 ${fs}px ${FF}`; const m=g0.measureText(w), up=Math.max(m.actualBoundingBoxAscent||fs*0.8, fs*0.72), dn=Math.max(m.actualBoundingBoxDescent||fs*0.2, fs*0.12);
+    const l=Math.max(0, m.actualBoundingBoxLeft||0), r=Math.max(m.width, m.actualBoundingBoxRight||m.width); return { w:l+r, h:up+dn, l, up }; };   // ink box; text is drawn at (x+l, y+up)
+  const lay=k=>{ const placed=[], hit=(x,y,w,h)=>placed.some(q=>x<q.x+q.w+GX&&x+w+GX>q.x&&y<q.y+q.h+GY&&y+h+GY>q.y);
+    const R=Math.hypot(W,H)/2, ax=W/2, ay=H/2;
+    top.forEach(([w,cnt],i)=>{ const f0=Math.max(6, (9+Math.sqrt((cnt-mn)/rg)*21)*k);
+      for (const fs of [f0, Math.max(6, f0*0.8)]) { const b=box(w,fs); if (b.w>W-2*M || b.h>H-2*M) continue;
+        for (let t=0; t<=R; t+=1.5) {   // t: distance along the spiral, scaled to the box so it fills the width and the height alike
+          const n=t?Math.max(10,Math.round(t*0.7)):1;
+          for (let j=0;j<n;j++) { const a=j/n*Math.PI*2+i*0.9, x=ax+t*Math.cos(a)*(W/2)/R*1.45-b.w/2, y=ay+t*Math.sin(a)*(H/2)/R*1.45-b.h/2;
+            if (x<M||y<M||x+b.w>W-M||y+b.h>H-M||hit(x,y,b.w,b.h)) continue;
+            placed.push({ x, y, w:b.w, h:b.h, word:w, fs, b, c:pal[i%pal.length] }); return; } } } });
+    return placed; };
+  let placed=[];
+  for (const k of [1, 0.93, 0.86, 0.8, 0.74, 0.68, 0.62]) { const p=lay(k); if (p.length>placed.length) placed=p; if (p.length===top.length) break; }   // the largest size at which every word fits
+  // centre what was placed, so the cloud sits in the middle of its picture
+  const x0=Math.min(...placed.map(q=>q.x)), x1=Math.max(...placed.map(q=>q.x+q.w)), y0=Math.min(...placed.map(q=>q.y)), y1=Math.max(...placed.map(q=>q.y+q.h)), dx=(W-x1-x0)/2, dy=(H-y1-y0)/2;
+  const S=3, cv=document.createElement('canvas'); cv.width=W*S; cv.height=H*S; const g=cv.getContext('2d'); g.scale(S,S); g.textBaseline='alphabetic';
+  placed.forEach(q=>{ g.font=`700 ${q.fs}px ${FF}`; g.fillStyle=q.c; g.fillText(q.word, q.x+dx+q.b.l, q.y+dy+q.b.up); });
   return (_grCloudCache[key]=cv.toDataURL('image/png'));
 }
 function _grFacePng(pos){   // smiley (true / 1), frown (false / -1) or straight face (0): beside the word clouds and the Voice of Customer topics
@@ -16142,7 +16156,7 @@ function _rptGrPage(D){
   const donut=`<div class="grd"><div class="t">Sentiment Breakdown</div>${_grDonutSvg(G)}<div class="lg">${K.map(k=>`<div><span><i style="background:${SC[k]}"></i>${L[k]}</span><b>${G.c[k].toLocaleString()}</b></div>`).join('')}</div></div>`;
   const bars=`<div class="grc">${G.cats.map(c=>`<div class="r"><span class="n" title="${E(c.name)}">${E(c.name)}</span><div class="t">${K.filter(k=>c[k]).map(k=>{ const p=c[k]/c.total*100;
     return `<div style="width:${p.toFixed(2)}%;background:${SC[k]}">${p>=12?p.toFixed(1)+'%':''}</div>`; }).join('')}</div><b>${c.total.toLocaleString()}</b></div>`).join('')}</div>`;
-  const cloud=(pos,top)=>{ const png=_grCloudPng(top, pos?GR_POS_PAL:GR_NEG_PAL, 340, 170);
+  const cloud=(pos,top)=>{ const png=_grCloudPng(top, pos?GR_POS_PAL:GR_NEG_PAL);
     return `<div class="grw"><div class="t">Word cloud : ${pos?'Positive':'Negative'}<img src="${_grFacePng(pos)}" alt=""></div>${png?`<img class="c" src="${png}" alt="">`:'<div class="e">No review text</div>'}</div>`; };
   return `<div class="rpt-gr"><div class="top">${kpi}${donut}${bars}</div><i class="div"></i><div class="bot">${cloud(true,G.pos)}<i class="sep"></i>${cloud(false,G.neg)}</div></div>`;
 }
@@ -17486,7 +17500,7 @@ function _rptOutline(D, on){   // the outline page: numbered groups with the pag
     else if (k==='method') add('Data Coverage', 'Measurement & definitions'); });
   return out;
 }
-const APP_VERSION='v5.45.1';   // shown in the Report studio header, so a stale copy of the file is easy to spot
+const APP_VERSION='v5.45.2';   // shown in the Report studio header, so a stale copy of the file is easy to spot
 function _rptSafePage(s, fn){   // one page that fails to build shows a note instead of blanking the whole preview
   try { return fn(); } catch (e) { console.error('Report page '+s+' failed:', e); return `<div class="rpt-empty">This page couldn’t be built from this data (${_infEsc(e.message||String(e))}). Untick it in Slides &amp; headlines, or send this message to the team.</div>`; }
 }
@@ -18344,7 +18358,7 @@ async function _rptBuildPptx(){
         s.addShape(P.ShapeType.line,{ x:X, y:by+topH+0.27, w:BW2, h:0, line:{ color:'D9DEEA', width:1.25 } });   // divider between the charts and the word clouds
         const cy=by+topH+0.57, ch=bh-topH-0.57, hw=(BW2-0.3)/2;   // blank space under the divider
         s.addShape(P.ShapeType.line,{ x:X+hw+0.15, y:cy+0.05, w:0, h:ch-0.1, line:{ color:'D9DEEA', width:1, dashType:'dash' } });
-        [[true,G.pos],[false,G.neg]].forEach(([pos,top],j)=>{ const x=X+j*(hw+0.3), png=_grCloudPng(top, pos?GR_POS_PAL:GR_NEG_PAL, 340, 170), ih=Math.min(ch-0.38, hw*170/340), iw=ih*340/170;
+        [[true,G.pos],[false,G.neg]].forEach(([pos,top],j)=>{ const x=X+j*(hw+0.3), png=_grCloudPng(top, pos?GR_POS_PAL:GR_NEG_PAL), ih=Math.min(ch-0.4, hw*GR_CLOUD_H/GR_CLOUD_W), iw=ih*GR_CLOUD_W/GR_CLOUD_H;
           s.addText(`Word cloud : ${pos?'Positive':'Negative'}`, T({ x, y:cy, w:hw-0.3, h:0.3, fontSize:12, italic:true, align:'center', valign:'middle' }));
           s.addImage({ data:_grFacePng(pos), x:x+hw-0.38, y:cy+0.03, w:0.24, h:0.24 });
           if (png) s.addImage({ data:png, x:x+(hw-iw)/2, y:cy+0.36, w:iw, h:ih }); else s.addText('No review text', T({ x, y:cy+0.36, w:hw, h:ch-0.4, align:'center', color:'8890A8' })); });
